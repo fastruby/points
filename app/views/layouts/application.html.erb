@@ -10,9 +10,31 @@
 
   </head>
 
-  <body>
-    <div class="container">
-      <%= yield %>
-    </div>
+  <body class="content">
+
+      <div class="main">
+        <%= yield %>
+      </div>
+
+      <footer>
+        <div class="logo-container">
+          <h3 class="logo">
+            <a href="https://www.ombulabs.com" target="_blank" title="The Lean Software Boutique">
+              <span class="logo-ombu">Ombu</span>Labs
+            </a>
+          </h3>
+          <h2 class="slogan">
+            <a href="https://www.ombulabs.com" target="_blank" title="Ombu Labs"> THE LEAN SOFTWARE BOUTIQUE </a>
+          </h2>
+        </div>
+        <div>
+          <p class="txt_footer">Made with ❤ in Philadelphia and Buenos Aires</p>
+        </div>
+      </footer>
+
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+      <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
   </body>
 </html>
