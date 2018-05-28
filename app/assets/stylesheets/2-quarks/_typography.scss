@@ -1,0 +1,62 @@
+#typography ul.font-family{
+  font-size: 36px;
+  line-height: 44px;
+  width: 50%;
+  float: left;
+  margin-bottom: 30px;
+  &.italic{
+    font-style: italic;
+  }
+  li{
+    padding-bottom: 10px;
+    &.light{
+      font-weight: 300;
+    }
+    &.bold{
+      font-weight: 700;
+    }
+    &.italic{
+      font-style: italic;
+    }
+  }
+}
+.paragraph{
+  font-size: 17px;
+  line-height: 24px;
+  letter-spacing: 0.05882em;
+}
+h1, h2, h3{
+  margin: 0;
+  padding:0;
+  border: 0;
+  color: $black;
+  text-transform: none;
+  font-style: normal;
+}
+
+h1{
+  font-size: 60px;
+  font-weight: 300;
+  line-height: 1.2em;
+}
+h2{
+  font-size: 41px;
+  font-weight: 300;
+  line-height: 1.2em;
+}
+h3{
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;;
+  border: 0;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  line-height: 1.2em;
+  margin-top: 20px;
+}
+.center {
+  text-align: center;
+}
+abbr{
+	text-decoration: none;
+}

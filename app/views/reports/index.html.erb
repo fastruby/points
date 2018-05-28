@@ -1,0 +1,31 @@
+<div class="container">
+  <h1 class="dashboard-title">Project Reports</h1>
+
+  <table class="project-table">
+
+    <thead>
+      <tr class="project-table__row project-table__row--project-reports project-table__row--header">
+        <td class="project-table__cell">Project</td>
+        <td class="project-table__cell">Report</td>
+      </tr>
+    </thead>
+
+    <tbody id="stories">
+      <% if @projects.present? %>
+        <% @projects.each do | project | %>
+        <tr class="project-table__row project-table__row--project-reports project-table__row--story">
+          <td class="project-table__cell"><%= project.title%></td>
+          <td class="project-table__cell"><%= link_to "View Report", project_report_path(project.id), class: "button green" %></td>
+        </tr>
+        <% end %>
+      <% else %>
+          <p> No Projects </p>
+      <% end %>
+    </tbody>
+
+  </table>
+
+  <div class="btn-group">
+    <%= link_to 'Return to Projects Page', projects_path, id:"back", class: "button" %>
+  </div>
+</div>

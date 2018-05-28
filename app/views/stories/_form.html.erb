@@ -1,0 +1,28 @@
+<%= form_for([@project, @story]) do |f| %>
+  <% if story.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(story.errors.count, "error") %> prohibited this story from being saved:</h2>
+
+      <ul>
+      <% story.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title, placeholder: "Story Title", class: "project-story-title" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :description, "Description (Markdown)" %>
+    <%= f.text_area :description, placeholder: "Description", class: "story-description", rows: 20 %>
+  </div>
+
+  <%= f.hidden_field :project_id, value: params[:project_id] %>
+  <div class="btn-group">
+    <%= f.submit yield(:button_text), class: "button", id: "edit" %>
+  </div>
+<% end %>

@@ -1,0 +1,60 @@
+<div class="container">
+  <h1 class="dashboard-title"><%= @project.title %></h1>
+
+  <table class="project-table">
+    <thead>
+      <tr class="project-table__row project-table__row--header">
+        <td class="project-table__cell">Story Title</td>
+        <td class="project-table__cell">Best Estimate</td>
+        <td class="project-table__cell">Worst Estimate</td>
+        <td class="project-table__cell"></td>
+      </tr>
+    </thead>
+
+    <tbody id="stories" data-url="<%= sort_project_path(@project.id) %>">
+      <% if @stories.present? %>
+        <% @stories.each do | story | %>
+        <tr class="project-table__row project-table__row--story" id="<%= dom_id(story)%>" >
+          <td class="project-table__cell"><%= link_to story.title, [story.project, story] %></td>
+          <td class="project-table__cell"><%= story.estimates.where(user: current_user)&.first&.best_case_points %></td>
+          <td class="project-table__cell"><%= story.estimates.where(user: current_user)&.first&.worst_case_points %></td>
+          <td class="project-table__cell">
+            <%= link_to 'Clone', new_project_story_path(@project.id, story_id: story.id), class: "button green", id: "edit" %>
+            <%= link_to 'Edit', edit_project_story_path(@project.id, story), class: "button green", id: "edit" %>
+            <% if estimated(story) %>
+              <%= link_to 'Edit Estimate', edit_project_story_estimate_path(@project.id, story, @estimate_id), class: "button green", id: "edit" %>
+            <% else %>
+              <%= link_to 'Add Estimate', new_project_story_estimate_path(@project.id, story), class: "button green", id: "edit" %>
+            <% end %>
+            <%= link_to 'Delete', project_story_path(@project.id, story), method: "delete",  data: { confirm: 'Are you sure?' }, class: "button green", id: "edit" %>
+          </td>
+        </tr>
+        <% end %>
+      <% else %>
+          <p> You don't have any story yet. </p>
+      <% end %>
+    </tbody>
+
+    <tfoot>
+      <tr class="project-table__row project-table__row--footer">
+        <td class="project-table__cell">Total estimates</td>
+        <td class="project-table__cell"><%= @project.best_estimate_sum_per_user(current_user) %></td>
+        <td class="project-table__cell"><%= @project.worst_estimate_sum_per_user(current_user) %></td>
+        <td class="project-table__cell"></td>
+      </tr>
+    </tfoot>
+
+  </table>
+  <%= render partial: "projects/import_export" %>
+
+  <div class="btn-group">
+    <%= link_to "Add a Story", new_project_story_path(@project.id), class: "button magenta"  %>
+    <%= link_to "Edit or Delete Project", edit_project_path(@project.id), class: "button magenta"  %>
+    <%= link_to "Generate Action Plan", project_action_plan_path(@project.id), class: "button" %>
+    <% if current_user.admin? %>
+      <%= link_to "View Report", project_report_path(@project.id), class: "button"  %>
+    <% end %>
+  </div>
+
+  <%= link_to 'Return to Projects Page', projects_path, id:"back", class: "button" %>
+</div>

@@ -1,0 +1,27 @@
+/* === BASIC */
+/* ========================== */
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+main{
+	min-height: calc(100vh - 160px);
+	padding: 100px 0;
+}
+::selection {
+  background: $orange;
+}
+::-moz-selection {
+  background: $orange;
+}
+section {
+  overflow: auto;
+}
+textarea {
+  resize: vertical;
+}
+.hidden {
+	display:none;
+}

@@ -1,0 +1,72 @@
+/* Footer */
+footer {
+  background-color: #000000;
+  height: 160px;
+  width: 100%;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  color: #fff;
+  text-align: center;
+	overflow: hidden;
+	.logo-container {
+		width: 220px;
+		margin: auto;
+		.slogan {
+			font-family: "Open Sans", sans-serif;
+			font-weight: 300;
+			font-size: 9px;
+			color: #ffcc00 !important;
+			letter-spacing: 1px;
+			text-transform: uppercase;
+			margin-top: 0px;
+			float: left;
+			margin-left: 50px;
+			text-align: left;
+			text-decoration: underline;
+		}
+		.logo {
+			display: block;
+			margin: 0px auto 0px auto;
+			background-image: url(/assets/isotype_vector.svg);
+			background-repeat: no-repeat;
+			background-position: left center;
+			width: 220px;
+			height: 40px;
+			font-family: "Lato", "Helvetica", Arial, sans-serif;
+			font-weight: 700;
+			font-style: normal;
+			font-size: 27px;
+			letter-spacing: 2px;
+			text-transform: uppercase;
+			text-align: left;
+			padding-left: 50px;
+			background-size: auto 80%;
+			.logo-ombu {
+				color: #ec037c;
+			}
+		}
+	}
+	a{
+		color: $white;
+		&:hover, &:visited, &:link, &:active{
+			text-decoration: none;
+			color: $white;
+		}
+	}
+	.txt_footer {
+		font-family: "Lato", sans-serif;
+		color: #515151;
+		font-size: 14px;
+		font-weight: 300;
+		letter-spacing: 1px;
+		margin: 20px auto 10px auto;
+		border-top: solid 1px #515151;
+		border-bottom: solid 1px #515151;
+		padding: 10px 5px;
+		display: block;
+		width: 380px;
+		background-image: url("footer_2.png");
+		background-size: 380px 40px;
+		background-repeat: no-repeat;
+	}
+}

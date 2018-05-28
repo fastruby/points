@@ -1,0 +1,48 @@
+<div class="container">
+  <h1 class="dashboard-title"><%= @project.title %> Real Scores</h1>
+  <%= form_with scope: :stories, url: real_scores_project_stories_path(@project), method: :patch do |form| %>
+    
+    <table class="project-table">
+      
+      <thead>
+        <tr class="project-table__row project-table__row--real-scores project-table__row--header">
+          <td class="project-table__cell">Story Title</td>
+          <td class="project-table__cell">Average: Best Estimates</td>
+          <td class="project-table__cell">Average: Worst Estimates</td>
+          <td class="project-table__cell">Real Score</td>
+        </tr>
+      </thead>
+
+      <tbody id="stories">
+        <% if @stories.present? %>
+          <% @stories.each do | story | %>
+            <tr class="project-table__row project-table__row--real-scores project-table__row--story">
+              <td class="project-table__cell"><%= link_to story.title, [@project, story], target: "_blank" %></td>
+              <td class="project-table__cell"><%= best_estimate_for_story(story) %></td>
+              <td class="project-table__cell"><%= worst_estimate_for_story(story) %></td>
+              <td class="project-table__cell"><%= form.number_field "story_#{story.id}" %></td>
+            </tr>
+          <% end %>
+        <% else %>
+            <p> This user doesn't have any story yet. </p>
+        <% end %>
+      </tbody>
+
+      <tfoot>
+        <tr class="project-table__row project-table__row--real-scores project-table__row--footer">
+          <td class="project-table__cell"></td>
+          <td class="project-table__cell"><%= @project.best_estimate_total %></td>
+          <td class="project-table__cell"><%= @project.worst_estimate_total %></td>
+          <td class="project-table__cell"><%=form.submit "Submit", class: "button green"%></td>
+        </tr>
+      </tfoot>
+
+    </table>
+  <% end %>
+
+  <div class="btn-group">
+    <%= link_to 'Back', reports_index_path, id:"back", class: "button" %>
+
+    <%= link_to 'Populate Real Scores', class: "button" %>
+  </div>
+</div>

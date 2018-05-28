@@ -1,0 +1,27 @@
+<div class="container">
+  <h1 class="home-title">My Projects</h1>
+
+  <% if @projects.present? %>
+    <div class="row">
+      <% @projects.each do | project | %>
+        <div class="col-sm-6 col-lg-4">
+          <%= link_to project_path(project.id), class: "project-card" do %>
+            <div>
+              <h2><%= project.title %></h2>
+            </div>
+          <% end  %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p> You don't have any projects yet. </p>
+  <% end %>
+
+  <div class="btn-group">
+    <%= link_to "Add a Project", new_project_path, class: "button", id: "create-button" %>
+    <% if current_user.admin? %>
+      <%= link_to "View Reports", reports_index_path, class: "button", id: "create-button" %>
+    <% end %>
+  </div>
+
+</div>

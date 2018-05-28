@@ -1,0 +1,46 @@
+// Colors:
+$light-green: #D9F1F1;
+$green: #57CE81;
+$orange: #FFCC00;
+$magenta: #F70A7C;
+$light_grey: #EFF7F7;
+$slogan_grey: #666;
+$medium_grey: #999;
+$dark_grey: #272727;
+$black:#000000;
+$white:#ffffff;
+$dark_magenta: darken(#F70A7C, 19%);
+
+// Measurements:
+$gutter: 30px;
+$hover_transition_time: 200ms;
+$lean_startup_process_graph_height: 642px;
+$image_isotype_height: 80px;
+$logo_width: 260px;
+$logo_height: 60px;
+$header_height: 90px;
+
+// Typography:
+$font-lato: "Lato", "Helvetica", Arial, sans-serif;
+$font-open-sans: "Open Sans", "Helvetica", Arial, sans-serif;
+$font-maven: "Maven", "Lato", "Helvetica", Arial, sans-serif;
+$base-font-size: 17px;
+$base-line-height: 1.4;
+
+// Breakpoints:
+$breakpoint_500px: 500px;
+$breakpoint_768px: 768px;
+$breakpoint_992px: 992px;
+$breakpoint_1200px: 1200px;
+$breakpoint_1400px: 1400px;
+
+// Images:
+$image_isotype_static: "isotype.png";
+$image_isotype_animated: "isotype_vector.svg";
+$image_green_triangle: "green_triangle.png";
+$image_lean_square: "lean_square.png";
+$image_agile_circle: "agile_circle.png";
+$image_ux_triangle: "ux_triangle.png";
+$image_lean_process_old: "lean_process.png";
+$image_lean_process: "lean_startup_process_graph.svg";
+$image_circles_background_arrow: "circles_background_arrow.png";

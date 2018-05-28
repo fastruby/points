@@ -1,0 +1,10 @@
+<div class="container">
+  <% provide(:button_text, 'Save Changes') %>
+  <h2 class="new-edit-title">Edit Story</h2>
+
+  <%= render 'form', story: @story %>
+
+  <hr>
+
+  <%= link_to 'Back', project_path(@project.id), id:"back", class: "button" %>
+</div>

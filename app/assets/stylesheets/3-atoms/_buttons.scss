@@ -1,0 +1,46 @@
+.button, input.button {
+	display: inline-block;
+	text-align: center;
+	background: $orange;
+	border-radius: 20px;
+	padding: 10px 20px;
+	color: $black;
+	transition: $hover_transition_time;
+	transition-property: background, color;
+	border: none;
+	&:hover, &:active{
+		background-color: lighten($orange, 10%);
+	}
+	&.magenta{
+		background: $magenta;
+		color: $white;
+		&:hover, &:active{
+			background-color: lighten($magenta, 10%);
+		}
+	}
+	&.green{
+		background: $green;
+		color: $white;
+		&:hover, &:active{
+			background-color: lighten($green, 10%);
+		}
+	}
+	&.red{
+		background: red;
+		color: $white;
+		&:hover, &:active{
+			background-color: lighten(red, 10%);
+		}
+	}
+}
+
+#contact-us-popup .button {
+	display: block;
+	background: #fff;
+	color: $magenta;
+	margin: 20px auto 0;
+	width: 60%;
+	&:hover {
+		color: saturate($magenta, 10%);
+	}
+}

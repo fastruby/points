@@ -1,0 +1,73 @@
+<div class="container">
+  <h1 class="dashboard-title"><%= @project.title %> Report</h1>
+
+  <table class="project-table">
+    <thead>
+      <tr class="project-table__row project-table__row--reports project-table__row--header">
+        <td class="project-table__cell">Story Title</td>
+        <% @users.each do |user| %>
+          <td class="project-table__cell"><%= user.name %>'s Best Estimate</td>
+          <td class="project-table__cell"><%= user.name %>'s Worst Estimate</td>
+        <% end %>
+        <td class="project-table__cell"></td>
+        <td class="project-table__cell">Average: Best Estimates</td>
+        <td class="project-table__cell">Average: Worst Estimates</td>
+        <% if @real_score_exists %>
+          <td class="project-table__cell">Real Score</td>
+        <% end %>
+        <td class="project-table__cell">Percentage off from Best Estimate</td>
+        <td class="project-table__cell">Percentage off from Worst Estimate</td>
+      </tr>
+    </thead>
+
+    <tbody id="stories">
+      <% if @stories.present? %>
+        <% @stories.each do | story | %>
+        <tr class="project-table__row project-table__row--reports project-table__row--story">
+          <td class="project-table__cell"><%= link_to story.title, [@project, story], target: "_blank" %></td>
+          <% @users.each do |user| %>
+            <td class="project-table__cell"><%= user_estimate(story, user, 'best') %></td>
+            <td class="project-table__cell"><%= user_estimate(story, user, 'worst') %></td>
+          <% end %>
+          <td class="project-table__cell"></td>
+          <td class="project-table__cell"><%= best_estimate_for_story(story) %></td>
+          <td class="project-table__cell"><%= worst_estimate_for_story(story) %></td>
+          <% if @real_score_exists %>
+            <td class="project-table__cell"><%= story.real_score %></td>
+          <% end %>
+          <td class="project-table__cell"><%= number_to_percentage(story.percentage_off_estimate(story.best_estimate_average), precision: 2) %></td>
+          <td class="project-table__cell"><%= number_to_percentage(story.percentage_off_estimate(story.worst_estimate_average), precision: 2) %></td>
+        </tr>
+        <% end %>
+      <% else %>
+          <p> This user doesn't have any story yet. </p>
+      <% end %>
+      
+    </tbody>
+    <tfoot>
+      <tr class="project-table__row project-table__row--reports project-table__row--footer">
+        <td class="project-table__cell"></td>
+        <% @users.each do |user| %>
+          <td class="project-table__cell"><%= @project.best_estimate_sum_per_user(user) %></td>
+          <td class="project-table__cell"><%= @project.worst_estimate_sum_per_user(user) %></td>
+        <% end %>
+        <td class="project-table__cell">Total Points</td>
+        <td class="project-table__cell"><%= @project.best_estimate_total %></td>
+        <td class="project-table__cell"><%= @project.worst_estimate_total %></td>
+        <% if @real_score_exists %>
+          <td class="project-table__cell"><%= @project.real_score_total %></td>
+        <% end %>
+        <td class="project-table__cell"><%= number_to_percentage(@project.percentage_off_estimate_total(@project.best_estimate_total, @project.real_score_total), precision: 2) %></td>
+        <td class="project-table__cell"><%= number_to_percentage(@project.percentage_off_estimate_total(@project.worst_estimate_total, @project.real_score_total), precision: 2) %></td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <div class="btn-group">
+    <%= link_to 'Back', reports_index_path, id:"back", class: "button" %>
+    <%= link_to 'Populate Real Scores', real_scores_project_stories_path(@project), class: "button" %>
+    <%= link_to_if @can_generate_estimate_report, 'Download Average Estimate Report', project_report_path(@project, format: 'csv'), class: "button" do %>
+      Stories need at least 2 estimates to generate report
+    <% end %>
+  </div>
+</div>

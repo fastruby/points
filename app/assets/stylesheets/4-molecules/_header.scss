@@ -1,0 +1,21 @@
+/* Header */
+header{
+	nav{
+		text-align: right;
+		ul{
+			margin: 7.5px -15px;
+		}
+	}
+	#logo {
+		float: left;
+		margin: 17.5px -15px;
+		font-size: 2em;
+		color: #fff;
+		text-transform: uppercase;
+		font-weight: bold;
+		&:hover {
+			color: #fff;
+			text-decoration: none;
+		}
+	}
+}

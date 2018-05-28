@@ -1,0 +1,20 @@
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-6">
+        <%= link_to "points app", '/projects', id: "logo" %>
+      </div>
+      <div class="col-xs-6">
+        <nav>
+          <ul class="nav">
+            <% if current_user %>
+              <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "button magenta" %>
+            <% else %>
+              <%= link_to "Sign in", new_user_session_path, class: "button" %>
+            <% end %>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>

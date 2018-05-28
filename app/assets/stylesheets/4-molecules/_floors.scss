@@ -1,0 +1,20 @@
+/* === FLOORS */
+/* ========================== */
+
+.floor {
+	@extend .full-width;
+	padding-top: $gutter;    // avoid margin overflow
+	padding-bottom: $gutter; // avoid margin overflow
+	&.signin{
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		overflow: hidden;
+		background-color: #D9F1F1;
+		height: calc(100vh - 160px);
+		margin: -100px 0;
+	}
+}

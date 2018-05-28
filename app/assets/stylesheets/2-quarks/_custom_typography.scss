@@ -1,0 +1,81 @@
+
+// Typography mixins:
+@mixin font-open-sans-light {
+	font-family: $font-open-sans;
+	font-weight: 300;
+}
+@mixin font-open-sans-normal {
+	font-family: $font-open-sans;
+	font-weight: 400;
+}
+@mixin font-open-sans-bold {
+  font-family: $font-open-sans;
+  font-weight: 700;
+}
+@mixin font-lato-bold {
+  font-family: $font-lato;
+  font-weight: 700;
+}
+
+@mixin font-maven {
+	font-family: $font-maven;
+	font-weight: 400;
+}
+
+// Styles:
+body {
+	@include font-open-sans-light;
+	background-color: $white;
+  color: $black;
+  font-size: 13px;
+  line-height: 18px;
+}
+h3 {
+	font-size: 2.41176470588235em; // 41px
+	letter-spacing: 1px;
+	margin: .5em 0;
+  @media screen and (max-width: $breakpoint_768px) {
+		font-size: 1.5em;
+  }
+  &:first-child {
+  	margin-top: 0;
+  }
+}
+h4 {
+	@include font-open-sans-bold;
+	font-size: 1.5em; // 27px
+	letter-spacing: .04em;
+  @media screen and (max-width: $breakpoint_768px) {
+		font-size: 1.2em;
+  }
+}
+
+.values h4 {
+	text-transform: uppercase;
+}
+
+.ombulabs-brand {
+  text-transform: uppercase;
+  @include font-lato-bold;
+  font-size: .85em;
+}
+
+.dashboard-title {
+  text-align: left;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  font-size: 35px;
+  font-weight: 300;
+  line-height: 1.2em;
+}
+
+.new-edit-title {
+  margin-top: 15px;
+  margin-bottom: 25px;
+  font-size: 1.5em;
+}
+
+.project-story-title {
+  padding: 5px;
+  font-size: 15px;
+}

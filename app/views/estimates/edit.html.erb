@@ -1,0 +1,15 @@
+<div class="container">
+  <% provide(:button_text, 'Save Changes') %>
+
+  <%= render "shared/story", story: @story %>
+
+  <hr>
+
+  <h2 class="new-edit-title">Edit Estimate</h2>
+
+  <%= render 'form', estimate: @estimate %>
+
+  <hr>
+
+  <%= link_to 'Back', project_path(@project.id), id:"back", class: "button" %>
+</div>

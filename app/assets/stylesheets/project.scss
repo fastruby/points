@@ -1,0 +1,56 @@
+// Place all the styles related to the Project controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.projects-controller{
+  &.index-action{
+    .btn-group{
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      .button{
+        margin: 0 5px;
+      }
+    }
+  }
+}
+
+.totals {
+  font-weight: bold;
+}
+
+#import-export{
+  margin: 0 0 50px 0;
+  summary{
+    h4{
+      display: inline-block;
+    }
+  }
+  section{
+    background-color: $white;
+    padding:15px;
+    margin: 5px 0 60px 0;
+    input{
+      display: inline-block; 
+      margin: 0 0 10px 0;
+    }
+  }
+}
+
+.card-deck {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  .card {
+    padding-right: 40px;
+    .card-header{
+      margin-bottom: 10px;
+    }
+  }
+}

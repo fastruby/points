@@ -1,0 +1,47 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ */
+
+ // "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
+ @import "bootstrap-sprockets";
+ @import "bootstrap";
+//  @import "bourbon";
+
+// 1-UTILITIES
+@import "1-utilities/variables";
+@import "1-utilities/reset";
+@import "1-utilities/basic";
+@import "1-utilities/grid";
+
+// 2-QUARKS
+@import "2-quarks/typography";
+@import "2-quarks/custom_typography";
+@import "2-quarks/links";
+@import "2-quarks/icons";
+@import "2-quarks/code";
+
+// 3-ATOMS
+@import "3-atoms/buttons";
+@import "3-atoms/forms";
+@import "3-atoms/cards";
+
+// 4-MOLECULES
+@import "4-molecules/floors";
+@import "4-molecules/header";
+@import "4-molecules/footer";
+@import "4-molecules/tables";
+
+@import "home";
+@import "project";
+@import "stories";
+@import "action_plans";

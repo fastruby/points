@@ -1,0 +1,15 @@
+<div class="container">
+  <h1 class="dashboard-title"><%= @project.title %></h1>
+
+  <div id="action-plan">
+    <h2>Action Plan</h2>
+    <% @project_stories.each do |story| %>
+      <h3><%= story.title %></h3>
+      <%= markdown(story.description) %>
+    <% end %>
+  </div>
+
+  <div class="btn-group">
+    <%= link_to 'Back', project_path(@project), id:"back", class: "button" %>
+  </div>
+</div>

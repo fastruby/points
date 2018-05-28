@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Points</title>
+    <%= csrf_meta_tags %>
+    <!-- Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Lato:700|Open+Sans:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body class="content <%= controller_name %>-controller <%= action_name %>-action">
+    <%= render 'layouts/header' %>
+    <main class="fluid-container">
+      <%= render 'layouts/flash' %>
+      <%= yield %>
+    </main>
+    <%= render 'layouts/footer' %>
+  </body>
+</html>

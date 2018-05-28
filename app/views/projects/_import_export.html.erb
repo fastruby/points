@@ -1,0 +1,28 @@
+<details id="import-export">
+  <summary><h4>CSV Import / Export</h4></summary>
+  <section>
+    <div id="import" class="card-deck mb-3">
+      <div class="card mb-6 box-shadow">
+        <div class="card-header">
+          <h4 class="my-0 font-weight-normal">Import CSV</h4>
+        </div>
+        <div class="card-body">
+          <%= form_with(url: import_project_stories_path(@project), method: :patch, remote: false) do |f| %>
+            <%= f.file_field :file %>
+            <div class="btn-group">
+              <%= f.submit 'Import', class: 'button magenta' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div id='export' class="card mb-6 box-shadow">
+        <div class="card-header">
+          <h4 class="my-0 font-weight-normal">Export CSV</h4>
+        </div>
+        <div class="card-body">
+          <%= link_to 'Export', export_project_stories_path(@project), class:"button magenta" %>
+        </div>
+      </div>
+    </div>
+  </section>
+</details>
