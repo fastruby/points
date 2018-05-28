@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   get 'home/index'
+  get '*path' => "home#index"
 
- root 'application#hello'
+  root :to => "home#index"
+  
 end
