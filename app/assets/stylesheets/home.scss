@@ -1,10 +1,29 @@
 // Place all the styles related to the Home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import "bootstrap-sprockets";
+@import "bootstrap";
 
-html {
-  position: relative;
-  min-height: 100%;
+/* Universal */
+
+body {
+  padding-top: 60px;
+}
+
+section {
+  overflow: auto;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.center {
+  text-align: center;
+}
+
+.center h1 {
+  margin-bottom: 10px;
 }
 
 .content {
@@ -15,39 +34,22 @@ html {
   padding: 25px;
 }
 
-.main-content {
-  padding-top: 2em;
-  padding-left: 2em;
-}
-
-.main-title {
-  font-size: 40px;
-  font-weight: 300;
-  line-height: 1.2em;
-  color: #272727;
-}
-
-.home-info {
-  font-size: 17px;
-  line-height: 20px;
-  padding-top: 30px;
-  padding-bottom: 30px;
-}
-
-.home-info a {
-  color: #F70A7C;
-}
-
-.home-info a:hover, a:visited, a:link, a:active {
-  text-decoration: none;
-  color: #F70A7C;
-}
-
 /* Header */
 
-header {
-  margin-left: 15px;
-  margin-right: 15px;
+#logo {
+  float: left;
+  margin-right: 10px;
+  font-size: 1.7em;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  padding-top: 9px;
+  font-weight: bold;
+}
+
+#logo:hover {
+  color: #fff;
+  text-decoration: none;
 }
 
 /* Footer */
