@@ -186,7 +186,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
-  pg (~> 0.8)
+  pg (~> 0.18)
   puma (~> 3.7)
   rails (~> 5.1.4)
   sass-rails (~> 5.0)
