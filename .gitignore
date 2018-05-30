@@ -1,3 +1,4 @@
 tmp/**/*
 tmp
 app
+log/*.log
