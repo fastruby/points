@@ -2,3 +2,4 @@ tmp/**/*
 tmp
 app
 log/*.log
+config/database.yml
