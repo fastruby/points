@@ -1,1 +1,23 @@
-<h1>My Projects</h1>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Points App</title>
+  </head>
+  <body>
+    <h1 class="dashboard-title">My Projects</h1>
+
+    <% @projects.each do | project | %>
+      <div class="col-sm-6 col-lg-3">
+        <div class="card-blue">
+          <h2 class="project-title"><% project.title %></h2>
+        </div>
+      </div>
+    <% end %>
+
+    <div>
+      <h3> Add a Project </h3>
+    </div>
+
+  </body>
+</html>

@@ -2,6 +2,18 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-h1 {
+.dashboard-title {
+  text-align: center;
+  margin: 15px;
+}
+
+.card-blue {
+  margin: 1.5rem;
+  background-color: #20a8d8;
+  color: #fff;
+}
+
+.project-title {
+  padding: 10px;
   text-align: center;
 }
