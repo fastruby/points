@@ -5,6 +5,14 @@
     <title>Points App</title>
   </head>
   <body>
+    <h2>Create New Project</h2>
+
+    <%= form_for(@project) do |f| %>
+      <div class="field">
+        <%= f.text_field :title, placeholder: "Project Title" %>
+      </div>
+      <%= f.submit "Create", class: "btn btn-primary" %>
+    <% end %>
 
   </body>
 </html>
