@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :project do
+  factory :project, class: Project do
     title Faker::Lorem.word
     status "Active"
   end
