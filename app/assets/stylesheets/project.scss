@@ -2,6 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+// For index.html.erb
+
 .dashboard-title {
   text-align: center;
   margin-top: 15px;
@@ -28,7 +30,7 @@
   margin-top: 20px;
 }
 
-#new_project_button {
+#project_button {
   background-color: #57CE81;
   color: #272727;
   border: 2px solid #57CE81;
@@ -41,11 +43,32 @@
   -ms-border-radius: 20px;
   -o-border-radius: 20px;
   margin-bottom: 1em;
-  margin-top: 2em;
+  margin-top: 1em;
   cursor: pointer;
 }
 
-#new_project_button:hover {
+#project_button:hover {
   background-color: #58ff93;
   color: #272727;
+}
+
+#project_button a {
+  color: #272727;
+  text-decoration: none;
+}
+#project_button a:hover {
+  color: #272727;
+  text-decoration: none;
+}
+
+// For new.html.erb
+
+.new_title {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.project_title {
+  padding: 5px;
+  font-size: 15px;
 }
