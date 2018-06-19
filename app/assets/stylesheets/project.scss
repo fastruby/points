@@ -4,16 +4,48 @@
 
 .dashboard-title {
   text-align: center;
-  margin: 15px;
+  margin-top: 15px;
+  margin-bottom: 25px;
+  font-size: 35px;
+  font-weight: 300;
+  line-height: 1.2em;
 }
 
 .card-blue {
   margin: 1.5rem;
-  background-color: #20a8d8;
+  background-color: #1dbbf3;
   color: #fff;
 }
 
 .project-title {
-  padding: 10px;
+  padding: 30px;
   text-align: center;
+  font-size: 1.8rem;
+}
+
+.wrapper {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#new_project_button {
+  background-color: #57CE81;
+  color: #272727;
+  border: 2px solid #57CE81;
+  padding: 10px 20px;
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 400;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  margin-bottom: 1em;
+  margin-top: 2em;
+  cursor: pointer;
+}
+
+#new_project_button:hover {
+  background-color: #58ff93;
+  color: #272727;
 }

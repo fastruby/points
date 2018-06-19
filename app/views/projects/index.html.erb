@@ -7,18 +7,19 @@
   <body>
     <h1 class="dashboard-title">My Projects</h1>
 
+    <div class="row">
       <% @projects.each do | project | %>
-        <div class="col-sm-6 col-lg-3">
+        <div class="col-sm-6 col-lg-4">
           <div class="card-blue">
-            <h2 class="project-title"><% project.title %></h2>
-            <h3 class="project-status"><% project.status %></h3>
+            <h2 class="project-title"><%= project.title %></h2>
           </div>
         </div>
       <% end %>
+    </div>
 
-      <div>
-        <%= link_to "Add a Project", new_project_path, class: "btn btn-lg btn-primary" %>
-      </div>
+    <div class="wrapper">
+      <%= link_to "Add a Project", new_project_path, class: "btn btn-lg btn-primary", id: "new_project_button" %>
+    </div>
 
   </body>
 </html>
