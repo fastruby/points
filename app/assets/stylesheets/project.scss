@@ -2,6 +2,73 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-h1 {
+// For index.html.erb
+
+.dashboard-title {
   text-align: center;
+  margin-top: 15px;
+  margin-bottom: 25px;
+  font-size: 35px;
+  font-weight: 300;
+  line-height: 1.2em;
+}
+
+.card-blue {
+  margin: 1.5rem;
+  background-color: #1dbbf3;
+  color: #fff;
+}
+
+.project-title {
+  padding: 30px;
+  text-align: center;
+  font-size: 1.8rem;
+}
+
+.wrapper {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#project_button {
+  background-color: #57CE81;
+  color: #272727;
+  border: 2px solid #57CE81;
+  padding: 10px 20px;
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 400;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  margin-bottom: 1em;
+  margin-top: 1em;
+  cursor: pointer;
+}
+
+#project_button:hover {
+  background-color: #58ff93;
+  color: #272727;
+}
+
+#project_button a {
+  color: #272727;
+  text-decoration: none;
+}
+#project_button a:hover {
+  color: #272727;
+  text-decoration: none;
+}
+
+// For new.html.erb
+
+.new_title {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.project_title {
+  padding: 5px;
+  font-size: 15px;
 }
