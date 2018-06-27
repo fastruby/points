@@ -8,4 +8,6 @@ Rails.application.routes.draw do
   resources :projects
   get 'stories/new'
   get 'stories/show'
+  get 'estimates/new'
+  get 'estimates/show'
 end

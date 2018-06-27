@@ -1,19 +1,19 @@
-<p id="notice"><%= notice %></p>
+<h1 class="dashboard-title"><%= @story.title %></h1>
 
-<p>
-  <strong>Title:</strong>
-  <%= @story.title %>
-</p>
+<div class="row">
+  <% @estimates.each do | estimate | %>
+    <div class="col-sm-6 col-lg-4">
+      <div class="card-blue">
+        <h2 class="project-title"><%= link_to estimate.title, estimate_path(estimate.id), class: "link" %></h2>
+      </div>
+    </div>
+  <% end %>
+</div>
 
-<p>
-  <strong>Description:</strong>
-  <%= @story.description %>
-</p>
+<div class="wrapper">
+  <%= link_to "Add an Estimate", estimates_new_path, class: "btn btn-lg btn-primary", id: "create_button" %>
+</div>
 
-<p>
-  <strong>Project:</strong>
-  <%= @story.project_id %>
-</p>
 
 <%= link_to 'Edit', edit_story_path(@story) %> |
 <%= link_to 'Back', stories_path %>

@@ -16,6 +16,7 @@ class StoriesController < ApplicationController
 
   def show
     @story = Story.find(params[:id])
+    @estimates = Estimate.where(story_id: @story.id)
   end
 
 private
