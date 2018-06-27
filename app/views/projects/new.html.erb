@@ -1,8 +1,5 @@
 <h2 class="new_title">Create New Project</h2>
 
-<%= form_for(@project) do |f| %>
-  <div class="field">
-    <%= f.text_field :title, placeholder: "Project Title", class: "project_title" %>
-  </div>
-  <%= f.submit "Create", id: "project_button" %>
-<% end %>
+<%= render 'form', project: @project %>
+
+<%= link_to 'Back', projects_path %>

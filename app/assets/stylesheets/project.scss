@@ -30,7 +30,7 @@
   margin-top: 20px;
 }
 
-#project_button {
+#create_button {
   background-color: #57CE81;
   color: #272727;
   border: 2px solid #57CE81;
@@ -47,16 +47,16 @@
   cursor: pointer;
 }
 
-#project_button:hover {
+#create_button:hover {
   background-color: #58ff93;
   color: #272727;
 }
 
-#project_button a {
+#create_button a {
   color: #272727;
   text-decoration: none;
 }
-#project_button a:hover {
+#create_button a:hover {
   color: #272727;
   text-decoration: none;
 }
@@ -70,10 +70,10 @@
 
 .new_title {
   margin-top: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
 }
 
-.project_title {
+.project_story_title {
   padding: 5px;
   font-size: 15px;
 }
