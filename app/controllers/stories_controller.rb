@@ -1,22 +1,44 @@
 class StoriesController < ApplicationController
+
+  before_action :project
+
   def new
     @story = Story.new
+  end
+
+  def edit
+    @story = Story.find(params[:id])
+  end
+
+  def update
+    @story = Story.find(params[:id])
+    if @story.update_attributes(stories_params)
+      flash[:success] = "Story updated!"
+      redirect_to project_path(@project.id)
+    else
+      flash[:error] = @story.errors.full_messages
+      render edit_project_story_path
+    end
   end
 
   def create
     @story = Story.new(stories_params)
     if @story.save
       flash[:success] = "Story created!"
-      redirect_to @story.project
+      redirect_to project_path(@project.id)
     else
       flash[:error] = @story.errors.full_messages
-      render 'stories/new'
+      render new_project_story_path
     end
   end
 
   def show
     @story = Story.find(params[:id])
-    @estimates = Estimate.where(story_id: @story.id)
+    @estimate = Estimate.where(story: @story, user: current_user).first
+  end
+
+  def project
+    @project = Project.find(params[:project_id])
   end
 
 private
