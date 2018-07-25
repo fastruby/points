@@ -17,7 +17,7 @@ class StoriesController < ApplicationController
       redirect_to project_path(@project.id)
     else
       flash[:error] = @story.errors.full_messages
-      render edit_project_story_path
+      render edit_project_story_path(@project)
     end
   end
 
@@ -28,7 +28,7 @@ class StoriesController < ApplicationController
       redirect_to project_path(@project.id)
     else
       flash[:error] = @story.errors.full_messages
-      render new_project_story_path
+      render new_project_story_path(@project)
     end
   end
 
