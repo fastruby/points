@@ -69,6 +69,6 @@ class EstimatesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def estimate_params
-      params.require(:estimate).permit(:best_case_points, :worst_case_points, :user_id, :story_id)
+      params.require(:estimate).permit(:best_case_points, :worst_case_points)
     end
 end
