@@ -3,18 +3,24 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col">Title</th>
-      <th scope="col">Best Estimate</th>
-      <th scope="col">Worst Estimate</th>
+      <th scope="col" class="col-title">Title</th>
+      <th scope="col" class="col-title">Description</th>
+      <th scope="col" class="col-title"> </th>
+      <th scope="col" class="col-title">Best Estimate</th>
+      <th scope="col" class="col-title">Worst Estimate</th>
+      <th scope="col" class="col-title"> </th>
     </tr>
   </thead>
 
   <tbody>
     <% @stories.each do | story | %>
       <tr>
-        <td><%= link_to story.title, project_story_path(@project.id, story.id), class: "link" %></td>
+        <td><%= story.title%></td>
+        <td><%= story.description%></td>
+        <td><%= link_to 'Edit Story', edit_project_story_path(@project.id, story), id: "edit" %></td>
         <td><%= story.estimates&.first&.best_case_points %></td>
         <td><%= story.estimates&.first&.worst_case_points %></td>
+        <td><%= link_to 'Edit Estimate', edit_estimate_path, id: "edit" %></td>
       </tr>
     <% end %>
   </tbody>
