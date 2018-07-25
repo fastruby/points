@@ -1,10 +1,24 @@
 <h1 class="dashboard-title"><%= @project.title %></h1>
 
-<% @stories.each do | story | %>
-  <div class="list-group">
-    <button type="button" class="list-group-item"><%= link_to story.title, project_story_path(@project.id, story.id), class: "link" %></li>
-  </div>
-<% end %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Best Estimate</th>
+      <th scope="col">Worst Estimate</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @stories.each do | story | %>
+      <tr>
+        <td><%= link_to story.title, project_story_path(@project.id, story.id), class: "link" %></td>
+        <td><%= story.estimates&.first&.best_case_points %></td>
+        <td><%= story.estimates&.first&.worst_case_points %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <div class="wrapper">
   <%= link_to "Add a Story", new_project_story_path(@project.id), class: "btn btn-lg btn-primary", id: "create_button" %>
