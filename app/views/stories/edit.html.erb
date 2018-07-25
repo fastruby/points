@@ -3,5 +3,4 @@
 
 <%= render 'form', story: @story %>
 
-<%= link_to 'Show', project_story_path(@story, @project.id) %> |
-<%= link_to 'Back', project_stories_path(@project.id) %>
+<%= link_to 'Back', project_path(@project.id), id:"edit" %>
