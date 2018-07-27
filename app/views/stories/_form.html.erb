@@ -21,5 +21,7 @@
     <%= f.text_field :description, placeholder: "Description", class: "project_story_title" %>
   </div>
 
+  <%= f.hidden_field :project_id, value: params[:project_id] %>
+
   <%= f.submit yield(:button_text), id: "create_button" %>
 <% end %>
