@@ -32,11 +32,6 @@ class StoriesController < ApplicationController
     end
   end
 
-  def show
-    @story = Story.find(params[:id])
-    @estimate = Estimate.where(story: @story, user: current_user).first
-  end
-
   def project
     @project = Project.find(params[:project_id])
   end
