@@ -18,6 +18,11 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def show
+    @project = Project.find(params[:id])
+    @stories = Story.where(project_id: @project.id)
+  end
+
   private
 
   def projects_params

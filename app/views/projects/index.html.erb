@@ -1,25 +1,15 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Points App</title>
-  </head>
-  <body>
-    <h1 class="dashboard-title">My Projects</h1>
+<h1 class="dashboard-title">My Projects</h1>
 
-    <div class="row">
-      <% @projects.each do | project | %>
-        <div class="col-sm-6 col-lg-4">
-          <div class="card-blue">
-            <h2 class="project-title"><%= project.title %></h2>
-          </div>
-        </div>
-      <% end %>
+<div class="row">
+  <% @projects.each do | project | %>
+    <div class="col-sm-6 col-lg-4">
+      <div class="card-blue">
+        <h2 class="project-title"><%= link_to project.title, project_path(project.id), class: "link" %></h2>
+      </div>
     </div>
+  <% end %>
+</div>
 
-    <div class="wrapper">
-      <%= link_to "Add a Project", new_project_path, class: "btn btn-lg btn-primary", id: "project_button" %>
-    </div>
-
-  </body>
-</html>
+<div class="wrapper">
+  <%= link_to "Add a Project", new_project_path, class: "btn btn-lg btn-primary", id: "project_button" %>
+</div>

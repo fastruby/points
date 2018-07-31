@@ -1,0 +1,6 @@
+<% provide(:button_text, 'Save Changes') %>
+<h1>Editing Story</h1>
+
+<%= render 'form', story: @story %>
+
+<%= link_to 'Back', project_path(@project.id), id:"edit" %>
