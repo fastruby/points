@@ -36,7 +36,6 @@ class EstimatesController < ApplicationController
     params["estimate"]["user_id"] = current_user.id
 
     @project = Project.find(params[:project_id])
-    debugger
     if @estimate.update_attributes(estimate_params)
       flash[:success] = "Estimate updated!"
       redirect_to project_path(@project.id)
