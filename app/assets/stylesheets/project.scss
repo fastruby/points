@@ -62,14 +62,11 @@
   text-decoration: none;
 }
 
-.link, .link:hover {
-  color: #fff;
-  text-decoration: none;
-}
+
 
 // For new.html.erb
 
-.new_title {
+.new_edit_title {
   margin-top: 15px;
   margin-bottom: 25px;
 }
@@ -79,6 +76,10 @@
   font-size: 15px;
 }
 
+#edit, a:visited {
+  color: white;
+}
+
 // For show.html.erb
 
 .col-title {
@@ -86,12 +87,13 @@
   font-size: 15px;
 }
 
-#edit {
+#back {
+  font-size: 15px;
   cursor: pointer;
   color: #007bff;
 }
 
-#edit:hover {
+#back:hover {
   color: #007bff;
   background-color: transparent;
 }
