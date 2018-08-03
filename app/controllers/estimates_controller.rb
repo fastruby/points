@@ -1,4 +1,5 @@
 class EstimatesController < ApplicationController
+  before_action :load_story_and_project
 
   def index
     @estimates = Estimate.all
@@ -9,25 +10,23 @@ class EstimatesController < ApplicationController
 
   def new
     @estimate = Estimate.new
+
   end
 
   def edit
-    @project = Project.find(params[:project_id])
-    @story = Story.find(params[:story_id])
     @estimate = Estimate.find(params[:id])
   end
 
   def create
+    params["estimate"]["user_id"] = current_user.id
     @estimate = Estimate.new(estimate_params)
 
-    respond_to do |format|
-      if @estimate.save
-        format.html { redirect_to @estimate, notice: 'Estimate was successfully created.' }
-        format.json { render :show, status: :created, location: @estimate }
-      else
-        format.html { render :new }
-        format.json { render json: @estimate.errors, status: :unprocessable_entity }
-      end
+    if @estimate.save
+      flash[:success] = "Estimate created!"
+      redirect_to project_path(@project.id)
+    else
+      flash[:error] = @estimate.errors.full_messages
+      render :new
     end
   end
 
@@ -35,7 +34,6 @@ class EstimatesController < ApplicationController
     @estimate = Estimate.find(params[:id])
     params["estimate"]["user_id"] = current_user.id
 
-    @project = Project.find(params[:project_id])
     if @estimate.update_attributes(estimate_params)
       flash[:success] = "Estimate updated!"
       redirect_to project_path(@project.id)
@@ -54,6 +52,11 @@ class EstimatesController < ApplicationController
   end
 
   private
+
+    def load_story_and_project
+      @project = Project.find(params[:project_id])
+      @story = Story.find(params[:story_id])
+    end
 
     def set_estimate
       @estimate = Estimate.find(params[:id])
