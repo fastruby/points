@@ -1,4 +1,4 @@
-<%= form_for calculate_estimate_path do |f| %>
+<%= form_for [@project, @story, @estimate] do |f| %>
   <% if @estimate.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@estimate.errors.count, "error") %> prohibited this estimate from being saved:</h2>
