@@ -1,24 +1,13 @@
 class StoriesController < ApplicationController
 
   before_action :project
+  before_action :story, only: [:edit, :update, :destroy]
 
   def new
     @story = Story.new
   end
 
   def edit
-    @story = Story.find(params[:id])
-  end
-
-  def update
-    @story = Story.find(params[:id])
-    if @story.update_attributes(stories_params)
-      flash[:success] = "Story updated!"
-      redirect_to project_path(@project.id)
-    else
-      flash[:error] = @story.errors.full_messages
-      render :edit
-    end
   end
 
   def create
@@ -32,9 +21,32 @@ class StoriesController < ApplicationController
     end
   end
 
+  def destroy
+    @story.destroy
+    respond_to do |format|
+      format.html { redirect_to project_path(@project), notice: 'Story was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
   def project
     @project = Project.find(params[:project_id])
   end
+
+  def story
+    @story = Story.find(params[:id])
+  end
+
+  def update
+    if @story.update_attributes(stories_params)
+      flash[:success] = "Story updated!"
+      redirect_to project_path(@project.id)
+    else
+      flash[:error] = @story.errors.full_messages
+      render :edit
+    end
+  end
+
 
 private
 

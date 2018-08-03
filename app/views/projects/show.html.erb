@@ -5,26 +5,26 @@
     <tr>
       <th scope="col" class="col-title">Title</th>
       <th scope="col" class="col-title">Description</th>
-      <th scope="col" class="col-title"> </th>
       <th scope="col" class="col-title">Best Estimate</th>
       <th scope="col" class="col-title">Worst Estimate</th>
-      <th scope="col" class="col-title"> </th>
+      <th scope="col" colspan="3" class="col-title"> </th>
     </tr>
   </thead>
 
   <tbody>
     <% @stories.each do | story | %>
       <tr>
-        <td><%= story.title%></td>
-        <td><%= story.description%></td>
-        <td><%= link_to 'Edit Story', edit_project_story_path(@project.id, story), class: "btn btn-lg btn-primary", id: "edit" %></td>
+        <td><%= link_to story.title, [story.project, story] %></td>
         <td><%= story.estimates&.first&.best_case_points %></td>
         <td><%= story.estimates&.first&.worst_case_points %></td>
+        <td><%= link_to 'Edit', edit_project_story_path(@project.id, story), class: "btn btn-lg btn-primary", id: "edit" %></td>
+
         <% if estimated(story) %>
           <td><%= link_to 'Edit Estimate', edit_project_story_estimate_path(@project.id, story, @estimate_id), class: "btn btn-lg btn-primary", id: "edit" %></td>
         <% else %>
           <td><%= link_to 'Add Estimate', new_project_story_estimate_path(@project.id, story), class: "btn btn-lg btn-primary", id: "edit" %></td>
         <% end %>
+        <td><%= link_to 'Delete', project_story_path(@project.id, story), method: "delete", class: "btn btn-lg btn-primary", id: "delete" #TODO add a key/value that shows a confirmation message %></td>
       </tr>
     <% end %>
   </tbody>
