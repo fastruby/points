@@ -21,7 +21,6 @@ class ProjectsController < ApplicationController
   def show
     @project = Project.find(params[:id])
     @stories = Story.where(project_id: @project.id)
-    #@estimate = Estimate.where(story_id: @story.id)
   end
 
   private
