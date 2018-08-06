@@ -18,7 +18,7 @@
 
   <div class="field">
     <%= f.label :description %>
-    <%= f.text_field :description, placeholder: "Description", class: "project_story_title" %>
+    <%= f.text_area :description, placeholder: "Description", class: "project_story_title" %>
   </div>
 
   <%= f.hidden_field :project_id, value: params[:project_id] %>

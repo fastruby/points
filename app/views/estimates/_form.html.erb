@@ -1,10 +1,10 @@
-<%= form_with(model: estimate, local: true) do |form| %>
-  <% if estimate.errors.any? %>
+<%= form_for([@project, @story, @estimate]) do |f| %>
+  <% if @estimate.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(estimate.errors.count, "error") %> prohibited this estimate from being saved:</h2>
+      <h2><%= pluralize(@estimate.errors.count, "error") %> prohibited this estimate from being saved:</h2>
 
       <ul>
-      <% estimate.errors.full_messages.each do |message| %>
+      <% @estimate.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -12,26 +12,18 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :best_case_points %>
-    <%= form.number_field :best_case_points, id: :estimate_best_case_points %>
+    <%= f.label "Best Case Estimate (hours)" %>
+    <%= f.number_field :best_case_points, class: "project_story_title" %>
   </div>
 
   <div class="field">
-    <%= form.label :worst_case_points %>
-    <%= form.number_field :worst_case_points, id: :estimate_worst_case_points %>
+    <%= f.label "Worst Case Estimate (hours)" %>
+    <%= f.number_field :worst_case_points, class: "project_story_title" %>
   </div>
 
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.number_field :user_id, id: :estimate_user_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :story_id %>
-    <%= form.number_field :story_id, id: :estimate_story_id %>
-  </div>
+  <%= f.hidden_field :story_id, value: @estimate.story_id %>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= f.submit yield(:button_text), id: "create_button" %>
   </div>
 <% end %>
