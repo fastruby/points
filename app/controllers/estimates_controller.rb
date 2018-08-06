@@ -1,16 +1,9 @@
 class EstimatesController < ApplicationController
+
   before_action :load_story_and_project
-
-  def index
-    @estimates = Estimate.all
-  end
-
-  def show
-  end
 
   def new
     @estimate = Estimate.new
-
   end
 
   def edit
@@ -56,10 +49,6 @@ class EstimatesController < ApplicationController
     def load_story_and_project
       @project = Project.find(params[:project_id])
       @story = Story.find(params[:story_id])
-    end
-
-    def set_estimate
-      @estimate = Estimate.find(params[:id])
     end
 
     def estimate_params
