@@ -1,4 +1,4 @@
-<%= form_for([@project, @story, @estimate]) do |f| %>
+<%= form_for [@project, @story, @estimate] do |f| %>
   <% if @estimate.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@estimate.errors.count, "error") %> prohibited this estimate from being saved:</h2>
@@ -21,7 +21,7 @@
     <%= f.number_field :worst_case_points, class: "project_story_title" %>
   </div>
 
-  <%= f.hidden_field :story_id, value: @estimate.story_id %>
+  <%= f.hidden_field :story_id, value: params[:story_id] %>
 
   <div class="actions">
     <%= f.submit yield(:button_text), id: "create_button" %>
