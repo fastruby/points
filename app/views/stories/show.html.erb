@@ -1,13 +1,5 @@
-<h1 class="dashboard-title"><%= @story.title %></h1>
-<p class="description"><%= @story.description %></p>
+<h1 class="story-title"><%= @story.title %></h1>
+<h4 class="story-description"><%= @story.description %></h4>
 
-<div class="description"><%= @estimate.best_case_points %></p>
-<div class="description"><%= @estimate.worst_case_points %></p>
-
-<div class="wrapper">
-  <%= link_to "Add an Estimate", new_project_story_estimate_path, class: "btn btn-lg btn-primary", id: "create_button" %>
-</div>
-
-
-<%= link_to 'Edit', edit_project_story_path(@story, @project.id) %> |
-<%= link_to 'Back', project_path(@project.id) %>
+<%= link_to 'Edit', edit_project_story_path(@project.id), id:"back" %> |
+<%= link_to 'Back', project_path(@project.id), id:"back" %>
