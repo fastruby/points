@@ -24,6 +24,6 @@
   <%= f.hidden_field :story_id, value: params[:story_id] %>
 
   <div class="actions">
-    <%= f.submit yield(:button_text), id: "create-button" %>
+    <%= f.submit yield(:button_text), class: "btn btn-lg btn-primary", id: "edit" %>
   </div>
 <% end %>

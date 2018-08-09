@@ -44,6 +44,7 @@
 }
 
 #create-button {
+  margin: 0 20px;
   background-color: #57CE81;
   color: #272727;
   border: 2px solid #57CE81;
@@ -85,6 +86,21 @@
 .project-story-title {
   padding: 5px;
   font-size: 15px;
+  width: 350px;
+}
+
+#delete {
+  background-color: #e62b2b;
+  border-color: #b50909;
+  margin: 10px 0;
+}
+
+#delete, a:visited {
+  color: white;
+}
+
+#delete:hover {
+  background-color: #b50909;
 }
 
 // For show.html.erb
@@ -94,11 +110,17 @@
   font-size: 15px;
 }
 
+#edit {
+  margin: 10px 0;
+}
+
 #edit, a:visited {
   color: white;
 }
 
 #back {
+  display: block;
+  margin: 10px 0;
   font-size: 15px;
   cursor: pointer;
   color: #007bff;
