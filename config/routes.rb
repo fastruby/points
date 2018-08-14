@@ -6,6 +6,10 @@ Rails.application.routes.draw do
   get 'reports/index'
 
   resources :projects do
+    resource :report
+  end
+
+  resources :projects do
     resources :stories do
       resources :estimates
     end

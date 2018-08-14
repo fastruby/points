@@ -1,2 +1,19 @@
-<h1>Reports#index</h1>
-<p>Find me in app/views/reports/index.html.erb</p>
+<h1 class="dashboard-title">View Reports by Project</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col" class="col-title">Title</th>
+      <th scope="col" class="col-title">Details</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @projects.each do | project | %>
+      <tr>
+        <td><%= project.title%></td>
+        <td><%= link_to "Details", project_report_path(project.id), class: "link" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,33 @@
+<h1 class="dashboard-title"><%= @project.title %></h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col" class="col-title">Title</th>
+      <th scope="col" class="col-title">Description</th>
+      <th scope="col" class="col-title">Best Estimate Average</th>
+      <th scope="col" class="col-title">Worst Estimate Average</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @stories.each do | story | %>
+      <tr>
+        <td><%= story.title%></td>
+        <td><%= story.description%></td>
+        <td><%= story.best_estimate_average %></td>
+        <td><%= story.worst_estimate_average %></td>
+      </tr>
+    <% end %>
+  </tbody>
+
+  <tfoot>
+    <tr>
+      <td> </td>
+      <td> Total </td>
+      <td><%= @project.best_estimate_sum %></td>
+      <td><%= @project.worst_estimate_sum %></td>
+    </tr>
+  </tfoot>
+
+</table>
