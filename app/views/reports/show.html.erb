@@ -3,10 +3,14 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col" class="col-title">Title</th>
+      <th scope="col" class="col-title">Story Title</th>
       <th scope="col" class="col-title">Description</th>
-      <th scope="col" class="col-title">Best Estimate Average</th>
-      <th scope="col" class="col-title">Worst Estimate Average</th>
+      <th scope="col" class="col-title">Person 1's Best Estimate</th>
+      <th scope="col" class="col-title">Person 1's Worst Estimate</th>
+      <th scope="col" class="col-title">Person 2's Best Estimate</th>
+      <th scope="col" class="col-title">Person 2's Worst Estimate</th>
+      <th scope="col" class="col-title">Average: Best Estimates</th>
+      <th scope="col" class="col-title">Average: Worst Estimates</th>
     </tr>
   </thead>
 
@@ -15,8 +19,12 @@
       <tr>
         <td><%= story.title%></td>
         <td><%= story.description%></td>
-        <td><%= story.best_estimate_average %></td>
-        <td><%= story.worst_estimate_average %></td>
+        <td><%= story.estimates&.first&.best_case_points%></td>
+        <td><%= story.estimates&.first&.worst_case_points%></td>
+        <td><%= story.estimates&.last&.best_case_points%></td>
+        <td><%= story.estimates&.last&.worst_case_points%></td>
+        <td><%= best_estimate_for_story(story) %></td>
+        <td><%= worst_estimate_for_story(story) %></td>
       </tr>
     <% end %>
   </tbody>
@@ -24,10 +32,16 @@
   <tfoot>
     <tr>
       <td> </td>
-      <td> Total </td>
-      <td><%= @project.best_estimate_sum %></td>
-      <td><%= @project.worst_estimate_sum %></td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td><strong> Total Hours </strong></td>
+      <td><strong><%= @project.best_estimate_sum %></strong></td>
+      <td><strong><%= @project.worst_estimate_sum %></strong></td>
     </tr>
   </tfoot>
 
 </table>
+
+<%= link_to 'Back', reports_index_path, id:"back" %>
