@@ -13,15 +13,15 @@
 
   <div class="field">
     <%= f.label :title %>
-    <%= f.text_field :title, placeholder: "Story Title", class: "project_story_title" %>
+    <%= f.text_field :title, placeholder: "Story Title", class: "project-story-title" %>
   </div>
 
   <div class="field">
     <%= f.label :description %>
-    <%= f.text_area :description, placeholder: "Description", class: "project_story_title" %>
+    <%= f.text_area :description, placeholder: "Description", class: "project-story-title" %>
   </div>
 
   <%= f.hidden_field :project_id, value: params[:project_id] %>
 
-  <%= f.submit yield(:button_text), id: "create_button" %>
+  <%= f.submit yield(:button_text), class: "btn btn-lg btn-primary", id: "edit" %>
 <% end %>

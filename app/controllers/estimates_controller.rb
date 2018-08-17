@@ -39,7 +39,7 @@ class EstimatesController < ApplicationController
   def destroy
     @estimate.destroy
     respond_to do |format|
-      format.html { redirect_to estimates_url, notice: 'Estimate was successfully destroyed.' }
+      format.html { redirect_to project_path(@project), notice: 'Estimate was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
