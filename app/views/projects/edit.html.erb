@@ -1,0 +1,12 @@
+<% provide(:button_text, 'Save Changes') %>
+<h2 class="new-edit-title">Edit or Delete Project</h2>
+
+<%= render 'form', project: @project %>
+
+<hr>
+
+<%= link_to 'Delete Project', project_path(@project.id), method: "delete",  data: { confirm: 'Are you sure?' }, class: "btn btn-lg btn-primary", id: "delete" %>
+
+<hr>
+
+<%= link_to 'Back', project_path(@project.id), id:"back" %>

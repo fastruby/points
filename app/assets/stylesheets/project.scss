@@ -30,7 +30,21 @@
   margin-top: 20px;
 }
 
-#create_button {
+.project-title a{
+  color: white;
+}
+
+.project-title a:visited{
+  color: inherit;
+}
+
+.project-title a:hover{
+  color: inherit;
+  background-color: inherit;
+}
+
+#create-button {
+  margin: 0 20px;
   background-color: #57CE81;
   color: #272727;
   border: 2px solid #57CE81;
@@ -47,37 +61,46 @@
   cursor: pointer;
 }
 
-#create_button:hover {
+#create-button:hover {
   background-color: #58ff93;
   color: #272727;
 }
 
-#create_button a {
+#create-button a {
   color: #272727;
   text-decoration: none;
 }
 
-#create_button a:hover {
+#create-button a:hover {
   color: #272727;
   text-decoration: none;
 }
 
+// For new.html.erb and edit.html.erb
 
-
-// For new.html.erb
-
-.new_edit_title {
+.new-edit-title {
   margin-top: 15px;
   margin-bottom: 25px;
 }
 
-.project_story_title {
+.project-story-title {
   padding: 5px;
   font-size: 15px;
+  width: 350px;
 }
 
-#edit, a:visited {
+#delete {
+  background-color: #e62b2b;
+  border-color: #b50909;
+  margin: 10px 0;
+}
+
+#delete, a:visited {
   color: white;
+}
+
+#delete:hover {
+  background-color: #b50909;
 }
 
 // For show.html.erb
@@ -87,7 +110,16 @@
   font-size: 15px;
 }
 
+#edit {
+  margin: 10px 0;
+}
+
+#edit, a:visited {
+  color: white;
+}
+
 #back {
+  margin: 10px 0;
   font-size: 15px;
   cursor: pointer;
   color: #007bff;
@@ -99,6 +131,16 @@
 }
 
 a {
+  color: inherit;
+  background-color: inherit;
+}
+
+td a:visited {
+  color: inherit;
+  background-color: inherit;
+}
+
+td a:hover {
   color: inherit;
   background-color: inherit;
 }
