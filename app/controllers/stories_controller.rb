@@ -1,7 +1,7 @@
 class StoriesController < ApplicationController
 
   before_action :project
-  before_action :story, only: [:edit, :update, :destroy]
+  before_action :story, only: [:edit, :update, :destroy, :show]
 
   def new
     @story = Story.new
@@ -34,9 +34,8 @@ class StoriesController < ApplicationController
   end
 
   def show
-     @story = Story.find(params[:id])
-     @estimate = Estimate.where(story: @story, user: current_user).first
-   end
+    @estimate = Estimate.where(story: @story, user: current_user).first
+  end
 
   def story
     @story = Story.find(params[:id])
