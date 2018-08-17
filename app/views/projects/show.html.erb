@@ -16,8 +16,8 @@
     <% @stories.each do | story | %>
       <tr>
         <td><%= link_to story.title, [story.project, story] %></td>
-        <td><%= story.estimates&.first&.best_case_points %></td>
-        <td><%= story.estimates&.first&.worst_case_points %></td>
+        <td><%= story.estimates.where(user: current_user)&.first&.best_case_points %></td>
+        <td><%= story.estimates.where(user: current_user)&.first&.worst_case_points %></td>
         <td><%= link_to 'Edit', edit_project_story_path(@project.id, story), class: "btn btn-lg btn-primary", id: "edit" %></td>
         <% if estimated(story) %>
           <td><%= link_to 'Edit Estimate', edit_project_story_estimate_path(@project.id, story, @estimate_id), class: "btn btn-lg btn-primary", id: "edit" %></td>
