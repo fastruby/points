@@ -4,7 +4,6 @@
   <thead>
     <tr>
       <th scope="col" class="col-title">Story Title</th>
-      <th scope="col" class="col-title">Description</th>
       <th scope="col" class="col-title">Person 1's Best Estimate</th>
       <th scope="col" class="col-title">Person 1's Worst Estimate</th>
       <th scope="col" class="col-title">Person 2's Best Estimate</th>
@@ -18,7 +17,6 @@
     <% @stories.each do | story | %>
       <tr>
         <td><%= story.title%></td>
-        <td><%= story.description%></td>
         <td><%= story.estimates&.first&.best_case_points%></td>
         <td><%= story.estimates&.first&.worst_case_points%></td>
         <td><%= story.estimates&.last&.best_case_points%></td>
@@ -31,7 +29,6 @@
 
   <tfoot>
     <tr>
-      <td> </td>
       <td> </td>
       <td> </td>
       <td> </td>
