@@ -69,4 +69,20 @@ RSpec.describe ProjectsController, type: :controller do
     end
   end
 
+  describe "#show" do
+    it "should redirect to the show page" do
+      get :show
+    end
+  end
+
+  describe "#update" do
+    let!(:foo) { FactoryBot.create(:project) }
+
+    it "should delete the project" do
+      expect do
+        delete :destroy, params: { id: foo.id }
+      end.to change(Project, :count).by(-1)
+    end
+  end
+
 end
