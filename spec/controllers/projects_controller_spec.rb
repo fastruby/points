@@ -18,6 +18,7 @@ RSpec.describe ProjectsController, type: :controller do
   describe "#new" do
     it "should redirect to the new page" do
       get :new
+      expect(response).to render_template :new
     end
   end
 
@@ -51,10 +52,11 @@ RSpec.describe ProjectsController, type: :controller do
     context "with invalid attributes" do
       let(:attributes) { {:title=>""} }
 
-      it "should redirect to the new project" do
+      it "should stay on the new template page" do
         post :create, params: { :project => attributes }
 
         expect(response).to render_template :new
+        expect(flash[:error]).to be_present
       end
     end
   end
