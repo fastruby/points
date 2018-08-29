@@ -80,10 +80,10 @@ RSpec.describe ProjectsController, type: :controller do
   describe "#update" do
     let!(:foo) { FactoryBot.create(:project) }
 
-    it "should delete the project" do
-      expect do
-        delete :destroy, params: { id: foo.id }
-      end.to change(Project, :count).by(-1)
+    it "should update the project" do
+      get :update, params: {id: foo.id}
+
+      expect(assigns(:project)).to eq foo
     end
   end
 
