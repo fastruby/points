@@ -16,4 +16,12 @@ module ReportsHelper
     end
   end
 
+  def user_estimate(story, user, estimate_type)
+    estimate = story.estimates.where(user_id: user.id).first
+
+    return "-" if estimate.nil?
+
+    estimate_type == 'best' ? estimate.best_case_points : estimate.worst_case_points
+  end
+
 end

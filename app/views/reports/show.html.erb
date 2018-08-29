@@ -15,12 +15,20 @@
 
   <tbody>
     <% @stories.each do | story | %>
+      <% @users = story.estimates.map(&:user) %>
       <tr>
         <td><%= story.title%></td>
-        <td><%= story.estimates&.first&.best_case_points%></td>
-        <td><%= story.estimates&.first&.worst_case_points%></td>
-        <td><%= story.estimates&.last&.best_case_points%></td>
-        <td><%= story.estimates&.last&.worst_case_points%></td>
+
+        <% @users.each do |user| %>
+          <td><%= user_estimate(story, user, 'best') %></td>
+          <td><%= user_estimate(story, user, 'worst') %></td>
+        <% end %>
+
+        <% if @users.size <= 1 %>
+          <td><%= "-" %></td>
+          <td><%= "-" %></td>
+        <% end %>
+
         <td><%= best_estimate_for_story(story) %></td>
         <td><%= worst_estimate_for_story(story) %></td>
       </tr>
