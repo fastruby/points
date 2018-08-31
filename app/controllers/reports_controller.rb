@@ -8,7 +8,9 @@ class ReportsController < ApplicationController
   end
 
   def show
-    @stories = Story.where(project_id: @project.id)
+    @stories = @project.stories
+    @estimates = @project.estimates
+    @users = @project.users.uniq
   end
 
   def ensure_admin

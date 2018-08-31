@@ -4,10 +4,10 @@
   <thead>
     <tr>
       <th scope="col" class="col-title">Story Title</th>
-      <th scope="col" class="col-title">Person 1's Best Estimate</th>
-      <th scope="col" class="col-title">Person 1's Worst Estimate</th>
-      <th scope="col" class="col-title">Person 2's Best Estimate</th>
-      <th scope="col" class="col-title">Person 2's Worst Estimate</th>
+      <% @users.each do |user| %>
+        <th scope="col" class="col-title"><%= user.name %>'s Best Estimate</th>
+        <th scope="col" class="col-title"><%= user.name %>'s Worst Estimate</th>
+      <% end %>
       <th scope="col" class="col-title">Average: Best Estimates</th>
       <th scope="col" class="col-title">Average: Worst Estimates</th>
     </tr>
@@ -15,18 +15,12 @@
 
   <tbody>
     <% @stories.each do | story | %>
-      <% @users = story.estimates.map(&:user) %>
       <tr>
-        <td><%= story.title%></td>
+        <td><%= link_to story.title, [@project, story], target: "_blank" %></td>
 
         <% @users.each do |user| %>
           <td><%= user_estimate(story, user, 'best') %></td>
           <td><%= user_estimate(story, user, 'worst') %></td>
-        <% end %>
-
-        <% if @users.size <= 1 %>
-          <td><%= "-" %></td>
-          <td><%= "-" %></td>
         <% end %>
 
         <td><%= best_estimate_for_story(story) %></td>
@@ -37,11 +31,11 @@
 
   <tfoot>
     <tr>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td><strong> Total Hours </strong></td>
+      <% @users.each do |user| %>
+        <td></td>
+        <td></td>
+      <% end %>
+      <td><strong> Total Points </strong></td>
       <td><strong><%= @project.best_estimate_sum %></strong></td>
       <td><strong><%= @project.worst_estimate_sum %></strong></td>
     </tr>
