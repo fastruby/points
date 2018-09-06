@@ -3,87 +3,100 @@ require 'rails_helper'
 RSpec.describe ProjectsController, type: :controller do
   render_views
 
-  describe "#index" do
-    let!(:project) { FactoryBot.create(:project) }
+  let!(:project) { FactoryBot.create(:project) }
 
+  describe "#index" do
     before do
       get :index
     end
 
-    it "should show me a list of all the projects" do
+    it "shows me a list of all the projects" do
       expect(assigns(:projects)).to eq [project]
     end
   end
 
   describe "#new" do
-    it "should redirect to the new page" do
+    it "redirects to the new page" do
       get :new
       expect(response).to render_template :new
     end
   end
 
   describe "#edit" do
-    let!(:foo) { FactoryBot.create(:project) }
+    before do
+      get :edit, params: {id: project.id}
+    end
 
-    it "should redirect to the edit page" do
-      get :edit, params: {id: foo.id}
+    it "redirects to the edit page" do
+      expect(response).to render_template :edit
+    end
 
-      expect(assigns(:project)).to eq foo
+    it "shows the fields for the project" do
+      expect(assigns(:project)).to eq project
     end
   end
 
   describe "#create" do
     context "with valid attributes" do
-      let(:good_params) { FactoryBot.attributes_for(:project) }
+      let(:valid_params) { FactoryBot.attributes_for(:project) }
 
-      it "should create a new project" do
+      it "creates a new project" do
         expect do
-          post :create, params: { :project => good_params }
+          post :create, params: { :project => valid_params }
         end.to change(Project, :count).by(1)
       end
 
-      it "should redirect to the new project" do
-        post :create, params: { :project => good_params }
+      it "redirects to the new project" do
+        post :create, params: { :project => valid_params }
 
         expect(response).to redirect_to '/projects'
       end
     end
 
     context "with invalid attributes" do
-      let(:attributes) { {:title=>""} }
+      let(:invalid_attributes) { {:title=>""} }
 
-      it "should stay on the new template page" do
-        post :create, params: { :project => attributes }
+      before do
+        post :create, params: { :project => invalid_attributes }
+      end
 
+      it "stays on the new template page" do
         expect(response).to render_template :new
+      end
+
+      it "shows a flash message" do
         expect(flash[:error]).to be_present
       end
     end
   end
 
   describe "#destroy" do
-    let!(:foo) { FactoryBot.create(:project) }
-
-    it "should delete the project" do
+    it "deletes the project" do
       expect do
-        delete :destroy, params: { id: foo.id }
+        delete :destroy, params: { id: project.id }
       end.to change(Project, :count).by(-1)
     end
   end
 
   describe "#show" do
-    it "should redirect to the show page" do
-      get :show
+    before do
+      get :show, params: { id: project.id }
+    end
+
+    it "redirects to the show page" do
+      expect(response).to render_template :show
+    end
+
+    it "shows the attributes for the right project" do
+      expect(assigns(:project)).to eq project
     end
   end
 
   describe "#update" do
-    let!(:foo) { FactoryBot.create(:project) }
-
     it "should update the project" do
-      get :update, params: {id: foo.id}
+      put :update, params: { id: project.id, project: { title: "New Project Title" }}
 
-      expect(assigns(:project)).to eq foo
+      expect(project.reload.title).to eq "New Project Title"
     end
   end
 
