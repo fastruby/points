@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :story do
-    title { Faker::Lorem.words(3) }
+    title "This is a tester story"
+    description "This is the description"
     project
   end
 end

@@ -1,7 +1,7 @@
 class StoriesController < ApplicationController
 
-  before_action :project
-  before_action :story, only: [:edit, :update, :destroy, :show]
+  before_action :find_project
+  before_action :find_story, only: [:edit, :update, :destroy, :show]
 
   def new
     @story = Story.new
@@ -12,6 +12,8 @@ class StoriesController < ApplicationController
 
   def create
     @story = Story.new(stories_params)
+    @story.project_id = @project.id
+
     if @story.save
       flash[:success] = "Story created!"
       redirect_to project_path(@project.id)
@@ -29,16 +31,8 @@ class StoriesController < ApplicationController
     end
   end
 
-  def project
-    @project = Project.find(params[:project_id])
-  end
-
   def show
     @estimate = Estimate.where(story: @story, user: current_user).first
-  end
-
-  def story
-    @story = Story.find(params[:id])
   end
 
   def update
@@ -53,6 +47,14 @@ class StoriesController < ApplicationController
 
 
 private
+
+  def find_project
+    @project = Project.find(params[:project_id])
+  end
+
+  def find_story
+    @story = Story.find(params[:id])
+  end
 
   def stories_params
     params.require(:story).permit(:title, :description, :project_id)

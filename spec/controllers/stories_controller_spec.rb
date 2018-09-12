@@ -1,0 +1,96 @@
+require 'rails_helper'
+
+RSpec.describe StoriesController, type: :controller do
+  render_views
+
+  let!(:project) { FactoryBot.create(:project) }
+  let!(:story) { FactoryBot.create(:story, project: project) }
+
+  describe "#new" do
+    it "redirects to the new page" do
+      get :new, params: { id: story.id, project_id: project.id }
+      expect(response).to render_template :new
+    end
+  end
+
+  describe "#edit" do
+    before do
+      get :edit, params: { id: story.id, project_id: project.id }
+    end
+
+    it "redirects to the edit page" do
+      expect(response).to render_template :edit
+    end
+
+    it "shows the fields for the story" do
+      expect(assigns(:story)).to eq story
+    end
+  end
+
+  describe "#create" do
+    context "with valid attributes" do
+      let(:valid_params) { FactoryBot.attributes_for(:story) }
+
+      it "creates a new story" do
+        expect do
+          post :create, params: { project_id: project.id, story: valid_params }
+        end.to change(Story, :count).by(1)
+      end
+
+      it "redirects to the project path" do
+        post :create, params: { project_id: project.id, :story => valid_params }
+
+        expect(response).to redirect_to project_path(project.id)
+      end
+    end
+
+    context "with invalid attributes" do
+      let(:invalid_attributes) { {:title=>""} }
+
+      before do
+        post :create, params: { project_id: project.id, :story => invalid_attributes }
+      end
+
+      it "stays on the new template page" do
+        expect(response).to render_template :new
+      end
+
+      it "shows a flash message" do
+        expect(flash[:error]).to be_present
+      end
+    end
+  end
+
+  describe "#destroy" do
+  it "deletes the story" do
+      expect do
+        delete :destroy, params: { id: story.id, project_id: project.id }
+      end.to change(Story, :count).by(-1)
+    end
+  end
+
+  describe "#show" do
+    before do
+      get :show, params: { id: story.id, project_id: project.id }
+    end
+
+    it "redirects to the show page" do
+      expect(response).to render_template :show
+    end
+
+    it "shows the attributes for the right story" do
+      expect(assigns(:story)).to eq story
+    end
+  end
+
+  describe "#update" do
+    it "updates the story" do
+      put :update, params: { id: story.id,
+                             project_id: project.id,
+                             story: { title: "New Story" }}
+
+      expect(story.reload.title).to eq "New Story"
+    end
+  end
+
+end
