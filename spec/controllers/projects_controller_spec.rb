@@ -5,6 +5,12 @@ RSpec.describe ProjectsController, type: :controller do
 
   let!(:project) { FactoryBot.create(:project) }
 
+  before do
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+    user = FactoryBot.create(:user)
+    sign_in user
+  end
+
   describe "#index" do
     before do
       get :index

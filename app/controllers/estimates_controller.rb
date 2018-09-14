@@ -1,6 +1,7 @@
 class EstimatesController < ApplicationController
-
+  before_action :authenticate_user!
   before_action :load_story_and_project
+  before_action :find_estimate, only: [:edit, :update, :destroy]
 
   def new
     @estimate = Estimate.new
@@ -49,6 +50,10 @@ class EstimatesController < ApplicationController
     def load_story_and_project
       @project = Project.find(params[:project_id])
       @story = Story.find(params[:story_id])
+    end
+
+    def find_estimate
+      @estimate = Estimate.find(params[:id])
     end
 
     def estimate_params

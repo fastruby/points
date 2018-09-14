@@ -3,72 +3,96 @@ require 'rails_helper'
 RSpec.describe EstimatesController, type: :controller do
   render_views
 
+  let!(:user) { FactoryBot.create(:user) }
   let!(:project) { FactoryBot.create(:project) }
   let!(:story) { FactoryBot.create(:story, project: project) }
+  let!(:estimate) { FactoryBot.create(:estimate, story: story, user: user) }
+
+  before do
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+    user = FactoryBot.create(:user)
+    sign_in user
+  end
 
   describe "#new" do
-    it "should redirect to the new page" do
-      get :new, params: { project_id: project.id, story_id: story.id }
+    it "redirects to the new page" do
+      get :new, params: { id: estimate.id, story_id: story.id, project_id: project.id, user_id: user.id }
       expect(response).to render_template :new
     end
   end
 
   describe "#edit" do
-    let!(:foo) { FactoryBot.create(:estimate) }
+    before do
+      get :edit, params: { id: estimate.id, story_id: story.id, project_id: project.id, user_id: user.id }
+    end
 
-    it "should redirect to the edit page" do
-      get :edit, params: {id: foo.id}
+    it "redirects to the edit page" do
+      expect(response).to render_template :edit
+    end
 
-      expect(assigns(:estimate)).to eq foo
+    it "shows the fields for the estimate" do
+      expect(assigns(:estimate)).to eq estimate
     end
   end
 
   describe "#create" do
     context "with valid attributes" do
-      let(:good_params) { FactoryBot.attributes_for(:estimate) }
+      let(:valid_params) {
+        { best_case_points: 1, worst_case_points: 3, story_id: story.id }
+      }
 
-      it "should create a new estimate" do
+      it "creates a new estimate" do
         expect do
-          post :create, params: { :estimate => good_params }
-        end.to change(estimate, :count).by(1)
+          post :create, params: { project_id: project.id,
+                                  story_id: story.id,
+                                  estimate: valid_params }
+        end.to change(Estimate, :count).by(1)
       end
 
-      it "should redirect to the new estimate" do
-        post :create, params: { :estimate => good_params }
+      it "redirects to the new estimate" do
+        post :create, params: { story_id: story.id,
+                                project_id: project.id,
+                                estimate: valid_params }
 
-        expect(response).to redirect_to '/estimates'
+        expect(response).to redirect_to project_path(project.id)
       end
     end
 
     context "with invalid attributes" do
-      let(:attributes) { {:title=>""} }
+      let(:invalid_attributes) { {:best_case_points=>""} }
 
-      it "should stay on the new template page" do
-        post :create, params: { :estimate => attributes }
+      before do
+        post :create, params: { story_id: story.id,
+                                project_id: project.id,
+                                estimate: invalid_attributes }
+      end
 
+      it "stays on the new template page" do
         expect(response).to render_template :new
+      end
+
+      it "shows a flash message" do
         expect(flash[:error]).to be_present
       end
     end
   end
 
   describe "#destroy" do
-    let!(:foo) { FactoryBot.create(:estimate) }
-
-    it "should delete the estimate" do
+    it "deletes the estimate" do
       expect do
-        delete :destroy, params: { id: foo.id }
-      end.to change(estimate, :count).by(-1)
+        delete :destroy, params: { id: estimate.id, story_id: story.id, project_id: project.id }
+      end.to change(Estimate, :count).by(-1)
     end
   end
 
   describe "#update" do
-    let!(:foo) { FactoryBot.create(:estimate) }
+    it "updates the estimate" do
+      put :update, params: { id: estimate.id,
+                             story_id: story.id,
+                             project_id: project.id,
+                             estimate: { best_case_points: "7" }}
 
-    it "should delete the estimate" do
-      expect do
-        delete :destroy, params: { id: foo.id }
-      end.to change(estimate, :count).by(-1)
+      expect(estimate.reload.best_case_points).to eq 7
     end
   end
 

@@ -1,5 +1,5 @@
 class StoriesController < ApplicationController
-
+  before_action :authenticate_user!
   before_action :find_project
   before_action :find_story, only: [:edit, :update, :destroy, :show]
 

@@ -6,6 +6,12 @@ RSpec.describe StoriesController, type: :controller do
   let!(:project) { FactoryBot.create(:project) }
   let!(:story) { FactoryBot.create(:story, project: project) }
 
+  before do
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+    user = FactoryBot.create(:user)
+    sign_in user
+  end
+
   describe "#new" do
     it "redirects to the new page" do
       get :new, params: { id: story.id, project_id: project.id }
