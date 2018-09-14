@@ -1,0 +1,22 @@
+<h1 class="dashboard-title">Project Reports</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col" class="col-title">Project</th>
+      <th scope="col" class="col-title">Report</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @projects.each do | project | %>
+      <tr>
+        <td><%= project.title%></td>
+        <td><%= link_to "View Report", project_report_path(project.id), class: "link" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<%= link_to 'Return to Projects Page', projects_path, id:"back" %>

@@ -34,3 +34,5 @@
   <%= link_to "Add a Story", new_project_story_path(@project.id), class: "btn btn-lg btn-primary", id: "create-button" %>
   <%= link_to "Edit or Delete Project", edit_project_path(@project.id), class: "btn btn-lg btn-primary", id: "create-button"%>
 </div>
+
+<%= link_to 'Return to Projects Page', projects_path, id:"back" %>

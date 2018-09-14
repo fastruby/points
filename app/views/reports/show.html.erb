@@ -1,0 +1,46 @@
+<h1 class="dashboard-title"><%= @project.title %> Report</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col" class="col-title">Story Title</th>
+      <% @users.each do |user| %>
+        <th scope="col" class="col-title"><%= user.name %>'s Best Estimate</th>
+        <th scope="col" class="col-title"><%= user.name %>'s Worst Estimate</th>
+      <% end %>
+      <th scope="col" class="col-title">Average: Best Estimates</th>
+      <th scope="col" class="col-title">Average: Worst Estimates</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @stories.each do | story | %>
+      <tr>
+        <td><%= link_to story.title, [@project, story], target: "_blank" %></td>
+
+        <% @users.each do |user| %>
+          <td><%= user_estimate(story, user, 'best') %></td>
+          <td><%= user_estimate(story, user, 'worst') %></td>
+        <% end %>
+
+        <td><%= best_estimate_for_story(story) %></td>
+        <td><%= worst_estimate_for_story(story) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+
+  <tfoot>
+    <tr>
+      <% @users.each do |user| %>
+        <td></td>
+        <td></td>
+      <% end %>
+      <td class="totals"> Total Points </td>
+      <td class="totals"><%= @project.best_estimate_sum %></td>
+      <td class="totals"><%= @project.worst_estimate_sum %></td>
+    </tr>
+  </tfoot>
+
+</table>
+
+<%= link_to 'Back', reports_index_path, id:"back" %>
