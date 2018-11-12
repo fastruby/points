@@ -6,10 +6,6 @@
 
 /* Universal */
 
-body {
-  padding-top: 60px;
-}
-
 section {
   overflow: auto;
 }
@@ -31,19 +27,26 @@ textarea {
   background-color: #fdfcfc;
   color: #272727;
   margin: 0 0 160px;
-  padding: 25px;
+  min-height: 100%;
+  margin-bottom: -160px;
+}
+
+.push {
+  height: 160px;
+}
+
+.jumbotron h1{
+  font-size: 43px;
 }
 
 /* Header */
 
 #logo {
   float: left;
-  margin-right: 10px;
-  font-size: 1.7em;
+  margin-right: 500px;
+  font-size: 2em;
   color: #fff;
   text-transform: uppercase;
-  letter-spacing: -1px;
-  padding-top: 9px;
   font-weight: bold;
 }
 
@@ -52,21 +55,22 @@ textarea {
   text-decoration: none;
 }
 
+#login {
+  font-size: 1.2em;
+  color: lightgray;
+}
+
 /* Footer */
 
 footer {
-  display: block;
   background-color: #000000;
   height: 160px;
   width: 100%;
   padding-top: 30px;
   padding-bottom: 20px;
   color: #fff;
-  position: absolute;
   text-align: center;
   overflow: hidden;
-  left: 0;
-  bottom: 0;
 }
 
 footer .logo-container {
