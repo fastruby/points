@@ -36,8 +36,8 @@
         <td></td>
       <% end %>
       <td class="totals"> Total Points </td>
-      <td class="totals"><%= @project.best_estimate_sum %></td>
-      <td class="totals"><%= @project.worst_estimate_sum %></td>
+      <td class="totals" id="best"><%= @project.best_estimate_sum %></td>
+      <td class="totals" id="worst"><%= @project.worst_estimate_sum %></td>
     </tr>
   </tfoot>
 
