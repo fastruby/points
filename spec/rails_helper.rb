@@ -29,7 +29,7 @@ ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
   include Warden::Test::Helpers
-  
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
@@ -38,7 +38,6 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 
-  include Warden::Test::Helpers
   Shoulda::Matchers.configure do |config|
     config.integrate do |with|
       with.test_framework :rspec
