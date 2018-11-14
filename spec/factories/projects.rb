@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :project do
-    title "Super project"
+    title "First Project"
   end
 end
