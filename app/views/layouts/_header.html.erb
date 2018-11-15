@@ -4,13 +4,11 @@
     <nav>
       <ul class="nav navbar-nav navbar-right">
         <% if current_user %>
-          <li><%= link_to "Log out", destroy_user_session_path, method: :delete %></li>
+          <li><%= link_to "Log out", destroy_user_session_path, method: :delete, id: "login" %></li>
         <% else %>
-          <li><%= link_to "Log in", new_user_session_path %></li>
+          <li><%= link_to "Log in", new_user_session_path, id: "login" %></li>
         <% end %>
       </ul>
     </nav>
   </div>
 </header>
-<%= flash[:error] %>
-<%= flash[:success] %>
