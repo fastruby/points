@@ -1,5 +1,4 @@
-<h1 class="story-title"><%= @story.title %></h1>
-<h4 class="story-description"><%= @story.description %></h4>
+<%= render "shared/story", story: @story %>
 
 <%= link_to 'Edit', edit_project_story_path(@project.id), id:"back" %> |
 <%= link_to 'Back', project_path(@project.id), id:"back" %>

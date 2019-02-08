@@ -1,4 +1,7 @@
 <% provide(:button_text, 'Save Changes') %>
+
+<%= render "shared/story", story: @story %>
+
 <h2 class="new-edit-title">Edit Estimate</h2>
 
 <%= render 'form', estimate: @estimate %>
