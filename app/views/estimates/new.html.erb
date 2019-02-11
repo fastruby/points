@@ -1,5 +1,8 @@
 <% provide(:button_text, 'Create') %>
-<h1 class="new-edit-title">New Estimate</h1>
+
+<%= render "shared/story", story: @story %>
+
+<h2 class="new-edit-title">New Estimate</h2>
 
 <%= render 'form', estimate: @estimate %>
 

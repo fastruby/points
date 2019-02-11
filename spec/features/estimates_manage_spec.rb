@@ -11,9 +11,17 @@ RSpec.describe 'managing estimates' do
   end
 
   context "with one unestimated story" do
-    it "allows me to add an estimate" do
+    before do
       visit project_path(id: project.id)
       click_link 'Add Estimate'
+    end
+
+    it "shows me the story's title and description" do
+      expect(page).to have_content(story.title)
+      expect(page).to have_content(story.description)
+    end
+
+    it "allows me to add an estimate" do
       fill_in 'estimate[best_case_points]', with: "3"
       fill_in 'estimate[worst_case_points]', with: "8"
       click_button 'Create'
@@ -25,9 +33,17 @@ RSpec.describe 'managing estimates' do
   context "with one estimated story" do
     let!(:estimate) {FactoryBot.create(:estimate, story: story, user: user)}
 
-    it "allows me to edit an estimate" do
+    before do
       visit project_path(id: project.id)
       click_link 'Edit Estimate'
+    end
+
+    it "shows me the story's title and description" do
+      expect(page).to have_content(story.title)
+      expect(page).to have_content(story.description)
+    end
+
+    it "allows me to edit an estimate" do
       fill_in 'estimate[best_case_points]', with: "1"
       fill_in 'estimate[worst_case_points]', with: "2"
       click_button 'Save Changes'
