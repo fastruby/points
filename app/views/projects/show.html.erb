@@ -27,6 +27,14 @@
         <td><%= link_to 'Delete', project_story_path(@project.id, story), method: "delete",  data: { confirm: 'Are you sure?' }, class: "btn btn-lg btn-primary", id: "edit" %></td>
       </tr>
     <% end %>
+    <tr>
+      <td></td>
+      <td class="totals" id="best"><%= @project.best_estimate_sum_per_user %></td>
+      <td class="totals" id="worst"><%= @project.worst_estimate_sum_per_user %></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
   </tbody>
 </table>
 

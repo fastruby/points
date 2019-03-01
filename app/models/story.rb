@@ -19,4 +19,13 @@ class Story < ApplicationRecord
     worst_cases.sum / worst_cases.length.to_f
   end
 
+  def best_estimate_sum
+    self.estimates.sum(:best_case_points)
+  end
+
+  def worst_estimate_sum
+    self.estimates.sum(:worst_case_points)
+  end
+
+
 end
