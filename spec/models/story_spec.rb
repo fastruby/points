@@ -77,33 +77,32 @@ RSpec.describe Story, type: :model do
     end
   end
 
-  describe "#best_estimate_sum" do
+  context "there are two estimates" do
     let(:estimate_1) { Estimate.new(best_case_points: 10, worst_case_points: 2, user: user) }
     let(:estimate_2) { Estimate.new(best_case_points: 100, worst_case_points: 200, user: user) }
 
-    subject {
-      result = FactoryBot.create(:story)
-      result.estimates = [estimate_1, estimate_2]
-      result
-    }
+    describe "#best_estimate_sum" do
+      subject {
+        result = FactoryBot.create(:story)
+        result.estimates = [estimate_1, estimate_2]
+        result
+      }
 
-    it "returns the sum" do
-      expect(subject.best_estimate_sum).to eq(110)
+      it "returns the sum" do
+        expect(subject.best_estimate_sum).to eq(110)
+      end
     end
-  end
 
-  describe "#worst_estimate_sum" do
-    let(:estimate_1) { Estimate.new(best_case_points: 10, worst_case_points: 2, user: user) }
-    let(:estimate_2) { Estimate.new(best_case_points: 100, worst_case_points: 200, user: user) }
+    describe "#worst_estimate_sum" do
+      subject {
+        result = FactoryBot.create(:story)
+        result.estimates = [estimate_1, estimate_2]
+        result
+      }
 
-    subject {
-      result = FactoryBot.create(:story)
-      result.estimates = [estimate_1, estimate_2]
-      result
-    }
-
-    it "returns the sum" do
-      expect(subject.worst_estimate_sum).to eq(202)
+      it "returns the sum" do
+        expect(subject.worst_estimate_sum).to eq(202)
+      end
     end
   end
 end
