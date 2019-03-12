@@ -50,4 +50,20 @@ RSpec.describe 'managing estimates' do
       expect(page).to have_content "Estimate updated!"
     end
   end
+
+  context "when best case estimate is greater than worst case estimate" do
+    let!(:estimate) {FactoryBot.create(:estimate, story: story, user: user)}
+
+    before do
+      visit project_path(id: project.id)
+      click_link 'Edit Estimate'
+    end
+
+    it "shows me an error message" do
+      fill_in 'estimate[best_case_points]', with: "20"
+      fill_in 'estimate[worst_case_points]', with: "10"
+      click_button 'Save Changes'
+      expect(page).to have_content "Validation error Worst case estimate should be greater than best case estimate."
+    end
+  end
 end

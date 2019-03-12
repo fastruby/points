@@ -90,7 +90,7 @@ RSpec.describe EstimatesController, type: :controller do
       put :update, params: { id: estimate.id,
                              story_id: story.id,
                              project_id: project.id,
-                             estimate: { best_case_points: "7" }}
+                             estimate: { best_case_points: "7", worst_case_points: "10" }}
 
       expect(estimate.reload.best_case_points).to eq 7
     end
