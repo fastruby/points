@@ -28,7 +28,7 @@ RSpec.describe Story, type: :model do
       end
     end
     context "there are two or more estimates" do
-      let(:estimate_1) { Estimate.new(best_case_points: 10, worst_case_points: 2, user: user) }
+      let(:estimate_1) { Estimate.new(best_case_points: 10, worst_case_points: 20, user: user) }
       let(:estimate_2) { Estimate.new(best_case_points: 100, worst_case_points: 200, user: user) }
 
       subject {
@@ -78,7 +78,7 @@ RSpec.describe Story, type: :model do
   end
 
   context "there are two estimates" do
-    let(:estimate_1) { Estimate.new(best_case_points: 10, worst_case_points: 2, user: user) }
+    let(:estimate_1) { Estimate.new(best_case_points: 10, worst_case_points: 20, user: user) }
     let(:estimate_2) { Estimate.new(best_case_points: 100, worst_case_points: 200, user: user) }
 
     subject {
@@ -95,7 +95,7 @@ RSpec.describe Story, type: :model do
 
     describe "#worst_estimate_sum" do
       it "returns the sum" do
-        expect(subject.worst_estimate_sum).to eq(202)
+        expect(subject.worst_estimate_sum).to eq(220)
       end
     end
   end
