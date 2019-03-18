@@ -11,14 +11,16 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label "Best Case Estimate (hours)" %>
-    <%= f.number_field :best_case_points, class: "project-story-title" %>
-  </div>
+  <div class="estimate_wrapper">
+    <div class="field" id="first">
+      <%= f.label "Best Case Estimate (hours)" %>
+      <%= f.number_field :best_case_points, class: "estimate" %>
+    </div>
 
-  <div class="field">
-    <%= f.label "Worst Case Estimate (hours)" %>
-    <%= f.number_field :worst_case_points, class: "project-story-title" %>
+    <div class="field" id="second">
+      <%= f.label "Worst Case Estimate (hours)" %>
+      <%= f.number_field :worst_case_points, class: "estimate" %>
+    </div>
   </div>
 
   <%= f.hidden_field :story_id, value: params[:story_id] %>
