@@ -39,20 +39,20 @@ RSpec.describe 'managing reports' do
     let!(:user_2) {FactoryBot.create(:user, name: "Sarah")}
     let!(:estimate) {FactoryBot.create(:estimate, story: story, user: user)}
     let!(:estimate_2) {FactoryBot.create(:estimate, story: story, user: user_2)}
-    let!(:best_estimate_average) {1}
-    let!(:worst_estimate_average) {3}
-    let!(:best_estimate_sum) {1}
-    let!(:worst_estimate_sum) {3}
+    let!(:best_estimate_total) {1}
+    let!(:worst_estimate_total) {3}
+    let!(:best_estimate_sum_per_user) {1}
+    let!(:worst_estimate_sum_per_user) {3}
 
     it "calculates averages" do
       visit project_report_path(project.id)
-      expect(page).to have_content best_estimate_average
-      expect(page).to have_content worst_estimate_average
+      expect(page).to have_content best_estimate_total
+      expect(page).to have_content worst_estimate_total
       within('td#best') do
-        expect(page).to have_content best_estimate_sum
+        expect(page).to have_content best_estimate_sum_per_user
       end
       within('td#worst') do
-        expect(page).to have_content worst_estimate_sum
+        expect(page).to have_content worst_estimate_sum_per_user
       end
     end
   end
