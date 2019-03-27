@@ -48,12 +48,8 @@ RSpec.describe 'managing reports' do
       visit project_report_path(project.id)
       expect(page).to have_content best_estimate_total
       expect(page).to have_content worst_estimate_total
-      within('td#best') do
-        expect(page).to have_content best_estimate_sum_per_user
-      end
-      within('td#worst') do
-        expect(page).to have_content worst_estimate_sum_per_user
-      end
+      expect(page).to have_content best_estimate_sum_per_user
+      expect(page).to have_content worst_estimate_sum_per_user
     end
   end
 
