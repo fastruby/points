@@ -1,6 +1,15 @@
 class CallbacksController < Devise::OmniauthCallbacksController
   def github
-    @user = User.from_omniauth(request.env["omniauth.auth"])
-    sign_in_and_redirect @user
+    company = request.env["omniauth.auth"]['extra']['raw_info']['company']
+
+    debugger
+
+    if company == "@ombulabs"
+      @user = User.from_omniauth(request.env["omniauth.auth"])
+      sign_in_and_redirect @user
+    else
+      flash[:error] = "This application is only available to members of Ombu Labs."
+      redirect_to new_user_session_path
+    end
   end
 end
