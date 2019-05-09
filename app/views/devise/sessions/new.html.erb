@@ -1,4 +1,8 @@
-<h2 class="new-edit-title">Sign in with GitHub</h2>
+<h2 class="new-edit-title">Sign in</h2>
+
+<% if flash[:error] %>
+  <div class="alert alert-danger" role="alert"><%= flash[:error] %></div>
+<% end %>
 
 <%- if devise_mapping.omniauthable? %>
   <%- resource_class.omniauth_providers.each do |provider| %>

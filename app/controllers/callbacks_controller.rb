@@ -2,7 +2,7 @@ class CallbacksController < Devise::OmniauthCallbacksController
   def github
     company = request.env["omniauth.auth"]['extra']['raw_info']['company']
 
-    if company == "@ombulabs"
+    if company&.strip&.include? "@ombulabs"
       @user = User.from_omniauth(request.env["omniauth.auth"])
       sign_in_and_redirect @user
     else
