@@ -22,8 +22,8 @@ RSpec.describe 'managing estimates' do
     end
 
     it "allows me to add an estimate" do
-      fill_in 'estimate[best_case_points]', with: "3"
-      fill_in 'estimate[worst_case_points]', with: "8"
+      select "3", from: "estimate[best_case_points]"
+      select "8", from: "estimate[worst_case_points]"
       click_button 'Create'
       expect(Estimate.count).to eq 1
       expect(page).to have_content "Estimate created!"
@@ -44,8 +44,8 @@ RSpec.describe 'managing estimates' do
     end
 
     it "allows me to edit an estimate" do
-      fill_in 'estimate[best_case_points]', with: "1"
-      fill_in 'estimate[worst_case_points]', with: "2"
+      select "1", from: "estimate[best_case_points]"
+      select "2", from: "estimate[worst_case_points]"
       click_button 'Save Changes'
       expect(page).to have_content "Estimate updated!"
     end
@@ -60,8 +60,8 @@ RSpec.describe 'managing estimates' do
     end
 
     it "shows me an error message" do
-      fill_in 'estimate[best_case_points]', with: "20"
-      fill_in 'estimate[worst_case_points]', with: "10"
+      select "34", from: "estimate[best_case_points]"
+      select "1", from: "estimate[worst_case_points]"
       click_button 'Save Changes'
       expect(page).to have_content "Validation error Worst case estimate should be greater than best case estimate."
     end
