@@ -14,12 +14,12 @@
   <div class="estimate_wrapper">
     <div class="field" id="first">
       <%= f.label "Best Case Estimate (Story Points)" %>
-      <%= f.select :best_case_points, fib_numbers, class: "estimate" %>
+      <%= f.select :best_case_points, fib_numbers, {}, class: "estimate" %>
     </div>
 
     <div class="field" id="second">
       <%= f.label "Worst Case Estimate (Story Points)" %>
-      <%= f.select :worst_case_points, fib_numbers, class: "estimate" %>
+      <%= f.select :worst_case_points, fib_numbers, {}, class: "estimate" %>
     </div>
   </div>
 
