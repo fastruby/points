@@ -4,7 +4,6 @@ class CallbacksController < Devise::OmniauthCallbacksController
   def github
     username = request.env["omniauth.auth"]['extra']['raw_info']['login']
 
-    byebug
     ombulabs_members_json = open('https://api.github.com/orgs/ombulabs/members').read
     ombulabs_members_parsed = JSON.parse(ombulabs_members_json)
     ombulabs_members = ombulabs_members_parsed.map { |member| member["login"] }
