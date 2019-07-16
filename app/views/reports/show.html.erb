@@ -8,6 +8,7 @@
         <th scope="col" class="col-title"><%= user.name %>'s Best Estimate</th>
         <th scope="col" class="col-title"><%= user.name %>'s Worst Estimate</th>
       <% end %>
+      <th scope="col" class="col-title"></th>
       <th scope="col" class="col-title">Average: Best Estimates</th>
       <th scope="col" class="col-title">Average: Worst Estimates</th>
     </tr>
@@ -22,7 +23,7 @@
           <td><%= user_estimate(story, user, 'best') %></td>
           <td><%= user_estimate(story, user, 'worst') %></td>
         <% end %>
-
+        <td></td>
         <td><%= best_estimate_for_story(story) %></td>
         <td><%= worst_estimate_for_story(story) %></td>
       </tr>
@@ -31,13 +32,14 @@
 
   <tfoot>
     <tr>
+      <td></td>
       <% @users.each do |user| %>
-        <td></td>
-        <td></td>
+        <td id="best"><%= @project.best_estimate_sum_per_user(user) %></td>
+        <td id="worst"><%= @project.worst_estimate_sum_per_user(user) %></td>
       <% end %>
       <td class="totals"> Total Points </td>
-      <td class="totals" id="best"><%= @project.best_estimate_sum %></td>
-      <td class="totals" id="worst"><%= @project.worst_estimate_sum %></td>
+      <td class="totals" id="best"><%= @project.best_estimate_total %></td>
+      <td class="totals" id="worst"><%= @project.worst_estimate_total %></td>
     </tr>
   </tfoot>
 

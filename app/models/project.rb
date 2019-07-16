@@ -5,19 +5,19 @@ class Project < ApplicationRecord
   has_many :estimates, through: :stories
   has_many :users, through: :estimates
 
-  def best_estimate_sum
+  def best_estimate_total
     stories.sum(&:best_estimate_average)
   end
 
-  def worst_estimate_sum
+  def worst_estimate_total
     stories.sum(&:worst_estimate_average)
   end
 
-  def best_estimate_sum_per_user
-    stories.sum(&:best_estimate_sum)
+  def best_estimate_sum_per_user(user)
+    stories.sum { |x| x.best_estimate_sum(user) }
   end
 
-  def worst_estimate_sum_per_user
-    stories.sum(&:worst_estimate_sum)
+  def worst_estimate_sum_per_user(user)
+    stories.sum { |x| x.worst_estimate_sum(user) }
   end
 end

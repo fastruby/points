@@ -27,7 +27,19 @@ require 'capybara/rspec'
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
+require 'deprecation_tracker'
+
 RSpec.configure do |config|
+  # Tracker deprecation messages in each file
+  if ENV["DEPRECATION_TRACKER"]
+    DeprecationTracker.track_rspec(
+      config,
+      shitlist_path: "spec/support/deprecation_warning.shitlist.json",
+      mode: ENV["DEPRECATION_TRACKER"],
+      transform_message: -> (message) { message.gsub("#{Rails.root}/", "") }
+    )
+  end
+
   include Warden::Test::Helpers
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
