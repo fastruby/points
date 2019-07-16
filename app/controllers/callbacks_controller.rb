@@ -1,8 +1,15 @@
+require 'open-uri'
+
 class CallbacksController < Devise::OmniauthCallbacksController
   def github
-    company = request.env["omniauth.auth"]['extra']['raw_info']['company']
+    username = request.env["omniauth.auth"]['extra']['raw_info']['login']
 
-    if company&.strip&.include? "@ombulabs"
+    byebug
+    ombulabs_members_json = open('https://api.github.com/orgs/ombulabs/members').read
+    ombulabs_members_parsed = JSON.parse(ombulabs_members_json)
+    ombulabs_members = ombulabs_members_parsed.map { |member| member["login"] }
+
+    if username.in?(ombulabs_members)
       @user = User.from_omniauth(request.env["omniauth.auth"])
       sign_in_and_redirect @user
     else
