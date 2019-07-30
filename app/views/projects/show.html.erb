@@ -12,7 +12,7 @@
     </tr>
   </thead>
 
-  <tbody id="stories">
+  <tbody id="stories" data-url="<%= sort_project_stories_path(@project.id)%>">
     <% @stories.each do | story | %>
       <tr>
         <td><%= link_to story.title, [story.project, story] %></td>

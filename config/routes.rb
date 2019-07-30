@@ -15,6 +15,11 @@ Rails.application.routes.draw do
 
   resources :projects do
     resources :stories do
+      collection do
+        patch :sort
+      end
+    end
+    resources :stories do
       resources :estimates
     end
   end
