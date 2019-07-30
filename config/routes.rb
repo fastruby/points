@@ -10,15 +10,10 @@ Rails.application.routes.draw do
   get 'reports/index'
 
   resources :projects do
-    resource :report
-  end
+    patch :sort, on: :member
 
-  resources :projects do
-    resources :stories do
-      collection do
-        patch :sort
-      end
-    end
+    resource :report
+
     resources :stories do
       resources :estimates
     end

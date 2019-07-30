@@ -12,9 +12,9 @@
     </tr>
   </thead>
 
-  <tbody id="stories" data-url="<%= sort_project_stories_path(@project.id)%>">
+  <tbody id="stories" data-url="<%= sort_project_path(@project.id) %>">
     <% @stories.each do | story | %>
-      <tr>
+      <tr id="<%= dom_id(story)%>" >
         <td><%= link_to story.title, [story.project, story] %></td>
         <td><%= story.estimates.where(user: current_user)&.first&.best_case_points %></td>
         <td><%= story.estimates.where(user: current_user)&.first&.worst_case_points %></td>

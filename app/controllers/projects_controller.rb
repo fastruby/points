@@ -13,6 +13,14 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
   end
 
+  def sort
+    params[:story].each_with_index do |id, index|
+      Story.where(id: id).update_all(position: index + 1)
+    end
+
+    head :ok
+  end
+
   def create
     @project = Project.new(projects_params)
     if @project.save
@@ -34,7 +42,7 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.find(params[:id])
-    @stories = Story.where(project_id: @project.id)
+    @stories = Story.where(project_id: @project.id).order(:position)
   end
 
   def update
