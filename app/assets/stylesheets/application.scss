@@ -10,6 +10,14 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
- *= require_self
  */
+
+ // "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
+ @import "bootstrap-sprockets";
+ @import "bootstrap";
+
+ @import "home";
+ @import "project";
+ @import "reports";
+ @import "scaffolds";
+ @import "stories";
