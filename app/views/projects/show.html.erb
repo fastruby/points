@@ -12,7 +12,7 @@
     </tr>
   </thead>
 
-  <tbody>
+  <tbody id="stories">
     <% @stories.each do | story | %>
       <tr>
         <td><%= link_to story.title, [story.project, story] %></td>
@@ -27,6 +27,9 @@
         <td><%= link_to 'Delete', project_story_path(@project.id, story), method: "delete",  data: { confirm: 'Are you sure?' }, class: "btn btn-lg btn-primary", id: "edit" %></td>
       </tr>
     <% end %>
+  </tbody>
+
+  <tfoot>
     <tr>
       <td></td>
       <td class="totals" id="best"><%= @project.best_estimate_sum_per_user(current_user) %></td>
@@ -35,7 +38,7 @@
       <td></td>
       <td></td>
     </tr>
-  </tbody>
+  </tfoot>
 </table>
 
 <div class="wrapper">
