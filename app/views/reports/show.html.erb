@@ -3,7 +3,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col" class="col-title">Story Title</th>
+      <th scope="col" class="col-title" id="wide">Story Title</th>
       <% @users.each do |user| %>
         <th scope="col" class="col-title"><%= user.name %>'s Best Estimate</th>
         <th scope="col" class="col-title"><%= user.name %>'s Worst Estimate</th>
@@ -17,7 +17,7 @@
   <tbody>
     <% @stories.each do | story | %>
       <tr>
-        <td><%= link_to story.title, [@project, story], target: "_blank" %></td>
+        <td id="wide"><%= link_to story.title, [@project, story], target: "_blank" %></td>
 
         <% @users.each do |user| %>
           <td><%= user_estimate(story, user, 'best') %></td>
@@ -32,7 +32,7 @@
 
   <tfoot>
     <tr>
-      <td></td>
+      <td id="wide"></td>
       <% @users.each do |user| %>
         <td id="best"><%= @project.best_estimate_sum_per_user(user) %></td>
         <td id="worst"><%= @project.worst_estimate_sum_per_user(user) %></td>

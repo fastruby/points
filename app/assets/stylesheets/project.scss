@@ -6,7 +6,7 @@
 
 .dashboard-title {
   text-align: center;
-  margin-top: 15px;
+  margin-top: 125px;
   margin-bottom: 25px;
   font-size: 35px;
   font-weight: 300;
@@ -81,6 +81,7 @@
 .new-edit-title {
   margin-top: 15px;
   margin-bottom: 25px;
+  font-size: 1.5em;
 }
 
 .project-story-title {
@@ -93,6 +94,8 @@
   background-color: #e62b2b;
   border-color: #b50909;
   margin: 10px 0;
+  padding: 6px 12px;
+  font-size: 14px;
 }
 
 #delete, a:visited {
@@ -112,6 +115,8 @@
 
 #edit {
   margin: 10px 0;
+  padding: 6px 12px;
+  font-size: 14px;
 }
 
 #edit, a:visited {
@@ -143,4 +148,8 @@ td a:visited {
 td a:hover {
   color: inherit;
   background-color: inherit;
+}
+
+#wide {
+  min-width: 400px;
 }
