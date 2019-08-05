@@ -9,9 +9,9 @@ RSpec.describe 'managing projects' do
     login_as(user, :scope => :user)
   end
 
-  it "allows me to log in" do
+  it "allows me to sign in" do
     visit root_path
-    expect(page).to have_content "Log out"
+    expect(page).to have_content "Sign out"
   end
 
   it "allows me to add a project" do
