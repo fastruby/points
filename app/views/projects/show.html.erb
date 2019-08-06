@@ -3,7 +3,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col" class="col-title">Story Title</th>
+      <th scope="col" class="col-title" id="wide">Story Title</th>
       <th scope="col" class="col-title">Best Estimate</th>
       <th scope="col" class="col-title">Worst Estimate</th>
       <th scope="col" class="col-title"> </th>
@@ -12,10 +12,10 @@
     </tr>
   </thead>
 
-  <tbody>
+  <tbody id="stories" data-url="<%= sort_project_path(@project.id) %>">
     <% @stories.each do | story | %>
-      <tr>
-        <td><%= link_to story.title, [story.project, story] %></td>
+      <tr id="<%= dom_id(story)%>" >
+        <td id="wide"><%= link_to story.title, [story.project, story] %></td>
         <td><%= story.estimates.where(user: current_user)&.first&.best_case_points %></td>
         <td><%= story.estimates.where(user: current_user)&.first&.worst_case_points %></td>
         <td><%= link_to 'Edit', edit_project_story_path(@project.id, story), class: "btn btn-lg btn-primary", id: "edit" %></td>
@@ -27,15 +27,18 @@
         <td><%= link_to 'Delete', project_story_path(@project.id, story), method: "delete",  data: { confirm: 'Are you sure?' }, class: "btn btn-lg btn-primary", id: "edit" %></td>
       </tr>
     <% end %>
+  </tbody>
+
+  <tfoot>
     <tr>
-      <td></td>
+      <td id="wide"></td>
       <td class="totals" id="best"><%= @project.best_estimate_sum_per_user(current_user) %></td>
       <td class="totals" id="worst"><%= @project.worst_estimate_sum_per_user(current_user) %></td>
       <td></td>
       <td></td>
       <td></td>
     </tr>
-  </tbody>
+  </tfoot>
 </table>
 
 <div class="wrapper">

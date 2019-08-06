@@ -43,7 +43,10 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+gem 'jquery-rails'
 gem 'pg', '~> 0.18'
+gem 'jquery-ui-rails', '~> 5.0', '>= 5.0.5'
+gem 'acts_as_list'
 gem 'omniauth-github'
 
 group :development, :test do
