@@ -4,3 +4,4 @@ log/*.log
 config/database.yml
 .ruby-version
 coverage
+.env

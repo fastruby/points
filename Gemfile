@@ -47,6 +47,7 @@ gem 'jquery-rails'
 gem 'pg', '~> 0.18'
 gem 'jquery-ui-rails', '~> 5.0', '>= 5.0.5'
 gem 'acts_as_list'
+gem 'omniauth-github'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -56,6 +57,7 @@ group :development, :test do
   gem 'faker'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'rails-controller-testing'
+  gem 'dotenv-rails'
 end
 
 group :test do
