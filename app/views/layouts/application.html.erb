@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
   </head>
-  <body class="content">
+  <body class="content <%= controller_name %>-controller <%= action_name %>-action">
     <%= render 'layouts/header' %>
     <div class="container">
       <% if flash[:success] %>
