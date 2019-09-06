@@ -1,3 +1,15 @@
+.stories-controller {
+  form {
+    input, textarea {
+      width: 90%;
+    }
+
+    input[type=submit] {
+      width: auto;
+    }
+  }
+}
+
 .project_id {
   padding: 5px;
   font-size: 15px;
@@ -30,6 +42,8 @@ label {
 
 .story-description {
   margin-bottom: 25px;
+  padding: 5px;
+  font-size: 15px;
 }
 
 .estimate_wrapper {
@@ -43,10 +57,4 @@ label {
 .estimate {
   padding: 5px;
   width: 200px;
-}
-
-.story-description {
-  padding: 5px;
-  font-size: 15px;
-  width: 550px;
 }

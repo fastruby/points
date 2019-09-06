@@ -17,8 +17,8 @@
   </div>
 
   <div class="field">
-    <%= f.label :description %>
-    <%= f.text_area :description, placeholder: "Description", class: "story-description" %>
+    <%= f.label :description, "Description (Markdown)" %>
+    <%= f.text_area :description, placeholder: "Description", class: "story-description", rows: 20 %>
   </div>
 
   <%= f.hidden_field :project_id, value: params[:project_id] %>
