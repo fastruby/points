@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'apparition_helper'
 
-RSpec.describe 'managing stories', js: true do
+RSpec.describe 'managing stories', js: !ENV['CI'] do
 
   let(:user) {FactoryBot.create(:user)}
   let(:project) {FactoryBot.create(:project)}
