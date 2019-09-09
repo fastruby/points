@@ -61,8 +61,9 @@ group :development, :test do
 end
 
 group :test do
+  gem 'apparition'
   gem 'factory_bot_rails'
-  gem 'capybara', '~> 2.13'
+  gem 'capybara'
   gem 'selenium-webdriver'
   gem 'database_cleaner'
   gem 'capybara-screenshot'

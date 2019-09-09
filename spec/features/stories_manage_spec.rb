@@ -1,6 +1,9 @@
 require 'rails_helper'
+require 'capybara/apparition'
 
-RSpec.describe 'managing stories' do
+Capybara.javascript_driver = :apparition
+
+RSpec.describe 'managing stories', js: true do
 
   let(:user) {FactoryBot.create(:user)}
   let(:project) {FactoryBot.create(:project)}
