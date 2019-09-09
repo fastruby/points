@@ -1,7 +1,5 @@
 require 'rails_helper'
-require 'capybara/apparition'
-
-Capybara.javascript_driver = :apparition
+require 'apparition_helper'
 
 RSpec.describe 'managing stories', js: true do
 
