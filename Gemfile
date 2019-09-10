@@ -61,8 +61,9 @@ group :development, :test do
 end
 
 group :test do
+  gem 'apparition', git: "https://github.com/twalpole/apparition.git", ref: "7db58cc6b0e4ca4141b074ff27d5936a1b8874bf"
   gem 'factory_bot_rails'
-  gem 'capybara', '~> 2.13'
+  gem 'capybara'
   gem 'selenium-webdriver'
   gem 'database_cleaner'
   gem 'capybara-screenshot'
