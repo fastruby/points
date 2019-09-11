@@ -1,0 +1,566 @@
+Phase,subtitle,title,description,position
+Rails 4.2 to 5.0,Setup Dev Environment,Rails 4.2 to 5.0: Setup Dev Environment,"There is always some overhead setting up our development environments.
+
+It might be useful to have a Dockerfile and docker-compose.yml to work on this project. ",1
+Rails 4.2 to 5.0,Find alternative for `quiet_assets`,Rails 4.2 to 5.0: Find alternative for `quiet_assets`,"More details:
+
+```
+$ bundle exec bundle_report compatibility --rails-version=5.0.7
+                => Incompatible with Rails 5.0.7 (with new versions that are compatible):
+        These gems will need to be upgraded before upgrading to Rails 5.0.7.
+
+                devise 3.4.1 - upgrade to 4.7.0
+                flavors 0.6.0 - upgrade to 1.0.0
+                jquery-rails 2.1.4 - upgrade to 4.3.5
+                premailer-rails 1.8.2 - upgrade to 1.10.3
+                rails-dom-testing 1.0.9 - upgrade to 2.0.3
+                rails-observers 0.1.2 - upgrade to 0.1.5
+
+                        => Incompatible with Rails 5.0.7 (with no new compatible versions):
+        These gems will need to be removed or replaced before upgrading to Rails 5.0.7.
+
+                db-charmer 2.0.0.rn.dev2 (loaded from git) - new version, 1.9.1, is not compatible with Rails 5.0.7
+                prototype-rails 4.0.0 (loaded from git) - new version, 4.0.1, is not compatible with Rails 5.0.7
+                quiet_assets 1.1.0 - new version, 1.1.0, is not compatible with Rails 5.0.7
+
+                        => Incompatible with Rails 5.0.7 (with no new versions):
+        These gems will need to be upgraded by us or removed before upgrading to Rails 5.0.7.
+        This list is likely to contain internal gems, like Cuddlefish.
+
+                rin-tin-tin 0.0.1 (loaded from git) - new version not found
+
+                10 gems incompatible with Rails 5.0.7
+```",2
+Rails 4.2 to 5.0,Start using `params: { id: 123 }` in controller specs,Rails 4.2 to 5.0: Start using `params: { id: 123 }` in controller specs,"# Current
+
+Positional arguments are deprecated:
+
+```
+DEPRECATION WARNING: Using positional arguments in functional tests has been deprecated,
+         in favor of keyword arguments, and will be removed in Rails 5.1.
+```
+
+# Expected
+
+Start using `params` in controller specs.
+
+## Resources
+
+https://github.com/tjgrathwell/rails5-spec-converter",3
+Rails 4.2 to 5.0,Add ApplicationRecord to app/models,Rails 4.2 to 5.0: Add ApplicationRecord to app/models,"# Background
+
+We will need an app/models/application_record.rb:
+
+```
+class ApplicationRecord < ActiveRecord::Base
+  self.abstract_class = true
+end
+```
+
+The only class that inherits from ActiveRecord::Base will be ApplicationRecord.
+
+# Current
+
+All models in app/models do not extend `ApplicationRecord`
+
+# Expected
+
+All models in app/models should extend `ApplicationRecord`
+
+# References
+
+https://www.ombulabs.com/blog/rails/upgrades/upgrade-rails-from-4-2-to-5-0.html#active-record",4
+Rails 4.2 to 5.0,Create a `Gemfile.next`,Rails 4.2 to 5.0: Create a `Gemfile.next`,"# Current
+
+There is only one `Gemfile` in the project.
+
+# Expected
+
+We want to create a `Gemfile.next` so that we can start targeting a new set of dependencies based on the next version of Rails (5.0)
+
+## Resources
+
+For this we can use something like `ten_years_rails` -- See instructions here: https://fastruby.io/upgrade#6",5
+Rails 4.2 to 5.0,Setup CI to work with Gemfile.next,Rails 4.2 to 5.0: Setup CI to work with Gemfile.next,"# Current
+
+There is only one `Gemfile` in the project.
+
+# Expected
+
+We want to create a `Gemfile.next` so that we can start targeting a new set of dependencies based on the next version of Rails (5.0)
+
+## Resources
+
+For this we can use something like `ten_years_rails` -- See instructions here: https://fastruby.io/upgrade#6",6
+Rails 4.2 to 5.0,Change belongs_to associations to be optional when not required,Rails 4.2 to 5.0: Change belongs_to associations to be optional when not required,"# Background
+
+Make sure that all `belongs_to` associations look like this:
+
+```
+belongs_to :user, optional: true
+```
+
+The only exception will be if the `belongs_to` already says `required: true` as an option.
+
+# Current
+
+Some references to `belongs_to` don't explicitly mention that the relationship is optional.
+
+# Expected
+
+Explicitly define `optional: true` for all `belongs_to` associations which are not required.
+
+# References
+
+https://www.ombulabs.com/blog/rails/upgrades/upgrade-rails-from-4-2-to-5-0.html#active-record",7
+Rails 4.2 to 5.0,`bundle install` using Rails 5.0,Rails 4.2 to 5.0: `bundle install` using Rails 5.0,"# Current
+
+Bumping the version to rails 5.0 will probably fail with the current set of dependencies.
+
+# Expected
+
+Add conditionals to `Gemfile` so that we can start bundling with the next version of Rails.
+
+## Exit criteria
+
+`bundle install` should work with rails version 5.0",8
+Rails 4.2 to 5.0,Change migrations to follow new syntax,Rails 4.2 to 5.0: Change migrations to follow new syntax,"# Background
+
+Make sure that all migrations change from this:
+
+```
+class CreatePosts < ActiveRecord::Migration
+```
+
+To this:
+
+```
+class CreatePosts < ActiveRecord::Migration[4.2]
+```
+
+# Current
+
+Migrations use old Rails format.
+
+# Expected
+
+Migrations use the new format.
+
+# References
+
+https://www.ombulabs.com/blog/rails/upgrades/upgrade-rails-from-4-2-to-5-0.html#active-record",9
+Rails 4.2 to 5.0,Parameters now behave differently,Rails 4.2 to 5.0: Parameters now behave differently,Fix problems with params getting used as hashes. They no longer inherit from HashWithIndifferentAccess.,10
+Rails 4.2 to 5.0,Deprecated config.static_cache_control in favor of config.public_file_server.headers,Rails 4.2 to 5.0: Deprecated config.static_cache_control in favor of config.public_file_server.headers,,11
+Rails 4.2 to 5.0,Deprecated config.serve_static_files in favor of config.public_file_server.enabled,Rails 4.2 to 5.0: Deprecated config.serve_static_files in favor of config.public_file_server.enabled,,12
+Rails 4.2 to 5.0,"Removed respond_to and respond_with placeholder methods,this functionality has been extracted to the responders gem.","Rails 4.2 to 5.0: Removed respond_to and respond_with placeholder methods,this functionality has been extracted to the responders gem.",,13
+Rails 4.2 to 5.0,Removed assigns and assert_template. Both methods have been extracted into the rails-controller-testing gem.,Rails 4.2 to 5.0: Removed assigns and assert_template. Both methods have been extracted into the rails-controller-testing gem.,,14
+Rails 4.2 to 5.0,"Deprecated redirect_to :back in favor of redirect_back,which accepts a required fallback_location","Rails 4.2 to 5.0: Deprecated redirect_to :back in favor of redirect_back,which accepts a required fallback_location",,15
+Rails 4.2 to 5.0,Deprecated returning false as a way to halt Active Model and ActiveModel::Validations callback chains.,Rails 4.2 to 5.0: Deprecated returning false as a way to halt Active Model and ActiveModel::Validations callback chains.,The recommended way is to throw(:abort),16
+Rails 4.2 to 5.0,Start using `rails-controller-testing` gem,Rails 4.2 to 5.0: Start using `rails-controller-testing` gem,"In Rails 5.0, `assigns` have been extracted from Rails and moved to a gem.",17
+Rails 4.2 to 5.0,Fix broken build with Rails 5.0,Rails 4.2 to 5.0: Fix broken build with Rails 5.0,There will be many failures. Fix them all. ,18
+Rails 4.2 to 5.0,Address all deprecation warnings listed in the Rails 4.2 test.log,Rails 4.2 to 5.0: Address all deprecation warnings listed in the Rails 4.2 test.log,Introduce as many backwards compatible changes as possible. ,19
+Rails 4.2 to 5.0,Deploy to staging and QA,Rails 4.2 to 5.0: Deploy to staging and QA,Make sure everything works in staging. ,20
+Rails 4.2 to 5.0,Deploy to production and QA,Rails 4.2 to 5.0: Deploy to production and QA,,21
+Rails 5.0 to 5.1,`bundle install` using Rails 5.1,Rails 5.0 to 5.1: `bundle install` using Rails 5.1,"# Current
+
+Bumping the version to rails 5.1 will probably fail with the current set of dependencies.
+
+# Expected
+
+Add conditionals to `Gemfile` so that we can start bundling with the next version of Rails.
+
+## Exit criteria
+
+`bundle install` should work with rails version 5.1",22
+Rails 5.0 to 5.1,Setup dual boot in Circle CI,Rails 5.0 to 5.1: Setup dual boot in Circle CI,"# Current
+
+We are running the build using Rails 5.0
+
+# Expected
+
+We should be running the building using Rails 5.0 and Rails 5.1",23
+Rails 5.0 to 5.1,Upgrade `acts_as_paranoid`,Rails 5.0 to 5.1: Upgrade `acts_as_paranoid`,"More details:
+
+```
+$ bundle exec bundle_report compatibility --rails-version=5.1.7
+                => Incompatible with Rails 5.1.7 (with new versions that are compatible):
+        These gems will need to be upgraded before upgrading to Rails 5.1.7.
+
+                acts_as_paranoid 0.5.0 - upgrade to 0.6.0
+                devise 3.4.1 - upgrade to 4.7.0
+                flavors 0.6.0 - upgrade to 1.0.0
+                interactor-rails 2.0.2 - upgrade to 2.2.0
+                jquery-rails 2.1.4 - upgrade to 4.3.5
+                premailer-rails 1.8.2 - upgrade to 1.10.3
+                rails-dom-testing 1.0.9 - upgrade to 2.0.3
+                rails-observers 0.1.2 - upgrade to 0.1.5
+
+                        => Incompatible with Rails 5.1.7 (with no new compatible versions):
+        These gems will need to be removed or replaced before upgrading to Rails 5.1.7.
+
+                db-charmer 2.0.0.rn.dev2 (loaded from git) - new version, 1.9.1, is not compatible with Rails 5.1.7
+                prototype-rails 4.0.0 (loaded from git) - new version, 4.0.1, is not compatible with Rails 5.1.7
+                quiet_assets 1.1.0 - new version, 1.1.0, is not compatible with Rails 5.1.7
+
+                        => Incompatible with Rails 5.1.7 (with no new versions):
+        These gems will need to be upgraded by us or removed before upgrading to Rails 5.1.7.
+        This list is likely to contain internal gems, like Cuddlefish.
+
+                rin-tin-tin 0.0.1 (loaded from git) - new version not found
+
+                12 gems incompatible with Rails 5.1.7
+```",24
+Rails 5.0 to 5.1,Upgrade `interactor-rails`,Rails 5.0 to 5.1: Upgrade `interactor-rails`,"More details:
+
+```
+$ bundle exec bundle_report compatibility --rails-version=5.1.7
+                => Incompatible with Rails 5.1.7 (with new versions that are compatible):
+        These gems will need to be upgraded before upgrading to Rails 5.1.7.
+
+                acts_as_paranoid 0.5.0 - upgrade to 0.6.0
+                devise 3.4.1 - upgrade to 4.7.0
+                flavors 0.6.0 - upgrade to 1.0.0
+                interactor-rails 2.0.2 - upgrade to 2.2.0
+                jquery-rails 2.1.4 - upgrade to 4.3.5
+                premailer-rails 1.8.2 - upgrade to 1.10.3
+                rails-dom-testing 1.0.9 - upgrade to 2.0.3
+                rails-observers 0.1.2 - upgrade to 0.1.5
+
+                        => Incompatible with Rails 5.1.7 (with no new compatible versions):
+        These gems will need to be removed or replaced before upgrading to Rails 5.1.7.
+
+                db-charmer 2.0.0.rn.dev2 (loaded from git) - new version, 1.9.1, is not compatible with Rails 5.1.7
+                prototype-rails 4.0.0 (loaded from git) - new version, 4.0.1, is not compatible with Rails 5.1.7
+                quiet_assets 1.1.0 - new version, 1.1.0, is not compatible with Rails 5.1.7
+
+                        => Incompatible with Rails 5.1.7 (with no new versions):
+        These gems will need to be upgraded by us or removed before upgrading to Rails 5.1.7.
+        This list is likely to contain internal gems, like Cuddlefish.
+
+                rin-tin-tin 0.0.1 (loaded from git) - new version not found
+
+                12 gems incompatible with Rails 5.1.7
+```",25
+Rails 5.0 to 5.1,Upgrade assets configuration,Rails 5.0 to 5.1: Upgrade assets configuration,"Make the following changes to config/environments/{development, test, 	production}.rb
+From:
+config.serve_static_files = false
+config.static_cache_control = ""public, max-age=3600""
+To:
+ config.public_file_server.enabled = false
+ config.public_file_server.headers = ""public, max-age=3600""",26
+Rails 5.0 to 5.1,Change all *_filter methods to *_action,Rails 5.0 to 5.1: Change all *_filter methods to *_action,"Rails 5.1 removes support for *_filter usage, use *_action instead",27
+Rails 5.0 to 5.1,Stop using raise_in_transactional_callbacks,Rails 5.0 to 5.1: Stop using raise_in_transactional_callbacks,Remove option from ./config/application.rb,28
+Rails 5.0 to 5.1,"Stop using `uniq`, start using `distinct`","Rails 5.0 to 5.1: Stop using `uniq`, start using `distinct`","# Current
+
+Stop using `uniq` as it is deprecated
+
+# Expected
+
+Start using `distinct` instead
+
+## Details
+
+```
+$ grep ""DEPRECATION WARNING: uniq is deprecated"" *.log
+1test.log:[2017-08-03 00:00:00 +0000] [47082440674580] DEPRECATION WARNING: uniq is deprecated and will be removed from Rails 5.1 (use distinct instead) (called from opted_in_clients at /home/circleci/project/app/models/smart_folder.rb:511)
+1test.log:[2017-08-03 00:00:00 +0000] [47082440674580] DEPRECATION WARNING: uniq is deprecated and will be removed from Rails 5.1 (use distinct instead) (called from opted_in_clients at /home/circleci/project/app/models/smart_folder.rb:511)
+```",29
+Rails 5.0 to 5.1,Method symbolize_keys is deprecated and will be removed in Rails 5.1,Rails 5.0 to 5.1: Method symbolize_keys is deprecated and will be removed in Rails 5.1,"# Current
+
+DEPRECATION WARNING: Method symbolize_keys is deprecated and will be removed in Rails 5.1, as `ActionController::Parameters` no longer inherits from hash. Using this deprecated behavior exposes potential security problems. If you continue to use this method you may be creating a security vulnerability in your app that can be exploited. Instead, consider using one of these documented methods which are not deprecated: http://api.rubyonrails.org/v5.0.7.2/classes/ActionController/Parameters.html (called from create_envelope at /home/circleci/project/app/controllers/folio/docusign_controller.rb:10)
+
+# Expected
+
+Stop using `symbolize_keys`
+
+## WARNING: There are A LOT of references to this method in the project.",30
+Rails 5.0 to 5.1,Stop comparing equality between `ActionController::Parameters` and a `Hash`,Rails 5.0 to 5.1: Stop comparing equality between `ActionController::Parameters` and a `Hash`,"# Current
+
+There are many places where we compare equality between `ActionController::Parameters` and a `Hash`
+
+# Expected
+
+We should stop doing that as Parameters no longer are an instance of Hash
+",31
+Rails 5.0 to 5.1,use_transactional_fixtures was replaced by use_transactional_tests,Rails 5.0 to 5.1: use_transactional_fixtures was replaced by use_transactional_tests,More here: https://www.ombulabs.com/blog/rails/upgrades/upgrade-rails-from-5-0-to-5-1.html,32
+Rails 5.0 to 5.1,Fix issues with ActiveModel::Dirty API changes,Rails 5.0 to 5.1: Fix issues with ActiveModel::Dirty API changes,"# Current
+
+Failures related to API change: https://gist.github.com/etagwerker/d17d343d1a6d7a65c423b4b1034ac607
+
+# Expected
+
+Start using new API",33
+Rails 5.0 to 5.1,Method with_indifferent_access is deprecated and will be removed in Rails 5.1,Rails 5.0 to 5.1: Method with_indifferent_access is deprecated and will be removed in Rails 5.1,"# Current
+
+We are using `with_indifferent_access`
+
+# Expected
+
+We should stop using `with_indifferent_access`
+
+## Details
+
+```
+1test.log:DEPRECATION WARNING: Method with_indifferent_access is deprecated and will be removed in Rails 5.1, as `ActionController::Parameters` no longer inherits from hash. Using this deprecated behavior exposes potential security problems. If you continue to use this method you may be creating a security vulnerability in your app that can be exploited. Instead, consider using one of these documented methods which are not deprecated: http://api.rubyonrails.org/v5.0.7.2/classes/ActionController/Parameters.html (called from from_cloudmailin at /home/circleci/project/lib/core_extensions.rb:385)
+```",34
+Rails 5.0 to 5.1,implement encrypted secrets,Rails 5.0 to 5.1: implement encrypted secrets,,35
+Rails 5.0 to 5.1,unify form_for and form_tag into form_with,Rails 5.0 to 5.1: unify form_for and form_tag into form_with,,36
+Rails 5.0 to 5.1,dotenv-rails 2.1.1 - upgrade to 2.7.5,Rails 5.0 to 5.1: dotenv-rails 2.1.1 - upgrade to 2.7.5,,37
+Rails 5.0 to 5.1,jbuilder 2.6.0 - upgrade to 2.9.1,Rails 5.0 to 5.1: jbuilder 2.6.0 - upgrade to 2.9.1,,38
+Rails 5.0 to 5.1,lograge 0.4.1 - upgrade to 0.11.2,Rails 5.0 to 5.1: lograge 0.4.1 - upgrade to 0.11.2,,39
+Rails 5.0 to 5.1,meta_request 0.4.0 - upgrade to 0.7.2,Rails 5.0 to 5.1: meta_request 0.4.0 - upgrade to 0.7.2,,40
+Rails 5.0 to 5.1,paranoia 2.2.0 - upgrade to 2.4.2,Rails 5.0 to 5.1: paranoia 2.2.0 - upgrade to 2.4.2,,41
+Rails 5.0 to 5.1,rails-dom-testing 1.0.9 - upgrade to 2.0.3,Rails 5.0 to 5.1: rails-dom-testing 1.0.9 - upgrade to 2.0.3,,42
+Rails 5.0 to 5.1,Stop passing `ActiveRecord::Base` objects to `sanitize_sql_hash_for_assignment`,Rails 5.0 to 5.1: Stop passing `ActiveRecord::Base` objects to `sanitize_sql_hash_for_assignment`,"# Current
+
+Passing `ActiveRecord::Base` objects to `sanitize_sql_hash_for_assignment` (or methods which call it, such as `update_all`) is deprecated.
+
+# Expected
+
+Please pass the id directly, instead
+
+## Details
+
+```
+$ grep ""methods which call it"" *.log
+5test.log:DEPRECATION WARNING: Passing `ActiveRecord::Base` objects to `sanitize_sql_hash_for_assignment` (or methods which call it, such as `update_all`) is deprecated. Please pass the id directly, instead. (called from block in create_atomic_delayed_job at /home/circleci/project/lib/model_extensions.rb:68)
+```",43
+Rails 5.0 to 5.1,Stop using `render :text`,Rails 5.0 to 5.1: Stop using `render :text`,"# Current
+
+There are some references to `render :text`
+
+# Expected
+
+We should stop using that API.
+
+## Details
+
+```
+$ grep ""DEPRECATION WARNING: \`render :text"" *.log
+1test.log:DEPRECATION WARNING: `render :text` is deprecated because it does not actually render a `text/plain` response. Switch to `render plain: 'plain text'` to render as `text/plain`, `render html: '<strong>HTML</strong>'` to render as `text/html`, or `render body: 'raw'` to match the deprecated behavior and render with the default Content-Type, which is `text/html`. (called from rescue in process_email at /home/circleci/project/app/controllers/email/cloud_mail_in_controller.rb:25)
+1test.log:DEPRECATION WARNING: `render :text` is deprecated because it does not actually render a `text/plain` response. Switch to `render plain: 'plain text'` to render as `text/plain`, `render html: '<strong>HTML</strong>'` to render as `text/html`, or `render body: 'raw'` to match the deprecated behavior and render with the default Content-Type, which is `text/html`. (called from rescue in process_email at /home/circleci/project/app/controllers/email/cloud_mail_in_controller.rb:25)
+1test.log:DEPRECATION WARNING: `render :text` is deprecated because it does not actually render a `text/plain` response. Switch to `render plain: 'plain text'` to render as `text/plain`, `render html: '<strong>HTML</strong>'` to render as `text/html`, or `render body: 'raw'` to match the deprecated behavior and render with the default Content-Type, which is `text/html`. (called from process_email at /home/circleci/project/app/controllers/email/cloud_mail_in_controller.rb:11)
+1test.log:DEPRECATION WARNING: `render :text` is deprecated because it does not actually render a `text/plain` response. Switch to `render plain: 'plain text'` to render as `text/plain`, `render html: '<strong>HTML</strong>'` to render as `text/html`, or `render body: 'raw'` to match the deprecated behavior and render with the default Content-Type, which is `text/html`. (called from process_email at /home/circleci/project/app/controllers/email/cloud_mail_in_controller.rb:11)
+1test.log:DEPRECATION WARNING: `render :text` is deprecated because it does not actually render a `text/plain` response. Switch to `render plain: 'plain text'` to render as `text/plain`, `render html: '<strong>HTML</strong>'` to render as `text/html`, or `render body: 'raw'` to match the deprecated behavior and render with the default Content-Type, which is `text/html`. (called from process_email at /home/circleci/project/app/controllers/email/cloud_mail_in_controller.rb:13)
+1test.log:DEPRECATION WARNING: `render :text` is deprecated because it does not actually render a `text/plain` response. Switch to `render plain: 'plain text'` to render as `text/plain`, `render html: '<strong>HTML</strong>'` to render as `text/html`, or `render body: 'raw'` to match the deprecated behavior and render with the default Content-Type, which is `text/html`. (called from rescue in process_email at /home/circleci/project/app/controllers/email/cloud_mail_in_controller.rb:22)
+```",44
+Rails 5.0 to 5.1,Fix conflicts with rebases,Rails 5.0 to 5.1: Fix conflicts with rebases,,45
+Rails 5.0 to 5.1,Deploy to staging and QA,Rails 5.0 to 5.1: Deploy to staging and QA,,46
+Rails 5.0 to 5.1,Fix broken build with Rails 5.1,Rails 5.0 to 5.1: Fix broken build with Rails 5.1,There will be many failures. Fix them all.,47
+Rails 5.0 to 5.1,Address all deprecation warnings listed in the Rails 5.0 test.log,Rails 5.0 to 5.1: Address all deprecation warnings listed in the Rails 5.0 test.log,"Introduce as many backwards compatible changes as possible.
+
+",48
+Rails 5.0 to 5.1,Deploy to production and QA,Rails 5.0 to 5.1: Deploy to production and QA,,49
+Rails 5.1 to 5.2,`bundle install` using Rails 5.2,Rails 5.1 to 5.2: `bundle install` using Rails 5.2,"# Current
+
+Bumping the version to rails 5.2 will probably fail with the current set of dependencies.
+
+# Expected
+
+Add conditionals to `Gemfile` so that we can start bundling with the next version of Rails.
+
+## Exit criteria
+
+`bundle install` should work with rails version 5.2",50
+Rails 5.1 to 5.2,Setup dual boot in Circle CI,Rails 5.1 to 5.2: Setup dual boot in Circle CI,"# Current
+
+We are running the build using Rails 5.2
+
+# Expected
+
+We should be running the building using Rails 5.1 and Rails 5.2",51
+Rails 5.1 to 5.2,default_value_for -> upgrade to 3.3.0,Rails 5.1 to 5.2: default_value_for -> upgrade to 3.3.0,"More details:
+
+```
+$ bundle exec bundle_report compatibility --rails-version=5.2.3
+                => Incompatible with Rails 5.2.3 (with new versions that are compatible):
+        These gems will need to be upgraded before upgrading to Rails 5.2.3.
+
+                acts_as_paranoid 0.5.0 - upgrade to 0.6.0
+                default_value_for 3.0.5 - upgrade to 3.3.0
+                devise 3.4.1 - upgrade to 4.7.0
+                flavors 0.6.0 - upgrade to 1.0.0
+                interactor-rails 2.0.2 - upgrade to 2.2.1
+                jquery-rails 2.1.4 - upgrade to 4.3.5
+                premailer-rails 1.8.2 - upgrade to 1.10.3
+                rails-dom-testing 1.0.9 - upgrade to 2.0.3
+                rails-observers 0.1.2 - upgrade to 0.1.5
+
+                        => Incompatible with Rails 5.2.3 (with no new compatible versions):
+        These gems will need to be removed or replaced before upgrading to Rails 5.2.3.
+
+                db-charmer 2.0.0.rn.dev2 (loaded from git) - new version, 1.9.1, is not compatible with Rails 5.2.3
+                prototype-rails 4.0.0 (loaded from git) - new version, 4.0.1, is not compatible with Rails 5.2.3
+                quiet_assets 1.1.0 - new version, 1.1.0, is not compatible with Rails 5.2.3
+
+                        => Incompatible with Rails 5.2.3 (with no new versions):
+        These gems will need to be upgraded by us or removed before upgrading to Rails 5.2.3.
+        This list is likely to contain internal gems, like Cuddlefish.
+
+                rin-tin-tin 0.0.1 (loaded from git) - new version not found
+
+                13 gems incompatible with Rails 5.2.3
+```",52
+Rails 5.1 to 5.2,The behavior of `attribute_changed?` ,Rails 5.1 to 5.2: The behavior of `attribute_changed?` ,"# DEPRECATION WARNING: The behavior of `attribute_changed?` inside of after callbacks will be changing in the next version of Rails. -  app/models
+
+Use the correct names for rails 5.2 `ActiveRecord::Dirty` methods.
+
+See: https://www.ombulabs.com/blog/rails/upgrades/active-record-5-1-api-changes.html",53
+Rails 5.1 to 5.2,Add `bootsnap` configuration,Rails 5.1 to 5.2: Add `bootsnap` configuration,This should improve performance when loading the application. Make sure everything works as expected after setting  this up. ,54
+Rails 5.1 to 5.2,Added config/credentials.yml.enc file to store production app secrets.,Rails 5.1 to 5.2: Added config/credentials.yml.enc file to store production app secrets.,,55
+Rails 5.1 to 5.2,audited 4.5.0 - upgrade to 4.9.0,Rails 5.1 to 5.2: audited 4.5.0 - upgrade to 4.9.0,,56
+Rails 5.1 to 5.2,coffee-rails 4.2.1 - upgrade to 5.0.0,Rails 5.1 to 5.2: coffee-rails 4.2.1 - upgrade to 5.0.0,,57
+Rails 5.1 to 5.2,dotenv-rails 2.1.1 - upgrade to 2.7.5,Rails 5.1 to 5.2: dotenv-rails 2.1.1 - upgrade to 2.7.5,,58
+Rails 5.1 to 5.2,jbuilder 2.6.0 - upgrade to 2.9.1,Rails 5.1 to 5.2: jbuilder 2.6.0 - upgrade to 2.9.1,,59
+Rails 5.1 to 5.2,lograge 0.4.1 - upgrade to 0.11.2,Rails 5.1 to 5.2: lograge 0.4.1 - upgrade to 0.11.2,,60
+Rails 5.1 to 5.2,meta_request 0.4.0 - upgrade to 0.7.2,Rails 5.1 to 5.2: meta_request 0.4.0 - upgrade to 0.7.2,,61
+Rails 5.1 to 5.2,paranoia 2.2.0 - upgrade to 2.4.2,Rails 5.1 to 5.2: paranoia 2.2.0 - upgrade to 2.4.2,,62
+Rails 5.1 to 5.2,rails-dom-testing 1.0.9 - upgrade to 2.0.3,Rails 5.1 to 5.2: rails-dom-testing 1.0.9 - upgrade to 2.0.3,,63
+Rails 5.1 to 5.2,Expire cookies after deployment,Rails 5.1 to 5.2: Expire cookies after deployment,"Cookies generated with Rails 5.1 won't be compatible with Rails 5.2. Expire sessions.
+
+https://edgeguides.rubyonrails.org/upgrading_ruby_on_rails.html#expiry-in-signed-or-encrypted-cookie-is-now-embedded-in-the-cookies-values",64
+Rails 5.1 to 5.2,Address all deprecation warnings listed in the Rails 5.1 test.log,Rails 5.1 to 5.2: Address all deprecation warnings listed in the Rails 5.1 test.log,"Introduce as many backwards compatible changes as possible.
+",65
+Rails 5.1 to 5.2,Fix broken build with Rails 5.2,Rails 5.1 to 5.2: Fix broken build with Rails 5.2,There will be many failures. Fix them all.,66
+Rails 5.1 to 5.2,Fix conflicts with rebases,Rails 5.1 to 5.2: Fix conflicts with rebases,,67
+Rails 5.1 to 5.2,Deploy to staging and QA,Rails 5.1 to 5.2: Deploy to staging and QA,,68
+Rails 5.1 to 5.2,Deploy to production and QA,Rails 5.1 to 5.2: Deploy to production and QA,,69
+Rails 5.2 to 6.0,`bundle install` using Rails 6.0,Rails 5.2 to 6.0: `bundle install` using Rails 6.0,"# Current
+
+Bumping the version to rails 6.0 will probably fail with the current set of dependencies.
+
+# Expected
+
+Add conditionals to `Gemfile` so that we can start bundling with the next version of Rails.
+
+## Exit criteria
+
+`bundle install` should work with rails version 6.0",70
+Rails 5.2 to 6.0,Setup dual boot in Circle CI,Rails 5.2 to 6.0: Setup dual boot in Circle CI,"# Current
+
+We are running the build using Rails 5.2
+
+# Expected
+
+We should be running the building using Rails 5.2 and Rails 6.0",71
+Rails 5.2 to 6.0,Address all deprecation warnings listed in the Rails 5.2 test.log,Rails 5.2 to 6.0: Address all deprecation warnings listed in the Rails 5.2 test.log,"Introduce as many backwards compatible changes as possible.
+",72
+Rails 5.2 to 6.0,Migrate to webpack (optional),Rails 5.2 to 6.0: Migrate to webpack (optional),,73
+Rails 5.2 to 6.0,audited 4.5.0 - upgrade to 4.9.0,Rails 5.2 to 6.0: audited 4.5.0 - upgrade to 4.9.0,,74
+Rails 5.2 to 6.0,coffee-rails 4.2.1 - upgrade to 5.0.0,Rails 5.2 to 6.0: coffee-rails 4.2.1 - upgrade to 5.0.0,,75
+Rails 5.2 to 6.0,devise 4.6.1 - upgrade to 4.7.1,Rails 5.2 to 6.0: devise 4.6.1 - upgrade to 4.7.1,,76
+Rails 5.2 to 6.0,dotenv-rails 2.1.1 - upgrade to 2.7.5,Rails 5.2 to 6.0: dotenv-rails 2.1.1 - upgrade to 2.7.5,,77
+Rails 5.2 to 6.0,jbuilder 2.6.0 - upgrade to 2.9.1,Rails 5.2 to 6.0: jbuilder 2.6.0 - upgrade to 2.9.1,,78
+Rails 5.2 to 6.0,lograge 0.4.1 - upgrade to 0.11.2,Rails 5.2 to 6.0: lograge 0.4.1 - upgrade to 0.11.2,,79
+Rails 5.2 to 6.0,meta_request 0.4.0 - upgrade to 0.7.2,Rails 5.2 to 6.0: meta_request 0.4.0 - upgrade to 0.7.2,,80
+Rails 5.2 to 6.0,paranoia 2.2.0 - upgrade to 2.4.2,Rails 5.2 to 6.0: paranoia 2.2.0 - upgrade to 2.4.2,,81
+Rails 5.2 to 6.0,rails-dom-testing 1.0.9 - upgrade to 2.0.3,Rails 5.2 to 6.0: rails-dom-testing 1.0.9 - upgrade to 2.0.3,,82
+Rails 5.2 to 6.0,redis-actionpack 5.0.0 - upgrade to 5.1.0,Rails 5.2 to 6.0: redis-actionpack 5.0.0 - upgrade to 5.1.0,,83
+Rails 5.2 to 6.0,redis-activesupport 5.0.1 - upgrade to 5.2.0,Rails 5.2 to 6.0: redis-activesupport 5.0.1 - upgrade to 5.2.0,,84
+Rails 5.2 to 6.0,responders 2.4.1 - upgrade to 3.0.0,Rails 5.2 to 6.0: responders 2.4.1 - upgrade to 3.0.0,,85
+Rails 5.2 to 6.0,sass-rails 5.0.6 - upgrade to 6.0.0,Rails 5.2 to 6.0: sass-rails 5.0.6 - upgrade to 6.0.0,,86
+Rails 5.2 to 6.0,sass-rails 5.0.7 - upgrade to 6.0.0,Rails 5.2 to 6.0: sass-rails 5.0.7 - upgrade to 6.0.0,"More details:
+
+```
+$ bundle exec bundle_report compatibility --rails-version=6.0.0
+                => Incompatible with Rails 6.0.0 (with new versions that are compatible):
+        These gems will need to be upgraded before upgrading to Rails 6.0.0.
+
+                awesome_nested_set 3.1.4 - upgrade to 3.2.0
+                default_value_for 3.0.5 - upgrade to 3.3.0
+                devise 3.4.1 - upgrade to 4.7.0
+                flavors 0.6.0 - upgrade to 1.0.0
+                interactor-rails 2.0.2 - upgrade to 2.2.1
+                jquery-rails 2.1.4 - upgrade to 4.3.5
+                premailer-rails 1.8.2 - upgrade to 1.10.3
+                rails-dom-testing 1.0.9 - upgrade to 2.0.3
+                rails-observers 0.1.2 - upgrade to 0.1.5
+                responders 2.4.0 - upgrade to 3.0.0
+                sass-rails 5.0.7 - upgrade to 6.0.0
+
+                        => Incompatible with Rails 6.0.0 (with no new compatible versions):
+        These gems will need to be removed or replaced before upgrading to Rails 6.0.0.
+
+                actionpack-action_caching 1.2.0 - new version, 1.2.0, is not compatible with Rails 6.0.0
+                actionpack-page_caching 1.1.0 - new version, 1.1.1, is not compatible with Rails 6.0.0
+                acts_as_paranoid 0.5.0 - new version, 0.6.0, is not compatible with Rails 6.0.0
+                db-charmer 2.0.0.rn.dev2 (loaded from git) - new version, 1.9.1, is not compatible with Rails 6.0.0
+                prototype-rails 4.0.0 (loaded from git) - new version, 4.0.1, is not compatible with Rails 6.0.0
+                quiet_assets 1.1.0 - new version, 1.1.0, is not compatible with Rails 6.0.0
+                remockable 0.3.6 - new version, 0.3.6, is not compatible with Rails 6.0.0
+
+                        => Incompatible with Rails 6.0.0 (with no new versions):
+        These gems will need to be upgraded by us or removed before upgrading to Rails 6.0.0.
+        This list is likely to contain internal gems, like Cuddlefish.
+
+                rin-tin-tin 0.0.1 (loaded from git) - new version not found
+
+                19 gems incompatible with Rails 6.0.0
+```",87
+Rails 5.2 to 6.0,responders 2.4.0 - upgrade to 3.0.0,Rails 5.2 to 6.0: responders 2.4.0 - upgrade to 3.0.0,"More details:
+
+```
+$ bundle exec bundle_report compatibility --rails-version=6.0.0
+                => Incompatible with Rails 6.0.0 (with new versions that are compatible):
+        These gems will need to be upgraded before upgrading to Rails 6.0.0.
+
+                awesome_nested_set 3.1.4 - upgrade to 3.2.0
+                default_value_for 3.0.5 - upgrade to 3.3.0
+                devise 3.4.1 - upgrade to 4.7.0
+                flavors 0.6.0 - upgrade to 1.0.0
+                interactor-rails 2.0.2 - upgrade to 2.2.1
+                jquery-rails 2.1.4 - upgrade to 4.3.5
+                premailer-rails 1.8.2 - upgrade to 1.10.3
+                rails-dom-testing 1.0.9 - upgrade to 2.0.3
+                rails-observers 0.1.2 - upgrade to 0.1.5
+                responders 2.4.0 - upgrade to 3.0.0
+                sass-rails 5.0.7 - upgrade to 6.0.0
+
+                        => Incompatible with Rails 6.0.0 (with no new compatible versions):
+        These gems will need to be removed or replaced before upgrading to Rails 6.0.0.
+
+                actionpack-action_caching 1.2.0 - new version, 1.2.0, is not compatible with Rails 6.0.0
+                actionpack-page_caching 1.1.0 - new version, 1.1.1, is not compatible with Rails 6.0.0
+                acts_as_paranoid 0.5.0 - new version, 0.6.0, is not compatible with Rails 6.0.0
+                db-charmer 2.0.0.rn.dev2 (loaded from git) - new version, 1.9.1, is not compatible with Rails 6.0.0
+                prototype-rails 4.0.0 (loaded from git) - new version, 4.0.1, is not compatible with Rails 6.0.0
+                quiet_assets 1.1.0 - new version, 1.1.0, is not compatible with Rails 6.0.0
+                remockable 0.3.6 - new version, 0.3.6, is not compatible with Rails 6.0.0
+
+                        => Incompatible with Rails 6.0.0 (with no new versions):
+        These gems will need to be upgraded by us or removed before upgrading to Rails 6.0.0.
+        This list is likely to contain internal gems, like Cuddlefish.
+
+                rin-tin-tin 0.0.1 (loaded from git) - new version not found
+
+                19 gems incompatible with Rails 6.0.0
+```",88
+Rails 5.2 to 6.0,Rename `be_success` to `be_successful`,Rails 5.2 to 6.0: Rename `be_success` to `be_successful`,"Remove deprecated methods in ActionDispatch::TestResponse: #success? in favor of #successful?, #missing? in favor of #not_found?, #error? in favor of #server_error?",89
+Rails 5.2 to 6.0,Remove calls to deprecated `config.secret_token`,Rails 5.2 to 6.0: Remove calls to deprecated `config.secret_token`,More here: https://github.com/rails/rails/commit/46ac5fe69a20d4539a15929fe48293e1809a26b0,90
+Rails 5.2 to 6.0,Solve issues with new autoloading mechanism (zeitwerk),Rails 5.2 to 6.0: Solve issues with new autoloading mechanism (zeitwerk),"The default configuration for Rails 6
+
+# config/application.rb
+
+config.load_defaults ""6.0""
+enables zeitwerk autoloading mode on CRuby. In that mode, autoloading, reloading, and eager loading are managed by Zeitwerk.",91
+Rails 5.2 to 6.0,"Verify one file, one constant (autoload)","Rails 5.2 to 6.0: Verify one file, one constant (autoload)","2.6.8 One file, one constant (at the same top-level)
+
+In classic mode you could technically define several constants at the same top-level and have them all reloaded. For example, given
+
+```
+# app/models/foo.rb
+
+class Foo
+end
+
+class Bar
+end
+while Bar could not be autoloaded, autoloading Foo would mark Bar as autoloaded too. This is not the case in zeitwerk mode, you need to move Bar to its own file bar.rb. One file, one constant.
+```",92
+Rails 5.2 to 6.0,Fix broken build with Rails 6.0,Rails 5.2 to 6.0: Fix broken build with Rails 6.0,There will be many failures. Fix them all.,93
+Rails 5.2 to 6.0,Fix conflicts with rebases,Rails 5.2 to 6.0: Fix conflicts with rebases,,94
+Rails 5.2 to 6.0,Deploy to staging and QA,Rails 5.2 to 6.0: Deploy to staging and QA,,95
+Rails 5.2 to 6.0,Deploy to production and QA,Rails 5.2 to 6.0: Deploy to production and QA,,96
+Rails 5.2 to 6.0,Expire cookies after deployment,Rails 5.2 to 6.0: Expire cookies after deployment,"Cookies generated with Rails 5.2 won't be compatible with Rails 6.0. Expire sessions.
+
+https://edgeguides.rubyonrails.org/upgrading_ruby_on_rails.html#expiry-in-signed-or-encrypted-cookie-is-now-embedded-in-the-cookies-values",97
