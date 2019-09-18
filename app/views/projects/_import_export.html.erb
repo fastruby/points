@@ -1,0 +1,27 @@
+<details id='import-export'>
+  <summary><h4>CSV Import / Export</h4></summary>
+  <section>
+    <div id='import' class="card-deck mb-3 text-center">
+      <div class="card mb-6 box-shadow">
+        <div class="card-header">
+          <h4 class="my-0 font-weight-normal">Import CSV</h4>
+        </div>
+        <div class="card-body">
+          <%= form_with(url: import_project_stories_path(@project), method: :patch) do |f| %>  <p>
+      <%= f.file_field :file %>
+    </p>
+    <p><%= f.submit 'Import', class: 'btn btn-sm btn-block btn-outline-primary', data: { confirm: "Existing stories will be removed for '#{@project.title}' before importing. Proceed?" } %></p>
+  <% end %>
+        </div>
+      </div>
+      <div id='export' class="card mb-6 box-shadow">
+        <div class="card-header">
+          <h4 class="my-0 font-weight-normal">Export CSV</h4>
+        </div>
+        <div class="card-body">
+          <%= link_to 'Export', export_project_stories_path(@project), class:"btn btn-sm btn-block btn-primary" %>
+        </div>
+      </div>
+    </div>
+  </section>
+</details>
