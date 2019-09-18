@@ -1,0 +1,126 @@
+title,description,position
+Rails 4.2 to 5.0: Setup Dev Environment,"There is always some overhead setting up our development environments.
+
+It might be useful to have a Dockerfile and docker-compose.yml to work on this project. ",1
+Rails 4.2 to 5.0: Create a `Gemfile.next`,"# Current
+
+There is only one `Gemfile` in the project.
+
+# Expected
+
+We want to create a `Gemfile.next` so that we can start targeting a new set of dependencies based on the next version of Rails (5.0)
+
+## Resources
+
+For this we can use something like `ten_years_rails` -- See instructions here: https://fastruby.io/upgrade#6",5
+Rails 4.2 to 5.0: Setup CI to work with Gemfile.next,"# Current
+
+There is only one `Gemfile` in the project.
+
+# Expected
+
+We want to create a `Gemfile.next` so that we can start targeting a new set of dependencies based on the next version of Rails (5.0)
+
+## Resources
+
+For this we can use something like `ten_years_rails` -- See instructions here: https://fastruby.io/upgrade#6",6
+Rails 4.2 to 5.0: Find alternative for `quiet_assets`,"More details:
+
+```
+$ bundle exec bundle_report compatibility --rails-version=5.0.7
+                => Incompatible with Rails 5.0.7 (with new versions that are compatible):
+        These gems will need to be upgraded before upgrading to Rails 5.0.7.
+
+                devise 3.4.1 - upgrade to 4.7.0
+                flavors 0.6.0 - upgrade to 1.0.0
+                jquery-rails 2.1.4 - upgrade to 4.3.5
+                premailer-rails 1.8.2 - upgrade to 1.10.3
+                rails-dom-testing 1.0.9 - upgrade to 2.0.3
+                rails-observers 0.1.2 - upgrade to 0.1.5
+
+                        => Incompatible with Rails 5.0.7 (with no new compatible versions):
+        These gems will need to be removed or replaced before upgrading to Rails 5.0.7.
+
+                db-charmer 2.0.0.rn.dev2 (loaded from git) - new version, 1.9.1, is not compatible with Rails 5.0.7
+                prototype-rails 4.0.0 (loaded from git) - new version, 4.0.1, is not compatible with Rails 5.0.7
+                quiet_assets 1.1.0 - new version, 1.1.0, is not compatible with Rails 5.0.7
+
+                        => Incompatible with Rails 5.0.7 (with no new versions):
+        These gems will need to be upgraded by us or removed before upgrading to Rails 5.0.7.
+        This list is likely to contain internal gems, like Cuddlefish.
+
+                rin-tin-tin 0.0.1 (loaded from git) - new version not found
+
+                10 gems incompatible with Rails 5.0.7
+```",2
+Rails 4.2 to 5.0: Start using `params: { id: 123 }` in controller specs,"# Current
+
+Positional arguments are deprecated:
+
+```
+DEPRECATION WARNING: Using positional arguments in functional tests has been deprecated,
+         in favor of keyword arguments, and will be removed in Rails 5.1.
+```
+
+# Expected
+
+Start using `params` in controller specs.
+
+## Resources
+
+https://github.com/tjgrathwell/rails5-spec-converter",3
+Rails 4.2 to 5.0: Add ApplicationRecord to app/models,"# Background
+
+We will need an app/models/application_record.rb:
+
+```
+class ApplicationRecord < ActiveRecord::Base
+  self.abstract_class = true
+end
+```
+
+The only class that inherits from ActiveRecord::Base will be ApplicationRecord.
+
+# Current
+
+All models in app/models do not extend `ApplicationRecord`
+
+# Expected
+
+All models in app/models should extend `ApplicationRecord`
+
+# References
+
+https://www.ombulabs.com/blog/rails/upgrades/upgrade-rails-from-4-2-to-5-0.html#active-record",4
+Rails 4.2 to 5.0: Change belongs_to associations to be optional when not required,"# Background
+
+Make sure that all `belongs_to` associations look like this:
+
+```
+belongs_to :user, optional: true
+```
+
+The only exception will be if the `belongs_to` already says `required: true` as an option.
+
+# Current
+
+Some references to `belongs_to` don't explicitly mention that the relationship is optional.
+
+# Expected
+
+Explicitly define `optional: true` for all `belongs_to` associations which are not required.
+
+# References
+
+https://www.ombulabs.com/blog/rails/upgrades/upgrade-rails-from-4-2-to-5-0.html#active-record",7
+Rails 4.2 to 5.0: `bundle install` using Rails 5.0,"# Current
+
+Bumping the version to rails 5.0 will probably fail with the current set of dependencies.
+
+# Expected
+
+Add conditionals to `Gemfile` so that we can start bundling with the next version of Rails.
+
+## Exit criteria
+
+`bundle install` should work with rails version 5.0",8

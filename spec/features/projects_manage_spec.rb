@@ -36,4 +36,29 @@ RSpec.describe 'managing projects' do
     click_link 'Delete Project'
     expect(Project.count).to eq 0
   end
+
+  context "import & Export" do
+
+    before do
+      project.stories.create(title: 'upgrade rails', description: 'php upgrade')
+    end
+
+    it "allows me to export a CSV" do
+      visit project_path(id: project.id)
+      find('#import-export').click
+      click_on 'Export'
+      expect(page.response_headers['Content-Type']).to eql "text/csv"
+      expect(page.text).to include("php upgrade")
+    end
+
+    it "allows me to import a CSV" do
+      visit project_path(id: project.id)
+      find('#import-export').click
+      page.attach_file('file', (Rails.root + 'spec/fixtures/test.csv').to_s)
+      click_on 'Import'
+      expect(project.stories.count).to be > 1
+      expect(project.stories.map(&:title).join).to_not include("php upgrade")
+      expect(page.current_path).to eql project_path(project.id)
+    end
+  end
 end
