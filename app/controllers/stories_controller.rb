@@ -1,3 +1,4 @@
+require 'csv'
 class StoriesController < ApplicationController
   before_action :authenticate_user!
   before_action :find_project
@@ -45,6 +46,34 @@ class StoriesController < ApplicationController
     end
   end
 
+  def import
+    if !params[:file].original_filename.ends_with?(".csv")
+      render('stories/invalid_file') and return
+    end
+    file = CSV.parse(params[:file].read, headers: true) rescue []
+    if !expected_csv_headers?(file)
+      render('stories/invalid_csv') and return
+    else
+      @project.stories.destroy_all
+      file.each do |story_csv|
+        @project.stories.create(title: story_csv['title'], description: story_csv['description'], position: story_csv['position'])
+      end
+      redirect_to project_path(@project)
+    end
+  end
+
+  def export
+    headers = %w{title description position}
+    csv = CSV.generate(headers: true) do |csv|
+      csv << headers
+      @project.stories.each do |story|
+        csv << story.attributes.slice(*headers)
+      end
+    end
+    filename = "#{@project.title.gsub(/[^\w]/, '_')}-#{Time.now.to_s(:short).gsub(" ", '_')}.csv"
+    send_data csv, filename: filename
+  end
+
 
 private
 
@@ -58,6 +87,10 @@ private
 
   def stories_params
     params.require(:story).permit(:title, :description, :project_id)
+  end
+
+  def expected_csv_headers?(file)
+    ['title', 'description', 'position'].to_set.subset?(file.headers.to_set)
   end
 
 end
