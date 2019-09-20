@@ -6,7 +6,7 @@
 
 .dashboard-title {
   text-align: center;
-  margin-top: 125px;
+  margin-top: 25px;
   margin-bottom: 25px;
   font-size: 35px;
   font-weight: 300;
@@ -159,8 +159,10 @@ td a:hover {
     background-color:#fff;
     padding:15px;
     border:1px solid #ddd;
+    margin-bottom:60px;
   }
   summary h4{display: inline-block;}
+  input[type=file]{display: inline-block; margin:10px}
 }
 
 .card-deck {
@@ -194,8 +196,13 @@ td a:hover {
     margin-right: 15px;
     margin-bottom: 0;
     margin-left: 15px;
+    justify-content: space-between;
 }
 #export .btn{
   margin-top: 29px;
   color: white;
+}
+
+main.container{
+  padding-top: 100px;
 }
