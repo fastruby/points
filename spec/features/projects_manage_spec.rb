@@ -58,6 +58,7 @@ RSpec.describe 'managing projects' do
       click_on 'Import'
       expect(project.stories.count).to be > 1
       expect(project.stories.map(&:title).join).to_not include("php upgrade")
+      expect(page.text).to include("success")
       expect(page.current_path).to eql project_path(project.id)
     end
   end
