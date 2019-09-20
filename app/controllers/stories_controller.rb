@@ -47,17 +47,21 @@ class StoriesController < ApplicationController
   end
 
   def import
+
     if !params[:file].original_filename.ends_with?(".csv")
-      render('stories/invalid_file') and return
+      flash[:error] = "invalid File: must be CSV"
+      redirect_to(@project) and return
     end
     file = CSV.parse(params[:file].read, headers: true) rescue []
     if !expected_csv_headers?(file)
-      render('stories/invalid_csv') and return
+      flash[:error] = "invalid CSV: must have headers title,description,position"
+      redirect_to(@project) and return
     else
       @project.stories.destroy_all
       file.each do |story_csv|
         @project.stories.create(title: story_csv['title'], description: story_csv['description'], position: story_csv['position'])
       end
+      flash[:success] = "CSV import was successful"
       redirect_to project_path(@project)
     end
   end
