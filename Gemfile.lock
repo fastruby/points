@@ -207,6 +207,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
+    recursive-open-struct (1.1.0)
     redcarpet (3.0.0)
     regexp_parser (1.6.0)
     responders (3.0.0)
@@ -324,6 +325,7 @@ DEPENDENCIES
   puma (~> 3.7)
   rails (~> 5.1.4)
   rails-controller-testing
+  recursive-open-struct
   redcarpet (~> 3.0.0)
   rspec-rails (~> 3.7)
   sass-rails (~> 5.0)
