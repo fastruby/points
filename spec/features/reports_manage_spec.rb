@@ -10,6 +10,12 @@ RSpec.describe 'managing reports' do
     login_as(user, :scope => :user)
   end
 
+  it "shows message for no projects" do
+    project.destroy
+    visit reports_index_path
+    expect(page).to have_content "No Projects"
+  end
+
   context "with no estimates" do
 
     it "shows no estimates" do
