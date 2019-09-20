@@ -58,6 +58,7 @@ group :development, :test do
   gem 'shoulda-matchers', '~> 3.1'
   gem 'rails-controller-testing'
   gem 'dotenv-rails'
+  gem 'recursive-open-struct'
 end
 
 group :test do
