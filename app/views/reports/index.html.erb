@@ -15,6 +15,9 @@
         <td><%= link_to "View Report", project_report_path(project.id), class: "link" %></td>
       </tr>
     <% end %>
+    <% if @projects.empty? %>
+    <tr><td>No Projects</td><td></td></tr>
+    <% end %>
   </tbody>
 </table>
 
