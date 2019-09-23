@@ -53,7 +53,10 @@ class StoriesController < ApplicationController
       redirect_to(@project) and return
     end
     file = CSV.parse(params[:file].read, headers: true) rescue []
-    if !expected_csv_headers?(file)
+    if file.empty?
+      flash[:error] = "CSV Error: File is empty or could not be parsed"
+      redirect_to(@project) and return
+    elsif !expected_csv_headers?(file)
       flash[:error] = "invalid CSV: must have headers title,description,position"
       redirect_to(@project) and return
     else
