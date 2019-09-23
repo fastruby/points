@@ -43,7 +43,7 @@
   background-color: inherit;
 }
 
-#create-button {
+nav.actions a  {
   margin: 0 20px;
   background-color: #57CE81;
   color: #272727;
@@ -52,28 +52,14 @@
   font-size: 16px;
   line-height: 22px;
   font-weight: 400;
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
-  -ms-border-radius: 20px;
-  -o-border-radius: 20px;
+  border-radius: 20px;
   margin-bottom: 1em;
   margin-top: 1em;
-  cursor: pointer;
-}
 
-#create-button:hover {
-  background-color: #58ff93;
-  color: #272727;
-}
-
-#create-button a {
-  color: #272727;
-  text-decoration: none;
-}
-
-#create-button a:hover {
-  color: #272727;
-  text-decoration: none;
+  &:hover {
+    background-color: #58ff93;
+    color: #272727;
+  }
 }
 
 // For new.html.erb and edit.html.erb
