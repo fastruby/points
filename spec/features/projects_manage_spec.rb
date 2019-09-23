@@ -40,7 +40,7 @@ RSpec.describe 'managing projects' do
   context "import & Export" do
 
     before do
-      project.stories.create(title: 'upgrade rails', description: 'php upgrade')
+      project.stories.create(title: 'php upgrade', description: 'php upgrade')
     end
 
     it "allows me to export a CSV" do
@@ -57,7 +57,7 @@ RSpec.describe 'managing projects' do
       page.attach_file('file', (Rails.root + 'spec/fixtures/test.csv').to_s)
       click_on 'Import'
       expect(project.stories.count).to be > 1
-      expect(project.stories.map(&:title).join).to_not include("php upgrade")
+      expect(project.stories.map(&:title).join).to include("php upgrade")
       expect(page.text).to include("success")
       expect(page.current_path).to eql project_path(project.id)
     end

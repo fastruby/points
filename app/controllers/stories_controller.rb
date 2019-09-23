@@ -57,9 +57,9 @@ class StoriesController < ApplicationController
       flash[:error] = "invalid CSV: must have headers title,description,position"
       redirect_to(@project) and return
     else
-      @project.stories.destroy_all
       file.each do |story_csv|
-        @project.stories.create(title: story_csv['title'], description: story_csv['description'], position: story_csv['position'])
+        story = @project.stories.where(id: story_csv['id']).first || @project.stories.new
+        story.update(title: story_csv['title'], description: story_csv['description'], position: story_csv['position'])
       end
       flash[:success] = "CSV import was successful"
       redirect_to project_path(@project)
@@ -67,7 +67,7 @@ class StoriesController < ApplicationController
   end
 
   def export
-    headers = %w{title description position}
+    headers = %w{id title description position}
     csv = CSV.generate(headers: true) do |csv|
       csv << headers
       @project.stories.each do |story|
