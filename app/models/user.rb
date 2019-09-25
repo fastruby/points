@@ -10,6 +10,6 @@ class User < ApplicationRecord
       name: auth.info.name,
       password: Devise.friendly_token[0,20]
     }
-    where(provider: auth.provider, uid: auth.uid).first_or_create.update(user_attributes)
+    where(provider: auth.provider, uid: auth.uid).first_or_create.tap{|user| user.update(user_attributes)}
    end
 end

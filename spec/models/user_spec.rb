@@ -25,6 +25,10 @@ RSpec.describe User, type: :model do
         User.from_omniauth(auth)
         expect(User.last.name).to eql 'benjamin'
       end
+
+      it "returns a user record" do
+        expect(User.from_omniauth(auth)).to be_a User
+      end
     end
   end
 end
