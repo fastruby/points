@@ -41,10 +41,13 @@
   </tfoot>
 </table>
 
-<div class="wrapper">
-  <%= link_to "Add a Story", new_project_story_path(@project.id), class: "btn btn-lg btn-primary", id: "create-button" %>
-  <%= link_to "Edit or Delete Project", edit_project_path(@project.id), class: "btn btn-lg btn-primary", id: "create-button"%>
-</div>
+<nav class="wrapper actions">
+  <%= link_to "Add a Story", new_project_story_path(@project.id) %>
+  <%= link_to "Edit or Delete Project", edit_project_path(@project.id) %>
+  <% if current_user.admin? %>
+    <%= link_to "View Report", project_report_path(@project.id) %>
+  <% end %>
+</nav>
 
 <hr>
 </br>
