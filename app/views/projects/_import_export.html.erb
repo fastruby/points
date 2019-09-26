@@ -9,7 +9,7 @@
         <div class="card-body">
           <%= form_with(url: import_project_stories_path(@project), method: :patch, remote: false) do |f| %>
             <%= f.file_field :file %>
-            <%= f.submit 'Import', class: 'btn btn-sm btn-block btn-outline-primary' %>
+            <%= f.submit 'Import', class: 'btn btn-sm btn-block btn-primary' %>
           <% end %>
         </div>
       </div>
