@@ -4,6 +4,8 @@ class StoriesController < ApplicationController
   before_action :find_project
   before_action :find_story, only: [:edit, :update, :destroy, :show]
 
+  CSV_HEADERS = %w{id title description position}
+
   def new
     @story = Story.new
   end
@@ -49,7 +51,7 @@ class StoriesController < ApplicationController
   def import
 
     if !params[:file].original_filename.ends_with?(".csv")
-      flash[:error] = "invalid File: must be CSV"
+      flash[:error] = "Invalid File: Must be CSV"
       redirect_to(@project) and return
     end
     file = CSV.parse(params[:file].read, headers: true) rescue []
@@ -57,7 +59,7 @@ class StoriesController < ApplicationController
       flash[:error] = "CSV Error: File is empty or could not be parsed"
       redirect_to(@project) and return
     elsif !expected_csv_headers?(file)
-      flash[:error] = "invalid CSV: must have headers title,description,position"
+      flash[:error] = "Invalid CSV: Must have headers title,description,position"
       redirect_to(@project) and return
     else
       file.each do |story_csv|
@@ -70,11 +72,10 @@ class StoriesController < ApplicationController
   end
 
   def export
-    headers = %w{id title description position}
     csv = CSV.generate(headers: true) do |csv|
-      csv << headers
+      csv << CSV_HEADERS
       @project.stories.each do |story|
-        csv << story.attributes.slice(*headers)
+        csv << story.attributes.slice(*CSV_HEADERS)
       end
     end
     filename = "#{@project.title.gsub(/[^\w]/, '_')}-#{Time.now.to_s(:short).gsub(" ", '_')}.csv"
