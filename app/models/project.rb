@@ -13,6 +13,10 @@ class Project < ApplicationRecord
     stories.sum(&:worst_estimate_average)
   end
 
+  def real_score_total
+    stories.sum(&:real_score)
+  end
+
   def best_estimate_sum_per_user(user)
     stories.sum { |x| x.best_estimate_sum(user) }
   end
@@ -20,4 +24,5 @@ class Project < ApplicationRecord
   def worst_estimate_sum_per_user(user)
     stories.sum { |x| x.worst_estimate_sum(user) }
   end
+
 end
