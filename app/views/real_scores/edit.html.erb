@@ -16,7 +16,8 @@
           <td id="wide"><%= link_to story.title, [@project, story], target: "_blank" %></td>
           <td><%= best_estimate_for_story(story) %></td>
           <td><%= worst_estimate_for_story(story) %></td>
-          <td><%= form.text_field "story_#{story.id}", size: 4, value: story.real_score, autocomplete: :off %></td>
+          <td><%= form.select "story_#{story.id}", fib_numbers, {}, value: story.real_score, autocomplete: :off %></td>
+
         </tr>
       <% end %>
     </tbody>
