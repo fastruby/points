@@ -11,7 +11,8 @@ class RealScoresController < ApplicationController
     values.each do |id,score|
       @project.stories.find{|story| story.id == id.to_i}.update(real_score: score)
     end
-    redirect_to @project
+
+    redirect_to [@project, :report], flash: {success: "Real scores populated"} 
   end
 
 private

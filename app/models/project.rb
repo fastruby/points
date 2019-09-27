@@ -14,7 +14,7 @@ class Project < ApplicationRecord
   end
 
   def real_score_total
-    stories.sum(&:real_score)
+    stories.collect(&:real_score).compact.sum
   end
 
   def best_estimate_sum_per_user(user)
