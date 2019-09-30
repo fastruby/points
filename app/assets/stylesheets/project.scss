@@ -6,7 +6,7 @@
 
 .dashboard-title {
   text-align: center;
-  margin-top: 125px;
+  margin-top: 25px;
   margin-bottom: 25px;
   font-size: 35px;
   font-weight: 300;
@@ -137,4 +137,58 @@ td a:hover {
 
 #wide {
   min-width: 400px;
+}
+
+#import-export{
+  margin-bottom:10px;
+  section{
+    background-color:#fff;
+    padding:15px;
+    border:1px solid #ddd;
+    margin-bottom:60px;
+  }
+  summary h4{display: inline-block;}
+  input[type=file]{display: inline-block; margin:10px}
+}
+
+.card-deck {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.card-deck {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+.card-deck .card {
+    min-width: 220px;
+}
+.card-deck .card {
+  min-height:100px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 0 0%;
+    flex: 1 0 0%;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    margin-right: 15px;
+    margin-bottom: 0;
+    margin-left: 15px;
+    justify-content: space-between;
+}
+#export .btn{
+  margin-top: 29px;
+  color: white;
+}
+
+main.container{
+  padding-top: 100px;
 }

@@ -10,14 +10,10 @@
   </head>
   <body class="content <%= controller_name %>-controller <%= action_name %>-action">
     <%= render 'layouts/header' %>
-    <div class="container">
-      <% if flash[:success] %>
-        <% flash.each do |key, value| %>
-          <div class="alert alert-<%= key %>"><%= value %></div>
-        <% end %>
-      <% end %>
+    <main class="container">
+      <%= render 'layouts/flash' %>
       <%= yield %>
-    </div>
+    </main>
     <div class="push"></div>
     <%= render 'layouts/footer' %>
   </body>

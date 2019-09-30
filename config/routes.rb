@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     resource :report
 
     resources :stories do
+      patch :import, on: :collection
+      get :export, on: :collection
       resources :estimates
     end
   end

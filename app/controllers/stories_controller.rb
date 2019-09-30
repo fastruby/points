@@ -1,7 +1,10 @@
+require 'csv'
 class StoriesController < ApplicationController
   before_action :authenticate_user!
   before_action :find_project
   before_action :find_story, only: [:edit, :update, :destroy, :show]
+
+  CSV_HEADERS = %w{id title description position}
 
   def new
     @story = Story.new
@@ -45,6 +48,40 @@ class StoriesController < ApplicationController
     end
   end
 
+  def import
+
+    if !params[:file].original_filename.ends_with?(".csv")
+      flash[:error] = "Invalid File: Must be CSV"
+      redirect_to(@project) and return
+    end
+    file = CSV.parse(params[:file].read, headers: true) rescue []
+    if file.empty?
+      flash[:error] = "CSV Error: File is empty or could not be parsed"
+      redirect_to(@project) and return
+    elsif !expected_csv_headers?(file)
+      flash[:error] = "Invalid CSV: Must have headers title,description,position"
+      redirect_to(@project) and return
+    else
+      file.each do |story_csv|
+        story = @project.stories.where(id: story_csv['id']).first || @project.stories.new
+        story.update(title: story_csv['title'], description: story_csv['description'], position: story_csv['position'])
+      end
+      flash[:success] = "CSV import was successful"
+      redirect_to project_path(@project)
+    end
+  end
+
+  def export
+    csv = CSV.generate(headers: true) do |csv|
+      csv << CSV_HEADERS
+      @project.stories.each do |story|
+        csv << story.attributes.slice(*CSV_HEADERS)
+      end
+    end
+    filename = "#{@project.title.gsub(/[^\w]/, '_')}-#{Time.now.to_s(:short).gsub(" ", '_')}.csv"
+    send_data csv, filename: filename
+  end
+
 
 private
 
@@ -58,6 +95,10 @@ private
 
   def stories_params
     params.require(:story).permit(:title, :description, :project_id)
+  end
+
+  def expected_csv_headers?(file)
+    ['title', 'description', 'position'].to_set.subset?(file.headers.to_set)
   end
 
 end
