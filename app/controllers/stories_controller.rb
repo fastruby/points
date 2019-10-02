@@ -7,13 +7,7 @@ class StoriesController < ApplicationController
   CSV_HEADERS = %w{id title description position}
 
   def new
-    if params[:story_id]
-      clone_story = Story.find( params[:story_id] )
-    else
-      clone_story = Story.new
-    end
-    @story = Story.new(title: clone_story.title, description: clone_story.description)
-
+    @story = Story.where(id: params[:story_id]).first_or_initialize.dup
   end
 
   def edit
