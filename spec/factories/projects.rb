@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :project do
-    title { "First Project" }
+    title { Faker::Company.name }
   end
 end
