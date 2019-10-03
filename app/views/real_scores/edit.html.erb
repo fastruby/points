@@ -1,0 +1,40 @@
+<h1 class="dashboard-title"><%= @project.title %> Real Scores</h1>
+<%= form_with scope: :stories, url: real_scores_project_stories_path(@project), method: :patch do |form| %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col" class="col-title" id="wide">Story Title</th>
+        <th scope="col" class="col-title">Average: Best Estimates</th>
+        <th scope="col" class="col-title">Average: Worst Estimates</th>
+        <th scope="col" class="col-title">Real Score</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @stories.each do | story | %>
+        <tr>
+          <td id="wide"><%= link_to story.title, [@project, story], target: "_blank" %></td>
+          <td><%= best_estimate_for_story(story) %></td>
+          <td><%= worst_estimate_for_story(story) %></td>
+          <td><%= form.select "story_#{story.id}", options_for_select(fib_numbers, story.real_score) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+
+    <tfoot>
+      <tr>
+        <td></td>
+        <td class="totals" id="best"><%= @project.best_estimate_total %></td>
+        <td class="totals" id="worst"><%= @project.worst_estimate_total %></td>
+        <td><%=form.submit "Submit", class: "btn btn-primary"%></td>
+      </tr>
+    </tfoot>
+
+  </table>
+<% end %>
+
+<%= link_to 'Back', reports_index_path, id:"back" %>
+
+|
+
+<%= link_to 'Populate Real Scores' %>

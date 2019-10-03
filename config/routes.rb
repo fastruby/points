@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     resource :report
 
     resources :stories do
+      get :real_scores, on: :collection, to: 'real_scores#edit'
+      patch :real_scores, on: :collection, to: 'real_scores#update'
       patch :import, on: :collection
       get :export, on: :collection
       resources :estimates
