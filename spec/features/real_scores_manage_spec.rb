@@ -1,0 +1,21 @@
+require 'rails_helper'
+require 'apparition_helper'
+
+RSpec.describe 'managing real scores', js: !ENV['CI'] do
+
+  let!(:user) {FactoryBot.create(:user, :admin, name: "John")}
+  let(:project) {FactoryBot.create(:project)}
+  let!(:story) {FactoryBot.create(:story, project: project)}
+
+  before do
+    login_as(user, :scope => :user)
+  end
+
+  it "allows me to edit a real score" do
+    visit project_report_path(project.id)
+    click_link 'Populate Real Scores'
+    select "5", from: "stories[story_#{story.id}]"
+    click_button 'Submit'
+    expect(story.reload.real_score).to eq 5
+  end
+end
