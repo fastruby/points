@@ -7,7 +7,7 @@ class StoriesController < ApplicationController
   CSV_HEADERS = %w{id title description position}
 
   def new
-    @story = Story.new
+    @story = Story.where(id: params[:story_id]).first_or_initialize.dup
   end
 
   def edit
