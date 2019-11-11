@@ -5,3 +5,20 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+Project.find_or_create_by(title: 'Test Project')
+project_with_stories = Project.find_or_create_by(title: 'Test Project With Stories')
+3.times{|_| project_with_stories.stories.create} if project_with_stories.stories.count.zero?
+
+project_with_estimates = Project.find_or_create_by(title: 'Test Project With Estimates')
+3.times{|_| project_with_estimates.stories.find_or_create_by(title: "Story ##{_}", description: "This is story ##{_}")}
+
+first_user = User.find_or_create_by(email: 'test1@ombulabs.com', name: 'User 1') do |user|
+  user.password = '123456'
+end
+
+second_user = User.find_or_create_by(email: 'test2@ombulabs.com', name: 'User 2') do |user|
+  user.password = '123456'
+end
+
+project_with_estimates.stories.each { |story| story.estimates.find_or_create_by(user: first_user, best_case_points: 1, worst_case_points: 5)}
+project_with_estimates.stories.each { |story| story.estimates.find_or_create_by(user: second_user, best_case_points: 1, worst_case_points: 5)}

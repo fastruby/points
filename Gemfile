@@ -59,11 +59,11 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'dotenv-rails'
   gem 'recursive-open-struct'
+  gem 'factory_bot_rails'
 end
 
 group :test do
   gem 'apparition', git: "https://github.com/twalpole/apparition.git", ref: "7db58cc6b0e4ca4141b074ff27d5936a1b8874bf"
-  gem 'factory_bot_rails'
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'database_cleaner'
