@@ -1,5 +1,7 @@
 # Points Application
 
+[![CircleCI](https://circleci.com/gh/fastruby/points.svg?style=shield)](https://circleci.com/gh/fastruby/points)
+
 This is a Rails application to collaboratively estimate stories
 
 ## Getting started
