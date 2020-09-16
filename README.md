@@ -1,5 +1,8 @@
 # Points Application
 
+[![CircleCI](https://circleci.com/gh/fastruby/points.svg?style=shield)](https://circleci.com/gh/fastruby/points)
+[![Maintainability](https://api.codeclimate.com/v1/badges/2484911d9c021cfee1ce/maintainability)](https://codeclimate.com/github/fastruby/points/maintainability)
+
 This is a Rails application to collaboratively estimate stories
 
 ## Getting started
