@@ -30,25 +30,24 @@
     <div id="sections">
 
       <h2>Points</h2>
-      <h3><a href="https://github.com/fastruby/points" title="Points" target="_blank">Points</a> is an open source estimation tool. It can be used to create projects, stories for projects, and blind estimates for project proposals and planning.
+      <h3><a href="https://github.com/fastruby/points" title="Points" target="_blank">Points</a> is an open source estimation tool. It can be used to create projects, stories for projects, and blind estimates for project proposals and planning.</h3>
       <img id="example" src='static/images/points-example.png' alt='Points Example Page'>
+      <img id="example" src='static/images/points-example-2.png' alt='Points Example Page 2'>
 
       <div id="getting-started" class="section__content">
         <h2>Getting Started</h2>
-        <h4>To get started with the app, clone the repo and then install the needed gems:</h4>
+        <p>To get started with the app, clone the repo and then install the needed gems:</p>
         <pre><code>$ bundle install</code></pre>
-        <h4>Next, migrate the database:</h4>
+        <p>Next, migrate the database:</p>
         <pre><code>$ rails db:migrate</code></pre>
       </div>
 
       <div id="variables" class="section__content">
         <h2>Environment Variables</h2>
         <p>Examples</p>
-
         <pre><code>ORGANIZATION_LOGIN=<INSERT-HERE>
 GITHUB_APP_ID=<INSERT-HERE>
 GITHUB_APP_SECRET=<INSERT-HERE></code></pre>
-
         <p>GITHUB_APP_ID and GITHUB_APP_SECRET: You need to sign up for an OAuth2 Application ID and Secret on the <a
             href="https://github.com/settings/applications" title="Github Applications" target="_blank">GitHub
             Applications Page.</a></p>
@@ -59,27 +58,12 @@ GITHUB_APP_SECRET=<INSERT-HERE></code></pre>
         <h2>Starting the Server</h2>
         <pre><code> $ rails s </code></pre>
         <p>Go to <a href="http://localhost:3000" title="localhost" target="_blank">http://localhost:3000</a></p>
-
       </div>
 
       <div id="tests" class="section__content">
         <h2>Running Tests</h2>
         <div>
           <pre><code>$ rails spec</code></pre>
-          <p>The tests in this project use the <a href="https://github.com/vcr/vcr" title="VRC gem" target="_blank">VCR
-              gem</a> to record and playback all interactions with the Github and Pivotal Tracker APIs. This allows you
-            to run the test suite without having an account at GitHub or Pivotal Tracker for testing.</p>
-          <p>If you add a test that requires making an additional API call, then you'll need to make adjustments to the
-            <code>.env</code> file to provide account details that are required by the test suite.</p>
-          <p>If you need to refresh the VCR cassettes, the easiest way is to delete all of the files located under <a
-              href=https://github.com/fastruby/dash/tree/master/fixtures/vcr_cassettes title="VRC fixtures"
-              target="_blank">fixtures/vcr_cassettes</a>. The next time the test suite is run, VCR will make actual
-            calls against the GitHub or Pivotal Tracker APIs and record the responses into updated cassette files. Care
-            should be taken to use fake account if you are doing this and wish to preserve sensitive data.</p>
-          <p>Effort has been taken to ensure that private information is excluded from the recorded cassettes. To adjust
-            this further, add additional <code>filter_sensitive_data</code> calls to <a
-              href=https://github.com/fastruby/dash/blob/master/spec/spec_helper.rb title="spec/spec_helper.rb"
-              target="_blank">spec/spec_helper.rb</a>.</p>
         </div>
       </div>
 
@@ -90,25 +74,17 @@ GITHUB_APP_SECRET=<INSERT-HERE></code></pre>
           <h5>Add these enviornement variables to Heroku:</h5>
           <p>See above in <a href="#variables" title="variables">Environment Variables</a> section if you are unsure of where to get these variables.</p>
           <ul>
-            <li>GITHUB_KEY</li>
-            <li>GITHUB_SECRET</li>
-            <li>GITHUB_MACHINE_USER_ACCESS_TOKEN</li>
-            <li>LOCKBOX_MASTER_KEY</li>
-            <li>GITHUB_ORGANIZATIONS</li>
+            <li>ORGANIZATION_LOGIN</li>
+            <li>GITHUB_APP_ID</li>
+            <li>GITHUB_APP_SECRET</li>
           </ul>
           <h5>Required Heroku Add-Ons:</h5>
           <ul>
             <li>heroku-postgresql</li>
-            <li>heroku-redis</li>
-          </ul>
-          <h5>Optional Heroku Add-On</h5>
-          <ul>
-            <li>heroku-scheduler</li>
           </ul>
           <h5>Dynos (Hobby Dynos)</h5>
           <ul>
-            <li>web bundle exec puma -C config/puma.rb</li>
-            <li>worker bundle exec sidekiq -t 2</li>
+            <li>bin/rails server -p ${PORT:-5000} -e $RAILS_ENV</li>
           </ul>
         </div>
       </div>
@@ -130,8 +106,8 @@ GITHUB_APP_SECRET=<INSERT-HERE></code></pre>
 
       <div id="code-of-conduct" class="section__content">
         <h2>Code of Conduct</h2>
-        <p>Everyone interacting in the Dash project's codebases, issue trackers, chat rooms and mailing lists is
-          expected to follow the <a href=https://github.com/ombulabs/dash/CODE_OF_CONDUCT.md title="code of conduct"
+        <p>Everyone interacting in the Points project's codebases, issue trackers, chat rooms and mailing lists is
+          expected to follow the <a href=https://github.com/fastruby/points/CODE_OF_CONDUCT.md title="code of conduct"
             target="_blank">code of conduct</a>.</p>
       </div>
 
