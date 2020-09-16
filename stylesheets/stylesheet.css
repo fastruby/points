@@ -1,0 +1,28 @@
+@import '../static/styleguide.css';
+
+html {
+  scroll-behavior: smooth;
+}
+
+.styleguide-page #page-wrapper, h1, h2, h3, h4, h5{
+  text-align: left;
+}
+
+.styleguide-page #page-wrapper #sections .section__content{
+  padding: 50px 0;
+}
+
+ p, h4{
+   margin-bottom: 20px;
+ }
+
+ h5{
+   padding-top: 5px;
+   padding-bottom: 5px;
+ }
+
+ #example{
+   max-width: 100%;
+   height: auto;
+   border: 1px solid black;
+ }
