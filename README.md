@@ -7,13 +7,7 @@ This is a Rails application to collaboratively estimate stories
 To get started with the app, clone the repo and then install the needed gems:
 
 ```
-$ bundle install
-```
-
-Next, migrate the database:
-
-```
-$ rails db:migrate
+$ ./bin/setup
 ```
 
 ## Environment Variables
