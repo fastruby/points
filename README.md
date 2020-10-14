@@ -49,7 +49,7 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Sponsorship
 
-![FastRuby.io | Rails Upgrade Services](https://github.com/fastruby/points/raw/master/app/assets/images/fastruby-logo.png)
+![FastRuby.io | Rails Upgrade Services](https://github.com/fastruby/points/raw/main/app/assets/images/fastruby-logo.png)
 
 
 `Points` is maintained and funded by [FastRuby.io](https://fastruby.io). The names and logos for FastRuby.io are trademarks of The Lean Software Boutique LLC.
