@@ -43,8 +43,8 @@ chdir APP_ROOT do
   system! 'bin/rails log:clear tmp:clear'
 
   puts "\n== Adding pre-commit hook =="
-  system! 'cp .pre-commit .git/hooks/pre-commit'
-  system! 'chmod +x .git/hooks/pre-commit'
+  # system! 'cp .pre-commit .git/hooks/pre-commit'
+  # system! 'chmod +x .git/hooks/pre-commit'
 
   puts "\n== Restarting application server =="
   system! 'bin/rails restart'
