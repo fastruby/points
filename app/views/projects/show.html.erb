@@ -10,14 +10,17 @@
       <th scope="col" class="col-title"> </th>
       <th scope="col" class="col-title"> </th>
       <th scope="col" class="col-title"> </th>
-      <th scope="col" class="col-title"> <button class="btn btn-md btn-danger">Delete</button> </th>
+      <th scope="col" class="col-title"> <button id="bulk_delete" class="btn btn-md btn-danger">Delete</button> </th>
     </tr>
   </thead>
 
   <tbody id="stories" data-url="<%= sort_project_path(@project.id) %>">
     <% @stories.each do | story | %>
       <tr id="<%= dom_id(story)%>" >
-        <td id="wide"><%= link_to story.title, [story.project, story] %></td>
+        <td id="wide">
+          <div class="checkbox"><input type="checkbox" name="stories[]" value=<%= story.id %>></div>
+          <%= link_to story.title, [story.project, story] %>
+        </td>
         <td><%= story.estimates.where(user: current_user)&.first&.best_case_points %></td>
         <td><%= story.estimates.where(user: current_user)&.first&.worst_case_points %></td>
         <td><%= link_to 'Clone', new_project_story_path(@project.id, story_id: story.id), class: "btn btn-lg btn-primary", id: "edit" %></td>
