@@ -26,7 +26,6 @@ $(() => {
         console.log("There was an error destroying the stories")
       }
     })
-    console.log(stories_ids)
   })
 })
 
