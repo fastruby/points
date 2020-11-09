@@ -10,6 +10,10 @@ Rails.application.routes.draw do
   get 'home/index'
   get 'reports/index'
 
+  resource :stories do
+    post :bulk_destroy, to: 'stories#bulk_destroy'
+  end
+
   resources :projects do
     patch :sort, on: :member
 
