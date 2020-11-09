@@ -99,4 +99,17 @@ RSpec.describe StoriesController, type: :controller do
     end
   end
 
+  describe "#bulk_destroy" do
+    it "deletes multiple stories" do
+      ids = [99,100]
+      ids.each do |id|
+        FactoryBot.create(:story, id: id, project: project)
+      end
+
+      expect do
+        post :bulk_destroy, params: {ids: ids}, format: :json
+      end.to change(Story, :count).by(-2)
+    end
+  end
+
 end
