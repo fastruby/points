@@ -1,7 +1,7 @@
 require 'csv'
 class StoriesController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_project
+  before_action :find_project, except: :bulk_destroy
   before_action :find_story, only: [:edit, :update, :destroy, :show]
 
   CSV_HEADERS = %w{id title description position}
@@ -31,6 +31,13 @@ class StoriesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to project_path(@project), notice: "Story was successfully destroyed." }
       format.json { head :no_content }
+    end
+  end
+
+  def bulk_destroy
+    Story.where(id: params[:ids]).destroy_all
+    respond_to do |format|
+      format.json { render json: :ok }
     end
   end
 
