@@ -4,7 +4,7 @@ class CallbacksController < Devise::OmniauthCallbacksController
   def github
     username = request.env["omniauth.auth"]["extra"]["raw_info"]["login"]
 
-    organization_name = organization_info["name"]
+    organization_name = ENV["ORGANIZATION_LOGIN"]
     member_logins = organization_members.map { |member| member["login"] }
 
     if username.in?(member_logins)
@@ -22,13 +22,6 @@ class CallbacksController < Devise::OmniauthCallbacksController
     @organization_members ||= begin
         members_raw_response = open("https://api.github.com/orgs/#{ENV["ORGANIZATION_LOGIN"]}/members").read
         JSON.parse(members_raw_response)
-      end
-  end
-
-  def organization_info
-    @organization_info ||= begin
-        organization_raw_response = open("https://api.github.com/orgs/#{ENV["ORGANIZATION_LOGIN"]}").read
-        JSON.parse(organization_raw_response)
       end
   end
 end
