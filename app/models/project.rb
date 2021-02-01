@@ -5,6 +5,9 @@ class Project < ApplicationRecord
   has_many :estimates, through: :stories
   has_many :users, through: :estimates
 
+  belongs_to :parent, class_name: 'Project', required: false
+  has_many :projects, class_name: 'Project', foreign_key: :parent_id
+
   def best_estimate_total
     stories.sum(&:best_estimate_average)
   end
