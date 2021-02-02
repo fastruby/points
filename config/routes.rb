@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'callbacks' }
 
   authenticated do
-    root to: "projects#index"
+    root to: "projects#index", as: :authenticated_root
   end
 
   root to: "home#index"

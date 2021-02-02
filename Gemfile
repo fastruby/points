@@ -10,14 +10,16 @@ git_source(:github) do |repo_name|
 end
 
 if next?
-  gem "rails", "~> 5.2.3"
+  gem "rails", "~> 6.0.3.4"
 else
-  gem "rails", "~> 5.1.4"
+  gem "rails", "~> 5.2.3"
 end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 
 gem "bootstrap-sass", "3.3.7"
-gem "devise"
+
+gem "devise", git: "https://github.com/heartcombo/devise.git", ref: "8bb358cf80a632d3232c3f548ce7b95fd94b6eb2"
+
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
 # Use Puma as the app server
@@ -26,13 +28,17 @@ gem "puma", "~> 3.7"
 gem "sass-rails", "~> 5.0"
 # Use Uglifier as compressor for JavaScript assets
 gem "uglifier", ">= 1.3.0"
-gem 'bourbon', git: 'https://github.com/thoughtbot/bourbon.git',
+
+if next?
+  gem 'bourbon'
+else
+  gem 'bourbon', git: 'https://github.com/thoughtbot/bourbon.git',
                tag: 'v5.0.0.beta.6'
+end
+
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 gem "redcarpet", "~> 3.0.0"
-# Use CoffeeScript for .coffee assets and views
-gem "coffee-rails", "~> 4.2"
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem "turbolinks", "~> 5"
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -48,13 +54,18 @@ gem 'jquery-rails'
 gem 'pg', '~> 0.18'
 gem 'jquery-ui-rails', '~> 5.0', '>= 5.0.5'
 gem 'acts_as_list'
-gem 'omniauth-github'
+
+if next?
+  gem 'omniauth-github', '~> 2.0.0'
+else
+  gem 'omniauth-github'
+end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
-  gem 'rspec-rails', '~> 3.7'
+  gem 'rspec-rails', '~> 4.0.2'
   gem 'faker'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'rails-controller-testing'
@@ -83,7 +94,7 @@ group :development do
 end
 
 group :development, :test do
-  gem "ten_years_rails"
+  gem "next_rails"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
