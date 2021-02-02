@@ -56,9 +56,14 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def new_sub_project
+    @project = Project.find(params[:project_id])
+    @sub = Project.new(parent_id: @project)
+  end
+
   private
 
   def projects_params
-    params.require(:project).permit(:title, :status)
+    params.require(:project).permit(:title, :status, :parent_id)
   end
 end

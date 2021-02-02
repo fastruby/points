@@ -1,0 +1,21 @@
+<%= form_with(model: project) do |f| %>
+  <% if project.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
+
+      <ul>
+      <% project.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title, placeholder: "Subproject Title", class: "project-story-title" %>
+    <%= f.hidden_field :parent_id, value: parent.id %>
+  </div><div class="btn-group">
+    <%= f.submit yield(:button_text), class: "button", id: "edit" %>
+  </div>
+<% end %>

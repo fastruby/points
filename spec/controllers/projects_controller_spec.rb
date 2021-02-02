@@ -28,6 +28,14 @@ RSpec.describe ProjectsController, type: :controller do
     end
   end
 
+  describe "#new_sub_project" do
+    before do
+      get :new_sub_project, params: {project_id: project.id}
+    end
+
+    it { expect(response).to render_template :new_sub_project }
+  end
+
   describe "#edit" do
     before do
       get :edit, params: {id: project.id}

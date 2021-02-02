@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
   resources :projects do
     patch :sort, on: :member
+    get :new_sub_project
 
     resource :report do
       get 'download', to: 'reports#download'

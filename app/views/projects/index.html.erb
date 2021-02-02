@@ -5,11 +5,17 @@
     <div class="row">
       <% @projects.each do | project | %>
         <div class="col-sm-6 col-lg-4">
-          <%= link_to project_path(project.id), class: "project-card" do %>
-            <div>
-              <h2><%= project.title %></h2>
-            </div>
-          <% end  %>
+          <div class="project-card">
+            <%= link_to project_path(project.id) do %>
+              <div>
+                <h2><%= project.title %></h2>
+              </div>
+            <% end %>
+
+            <% project.projects.each do |subproj| %>
+              <%= link_to subproj.title, project_path(subproj), class: "project-card" %>
+            <% end %>
+          </div>
         </div>
       <% end %>
     </div>
