@@ -10,17 +10,12 @@
     <% @project.projects.each do |proj| %>
       <%= link_to proj.title, edit_project_path(proj) %>
     <% end %>
-  <% end %>
 
-  <hr>
+    <hr>
+  <% end %>
 
   <div class="btn-group">
     <%= link_to 'Delete Project', project_path(@project.id), method: "delete",  data: { confirm: 'Are you sure?' }, class: "button red", id: "delete" %>
-
-    <% unless @project.parent_id %>
-      <%= link_to 'Add Sub-Project', project_new_sub_project_path(@project.id), id:"subproject", class: "button" %>
-    <% end %>
-
     <%= link_to 'Back', project_path(@project.id), id:"back", class: "button" %>
   </div>
 </div>
