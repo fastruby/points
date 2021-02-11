@@ -28,6 +28,14 @@ RSpec.describe ProjectsController, type: :controller do
     end
   end
 
+  describe "#new_sub_project" do
+    before do
+      get :new_sub_project, params: {project_id: project.id}
+    end
+
+    it { expect(response).to render_template :new_sub_project }
+  end
+
   describe "#edit" do
     before do
       get :edit, params: {id: project.id}
@@ -67,7 +75,26 @@ RSpec.describe ProjectsController, type: :controller do
       end
 
       it "stays on the new template page" do
-        expect(response).to render_template :new
+        expect(response).to redirect_to "projects/new"
+      end
+
+      it "shows a flash message" do
+        expect(flash[:error]).to be_present
+      end
+    end
+
+    context "with parent id and no title" do
+      let(:parent_project) { {title: "parent", id: 1} }
+      let(:child_project) { {title: ""} }
+      let(:back_path) { project_new_sub_project_path(project_id: parent_project[:id]) }
+
+      before do
+        request.env['HTTP_REFERER'] = back_path
+        post :create, params: {project: child_project}
+      end
+
+      it "stays on the new template page" do
+        expect(response).to redirect_to back_path
       end
 
       it "shows a flash message" do

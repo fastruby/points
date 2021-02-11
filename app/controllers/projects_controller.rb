@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @projects = Project.all
+    @projects = Project.where(parent_id: nil)
   end
 
   def new
@@ -28,7 +28,7 @@ class ProjectsController < ApplicationController
       redirect_to "/projects"
     else
       flash[:error] = @project.errors.full_messages
-      render "projects/new"
+      redirect_back(fallback_location: "projects/new")
     end
   end
 
@@ -56,9 +56,14 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def new_sub_project
+    @project = Project.find(params[:project_id])
+    @sub = Project.new(parent_id: @project)
+  end
+
   private
 
   def projects_params
-    params.require(:project).permit(:title, :status)
+    params.require(:project).permit(:title, :status, :parent_id)
   end
 end

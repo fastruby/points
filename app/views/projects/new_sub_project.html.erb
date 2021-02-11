@@ -1,0 +1,11 @@
+<div class="container">
+  <% provide(:button_text, 'Create') %>
+  <h3 class="new-edit-title"><%= @project.title %></h3>
+  <h2 class="new-edit-title">Create New Subproject</h2>
+
+  <%= render 'sub_project_form', project: @sub, parent: @project %>
+
+  <hr>
+
+  <%= link_to 'Back', project_path(@project), id:"back", class: "button" %>
+</div>
