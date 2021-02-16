@@ -99,6 +99,10 @@ GEM
       capybara (>= 1.0, < 4)
       launchy
     childprocess (3.0.0)
+    coffee-script (2.4.1)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.12.2)
     colorize (0.8.1)
     concurrent-ruby (1.1.8)
     crass (1.0.6)
@@ -344,6 +348,7 @@ DEPENDENCIES
   byebug
   capybara
   capybara-screenshot
+  coffee-script
   database_cleaner
   devise!
   dotenv-rails
