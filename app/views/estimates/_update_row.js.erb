@@ -1,0 +1,4 @@
+const row = document.getElementById("story_<%= estimate.story_id %>")
+row.children[0].querySelector('a').innerText = "<%= j(estimate.story.title) %>"
+row.children[1].innerText = "<%= j(estimate.best_case_points.to_s) %>"
+row.children[2].innerText = "<%= j(estimate.worst_case_points.to_s) %>"

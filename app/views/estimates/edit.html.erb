@@ -7,7 +7,7 @@
 
   <h2 class="new-edit-title">Edit Estimate</h2>
 
-  <%= render 'form', estimate: @estimate %>
+  <%= render partial: 'form', locals: {story: @story, estimate: @estimate, project: @project} %>
 
   <hr>
 

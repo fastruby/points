@@ -15,24 +15,36 @@ class EstimatesController < ApplicationController
     params["estimate"]["user_id"] = current_user.id
     @estimate = Estimate.new(estimate_params)
 
-    if @estimate.save
-      flash[:success] = "Estimate created!"
-      redirect_to project_path(@project.id)
-    else
-      flash[:error] = @estimate.errors.full_messages
-      render :new
+    saved = @estimate.save
+    respond_to do |format|
+      format.html {
+        if saved
+          flash[:success] = "Estimate created!"
+          redirect_to project_path(@project.id)
+        else
+          flash[:error] = @estimate.errors.full_messages
+          render :new
+        end
+      }
+      format.js
     end
   end
 
   def update
     @estimate = Estimate.find(params[:id])
     params["estimate"]["user_id"] = current_user.id
-    if @estimate.update_attributes(estimate_params)
-      flash[:success] = "Estimate updated!"
-      redirect_to project_path(@project.id)
-    else
-      flash[:error] = @estimate.errors.full_messages
-      render :edit
+    updated = @estimate.update_attributes(estimate_params)
+    respond_to do |format|
+      format.html {
+        if updated
+          flash[:success] = "Estimate updated!"
+          redirect_to project_path(@project.id)
+        else
+          flash[:error] = @estimate.errors.full_messages
+          render :edit
+        end
+      }
+      format.js
     end
   end
 
