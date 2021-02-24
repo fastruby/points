@@ -1,5 +1,5 @@
 <% if @estimate.valid? %>
-  <%= render partial: 'update_row', locals: {estimate: @estimate} %>
+  <%= render partial: 'update_estimates', locals: {estimate: @estimate} %>
   closeModal()
 <% else %>
   updateModal("Edit estimate", "<%= j(render partial: 'modal_body') %>")
