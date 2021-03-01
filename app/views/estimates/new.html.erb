@@ -4,7 +4,7 @@
   <p>New Estimate</p>
   <%= render "shared/story", story: @story %>
 
-  <%= render 'form', estimate: @estimate %>
+  <%= render partial: 'form', locals: {estimate: @estimate, story: @story, project: @project} %>
 
   <hr>
 

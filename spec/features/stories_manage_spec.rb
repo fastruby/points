@@ -1,7 +1,6 @@
 require 'rails_helper'
-require 'apparition_helper'
 
-RSpec.describe 'managing stories', js: !ENV['CI'] do
+RSpec.describe 'managing stories', js: true do
 
   let(:user) {FactoryBot.create(:user)}
   let(:project) {FactoryBot.create(:project)}
@@ -39,7 +38,9 @@ RSpec.describe 'managing stories', js: !ENV['CI'] do
 
   it "allows me to delete a story" do
     visit project_path(id: project.id)
-    click_link "Delete"
+    accept_confirm do
+      click_link "Delete"
+    end
     expect(Story.count).to eq 0
   end
 end

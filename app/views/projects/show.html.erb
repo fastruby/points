@@ -27,14 +27,14 @@
             <td class="project-table__cell"><%= story.estimates.where(user: current_user)&.first&.best_case_points %></td>
             <td class="project-table__cell"><%= story.estimates.where(user: current_user)&.first&.worst_case_points %></td>
             <td class="project-table__cell">
-              <%= link_to 'Clone', new_project_story_path(@project.id, story_id: story.id), class: "button green", id: "edit" %>
-              <%= link_to 'Edit', edit_project_story_path(@project.id, story), class: "button green", id: "edit" %>
+              <%= link_to 'Clone', new_project_story_path(@project.id, story_id: story.id), class: "button green clone" %>
+              <%= link_to 'Edit', edit_project_story_path(@project.id, story), class: "button green edit" %>
               <% if estimated(story) %>
-                <%= link_to 'Edit Estimate', edit_project_story_estimate_path(@project.id, story, @estimate_id), class: "button green", id: "edit" %>
+                <%= link_to 'Edit Estimate', edit_project_story_estimate_path(@project.id, story, @estimate_id), class: "button green edit-estimate", remote: true %>
               <% else %>
-                <%= link_to 'Add Estimate', new_project_story_estimate_path(@project.id, story), class: "button green", id: "edit" %>
+                <%= link_to 'Add Estimate', new_project_story_estimate_path(@project.id, story), class: "button green add-estimate", remote: true %>
               <% end %>
-              <%= link_to 'Delete', project_story_path(@project.id, story), method: "delete",  data: { confirm: 'Are you sure?' }, class: "button green", id: "edit" %>
+              <%= link_to 'Delete', project_story_path(@project.id, story), method: "delete",  data: { confirm: 'Are you sure?' }, class: "button green delete" %>
             </td>
           </tr>
         <% end %>

@@ -77,4 +77,35 @@ RSpec.describe "managing estimates" do
       expect { click_link "Add Estimate" }.to_not raise_error
     end
   end
+
+  context "using ajax", js: true do
+    it "uses a modal to estimate" do
+      visit project_path(id: project.id)
+      click_link "Add Estimate"
+
+      expect(page).to have_text("New Estimate")
+      expect(page).to have_content(story.description)
+      expect(current_path).to eq project_path(id: project.id)
+
+      select "3", from: "estimate[best_case_points]"
+      select "8", from: "estimate[worst_case_points]"
+      click_button "Create"
+
+      cell = find("#story_#{story.id} td:nth-child(2)")
+      expect(cell).to have_text("3")
+      expect(page).to_not have_content(story.description)
+
+      click_link "Edit Estimate"
+
+      expect(page).to have_text("Edit Estimate")
+      expect(current_path).to eq project_path(id: project.id)
+      expect(page).to have_content(story.description)
+
+      select "5", from: "estimate[best_case_points]"
+      click_button "Save Changes"
+
+      cell = find("#story_#{story.id} td:nth-child(2)")
+      expect(cell).to have_text("5")
+    end
+  end
 end

@@ -1,7 +1,6 @@
 require 'rails_helper'
-require 'apparition_helper'
 
-RSpec.describe 'managing real scores', js: !ENV['CI'] do
+RSpec.describe 'managing real scores', js: true do
 
   let!(:user) {FactoryBot.create(:user, :admin, name: "John")}
   let(:project) {FactoryBot.create(:project)}

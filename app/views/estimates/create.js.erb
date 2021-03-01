@@ -1,0 +1,11 @@
+(function(){
+  <% if @estimate.persisted? %>
+    <%= render partial: 'update_estimates', locals: {estimate: @estimate} %>
+    const addEstimate = row.querySelector('.add-estimate')
+    addEstimate.insertAdjacentHTML('afterend', "<%= j(link_to 'Edit Estimate', edit_project_story_estimate_path(@project.id, @estimate.story, @estimate.id), class: "button green edit-estimate", remote: true) %>")
+    addEstimate.remove()
+    closeModal()
+  <% else %>
+    updateModal("New estimate", "<%= j(render partial: 'modal_body') %>")
+  <% end %>
+})()
