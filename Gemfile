@@ -16,7 +16,7 @@ else
 end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 
-gem "bootstrap-sass", "3.3.7"
+gem "bootstrap-sass", "3.4.1"
 
 gem "devise", git: "https://github.com/heartcombo/devise.git", ref: "8bb358cf80a632d3232c3f548ce7b95fd94b6eb2"
 
