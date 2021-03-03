@@ -82,9 +82,9 @@ GEM
       execjs
     bcrypt (3.1.16)
     bindex (0.8.1)
-    bootstrap-sass (3.3.7)
+    bootstrap-sass (3.4.1)
       autoprefixer-rails (>= 5.2.1)
-      sass (>= 3.3.4)
+      sassc (>= 2.0.0)
     builder (3.2.4)
     byebug (11.1.3)
     capybara (3.35.3)
@@ -286,6 +286,8 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    sassc (2.4.0)
+      ffi (~> 1.9)
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
@@ -347,7 +349,7 @@ PLATFORMS
 DEPENDENCIES
   acts_as_list
   apparition!
-  bootstrap-sass (= 3.3.7)
+  bootstrap-sass (= 3.4.1)
   bourbon!
   byebug
   capybara
