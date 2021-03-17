@@ -10,7 +10,10 @@
         <th class="project-table__cell">Story Title</th>
         <th class="project-table__cell">Best Estimate</th>
         <th class="project-table__cell">Worst Estimate</th>
-        <th class="project-table__cell"> <button id="bulk_delete" class="button magenta">Delete</button></th>
+        <th class="project-table__cell">
+          <%= link_to "Add a Story", new_project_story_path(@project.id), class: "button magenta"  %>
+          <button id="bulk_delete" class="button magenta">Delete</button>
+        </th>
       </tr>
     </thead>
 
@@ -56,7 +59,6 @@
   <%= render partial: "projects/import_export" %>
 
   <div class="btn-group">
-    <%= link_to "Add a Story", new_project_story_path(@project.id), class: "button magenta"  %>
     <%= link_to "Edit or Delete Project", edit_project_path(@project.id), class: "button magenta"  %>
 
     <% unless @project.parent_id %>
