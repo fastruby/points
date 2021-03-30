@@ -1,6 +1,14 @@
 .project-table {
   display: grid;
   padding: 50px 0;
+  &__header {
+    position: sticky;
+    background: #ffffff;
+    z-index: 1;
+    top: 54px;
+    margin-left: -20px;
+    padding-left: 20px;
+  }
   .project-table__row {
     display: grid;
     grid-template-columns: 40% 10% 10% auto;

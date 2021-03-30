@@ -8,6 +8,8 @@
 	transition: $hover_transition_time;
 	transition-property: background, color;
 	border: none;
+  font-weight: normal;
+
 	&:hover, &:active{
 		background-color: lighten($orange, 10%);
 	}
