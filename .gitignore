@@ -6,3 +6,4 @@ config/database.yml
 coverage
 .env
 .byebug_history
+.tool-versions
