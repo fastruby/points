@@ -37,6 +37,20 @@
   }
 }
 
+.import-export-header {
+  transition: all 0.2s linear;
+  cursor: pointer;
+
+  & &__text {
+    padding-left: 1rem;
+    vertical-align: bottom;
+  }
+
+  &:hover {
+    transform: translateY(-2px)
+  }
+}
+
 .card-deck {
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
