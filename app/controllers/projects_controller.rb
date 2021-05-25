@@ -21,6 +21,18 @@ class ProjectsController < ApplicationController
     head :ok
   end
 
+  def duplicate
+    original = Project.includes(stories: :estimates).find(params[:id])
+    duplicate = original.dup
+    duplicate.title = "Copy of #{original.title}"
+    duplicate.save
+
+    original.stories.each { |x| duplicate.stories.create(x.dup.attributes) }
+
+    flash[:success] = 'Project created!'
+    redirect_to "/projects/#{duplicate.id}"
+  end
+
   def create
     @project = Project.new(projects_params)
     if @project.save
