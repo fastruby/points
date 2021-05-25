@@ -21,6 +21,13 @@ RSpec.describe "managing projects" do
     expect(Project.count).to eq 1
   end
 
+  it "allows me to clone a project" do
+    visit project_path(id: project.id)
+    click_link "Clone Project"
+    expect(Project.count).to eq 2
+    expect(Project.last.title).to eq "Copy of #{project.title}"
+  end
+
   it "allows me to edit a project" do
     visit project_path(id: project.id)
     click_link "Edit or Delete Project"
