@@ -101,7 +101,7 @@ RSpec.describe ProjectsController, type: :controller do
       let(:back_path) { project_new_sub_project_path(project_id: parent_project[:id]) }
 
       before do
-        request.env['HTTP_REFERER'] = back_path
+        request.env["HTTP_REFERER"] = back_path
         post :create, params: {project: child_project}
       end
 

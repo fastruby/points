@@ -23,7 +23,7 @@ RSpec.describe "exporting reports to csv" do
 
     it "renders download button" do
       visit project_report_path(project.id)
-      expect(page).to have_link "Download Average Estimate Report", href: project_report_path(project, format: 'csv')
+      expect(page).to have_link "Download Average Estimate Report", href: project_report_path(project, format: "csv")
     end
   end
 

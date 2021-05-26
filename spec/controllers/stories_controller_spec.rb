@@ -93,7 +93,7 @@ RSpec.describe StoriesController, type: :controller do
     it "updates the story" do
       put :update, params: {id: story.id,
                             project_id: project.id,
-                            story: {title: "New Story"},}
+                            story: {title: "New Story"}}
 
       expect(story.reload.title).to eq "New Story"
     end
@@ -101,14 +101,14 @@ RSpec.describe StoriesController, type: :controller do
 
   describe "#bulk_destroy" do
     it "deletes multiple stories" do
-      ids = [99,100]
+      ids = [99, 100]
       ids.each do |id|
         FactoryBot.create(:story, id: id, project: project)
       end
 
-      expect do
+      expect {
         post :bulk_destroy, params: {ids: ids}, format: :json
-      end.to change(Story, :count).by(-2)
+      }.to change(Story, :count).by(-2)
     end
   end
 end

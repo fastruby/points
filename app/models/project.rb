@@ -5,8 +5,8 @@ class Project < ApplicationRecord
   has_many :estimates, through: :stories
   has_many :users, through: :estimates
 
-  belongs_to :parent, class_name: 'Project', required: false
-  has_many :projects, class_name: 'Project', foreign_key: :parent_id, dependent: :destroy
+  belongs_to :parent, class_name: "Project", required: false
+  has_many :projects, class_name: "Project", foreign_key: :parent_id, dependent: :destroy
 
   def best_estimate_total
     stories.sum(&:best_estimate_average)
@@ -30,7 +30,7 @@ class Project < ApplicationRecord
 
   def percentage_off_estimate_total(estimate_total, real_score_total)
     if estimate_total != 0 && real_score_total != 0
-      ((estimate_total-real_score_total).abs/estimate_total) * 100
+      ((estimate_total - real_score_total).abs / estimate_total) * 100
     else
       0
     end
