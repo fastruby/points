@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
   resources :projects do
     patch :sort, on: :member
+    patch :toggle_archive
     get :new_sub_project
 
     resource :report do
