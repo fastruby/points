@@ -12,11 +12,11 @@ require "capybara/rspec"
 # https://github.com/teamcapybara/capybara/blob/c7c22789b7aaf6c1515bf6e68f00bfe074cf8fc1/lib/capybara/registrations/drivers.rb
 Capybara.register_driver :headless_firefox do |app|
   browser_options = ::Selenium::WebDriver::Firefox::Options.new
-  browser_options.args << '-headless'
+  browser_options.args << "-headless"
   Capybara::Selenium::Driver.new(app, browser: :firefox, options: browser_options)
 end
 Capybara.javascript_driver = :headless_firefox
-Capybara.server = :puma, { Silent: true }
+Capybara.server = :puma, {Silent: true}
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are

@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { omniauth_callbacks: 'callbacks' }
+  devise_for :users, controllers: {omniauth_callbacks: "callbacks"}
 
   authenticated do
     root to: "projects#index", as: :authenticated_root
@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   get "reports/index"
 
   resource :stories do
-    post :bulk_destroy, to: 'stories#bulk_destroy'
+    post :bulk_destroy, to: "stories#bulk_destroy"
   end
 
   resources :projects do
@@ -19,11 +19,11 @@ Rails.application.routes.draw do
     get :new_sub_project
 
     resource :report do
-      get 'download', to: 'reports#download'
+      get "download", to: "reports#download"
     end
     resources :stories do
-      get :real_scores, on: :collection, to: 'real_scores#edit'
-      patch :real_scores, on: :collection, to: 'real_scores#update'
+      get :real_scores, on: :collection, to: "real_scores#edit"
+      patch :real_scores, on: :collection, to: "real_scores#update"
       patch :import, on: :collection
       get :export, on: :collection
       resources :estimates
