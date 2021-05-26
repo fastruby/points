@@ -35,4 +35,10 @@ class Project < ApplicationRecord
       0
     end
   end
+
+  def archived?
+    if self.status == "archived"
+      true
+    end
+  end
 end
