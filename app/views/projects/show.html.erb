@@ -64,7 +64,7 @@
     <% unless @project.parent_id %>
       <%= link_to 'Add Sub-Project', project_new_sub_project_path(@project.id), id:"subproject", class: "button magenta" %>
     <% end %>
-
+    <%= link_to "Archive Project", project_toggle_archive_path(@project.id), method: "patch", id: "archive", class: "button magenta", remote: true %>
     <%= link_to "Generate Action Plan", project_action_plan_path(@project.id), class: "button" %>
     <% if current_user.admin? %>
       <%= link_to "View Report", project_report_path(@project.id), class: "button"  %>

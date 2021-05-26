@@ -1,7 +1,7 @@
 <div class="container">
   <h1 class="home-title">My Projects</h1>
 
-  <% if @projects.present? %>
+  <% if !@projects.empty? %>
     <div class="row">
       <% @projects.each do | project | %>
         <div class="col-sm-6 col-lg-4">
@@ -11,7 +11,6 @@
                 <h2><%= project.title %></h2>
               </div>
             <% end %>
-
             <% project.projects.each do |subproj| %>
               <%= link_to subproj.title, project_path(subproj), class: "project-card" %>
             <% end %>
@@ -20,11 +19,16 @@
       <% end %>
     </div>
   <% else %>
-    <p> You don't have any projects yet. </p>
+    <p> You don't have any active projects. </p>
   <% end %>
 
   <div class="btn-group">
     <%= link_to "Add a Project", new_project_path, class: "button", id: "create-button" %>
+    <% if params[:archived] == "true" %>
+      <%= link_to "Hide Archived Projects", projects_path, class: "button" %>
+    <% else %>
+      <%= link_to "See Archived Projects", projects_path(archived: true), class: "button" %>
+    <% end %>
     <% if current_user.admin? %>
       <%= link_to "View Reports", reports_index_path, class: "button", id: "create-button" %>
     <% end %>
