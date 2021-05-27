@@ -2,11 +2,8 @@ class ProjectsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    if params[:archived] == "true"
-      @projects = Project.where(parent_id: nil, status: "archived")
-    else
-      @projects = Project.where(parent_id: nil, status: nil)
-    end
+    status = params[:archived] == "true" ? "archived" : nil
+    @projects = Project.where(parent_id: nil, status: status)
   end
 
   def new
@@ -25,13 +22,8 @@ class ProjectsController < ApplicationController
     head :ok
   end
 
-  def toggle_archive
-    @project = Project.find(params[:project_id])
-    if !@project.archived?
-      @project.update_column :status, "archived"
-    else
-      @project.update_column :status, nil
-    end
+  def toggle_archived
+    Project.find(params[:id]).toggle_archived! 
   end
 
   def create

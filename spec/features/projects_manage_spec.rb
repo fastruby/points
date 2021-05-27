@@ -34,6 +34,8 @@ RSpec.describe "managing projects" do
     visit project_path(id: project.id)
     click_link "Archive Project"
     expect(page).to have_content "Unarchive Project"
+    expect(project.reload).to be_archived
+
   end
 
   it "allows me to delete a project" do

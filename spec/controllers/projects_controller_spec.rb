@@ -4,7 +4,7 @@ RSpec.describe ProjectsController, type: :controller do
   render_views
 
   let!(:project) { FactoryBot.create(:project, status: nil) }
-  let!(:project2) { FactoryBot.create(:project, status: "archived") }
+  let!(:archived_project) { FactoryBot.create(:project, status: "archived") }
 
   before do
     @request.env["devise.mapping"] = Devise.mappings[:user]
@@ -28,7 +28,7 @@ RSpec.describe ProjectsController, type: :controller do
     end
 
     it "shows me a list of all the archived projects" do
-      expect(assigns(:projects)).to eq [project2]
+      expect(assigns(:projects)).to eq [archived_project]
     end
   end
 

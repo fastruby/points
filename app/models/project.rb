@@ -37,8 +37,11 @@ class Project < ApplicationRecord
   end
 
   def archived?
-    if self.status == "archived"
-      true
-    end
+    status == "archived"  
+  end
+
+  def toggle_archived!
+    new_status = archived? ? nil : "archived"
+    update_column :status, new_status
   end
 end
