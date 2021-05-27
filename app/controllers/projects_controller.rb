@@ -22,8 +22,8 @@ class ProjectsController < ApplicationController
     head :ok
   end
 
-  def toggle_archived
-    Project.find(params[:id]).toggle_archived! 
+  def toggle_archive
+    Project.find(params[:id]).toggle_archived!
   end
 
   def create
