@@ -1,10 +1,17 @@
 $(() => {
   $("input[name='stories[]']").click(() => {
     let selected = $("input[name='stories[]']:checked");
-    let ending = selected.length == 1 ? "y" : "ies";
-    $(".number-of-stories-selected")
-      .text(`${selected.length} stor${ending} selected`)
-      .removeClass("alert");
+
+    if (selected.length > 0) {
+      let ending = selected.length == 1 ? "y" : "ies";
+      $("#bulk_delete")
+        .text(`Bulk Delete (${selected.length} Stor${ending})`)
+        .removeAttr("aria-disabled");
+    } else {
+      $("#bulk_delete")
+        .text(`Bulk Delete`)
+        .attr("aria-disabled", "true");
+    }
   })
 
   $("#bulk_delete").click(() => {
@@ -12,12 +19,6 @@ $(() => {
     $("input[name='stories[]']:checked").each((_, checkbox) => {
       stories_ids.push($(checkbox).val())
     })
-
-    if (stories_ids.length === 0) {
-      $(".number-of-stories-selected")
-        .text("Please select 1 or more stories")
-        .addClass("alert");
-    }
 
     let token = $("meta[name='csrf-token']").attr("content")
     $.ajaxSetup({
@@ -33,7 +34,6 @@ $(() => {
       success: () => {
         $(stories_ids).each((_, id) => {
           console.log(id)
-          $(".number-of-stories-selected").text("");
           $("#story_" + id).remove();
         })
       },
