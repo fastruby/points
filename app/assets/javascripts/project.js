@@ -20,12 +20,6 @@ $(() => {
       stories_ids.push($(checkbox).val())
     })
 
-    if (stories_ids.length === 0) {
-      $(".number-of-stories-selected")
-        .text("Please select 1 or more stories")
-        .addClass("alert");
-    }
-
     let token = $("meta[name='csrf-token']").attr("content")
     $.ajaxSetup({
       beforeSend: function (xhr) {
@@ -40,7 +34,6 @@ $(() => {
       success: () => {
         $(stories_ids).each((_, id) => {
           console.log(id)
-          $(".number-of-stories-selected").text("");
           $("#story_" + id).remove();
         })
       },
