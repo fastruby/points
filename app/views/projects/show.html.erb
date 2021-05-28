@@ -4,8 +4,6 @@
     <li><%= link_to @project.parent.title, project_path(@project.parent) %></li>
   <% end %>
 
-  <div class="number-of-stories-selected"></div>
-
   <table class="project-table">
     <thead class="project-table__header">
       <tr class="project-table__row project-table__row--header">
@@ -14,7 +12,7 @@
         <th class="project-table__cell">Worst Estimate</th>
         <th class="project-table__cell">
           <%= link_to "Add a Story", new_project_story_path(@project.id), class: "button magenta"  %>
-          <button id="bulk_delete" class="button magenta">Bulk Delete</button>
+          <button id="bulk_delete" class="button magenta" aria-disabled="true">Bulk Delete</button>
         </th>
       </tr>
     </thead>
