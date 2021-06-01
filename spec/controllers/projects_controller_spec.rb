@@ -3,7 +3,8 @@ require "rails_helper"
 RSpec.describe ProjectsController, type: :controller do
   render_views
 
-  let!(:project) { FactoryBot.create(:project) }
+  let!(:project) { FactoryBot.create(:project, status: nil) }
+  let!(:archived_project) { FactoryBot.create(:project, status: "archived") }
 
   before do
     @request.env["devise.mapping"] = Devise.mappings[:user]
@@ -11,7 +12,7 @@ RSpec.describe ProjectsController, type: :controller do
     sign_in user
   end
 
-  describe "#index" do
+  describe "#index without archived params" do
     before do
       get :index
     end
@@ -20,6 +21,17 @@ RSpec.describe ProjectsController, type: :controller do
       expect(assigns(:projects)).to eq [project]
     end
   end
+
+  describe "#index with archived params" do
+    before do
+      get :index, params: { archived: true }
+    end
+
+    it "shows me a list of all the archived projects" do
+      expect(assigns(:projects)).to eq [archived_project]
+    end
+  end
+
 
   describe "#new" do
     it "redirects to the new page" do

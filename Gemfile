@@ -55,6 +55,8 @@ gem 'pg', '~> 0.18'
 gem 'jquery-ui-rails', '~> 5.0', '>= 5.0.5'
 gem 'acts_as_list'
 
+gem 'mimemagic', '~> 0.3.8'
+
 if next?
   gem 'omniauth-github', '~> 2.0.0'
 else
