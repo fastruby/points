@@ -19,9 +19,10 @@ ORGANIZATION_LOGIN=<INSERT-HERE>
 GITHUB_APP_ID=<INSERT-HERE>
 GITHUB_APP_SECRET=<INSERT-HERE>
 ```
-GITHUB_APP_ID and GITHUB_APP_SECRET: You need to sign up for an OAuth2 Application ID and Secret on the [GitHub Applications Page](https://github.com/settings/applications).
+GITHUB_APP_ID and GITHUB_APP_SECRET: You need to sign up for an OAuth2 Application ID and Secret on the [GitHub Applications Page](https://github.com/settings/applications/new).
 
-ORGANIZATION_LOGIN: This is the organization name as it appears in the Github URL, for instance “orgname’ in https://github.com/orgname. It is needed to check if users are a part of the organization.
+
+ORGANIZATION_LOGIN: This is the organization name as it appears in the Github URL, for instance “orgname’ in https://github.com/orgname. It is needed to check if users are a part of the organization. Ensure that your membership is set to public when you visit https://github.com/orgs/orgname/people.
 
 
 ## Starting the Server
