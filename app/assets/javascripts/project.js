@@ -9,7 +9,7 @@ document.addEventListener("turbolinks:load", function() {
         .removeAttr("aria-disabled");
     } else {
       $("#bulk_delete")
-        .text(`Bulk Delete`)
+        .text("Bulk Delete")
         .attr("aria-disabled", "true");
     }
   })
