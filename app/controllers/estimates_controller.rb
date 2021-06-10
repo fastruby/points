@@ -33,7 +33,7 @@ class EstimatesController < ApplicationController
   def update
     @estimate = Estimate.find(params[:id])
     params["estimate"]["user_id"] = current_user.id
-    updated = @estimate.update_attributes(estimate_params)
+    updated = @estimate.update(estimate_params)
     respond_to do |format|
       format.html {
         if updated
