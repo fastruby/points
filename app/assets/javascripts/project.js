@@ -14,11 +14,15 @@ document.addEventListener("turbolinks:load", function() {
     }
   })
 
-  $("#bulk_delete").click(() => {
+  $("#bulk_delete").click((event) => {
     let stories_ids = []
     $("input[name='stories[]']:checked").each((_, checkbox) => {
       stories_ids.push($(checkbox).val())
     })
+
+    $(event.target)
+      .text("Bulk Delete")
+      .attr("aria-disabled", "true");
 
     let token = $("meta[name='csrf-token']").attr("content")
     $.ajaxSetup({
