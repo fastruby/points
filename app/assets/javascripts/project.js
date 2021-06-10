@@ -1,4 +1,4 @@
-$(() => {
+document.addEventListener("turbolinks:load", function() {
   $("input[name='stories[]']").click(() => {
     let selected = $("input[name='stories[]']:checked");
 
