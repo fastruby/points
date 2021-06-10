@@ -46,7 +46,7 @@ class StoriesController < ApplicationController
   end
 
   def update
-    if @story.update_attributes(stories_params)
+    if @story.update(stories_params)
       flash[:success] = "Story updated!"
       redirect_to project_path(@project.id)
     else
