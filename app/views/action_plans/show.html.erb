@@ -3,8 +3,14 @@
 
   <div id="action-plan">
     <h2>Action Plan</h2>
+
+    <label for="action-plan_prefix">
+      Enter Prefix
+      <input name="action-plan_prefix" type="text">
+    </label>
+
     <% @project_stories.each do |story| %>
-      <h3><%= story.title %></h3>
+      <h3 class="action-plan_heading"><%= story.title %></h3>
       <%= markdown(story.description) %>
     <% end %>
   </div>
