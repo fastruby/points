@@ -6,7 +6,7 @@ document.addEventListener("turbolinks:load", function() {
       let prevHeader = $(this).text();
       prevHeader = prevHeader.substring(prevHeader.indexOf(" ") + 1);
 
-      $(this).text(`${prefix}.${index + 1} ${prevHeader}`);
-    })
+      $(this).text(`${prefix}${prefix.length > 1 ? index + 1 : ""} ${prevHeader}`);
+    });
   });
 });
