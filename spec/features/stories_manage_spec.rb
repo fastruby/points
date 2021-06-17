@@ -1,10 +1,9 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'managing stories', js: true do
-
-  let(:user) {FactoryBot.create(:user)}
-  let(:project) {FactoryBot.create(:project)}
-  let!(:story) {FactoryBot.create(:story, project: project)}
+RSpec.describe "managing stories", js: true do
+  let(:user) { FactoryBot.create(:user) }
+  let(:project) { FactoryBot.create(:project) }
+  let!(:story) { FactoryBot.create(:story, project: project) }
 
   before do
     login_as(user, scope: :user)
@@ -21,10 +20,10 @@ RSpec.describe 'managing stories', js: true do
 
   it "allows me to clone a story" do
     visit project_path(id: project.id)
-    within("#story_#{story.id}") {click_link 'Clone'}
+    within("#story_#{story.id}") { click_link "Clone" }
     expect(page.find("#story_title").value).to eq story.title
     expect(page.find("#story_description").value).to eq story.description
-    click_button 'Create'
+    click_button "Create"
     expect(Story.count).to eq 2
   end
 

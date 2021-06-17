@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "managing reports" do
   let!(:user) { FactoryBot.create(:user, :admin, name: "John") }
   let!(:project) { FactoryBot.create(:project) }
-  let!(:story) {FactoryBot.create(:story, project: project, real_score: 4)}
+  let!(:story) { FactoryBot.create(:story, project: project, real_score: 4) }
 
   before do
     login_as(user, scope: :user)
@@ -41,7 +41,7 @@ RSpec.describe "managing reports" do
   end
 
   context "with more than one estimate" do
-    let!(:user_2) {FactoryBot.create(:user, name: "Sarah")}
+    let!(:user_2) { FactoryBot.create(:user, name: "Sarah") }
     let!(:estimate) do
       FactoryBot.create(:estimate, story: story, user: user,
                                    best_case_points: 1,
@@ -72,14 +72,14 @@ RSpec.describe "managing reports" do
     let(:best_estimate_total) { "2" }
     let(:worst_estimate_total) { "6" }
     let(:real_score_total) { "4" }
-    let(:best_estimate_sum_per_user) { "1"}
+    let(:best_estimate_sum_per_user) { "1" }
     let(:best_estimate_sum_per_user_2) { "3" }
     let(:worst_estimate_sum_per_user) { "4" }
     let(:worst_estimate_sum_per_user_2) { "6" }
     let(:percentage_off_estimate_total_best) { "100.00%" }
     let(:percentage_off_estimate_total_worst) { "33.33%" }
 
-    it "calculates totals in the last row" do 
+    it "calculates totals in the last row" do
       visit project_report_path(project.id)
 
       expect(page).to have_content(best_estimate_total)

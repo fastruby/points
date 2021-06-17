@@ -45,14 +45,14 @@ RSpec.describe EstimatesController, type: :controller do
         expect {
           post :create, params: {project_id: project.id,
                                  story_id: story.id,
-                                 estimate: valid_params,}
+                                 estimate: valid_params}
         }.to change(Estimate, :count).by(1)
       end
 
       it "redirects to the new estimate" do
         post :create, params: {story_id: story.id,
                                project_id: project.id,
-                               estimate: valid_params,}
+                               estimate: valid_params}
 
         expect(response).to redirect_to project_path(project.id)
       end
@@ -64,7 +64,7 @@ RSpec.describe EstimatesController, type: :controller do
       before do
         post :create, params: {story_id: story.id,
                                project_id: project.id,
-                               estimate: invalid_attributes,}
+                               estimate: invalid_attributes}
       end
 
       it "stays on the new template page" do
@@ -90,7 +90,7 @@ RSpec.describe EstimatesController, type: :controller do
       put :update, params: {id: estimate.id,
                             story_id: story.id,
                             project_id: project.id,
-                            estimate: {best_case_points: "7", worst_case_points: "10"},}
+                            estimate: {best_case_points: "7", worst_case_points: "10"}}
 
       expect(estimate.reload.best_case_points).to eq 7
     end

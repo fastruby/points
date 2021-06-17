@@ -1,4 +1,4 @@
-require 'csv'
+require "csv"
 
 class Report
   MINIMUM_ESTIMATES_PER_STORY = 2
