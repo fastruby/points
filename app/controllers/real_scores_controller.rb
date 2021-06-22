@@ -7,15 +7,15 @@ class RealScoresController < ApplicationController
   end
 
   def update
-    values = params[:stories].to_unsafe_hash.transform_keys{|k| k.gsub("story_", '')}
-    values.each do |id,score|
-      @project.stories.find{|story| story.id == id.to_i}.update(real_score: score)
+    values = params[:stories].to_unsafe_hash.transform_keys { |k| k.gsub("story_", "") }
+    values.each do |id, score|
+      @project.stories.find { |story| story.id == id.to_i }.update(real_score: score)
     end
 
     redirect_to [@project, :report], flash: {success: "Real scores populated"}
   end
 
-private
+  private
 
   def find_project
     @project = Project.find(params[:project_id])

@@ -17,7 +17,7 @@ class EstimatesController < ApplicationController
 
     saved = @estimate.save
     respond_to do |format|
-      format.html {
+      format.html do
         if saved
           flash[:success] = "Estimate created!"
           redirect_to project_path(@project.id)
@@ -25,7 +25,7 @@ class EstimatesController < ApplicationController
           flash[:error] = @estimate.errors.full_messages
           render :new
         end
-      }
+      end
       format.js
     end
   end
@@ -35,7 +35,7 @@ class EstimatesController < ApplicationController
     params["estimate"]["user_id"] = current_user.id
     updated = @estimate.update(estimate_params)
     respond_to do |format|
-      format.html {
+      format.html do
         if updated
           flash[:success] = "Estimate updated!"
           redirect_to project_path(@project.id)
@@ -43,7 +43,7 @@ class EstimatesController < ApplicationController
           flash[:error] = @estimate.errors.full_messages
           render :edit
         end
-      }
+      end
       format.js
     end
   end
