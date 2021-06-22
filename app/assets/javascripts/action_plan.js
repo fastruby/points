@@ -3,10 +3,8 @@ document.addEventListener("turbolinks:load", function() {
     let prefix = event.target.value;
 
     $("h3.action-plan_heading").each(function(index) {
-      let prevHeader = $(this).text();
-      prevHeader = prevHeader.substring(prevHeader.indexOf(" ") + 1);
-
-      $(this).text(`${prefix}${prefix.length > 1 ? index + 1 : ""} ${prevHeader}`);
+      $(this).children("span").remove();
+      $(this).prepend(`<span>${prefix}${prefix.trim() == "" ? "" : index + 1} </span>`);
     });
   });
 });
