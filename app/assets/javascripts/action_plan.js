@@ -1,10 +1,10 @@
 document.addEventListener("turbolinks:load", function() {
   $("input[name='action-plan_prefix']").keyup(function(event) {
-    let prefix = event.target.value;
+    const prefix = event.target.value.trim();
 
     $("h3.action-plan_heading").each(function(index) {
       $(this).children("span").remove();
-      $(this).prepend(`<span>${prefix}${prefix.trim() == "" ? "" : index + 1} </span>`);
+      $(this).prepend(`<span>${prefix}${prefix == "" ? "" : index + 1} </span>`);
     });
   });
 });
