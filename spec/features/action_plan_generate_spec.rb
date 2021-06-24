@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "generating an action plan" do
+RSpec.describe "generating an action plan", js: true do
   let(:admin_user) { FactoryBot.create(:user) }
   let(:project) do
     FactoryBot.create(:project).tap do |project|
@@ -14,9 +14,17 @@ RSpec.describe "generating an action plan" do
   it "generates copy pasteable report" do
     visit project_path(project)
     click_link "Generate Action Plan"
+
+    # Check that content is there
     expect(page).to have_selector("h1", text: project.title)
     expect(page).to have_selector("h2", text: "Action Plan")
-    expect(page.all("#action-plan h3").map(&:text)).to eq(["First Story", "Second Story"])
+    expect(page).to have_selector("input[name='action-plan_prefix']")
+    expect(page).to have_selector("h3.action-plan_heading > span", visible: false)
+    expect(page.all("#action-plan h3").map(&:text)).to eq(["FIRST STORY", "SECOND STORY"])
     expect(page.all("#action-plan p").map(&:text)).to eq(["First", "Second"])
+
+    # Set prefix
+    page.fill_in "action-plan_prefix", with: "3.2."
+    expect(page.all("h3.action-plan_heading > span").map(&:text)).to eq(["3.2.1", "3.2.2"])
   end
 end
