@@ -10,7 +10,7 @@
     </label>
 
     <% @project_stories.each do |story| %>
-      <h3 class="action-plan_heading"><%= story.title %></h3>
+      <h3 class="action-plan_heading"><span></span><%= story.title %></h3>
       <%= markdown(story.description) %>
     <% end %>
   </div>
