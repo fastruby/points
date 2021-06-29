@@ -1,6 +1,8 @@
 require "open-uri"
 
 class CallbacksController < Devise::OmniauthCallbacksController
+  before_action :handle_proxy_requests
+
   def github
     username = request.env["omniauth.auth"]["extra"]["raw_info"]["login"]
 
@@ -17,6 +19,13 @@ class CallbacksController < Devise::OmniauthCallbacksController
   end
 
   private
+
+  def handle_proxy_requests
+    if params['proxy_to']
+      path = request.fullpath.gsub(/proxy_to=[^&]*&/, '')
+      redirect_to "#{params['proxy_to']}#{path}"
+    end
+  end
 
   def organization_members
     @organization_members ||= begin
