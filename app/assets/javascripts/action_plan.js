@@ -1,5 +1,5 @@
 document.addEventListener("turbolinks:load", function() {
-  $("input[name='action-plan_prefix']").keyup(function(event) {
+  $("input[name='action-plan-prefix']").keyup(function(event) {
     const prefix = event.target.value.trim();
 
     $("h3.action-plan_heading > span").each(function(index) {
