@@ -4,7 +4,7 @@ document.addEventListener("turbolinks:load", function() {
 
     $("h3.action-plan_heading > span").each(function(index) {
       const suffix = prefix.length === 0 ? "" : `${index+1}`
-      $(this).text(`${prefix}${suffix} `)
+      $(this).text(`${prefix}.${suffix} `)
     })
   })
 })

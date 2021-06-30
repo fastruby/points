@@ -24,7 +24,7 @@ RSpec.describe "generating an action plan", js: true do
     expect(page.all("#action-plan p").map(&:text)).to eq(["First", "Second"])
 
     # Set prefix
-    page.fill_in "action-plan-prefix", with: "3.2."
+    page.fill_in "action-plan-prefix", with: "3.2"
     expect(page.all("h3.action-plan_heading > span").map(&:text)).to eq(["3.2.1", "3.2.2"])
   end
 end
