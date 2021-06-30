@@ -256,7 +256,12 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  config.omniauth :github, ENV["GITHUB_APP_ID"], ENV["GITHUB_APP_SECRET"], scope: "user:email"
+  if ENV["HEROKU_APP_NAME"]
+    OmniAuth.config.full_host = 'https://staging.points.ombulabs.com'
+    config.omniauth :github, ENV['GITHUB_APP_ID'], ENV['GITHUB_APP_SECRET'], scope: 'user:email', callback_path: '/users/auth/github/callback?proxy_to=http://localhost:3000'
+  else
+    config.omniauth :github, ENV["GITHUB_APP_ID"], ENV["GITHUB_APP_SECRET"], scope: "user:email"
+  end
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
