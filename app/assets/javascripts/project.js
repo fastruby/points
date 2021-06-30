@@ -1,9 +1,9 @@
 document.addEventListener("turbolinks:load", function() {
   $("input[name='stories[]']").click(() => {
-    let selected = $("input[name='stories[]']:checked");
+    const selected = $("input[name='stories[]']:checked");
 
     if (selected.length > 0) {
-      let ending = selected.length == 1 ? "y" : "ies";
+      const ending = selected.length == 1 ? "y" : "ies";
       $("#bulk_delete")
         .text(`Bulk Delete (${selected.length} Stor${ending})`)
         .removeAttr("aria-disabled");
