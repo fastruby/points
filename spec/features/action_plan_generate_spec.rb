@@ -26,5 +26,9 @@ RSpec.describe "generating an action plan", js: true do
     # Set prefix
     page.fill_in "action-plan-prefix", with: "3.2"
     expect(page.all("h3.action-plan_heading > span").map(&:text)).to eq(["3.2.1", "3.2.2"])
+
+    # Ensure that dot is not there when prefix input is empty
+    page.fill_in "action-plan-prefix", with: " "
+    expect(page.all("#action-plan h3").map(&:text)).to eq(["FIRST STORY", "SECOND STORY"])
   end
 end
