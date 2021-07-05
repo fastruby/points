@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:buys-fran/omniauth.git
+  remote: https://github.com/buys-fran/omniauth.git
   revision: 867a07c4cc3363879c6255b4c81f7e19caa55e91
   ref: 867a07c4cc3363879c6255b4c81f7e19caa55e91
   specs:

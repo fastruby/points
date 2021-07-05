@@ -19,7 +19,7 @@ end
 gem "bootstrap-sass", "3.4.1"
 
 gem "devise", git: "https://github.com/heartcombo/devise.git", ref: "8bb358cf80a632d3232c3f548ce7b95fd94b6eb2"
-gem "omniauth", git: "git@github.com:buys-fran/omniauth.git", ref: "867a07c4cc3363879c6255b4c81f7e19caa55e91"
+gem "omniauth", git: "https://github.com/buys-fran/omniauth.git", ref: "867a07c4cc3363879c6255b4c81f7e19caa55e91"
 
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
