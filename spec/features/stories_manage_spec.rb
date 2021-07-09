@@ -48,6 +48,7 @@ RSpec.describe 'managing stories', js: true do
   it "does not allow me to bulk delete stories when there are none selected" do
     visit project_path(id: project.id)
     expect(page).to have_selector("#bulk_delete[aria-disabled='true']")
+    expect(page).to have_selector("#bulk_delete[disabled]")
   end
 
   it "allows me to bulk delete stories when one or more stories are selected" do
@@ -55,6 +56,7 @@ RSpec.describe 'managing stories', js: true do
 
     within("#story_#{story.id}") {check(option: "#{story.id}")}
     expect(page).to have_no_selector("#bulk_delete[aria-disabled='true']")
+    expect(page).to have_no_selector("#bulk_delete[disabled]")
     expect(page).to have_button("Bulk Delete (1 Story)")
     click_button("Bulk Delete (1 Story)")
     expect(Story.count).to eq 0
