@@ -6,11 +6,13 @@ document.addEventListener("turbolinks:load", function() {
       const ending = selected.length == 1 ? "y" : "ies";
       $("#bulk_delete")
         .text(`Bulk Delete (${selected.length} Stor${ending})`)
-        .removeAttr("aria-disabled");
+        .attr("aria-disabled", "false")
+        .prop("disabled", false);
     } else {
       $("#bulk_delete")
         .text("Bulk Delete")
-        .attr("aria-disabled", "true");
+        .attr("aria-disabled", "true")
+        .prop("disabled", true)
     }
   })
 
@@ -22,7 +24,8 @@ document.addEventListener("turbolinks:load", function() {
 
     $(event.target)
       .text("Bulk Delete")
-      .attr("aria-disabled", "true");
+      .attr("aria-disabled", "true")
+      .prop("disabled", true)
 
     let token = $("meta[name='csrf-token']").attr("content")
     $.ajaxSetup({
