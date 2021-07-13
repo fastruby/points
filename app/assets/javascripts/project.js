@@ -1,6 +1,12 @@
+document.addEventListener("turbolinks:load", function() {
+  $(".import-export-header").click(function () {
+    $(this).children(".rotate").toggleClass("left");
+  })
+})
+
 $(() => {
-  $("#bulk_delete").click(() => {
     let stories_ids = []
+  $("#bulk_delete").click(() => {
     $("input[name='stories[]']:checked").each((_, checkbox) => {
       stories_ids.push($(checkbox).val())
     })
