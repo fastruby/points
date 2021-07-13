@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "token"
+
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
@@ -256,7 +258,15 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  config.omniauth :github, ENV["GITHUB_APP_ID"], ENV["GITHUB_APP_SECRET"], scope: "user:email"
+  if ENV["HEROKU_APP_NAME"]
+    OmniAuth.config.full_host = "https://points.ombulabs.com"
+    proxy_to = "points-preview-pr-#{ENV['HEROKU_PR_NUMBER']}.herokuapp.com"
+    token = Token.issue("#{ENV["PROXY_SECRET"]}#{proxy_to}")
+    config.omniauth :github, ENV["GITHUB_APP_ID"], ENV["GITHUB_APP_SECRET"], scope: "user:email",
+                                                                             callback_path: "/users/auth/github/callback?proxy_to=#{proxy_to}&token=#{token}"
+  else
+    config.omniauth :github, ENV["GITHUB_APP_ID"], ENV["GITHUB_APP_SECRET"], scope: "user:email"
+  end
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

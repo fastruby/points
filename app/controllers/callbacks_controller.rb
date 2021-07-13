@@ -1,4 +1,5 @@
 require "open-uri"
+require "token"
 
 class CallbacksController < Devise::OmniauthCallbacksController
   before_action :handle_proxy_requests
@@ -20,11 +21,19 @@ class CallbacksController < Devise::OmniauthCallbacksController
 
   private
 
+  # Heroku preview apps requires a proxy for auth to work
   def handle_proxy_requests
-    if params['proxy_to']
-      path = request.fullpath.gsub(/proxy_to=[^&]*&/, '')
-      redirect_to "#{params['proxy_to']}#{path}"
+    if valid_proxy_request?
+      url = "#{params["proxy_to"]}#{request.path}"
+      query_params = request.params.slice(:code, :state).to_query
+      redirect_to "#{url}?#{query_params}"
     end
+  end
+
+  def valid_proxy_request?
+    proxy_to = params["proxy_to"]
+    token = params["token"]
+    token == Token.issue("#{ENV["PROXY_SECRET"]}#{proxy_to}")
   end
 
   def organization_members
