@@ -1,9 +1,31 @@
-$(() => {
-  $("#bulk_delete").click(() => {
+document.addEventListener("turbolinks:load", function() {
+  $("input[name='stories[]']").click(() => {
+    const selected = $("input[name='stories[]']:checked");
+
+    if (selected.length > 0) {
+      const ending = selected.length == 1 ? "y" : "ies";
+      $("#bulk_delete")
+        .text(`Bulk Delete (${selected.length} Stor${ending})`)
+        .attr("aria-disabled", "false")
+        .prop("disabled", false);
+    } else {
+      $("#bulk_delete")
+        .text("Bulk Delete")
+        .attr("aria-disabled", "true")
+        .prop("disabled", true)
+    }
+  })
+
+  $("#bulk_delete").click((event) => {
     let stories_ids = []
     $("input[name='stories[]']:checked").each((_, checkbox) => {
       stories_ids.push($(checkbox).val())
     })
+
+    $(event.target)
+      .text("Bulk Delete")
+      .attr("aria-disabled", "true")
+      .prop("disabled", true)
 
     let token = $("meta[name='csrf-token']").attr("content")
     $.ajaxSetup({
@@ -28,8 +50,3 @@ $(() => {
     })
   })
 })
-
-
-
-
-

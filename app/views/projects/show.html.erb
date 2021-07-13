@@ -12,7 +12,7 @@
         <th class="project-table__cell">Worst Estimate</th>
         <th class="project-table__cell">
           <%= link_to "Add a Story", new_project_story_path(@project.id), class: "button magenta"  %>
-          <button id="bulk_delete" class="button magenta">Delete</button>
+          <button id="bulk_delete" class="button magenta" aria-disabled="true" disabled>Bulk Delete</button>
         </th>
       </tr>
     </thead>

@@ -34,6 +34,9 @@
 			background-color: lighten(red, 10%);
 		}
 	}
+	&#bulk_delete[aria-disabled=true] {
+		opacity: 0.5;
+	}
 }
 
 #contact-us-popup .button {
