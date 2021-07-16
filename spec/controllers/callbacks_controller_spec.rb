@@ -20,7 +20,7 @@ RSpec.describe CallbacksController, type: :controller do
 
     context "without a proxy_to param" do
       it "redirects user to sign in" do
-        CallbacksController.any_instance.stub(:organization_members).and_return([])
+        allow_any_instance_of(CallbacksController).to receive(:organization_members).and_return([])
         get :github, params: {code: "code", state: "state"}
         expect(subject).to redirect_to("http://test.host/users/sign_in")
       end
