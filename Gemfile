@@ -10,9 +10,9 @@ git_source(:github) do |repo_name|
 end
 
 if next?
-  gem "rails", "~> 6.0.3.4"
+  gem "rails", "~> 6.1.4"
 else
-  gem "rails", "~> 5.2.3"
+  gem "rails", "~> 6.0.3.4"
 end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 
@@ -29,12 +29,7 @@ gem "sass-rails", "~> 5.0"
 # Use Uglifier as compressor for JavaScript assets
 gem "uglifier", ">= 1.3.0"
 
-if next?
-  gem "bourbon"
-else
-  gem "bourbon", git: "https://github.com/thoughtbot/bourbon.git",
-                 tag: "v5.0.0.beta.6"
-end
+gem "bourbon"
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
@@ -51,17 +46,17 @@ gem "jbuilder", "~> 2.5"
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem "jquery-rails"
-gem "pg", "~> 0.18"
+if next?
+  gem "pg", "~> 1.1"
+else
+  gem "pg", "~> 0.18"
+end
 gem "jquery-ui-rails", "~> 5.0", ">= 5.0.5"
 gem "acts_as_list"
 
 gem 'mimemagic', '~> 0.3.8'
 
-if next?
-  gem "omniauth-github", "~> 2.0.0"
-else
-  gem "omniauth-github"
-end
+gem "omniauth-github", "~> 2.0.0"
 gem "omniauth-rails_csrf_protection"
 
 group :development, :test do
