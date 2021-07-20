@@ -17,7 +17,7 @@ assignees: ''
 
 **Branch/Commit:**
 
-Inform what branch/commit/version of "Dash" you are using.
+Inform what branch/commit/version of "Points" you are using.
 
 **Describe the feature:**
 

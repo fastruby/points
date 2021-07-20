@@ -18,7 +18,7 @@ assignees: ''
 
 **Branch/Commit:**
 
-Inform what branch/commit of Dash you are using.
+Inform what branch/commit of Points you are using.
 
 **Expected behavior:**
 
