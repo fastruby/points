@@ -1,6 +1,7 @@
 # syntax=docker/dockerfile:1
 FROM ruby:2.6.3
-RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
+RUN echo "deb http://deb.debian.org/debian/ unstable main contrib non-free" >> /etc/apt/sources.list.d/debian.list
+RUN apt-get update -qq && apt-get install -y nodejs postgresql-client firefox xvfb
 WORKDIR /app
 COPY Gemfile /app/Gemfile
 COPY Gemfile.lock /app/Gemfile.lock
