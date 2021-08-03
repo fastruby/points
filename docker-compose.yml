@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   db:
-    image: postgres
+    image: postgres:10.9
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
   web:
