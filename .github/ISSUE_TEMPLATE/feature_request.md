@@ -1,9 +1,9 @@
 ---
 name: Feature request
 about: Request a new feature
-title: "[REQUEST]"
-labels: 'enhancement'
-assignees: ''
+title: ""
+labels: "Feature Request"
+assignees: ""
 
 ---
 
