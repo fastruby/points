@@ -1,5 +1,5 @@
 let modal = false
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("turbolinks:load", () => {
   modal = document.querySelector(".modal")
 })
 
