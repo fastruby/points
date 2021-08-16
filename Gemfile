@@ -1,5 +1,7 @@
 source "https://rubygems.org"
 
+ruby "2.6.3"
+
 def next?
   File.basename(__FILE__) == "Gemfile.next"
 end

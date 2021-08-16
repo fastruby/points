@@ -26,11 +26,6 @@ chdir APP_ROOT do
     cp 'config/database.yml.sample', 'config/database.yml'
   end
 
-  puts "\n== Copying ruby version =="
-  unless File.exist?('.ruby-version')
-    cp '.ruby-version.sample', '.ruby-version'
-  end
-
   unless File.exist?('.env')
     cp '.env.sample', '.env'
     puts "\n\e[93m=== IMPORTANT: Make sure you fill out details in .env\033[0m"
