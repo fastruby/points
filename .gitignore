@@ -3,6 +3,7 @@ tmp
 log/*.log
 config/database.yml
 .ruby-version
+.tool-versions
 coverage
 .env
 .byebug_history
