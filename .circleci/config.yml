@@ -7,7 +7,7 @@ jobs:
   build-rails-current:
     docker:
       # specify the version you desire here
-       - image: circleci/ruby:2.6.3-node-browsers
+       - image: circleci/ruby:2.6.8-node-browsers
          environment:
            - PGHOST=localhost
            - PGUSER=ubuntu
@@ -69,7 +69,7 @@ jobs:
   build-rails-next:
     docker:
       # specify the version you desire here
-       - image: circleci/ruby:2.6.3-node-browsers
+       - image: circleci/ruby:2.6.8-node-browsers
          environment:
            - BUNDLE_GEMFILE=Gemfile.next
            - PGHOST=localhost
