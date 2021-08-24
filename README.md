@@ -7,7 +7,7 @@ This is a Rails application to collaboratively estimate stories
 
 ## Getting started
 
-To get started with the app, clone the repo and then install the needed gems:
+To get started with the app, clone the repo and then install the needed gems running the setup script (NOTE: The version of bundler used is 2.2.26):
 
 ```
 $ ./bin/setup
