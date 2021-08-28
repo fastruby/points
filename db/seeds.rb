@@ -6,8 +6,9 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 Project.find_or_create_by(title: "Test Project")
+
 project_with_stories = Project.find_or_create_by(title: "Test Project With Stories")
-3.times { |_| project_with_stories.stories.create } if project_with_stories.stories.count.zero?
+3.times { |i| project_with_stories.stories.create(title: "Story ##{i}") } if project_with_stories.stories.count.zero?
 
 project_with_estimates = Project.find_or_create_by(title: "Test Project With Estimates")
 3.times { |i| project_with_estimates.stories.find_or_create_by(title: "Story ##{i}", description: "This is story ##{i}") }
