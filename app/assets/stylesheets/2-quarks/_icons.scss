@@ -1,7 +1,13 @@
 /* === ICONS */
 /* ========================== */
 
+.rotate {
+  transition: all 0.1s linear;
+}
+.rotate.left {
+  transform: rotate(180deg);
+}
 
 .features .fa {
-	color: #333;
+  color: #333;
 }

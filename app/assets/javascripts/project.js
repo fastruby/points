@@ -16,6 +16,10 @@ document.addEventListener("turbolinks:load", function() {
     }
   })
 
+  $(".import-export-header").click(function () {
+    $(this).children(".rotate").toggleClass("left");
+  })
+
   $("#bulk_delete").click((event) => {
     let stories_ids = []
     $("input[name='stories[]']:checked").each((_, checkbox) => {
