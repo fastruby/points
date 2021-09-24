@@ -48,8 +48,7 @@ $ docker-compose build
 
 Setup database and run migrations
 ```
-$ docker-compose run web bundle exec rake db:setup
-$ docker-compose run web bundle exec rake db:migrate
+$ docker-compose run web rails db:setup
 ```
 
 Run the app
