@@ -29,7 +29,7 @@ class CallbacksController < Devise::OmniauthCallbacksController
 
   def organization_members
     @organization_members ||= begin
-      members_raw_response = open("https://api.github.com/orgs/#{ENV["ORGANIZATION_LOGIN"]}/members").read
+      members_raw_response = URI.open("https://api.github.com/orgs/#{ENV["ORGANIZATION_LOGIN"]}/members").read
       JSON.parse(members_raw_response)
     end
   end
