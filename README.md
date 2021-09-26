@@ -36,6 +36,26 @@ Go to http://localhost:3000
 $ rails spec
 ```
 
+
+## Using Docker
+
+> NOTE: You'll need to have docker and docker-compose installed
+
+Build the points docker image
+```
+$ docker-compose build
+```
+
+Setup database and run migrations
+```
+$ docker-compose run web rails db:setup
+```
+
+Run the app
+```
+$ docker-compose up
+```
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at [https://github.com/fastruby/points](https://github.com/fastruby/points). This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.

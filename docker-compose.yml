@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:10.9
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+  web: &web
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - .:/app
+      - ./config/database.yml.sample:/app/config/database.yml
+    environment: &envs
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      POSTGRES_HOST: db
+  web-next:
+    <<: *web
+    command: bash -c "rm -rf /code/tmp/pids && bundle exec rails s -b 0.0.0.0"
+    environment:
+      <<: *envs
+      BUNDLE_GEMFILE: Gemfile.next
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
