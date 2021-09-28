@@ -2,13 +2,13 @@
 /* ========================== */
 
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-main{
-	min-height: calc(100vh - 160px);
-	padding: 100px 0;
+main {
+  min-height: calc(100vh - 160px);
+  padding: 60px 0;
 }
 ::selection {
   background: $orange;
@@ -23,5 +23,5 @@ textarea {
   resize: vertical;
 }
 .hidden {
-	display:none;
+  display: none;
 }

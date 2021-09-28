@@ -1,8 +1,8 @@
 <div class="container">
-  <h1 class="dashboard-title"><%= @project.title %> Report</h1>
+  <h1 class="dashboard-title-report"><%= @project.title %> Report</h1>
 
   <table class="project-table">
-    <thead>
+    <thead class="fixed-header">
       <tr class="project-table__row project-table__row--reports project-table__row--header">
         <td class="project-table__cell">Story Title</td>
         <% @users.each do |user| %>
@@ -20,7 +20,7 @@
       </tr>
     </thead>
 
-    <tbody id="stories">
+    <tbody id="report-stories">
       <% if @stories.present? %>
         <% @stories.each do | story | %>
         <tr class="project-table__row project-table__row--reports project-table__row--story">
@@ -42,7 +42,7 @@
       <% else %>
           <p> This user doesn't have any stories yet. </p>
       <% end %>
-      
+
     </tbody>
     <tfoot>
       <tr class="project-table__row project-table__row--reports project-table__row--footer">

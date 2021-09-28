@@ -1,11 +1,11 @@
 <div class="container">
-  <h1 class="dashboard-title"><%= @project.title %></h1>
+  <h1 class="dashboard-title-report"><%= @project.title %></h1>
   <% if @project.parent %>
     <li><%= link_to @project.parent.title, project_path(@project.parent) %></li>
   <% end %>
 
   <table class="project-table">
-    <thead class="project-table__header">
+    <thead class="fixed-header">
       <tr class="project-table__row project-table__row--header">
         <th class="project-table__cell">Story Title</th>
         <th class="project-table__cell">Best Estimate</th>
@@ -22,10 +22,8 @@
         <% @stories.each do | story | %>
           <tr class="project-table__row project-table__row--story" id="<%= dom_id(story)%>" >
             <td class="project-table__cell">
-              <div class="checkbox">
-                <input type="checkbox" name="stories[]" value=<%= story.id %>>
-                <%= link_to story.title, [story.project, story] %>
-              </div>
+              <input type="checkbox" name="stories[]" value=<%= story.id %>>
+              <%= link_to story.title, [story.project, story] %>
             </td>
             <td class="project-table__cell"><%= story.estimates.where(user: current_user)&.first&.best_case_points %></td>
             <td class="project-table__cell"><%= story.estimates.where(user: current_user)&.first&.worst_case_points %></td>
