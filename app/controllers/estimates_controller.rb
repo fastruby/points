@@ -32,6 +32,7 @@ class EstimatesController < ApplicationController
 
   def update
     @estimate = Estimate.find(params[:id])
+    @project = Project.find(params[:project_id])
     params["estimate"]["user_id"] = current_user.id
     updated = @estimate.update(estimate_params)
     respond_to do |format|
