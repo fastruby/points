@@ -34,7 +34,7 @@ class ProjectsController < ApplicationController
 
     original.stories.each { |x| duplicate.stories.create(x.dup.attributes) }
 
-    flash[:success] = 'Project created!'
+    flash[:success] = "Project created!"
     redirect_to "/projects/#{duplicate.id}"
   end
 

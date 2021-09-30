@@ -21,9 +21,9 @@ class CallbacksController < Devise::OmniauthCallbacksController
   private
 
   def handle_proxy_requests
-    if params['proxy_to']
-      path = request.fullpath.gsub(/proxy_to=[^&]*&/, '')
-      redirect_to "#{params['proxy_to']}#{path}"
+    if params["proxy_to"]
+      path = request.fullpath.gsub(/proxy_to=[^&]*&/, "")
+      redirect_to "#{params["proxy_to"]}#{path}"
     end
   end
 

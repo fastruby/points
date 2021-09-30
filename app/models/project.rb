@@ -37,7 +37,7 @@ class Project < ApplicationRecord
   end
 
   def archived?
-    status == "archived"  
+    status == "archived"
   end
 
   def toggle_archived!
