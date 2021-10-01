@@ -1,35 +1,42 @@
 label {
-	@include font-open-sans-normal;
-	margin-top: 1em;
-	margin-bottom: .2em;
-	display: block;
+  @include font-open-sans-normal;
+  margin-top: 1em;
+  margin-bottom: 0.2em;
+  display: block;
 }
-input, textarea {
-	display: block;
-	border: none;
-	background: #fff;
-	padding: 10px;
-	width: 100%;
-	border-radius: 2px;
-	font-size: 1em;
-	border: 1px solid $orange;
-	&:focus{
-		outline: none;
-		border: 1px solid $green;
-	}
+input,
+textarea {
+  display: block;
+  border: none;
+  background: #fff;
+  padding: 10px;
+  width: 100%;
+  border-radius: 2px;
+  font-size: 1em;
+  border: 1px solid $orange;
+  &:focus {
+    outline: none;
+    border: 1px solid $green;
+  }
 }
+input[type="checkbox"] {
+  display: inline;
+  width: auto;
+  margin-right: 5px;
+}
+
 .form-error {
-	background: $orange;
-	padding: 10px 20px;
-	margin-top: 2em;
-	margin-bottom: 2em;
-	border-radius: 24px;
+  background: $orange;
+  padding: 10px 20px;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  border-radius: 24px;
 }
 .form-success {
-	color: #57CE81;
-	@include font-open-sans-normal;
-	font-size: 1.2em;
-	padding-top: 20px;
+  color: #57ce81;
+  @include font-open-sans-normal;
+  font-size: 1.2em;
+  padding-top: 20px;
 }
 #error_explanation {
   width: 450px;
@@ -56,11 +63,12 @@ input, textarea {
 
 .alert-success {
   color: black;
-  background-color: #D9F1F1;
-  border-color: #D9F1F1;
+  background-color: #d9f1f1;
+  border-color: #d9f1f1;
   font-size: 12px;
 }
 
-.field, .actions {
-	margin-bottom: 10px;
+.field,
+.actions {
+  margin-bottom: 10px;
 }

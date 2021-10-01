@@ -1,12 +1,11 @@
-
 // Typography mixins:
 @mixin font-open-sans-light {
-	font-family: $font-open-sans;
-	font-weight: 300;
+  font-family: $font-open-sans;
+  font-weight: 300;
 }
 @mixin font-open-sans-normal {
-	font-family: $font-open-sans;
-	font-weight: 400;
+  font-family: $font-open-sans;
+  font-weight: 400;
 }
 @mixin font-open-sans-bold {
   font-family: $font-open-sans;
@@ -18,46 +17,46 @@
 }
 
 @mixin font-maven {
-	font-family: $font-maven;
-	font-weight: 400;
+  font-family: $font-maven;
+  font-weight: 400;
 }
 
 // Styles:
 body {
-	@include font-open-sans-light;
-	background-color: $white;
+  @include font-open-sans-light;
+  background-color: $white;
   color: $black;
   font-size: 13px;
   line-height: 18px;
 }
 h3 {
-	font-size: 2.41176470588235em; // 41px
-	letter-spacing: 1px;
-	margin: .5em 0;
+  font-size: 2.41176470588235em; // 41px
+  letter-spacing: 1px;
+  margin: 0.5em 0;
   @media screen and (max-width: $breakpoint_768px) {
-		font-size: 1.5em;
+    font-size: 1.5em;
   }
   &:first-child {
-  	margin-top: 0;
+    margin-top: 0;
   }
 }
 h4 {
-	@include font-open-sans-bold;
-	font-size: 1.5em; // 27px
-	letter-spacing: .04em;
+  @include font-open-sans-bold;
+  font-size: 1.5em; // 27px
+  letter-spacing: 0.04em;
   @media screen and (max-width: $breakpoint_768px) {
-		font-size: 1.2em;
+    font-size: 1.2em;
   }
 }
 
 .values h4 {
-	text-transform: uppercase;
+  text-transform: uppercase;
 }
 
 .ombulabs-brand {
   text-transform: uppercase;
   @include font-lato-bold;
-  font-size: .85em;
+  font-size: 0.85em;
 }
 
 .dashboard-title {
@@ -67,6 +66,25 @@ h4 {
   font-size: 35px;
   font-weight: 300;
   line-height: 1.2em;
+}
+
+.dashboard-title-report {
+  width: 100%;
+  position: sticky;
+  top: 53px;
+  background: white;
+  text-align: left;
+  font-size: 35px;
+  font-weight: 300;
+  line-height: 100px;
+  z-index: 1;
+}
+
+.fixed-header {
+  position: sticky;
+  top: 148px;
+  background: white;
+  z-index: 1;
 }
 
 .new-edit-title {
