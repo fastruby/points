@@ -4,7 +4,6 @@ RSpec.describe "managing projects" do
   let(:user) { FactoryBot.create(:user) }
   let(:project) { FactoryBot.create(:project) }
 
-
   before do
     login_as(user, scope: :user)
   end
@@ -42,7 +41,6 @@ RSpec.describe "managing projects" do
     click_link "Archive Project"
     expect(page).to have_content "Unarchive Project"
     expect(project.reload).to be_archived
-
   end
 
   it "allows me to delete a project" do

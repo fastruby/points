@@ -24,14 +24,13 @@ RSpec.describe ProjectsController, type: :controller do
 
   describe "#index with archived params" do
     before do
-      get :index, params: { archived: true }
+      get :index, params: {archived: true}
     end
 
     it "shows me a list of all the archived projects" do
       expect(assigns(:projects)).to eq [archived_project]
     end
   end
-
 
   describe "#new" do
     it "redirects to the new page" do
@@ -145,40 +144,40 @@ RSpec.describe ProjectsController, type: :controller do
     end
   end
 
-  describe 'duplicate' do
-    context 'with a project' do
+  describe "duplicate" do
+    context "with a project" do
       before do
-        post :duplicate, params: { id: project.id }
+        post :duplicate, params: {id: project.id}
       end
 
-      it 'creates a duplicate project' do
+      it "creates a duplicate project" do
         expect(Project.last.title).to eq "Copy of #{project.title}"
       end
 
-      it 'redirects to new project' do
+      it "redirects to new project" do
         expect(response).to redirect_to "/projects/#{Project.last.id}"
       end
 
-      it 'adds a success message' do
+      it "adds a success message" do
         expect(flash[:success]).to be_present
       end
     end
 
-    context 'with stories' do
-      it 'creates a duplicate project with matching stories' do
-        story = project.stories.create({ title: 'Story 1' })
+    context "with stories" do
+      it "creates a duplicate project with matching stories" do
+        story = project.stories.create({title: "Story 1"})
 
-        post :duplicate, params: { id: project.id }
+        post :duplicate, params: {id: project.id}
 
         expect(Project.last.stories.first.id).not_to eq story.id
         expect(Project.last.stories.first.title).to eq story.title
       end
 
-      it 'creates stories without estimates' do
-        story = project.stories.create({ title: 'Story 1' })
-        story.estimates.create({ best_case_points: 1, worst_case_points: 3 })
+      it "creates stories without estimates" do
+        story = project.stories.create({title: "Story 1"})
+        story.estimates.create({best_case_points: 1, worst_case_points: 3})
 
-        post :duplicate, params: { id: project.id }
+        post :duplicate, params: {id: project.id}
 
         expect(Project.last.stories.first.estimates).to be_empty
       end

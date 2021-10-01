@@ -7,8 +7,8 @@ RSpec.describe User, type: :model do
     describe ".from_omniauth" do
       let(:auth) do
         RecursiveOpenStruct.new(provider: "github",
-                                uid: "uuiidd11",
-                                info: {email: "testuser@email.com", name: "TestUser"})
+          uid: "uuiidd11",
+          info: {email: "testuser@email.com", name: "TestUser"})
       end
 
       it "creates a user" do
