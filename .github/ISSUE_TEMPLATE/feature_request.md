@@ -44,4 +44,4 @@ Include any mockup idea related to the requested feature if it applies.
 
 If you have resources related to the implementation or research for this feature, add them here.
 
-**I will abide by the [code of conduct](CODE_OF_CONDUCT.md)**
+**I will abide by the [code of conduct](https://github.com/fastruby/points/blob/main/CODE_OF_CONDUCT.md)**
