@@ -1,8 +1,9 @@
 require "csv"
 class StoriesController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_project, except: :bulk_destroy
+  before_action :find_project, except: [:bulk_destroy, :render_markdown]
   before_action :find_story, only: [:edit, :update, :destroy, :show]
+  include ApplicationHelper
 
   CSV_HEADERS = %w[id title description position]
 
@@ -90,6 +91,10 @@ class StoriesController < ApplicationController
     }
     filename = "#{@project.title.gsub(/[^\w]/, "_")}-#{Time.now.to_s(:short).tr(" ", "_")}.csv"
     send_data csv, filename: filename
+  end
+
+  def render_markdown
+    render plain: markdown(params[:markdown])
   end
 
   private

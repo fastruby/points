@@ -6,7 +6,7 @@
 .story-description {
   margin-bottom: 25px;
   font-size: 15px;
-  p{
+  p {
     margin-top: 10px;
   }
 }
@@ -20,13 +20,13 @@
   width: 200px;
 }
 
-.checkbox input[type=checkbox] {
+.checkbox input[type="checkbox"] {
   width: 15px;
 }
 
 .modal .story-description h1 {
   font-size: 1.5rem;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 
 .modal .story-description p {
@@ -35,4 +35,45 @@
 
 .modal p {
   padding-bottom: 1.3em;
+}
+
+.new_story,
+.edit_story {
+  display: grid;
+  grid-template-areas:
+    "error error"
+    "title preview"
+    "description preview"
+    "submit .";
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 10px;
+
+  #error_explanation {
+    grid-area: error;
+  }
+
+  .field {
+    align-self: start;
+
+    &.story_title {
+      grid-area: title;
+    }
+
+    &.story_description {
+      grid-area: description;
+    }
+  }
+
+  .story_preview {
+    grid-area: preview;
+    .content {
+      overflow: auto;
+      max-height: min(50vh, 700px);
+    }
+  }
+
+  .btn-group {
+    justify-self: start;
+    grid-area: submit;
+  }
 }

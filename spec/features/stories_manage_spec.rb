@@ -60,4 +60,41 @@ RSpec.describe "managing stories", js: true do
     click_button("Bulk Delete (1 Story)")
     expect(Story.count).to eq 0
   end
+
+  it "shows a preview of the description while typing" do
+    visit project_path(id: project.id)
+    click_link "Add a Story"
+    fill_in "story[title]", with: "As a user, I want to add stories"
+
+    desc = <<~DESC
+      This story allows users to add stories.
+
+          some
+          code
+      
+    DESC
+
+    fill_in "story[description]", with: desc
+
+    within(".story_preview .content") do
+      expect(page).to have_selector("p", text: "This story allows users to add stories.")
+      expect(page).to have_selector("pre", text: "some\ncode")
+    end
+
+    click_button "Create"
+
+    expect(page).to have_text(project.title)
+
+    story = Story.last
+    within("#story_#{story.id}") do
+      click_link("Edit")
+    end
+
+    expect(page).to have_text("Edit Story")
+
+    within(".story_preview .content") do
+      expect(page).to have_selector("p", text: "This story allows users to add stories.")
+      expect(page).to have_selector("pre", text: "some\ncode")
+    end
+  end
 end

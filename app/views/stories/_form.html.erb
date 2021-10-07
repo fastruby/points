@@ -11,17 +11,23 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="field story_title">
     <%= f.label :title %>
     <%= f.text_field :title, placeholder: "Story Title", class: "project-story-title" %>
   </div>
 
-  <div class="field">
+  <div class="field story_description">
     <%= f.label :description, "Description (Markdown)" %>
     <%= f.text_area :description, placeholder: "Description", class: "story-description", rows: 20 %>
   </div>
 
   <%= f.hidden_field :project_id, value: params[:project_id] %>
+
+  <div class="story_preview">
+    <label>Description Preview</label>
+    <div class="content"><%= markdown(@story.description) %></div>
+  </div>
+
   <div class="btn-group">
     <%= f.submit yield(:button_text), class: "button", id: "edit" %>
   </div>
