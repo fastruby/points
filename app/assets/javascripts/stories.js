@@ -30,8 +30,8 @@ document.addEventListener("input", (e) => {
         url: "/stories/render_markdown",
         data: `markdown=${encodeURIComponent(desc.value)}`,
         dataType: "text",
-        success: (args) => {
-          preview.innerHTML = args;
+        success: (response) => {
+          preview.innerHTML = response;
         },
       });
     }
