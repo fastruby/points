@@ -41,7 +41,7 @@ class Project < ApplicationRecord
   end
 
   def breadcrumb
-    parent.present? ? "#{parent.breadcrumb} >> #{title}" : title
+    parent.present? ? "#{parent.breadcrumb} » #{title}" : title
   end
 
   def toggle_archived!
