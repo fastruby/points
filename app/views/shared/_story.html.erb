@@ -1,5 +1,5 @@
+<h1>Story #<%= story.id %>: <%= story.title %></h1>
+
 <div class="story-description">
-  <h1>Story #<%= story.id %>: <%= story.title %></h1>
-  <h4><%= @project.breadcrumb %> </h4>
   <%= markdown(story.description) %>
 </div>
