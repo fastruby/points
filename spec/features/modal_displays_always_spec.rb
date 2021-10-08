@@ -16,7 +16,7 @@ RSpec.describe "managing estimates" do
     expect(page).to have_content(story.description)
     find(".close").click
 
-    click_link "points app"
+    visit "/projects"
     find(".project-card:nth-of-type(1)").click
     click_link "Add Estimate"
     expect(page).to have_text("New Estimate")
