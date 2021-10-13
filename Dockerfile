@@ -1,10 +1,11 @@
-FROM circleci/ruby:2.6.6-node-browsers
+FROM circleci/ruby:3.0.2-node-browsers
 
 WORKDIR /app
 
 # Copy all the Gemfile files
 COPY Gemfile* ./
 
+RUN gem install bundler -v 2.2.26
 RUN bundle install
 RUN BUNDLE_GEMFILE=Gemfile.next bundle install
 
