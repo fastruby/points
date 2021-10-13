@@ -60,10 +60,6 @@ RSpec.describe StoriesController, type: :controller do
       it "stays on the new template page" do
         expect(response).to render_template :new
       end
-
-      it "shows a flash message" do
-        expect(flash[:error]).to be_present
-      end
     end
   end
 
