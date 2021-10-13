@@ -15,7 +15,7 @@ module ApplicationHelper
   end
 
   def header_title
-    @project.present? ? @project.breadcrumb : "points app"
+    @project&.breadcrumb || "points app"
   end
 
   def markdown(text)
