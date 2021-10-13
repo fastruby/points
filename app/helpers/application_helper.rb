@@ -11,7 +11,7 @@ module ApplicationHelper
   }.freeze
 
   def header_link
-    @project.present? ? @project : "/projects"
+    @project.presence || "/projects"
   end
 
   def header_title
