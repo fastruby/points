@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   resource :stories do
     post :bulk_destroy, to: "stories#bulk_destroy"
+    post :render_markdown
   end
 
   resources :projects do
