@@ -107,5 +107,31 @@ RSpec.describe "managing estimates" do
       cell = find("#story_#{story.id} td:nth-child(2)")
       expect(cell).to have_text("5")
     end
+
+    it "allows estimation deletion" do
+      visit project_path(id: project.id)
+      click_link "Add Estimate"
+
+      expect(page).to have_text("New Estimate")
+      expect(page).to have_content(story.description)
+      expect(current_path).to eq project_path(id: project.id)
+
+      select "5", from: "estimate[best_case_points]"
+      select "8", from: "estimate[worst_case_points]"
+      click_button "Create"
+
+      cell = find("#story_#{story.id} td:nth-child(2)")
+      expect(cell).to have_text("5")
+      expect(page).to_not have_content(story.description)
+
+      click_link "Edit Estimate"
+
+      expect(page).to have_text("Edit Estimate")
+      accept_confirm do
+        click_link "Delete Estimate"
+      end
+
+      expect(page).to_not have_text("Edit Estimate")
+    end
   end
 end
