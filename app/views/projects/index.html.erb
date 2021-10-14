@@ -1,7 +1,7 @@
 <div class="container">
   <h1 class="home-title">My Projects</h1>
 
-  <% if !@projects.empty? %>
+  <% if @projects.any? %>
     <div class="row">
       <% @projects.each do | project | %>
         <div class="col-sm-6 col-lg-4">

@@ -10,6 +10,14 @@ module ApplicationHelper
     superscript: true
   }.freeze
 
+  def header_link
+    @project.presence || "/projects"
+  end
+
+  def header_title
+    @project&.breadcrumb || "points app"
+  end
+
   def markdown(text)
     renderer = Redcarpet::Render::HTML.new(OPTIONS)
     markdown = Redcarpet::Markdown.new(renderer, EXTENSIONS)

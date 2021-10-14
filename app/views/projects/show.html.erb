@@ -1,8 +1,5 @@
 <div class="container">
-  <h1 class="dashboard-title-report"><%= @project.title %></h1>
-  <% if @project.parent %>
-    <li><%= link_to @project.parent.title, project_path(@project.parent) %></li>
-  <% end %>
+  <h1 class="dashboard-title-report"><%= render "shared/project_title", project: @project %></h1>
 
   <table class="project-table">
     <thead class="fixed-header">

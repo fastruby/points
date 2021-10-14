@@ -40,6 +40,10 @@ class Project < ApplicationRecord
     status == "archived"
   end
 
+  def breadcrumb
+    parent.present? ? "#{parent.breadcrumb} » #{title}" : title
+  end
+
   def toggle_archived!
     new_status = archived? ? nil : "archived"
     update_column :status, new_status
