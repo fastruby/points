@@ -1,6 +1,16 @@
-
 .action_plans-controller {
   #action-plan {
     margin-bottom: 50px;
+  }
+  .action-plan_heading {
+    font-size: 16pt;
+    line-height: 1.2em;
+    margin: 0.2em auto;
+    text-transform: none;
+  }
+  .action-plan_heading ~ p {
+    font-size: 14pt;
+    line-height: 1.2em;
+    margin: 0.5em auto;
   }
 }
