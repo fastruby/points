@@ -22,7 +22,6 @@ class StoriesController < ApplicationController
       flash[:success] = "Story created!"
       redirect_to project_path(@project.id)
     else
-      flash[:error] = @story.errors.full_messages
       render :new
     end
   end
