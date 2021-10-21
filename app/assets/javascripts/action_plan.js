@@ -2,9 +2,9 @@ document.addEventListener("turbolinks:load", function() {
   $("#action-plan-prefix").keyup(function(event) {
     const prefix = event.target.value.trim()
 
-    $("h3.action-plan_heading > span").each(function(index) {
-      const suffix = prefix.length === 0 ? "" : `.${index+1}`
-      $(this).text(`${prefix}${suffix} `)
+    document.querySelectorAll(".action-plan_heading > span.index").forEach((el) => {
+      const suffix = prefix.length === 0 ? "" : `.${el.dataset.idx}`
+      el.innerText = `${prefix}${suffix} `
     })
   })
 })

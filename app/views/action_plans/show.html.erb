@@ -9,9 +9,21 @@
       <input id="action-plan-prefix" name="action-plan-prefix" type="text">
     </label>
 
+    <% idx = 0 %>
     <% @project_stories.each do |story| %>
-      <h3 class="action-plan_heading"><span></span><%= story.title %></h3>
+      <% idx += 1 %>
+      <h3 class="action-plan_heading"><span class="index"  data-idx="<%= idx %>."></span><%= story.title %></h3>
       <%= markdown(story.description) %>
+    <% end %>
+
+    <% @children.each do |child| %>
+      <% idx += 1 %>
+      <h3 class="action-plan_heading"><span class="index" data-idx="<%= idx %>."></span><%= child.title %></h3>
+
+      <% child.stories.each_with_index do |story, idx2| %>
+        <h4 class="action-plan_heading"><span class="index" data-idx="<%= idx %>.<%= idx2+1 %>."></span><%= story.title %></h4>
+        <%= markdown(story.description) %>
+      <% end %>
     <% end %>
   </div>
 
