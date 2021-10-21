@@ -58,4 +58,4 @@ If the issue has an effect in the frontend, include any relevant screenshots and
 
 Include relevant log snippets or files here.
 
-**I will abide by the [code of conduct] (CODE_OF_CONDUCT.md)**
+**I will abide by the [code of conduct](https://github.com/fastruby/points/blob/main/CODE_OF_CONDUCT.md)**

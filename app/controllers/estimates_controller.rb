@@ -8,12 +8,11 @@ class EstimatesController < ApplicationController
   end
 
   def edit
-    @estimate = Estimate.find(params[:id])
   end
 
   def create
-    params["estimate"]["user_id"] = current_user.id
-    @estimate = Estimate.new(estimate_params)
+    @estimate = current_user.estimates.build(estimate_params)
+    @estimate.story_id = params[:story_id]
 
     saved = @estimate.save
     respond_to do |format|
@@ -31,9 +30,7 @@ class EstimatesController < ApplicationController
   end
 
   def update
-    @estimate = Estimate.find(params[:id])
     @project = Project.find(params[:project_id])
-    params["estimate"]["user_id"] = current_user.id
     updated = @estimate.update(estimate_params)
     respond_to do |format|
       format.html do
@@ -65,10 +62,13 @@ class EstimatesController < ApplicationController
   end
 
   def find_estimate
-    @estimate = Estimate.find(params[:id])
+    @estimate = current_user.estimates.where(story_id: params[:story_id]).find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    flash[:error] = "Estimate not found"
+    redirect_to project_path(params[:project_id])
   end
 
   def estimate_params
-    params.require(:estimate).permit(:best_case_points, :worst_case_points, :user_id, :story_id)
+    params.require(:estimate).permit(:best_case_points, :worst_case_points)
   end
 end

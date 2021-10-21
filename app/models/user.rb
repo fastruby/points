@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
+  has_many :estimates
+
   def self.from_omniauth(auth)
     user_attributes = {
       email: auth.info.email,

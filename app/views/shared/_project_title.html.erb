@@ -1,0 +1,3 @@
+<% if project.parent %>
+  <%= link_to project.parent.title, project_path(project.parent) %> &raquo;&nbsp;
+<% end %><%= project.title %>

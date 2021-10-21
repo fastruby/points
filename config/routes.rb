@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   resource :stories do
     post :bulk_destroy, to: "stories#bulk_destroy"
+    post :render_markdown
   end
 
   resources :projects do
@@ -27,7 +28,7 @@ Rails.application.routes.draw do
       patch :real_scores, on: :collection, to: "real_scores#update"
       patch :import, on: :collection
       get :export, on: :collection
-      resources :estimates
+      resources :estimates, except: [:index, :show]
     end
     resource :action_plan, only: [:show]
   end

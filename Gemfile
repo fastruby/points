@@ -12,15 +12,15 @@ git_source(:github) do |repo_name|
 end
 
 if next?
-  gem "rails", "~> 6.1.4"
+  gem "rails", github: "rails/rails", branch: "main"
+  gem "devise", github: "heartcombo/devise", branch: "main"
 else
-  gem "rails", "~> 6.0.3.4"
+  gem "rails", "~> 6.1.4"
+  gem "devise"
 end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 
 gem "bootstrap-sass", "3.4.1"
-
-gem "devise", git: "https://github.com/heartcombo/devise.git", ref: "8bb358cf80a632d3232c3f548ce7b95fd94b6eb2"
 
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
@@ -48,11 +48,9 @@ gem "jbuilder", "~> 2.5"
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem "jquery-rails"
-if next?
-  gem "pg", "~> 1.1"
-else
-  gem "pg", "~> 0.18"
-end
+
+gem "pg", "~> 1.1"
+
 gem "jquery-ui-rails", "~> 5.0", ">= 5.0.5"
 gem "acts_as_list"
 
