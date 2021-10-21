@@ -118,6 +118,10 @@ RSpec.describe "managing estimates" do
 
       select "5", from: "estimate[best_case_points]"
       select "8", from: "estimate[worst_case_points]"
+
+      # make sure the delete button is not there during creation
+      expect(page).to have_selector('a', text: "Delete Estimate", count: 0)
+
       click_button "Create"
 
       cell = find("#story_#{story.id} td:nth-child(2)")
@@ -127,6 +131,7 @@ RSpec.describe "managing estimates" do
       click_link "Edit Estimate"
 
       expect(page).to have_text("Edit Estimate")
+
       accept_confirm do
         click_link "Delete Estimate"
       end
