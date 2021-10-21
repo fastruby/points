@@ -120,7 +120,7 @@ RSpec.describe "managing estimates" do
       select "8", from: "estimate[worst_case_points]"
 
       # make sure the delete button is not there during creation
-      expect(page).to have_selector('a', text: "Delete Estimate", count: 0)
+      expect(page).to have_selector("a", text: "Delete Estimate", count: 0)
 
       click_button "Create"
 
