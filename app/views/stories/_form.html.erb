@@ -1,25 +1,14 @@
 <%= form_for([@project, @story]) do |f| %>
-  <% if story.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(story.errors.count, "error") %> prohibited this story from being saved:</h2>
+  
+  <%= 
+    custom_text_field(f, :title, @story.errors[:title], 
+    {div_class: 'field story_title', field_class: 'project-story-title', placeholder: "Story Title"}) 
+  %>
 
-      <ul>
-      <% story.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field story_title">
-    <%= f.label :title %>
-    <%= f.text_field :title, placeholder: "Story Title", class: "project-story-title" %>
-  </div>
-
-  <div class="field story_description">
-    <%= f.label :description, "Description (Markdown)" %>
-    <%= f.text_area :description, placeholder: "Description", class: "story-description", rows: 20 %>
-  </div>
+  <%= 
+    custom_textarea_field(f, :description, @story.errors[:description], 
+    {div_class: 'field story_description', field_class: 'story-description', placeholder: "Description", label: "Description (Markdown)", rows: 20 }) 
+  %>
 
   <%= f.hidden_field :project_id, value: params[:project_id] %>
 

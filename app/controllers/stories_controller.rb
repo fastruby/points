@@ -50,7 +50,6 @@ class StoriesController < ApplicationController
       flash[:success] = "Story updated!"
       redirect_to project_path(@project.id)
     else
-      flash[:error] = @story.errors.full_messages
       render :edit
     end
   end
