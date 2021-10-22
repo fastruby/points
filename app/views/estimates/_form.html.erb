@@ -28,4 +28,8 @@
   <div class="btn-group">
     <%= f.submit yield(:button_text), class: "button", id: "edit" %>
   </div>
+
+  <% if estimate.persisted? %>
+    <%= link_to "Delete Estimate", project_story_estimate_path(project.id, story, estimate.id), method: "delete", data: { confirm: "Are you sure?" }, class: "button magenta" %>
+  <% end %>
 <% end %>
