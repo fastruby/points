@@ -1,29 +1,28 @@
-# Points Application
+# Points
 
 [![CircleCI](https://circleci.com/gh/fastruby/points.svg?style=shield)](https://circleci.com/gh/fastruby/points)
 [![Maintainability](https://api.codeclimate.com/v1/badges/2484911d9c021cfee1ce/maintainability)](https://codeclimate.com/github/fastruby/points/maintainability)
 
-This is a Rails application to collaboratively estimate stories
+This is a Rails application to collaboratively estimate stories.
 
 ## Getting started
 
-To get started with the app, clone the repo and then install the needed gems running the setup script (NOTE: The version of bundler used is 2.2.26):
+To get started with the app, clone the repo and then install the needed gems running the setup script:
 
 ```
 $ ./bin/setup
 ```
 
 ## Environment Variables
+
+`ORGANIZATION_LOGIN`: This is the organization name as it appears in the Github URL, for instance `orgname` in https://github.com/orgname. It is needed to check if users are a part of the organization. Ensure that your membership is set to public when you visit https://github.com/orgs/orgname/people.
+
+If you don't belong to any organization, you can set up one here: https://github.com/organizations/plan
+
+Make sure you add your organization to the `.env` file like this:
 ```
-ORGANIZATION_LOGIN=<INSERT-HERE>
-GITHUB_APP_ID=<INSERT-HERE>
-GITHUB_APP_SECRET=<INSERT-HERE>
+ORGANIZATION_LOGIN=orgname
 ```
-GITHUB_APP_ID and GITHUB_APP_SECRET: You need to sign up for an OAuth2 Application ID and Secret on the [GitHub Applications Page](https://github.com/settings/applications/new).
-
-
-ORGANIZATION_LOGIN: This is the organization name as it appears in the Github URL, for instance “orgname’ in https://github.com/orgname. It is needed to check if users are a part of the organization. Ensure that your membership is set to public when you visit https://github.com/orgs/orgname/people.
-
 
 ## Starting the Server
 ```
@@ -35,7 +34,6 @@ Go to http://localhost:3000
 ```
 $ rails spec
 ```
-
 
 ## Using Docker
 
