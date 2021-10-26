@@ -15,7 +15,7 @@ $ ./bin/setup
 
 ## Environment Variables
 
-`ORGANIZATION_LOGIN`: This is the organization name as it appears in the Github URL, for instance `orgname` in https://github.com/orgname. It is needed to check if users are a part of the organization. Ensure that your membership is set to public when you visit https://github.com/orgs/orgname/people.
+`ORGANIZATION_LOGIN`: This is the organization name as it appears in the GitHub URL, for instance `orgname` in https://github.com/orgname. It is needed to check if users are a part of the organization. Ensure that your membership is set to _public_ when you visit https://github.com/orgs/orgname/people.
 
 If you don't belong to any organization, you can set up one here: https://github.com/organizations/plan
 
