@@ -54,3 +54,12 @@ document.addEventListener("turbolinks:load", function() {
     })
   })
 })
+
+window.addEventListener("load", () => {
+  const links = document.querySelectorAll("a[data-remote]");
+  links.forEach((element) => {
+    element.addEventListener("ajax:success", () => {
+      console.log("The story was deleted.");
+    });
+  });
+});
