@@ -24,6 +24,16 @@ Make sure you add your organization to the `.env` file like this:
 ORGANIZATION_LOGIN=orgname
 ```
 
+`GITHUB_APP_ID` and `GITHUB_APP_SECRET`: These are the credentials of the OAuth GitHub App that you need to create. Follow the instructions on this link to create one: [Creating an OAuth GitHub App](https://docs.github.com/en/developers/apps/building-oauth-apps/creating-an-oauth-app)
+
+When creating the OAuth GitHub App, the `Homepage URL` field should be set to http://localhost:3000, and the `Authorization callback URL` should be http://localhost:3000/users/auth/github/callback.
+
+Once you create the app and generate credentials for it, make sure you add them to the `.env` file like this:
+```
+GITHUB_APP_ID=xxxxxxxxxxxxxxxxxxxx
+GITHUB_APP_SECRET=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
 ## Starting the Server
 ```
 $ rails s
