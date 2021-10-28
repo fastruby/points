@@ -54,3 +54,13 @@ document.addEventListener("turbolinks:load", function() {
     })
   })
 })
+
+window.addEventListener("load", () => {
+  const links = document.querySelectorAll(".project-table__row--story a.delete");
+  links.forEach((element) => {
+    element.addEventListener("ajax:success", () => {
+      document.getElementById(`story_${element.dataset.storyId}`).remove()
+      console.log("The story was deleted.");
+    });
+  });
+});

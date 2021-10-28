@@ -35,12 +35,11 @@ RSpec.describe "managing stories", js: true do
     expect(page).to have_content "Story updated!"
   end
 
-  it "allows me to delete a story" do
+  it "allows me to delete a story", js: true do
     visit project_path(id: project.id)
     accept_confirm do
       click_link "Delete"
     end
-    find("p", text: "You don't have any stories yet.")
     expect(Story.count).to eq 0
   end
 
@@ -71,7 +70,7 @@ RSpec.describe "managing stories", js: true do
 
           some
           code
-      
+
     DESC
 
     fill_in "story[description]", with: desc
