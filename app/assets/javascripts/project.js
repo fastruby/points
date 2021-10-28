@@ -56,7 +56,7 @@ document.addEventListener("turbolinks:load", function() {
 })
 
 window.addEventListener("load", () => {
-  const links = document.querySelectorAll("a[data-remote]");
+  const links = document.querySelectorAll(".project-table__row--story a.delete");
   links.forEach((element) => {
     element.addEventListener("ajax:success", () => {
       $("#story_" + element.id).remove();
