@@ -59,6 +59,7 @@ window.addEventListener("load", () => {
   const links = document.querySelectorAll("a[data-remote]");
   links.forEach((element) => {
     element.addEventListener("ajax:success", () => {
+      $("#story_" + element.id).remove();
       console.log("The story was deleted.");
     });
   });
