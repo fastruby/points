@@ -59,7 +59,7 @@ window.addEventListener("load", () => {
   const links = document.querySelectorAll(".project-table__row--story a.delete");
   links.forEach((element) => {
     element.addEventListener("ajax:success", () => {
-      $("#story_" + element.id).remove();
+      document.getElementById(`story_${element.id}`).remove()
       console.log("The story was deleted.");
     });
   });
