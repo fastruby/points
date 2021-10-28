@@ -40,7 +40,6 @@ RSpec.describe "managing stories", js: true do
     accept_confirm do
       click_link "Delete"
     end
-    find("p", text: "You don't have any stories yet.")
     expect(Story.count).to eq 0
   end
 
@@ -71,7 +70,7 @@ RSpec.describe "managing stories", js: true do
 
           some
           code
-      
+
     DESC
 
     fill_in "story[description]", with: desc
