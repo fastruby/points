@@ -106,6 +106,14 @@ RSpec.describe "managing estimates" do
 
       cell = find("#story_#{story.id} td:nth-child(2)")
       expect(cell).to have_text("5")
+
+      click_link "Edit Estimate"
+
+      select "8", from: "estimate[best_case_points]"
+      click_button "Save Changes"
+
+      cell = find("#story_#{story.id} td:nth-child(2)")
+      expect(cell).to have_text("8")
     end
 
     it "allows estimation deletion" do

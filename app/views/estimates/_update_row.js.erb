@@ -1,0 +1,7 @@
+let row = document.getElementById("story_<%= estimate.story_id %>")
+row.children[1].innerText = "<%= j(estimate.best_case_points.to_s) %>"
+row.children[2].innerText = "<%= j(estimate.worst_case_points.to_s) %>"
+
+let totals_row = document.querySelector('.project-table tfoot tr')
+totals_row.children[1].innerText = "<%= j @project.best_estimate_sum_per_user(current_user) %>"
+totals_row.children[2].innerText = "<%= j @project.worst_estimate_sum_per_user(current_user) %>"
