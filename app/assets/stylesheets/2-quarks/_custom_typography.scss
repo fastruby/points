@@ -78,7 +78,7 @@ h4 {
   font-weight: 300;
   line-height: 100px;
   z-index: 1;
-  @media screen and (max-width: 680px) {
+  @media screen and (max-width: $breakpoint_768px) {
    margin-top: 53px;
   }
 }
