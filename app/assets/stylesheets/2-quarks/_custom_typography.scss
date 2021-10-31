@@ -78,6 +78,9 @@ h4 {
   font-weight: 300;
   line-height: 100px;
   z-index: 1;
+  @media screen and (max-width: 680px) {
+   margin-top: 53px;
+  }
 }
 
 .fixed-header {
