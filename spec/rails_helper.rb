@@ -39,6 +39,30 @@ ActiveRecord::Migration.maintain_test_schema!
 
 require "deprecation_tracker"
 
+module FeatureSpecsHelpers
+  def set_estimates(best, worst)
+    select best.to_s, from: "estimate[best_case_points]"
+    select worst.to_s, from: "estimate[worst_case_points]"
+  end
+
+  def within_modal(&block)
+    within ".modal.in" do
+      yield
+    end
+  end
+
+  def expect_closed_modal
+    expect(page).to have_selector ".modal.in", count: 0
+  end
+
+  def expect_story_estimates(story, best, worst)
+    within "#story_#{story.id}" do
+      expect(find("td:nth-child(2)")).to have_text best.to_s
+      expect(find("td:nth-child(3)")).to have_text worst.to_s
+    end
+  end
+end
+
 RSpec.configure do |config|
   # Tracker deprecation messages in each file
   if ENV["DEPRECATION_TRACKER"]
@@ -68,6 +92,7 @@ RSpec.configure do |config|
   end
 
   config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include FeatureSpecsHelpers, type: :feature
 
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
