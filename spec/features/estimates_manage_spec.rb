@@ -106,6 +106,16 @@ RSpec.describe "managing estimates" do
       expect_closed_modal
 
       expect_story_estimates(story, 5, 8)
+
+      click_link "Edit Estimate"
+
+      within_modal do
+        set_estimates(5, 13)
+        click_button "Save Changes"
+      end
+      expect_closed_modal
+
+      expect_story_estimates(story, 5, 13)
     end
 
     it "allows estimation deletion" do
