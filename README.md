@@ -20,6 +20,7 @@ $ ./bin/setup
 If you don't belong to any organization, you can set up one here: https://github.com/organizations/plan
 
 Make sure you add your organization to the `.env` file like this:
+
 ```
 ORGANIZATION_LOGIN=orgname
 ```
@@ -29,18 +30,22 @@ ORGANIZATION_LOGIN=orgname
 When creating the OAuth GitHub App, the `Homepage URL` field should be set to http://localhost:3000, and the `Authorization callback URL` should be http://localhost:3000/users/auth/github/callback.
 
 Once you create the app and generate credentials for it, make sure you add them to the `.env` file like this:
+
 ```
 GITHUB_APP_ID=xxxxxxxxxxxxxxxxxxxx
 GITHUB_APP_SECRET=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
 ## Starting the Server
+
 ```
 $ rails s
 ```
+
 Go to http://localhost:3000
 
 ## Running Tests
+
 ```
 $ rails spec
 ```
@@ -50,18 +55,25 @@ $ rails spec
 > NOTE: You'll need to have docker and docker-compose installed
 
 Build the points docker image
+
 ```
 $ docker-compose build
 ```
 
 Setup database and run migrations
+
 ```
 $ docker-compose run web rails db:setup
 ```
 
 Run the app
+
 ```
-$ docker-compose up
+$ docker-compose up web
+
+or
+
+$ docker-compose up web-next
 ```
 
 ## Contributing
@@ -70,13 +82,13 @@ Bug reports and pull requests are welcome on GitHub at [https://github.com/fastr
 
 When Submitting a Pull Request:
 
-* If your PR closes any open GitHub issues, please include `Closes #XXXX` in your comment
+- If your PR closes any open GitHub issues, please include `Closes #XXXX` in your comment
 
-* Please include a summary of the change and which issue is fixed or which feature is introduced.
+- Please include a summary of the change and which issue is fixed or which feature is introduced.
 
-* If changes to the behavior are made, clearly describe what changes.
+- If changes to the behavior are made, clearly describe what changes.
 
-* If changes to the UI are made, please include screenshots of the before and after.
+- If changes to the UI are made, please include screenshots of the before and after.
 
 ## License
 
@@ -84,11 +96,10 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
- Everyone interacting in the Points project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/fastruby/points/CODE_OF_CONDUCT.md).
+Everyone interacting in the Points project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/fastruby/points/CODE_OF_CONDUCT.md).
 
 ## Sponsorship
 
 ![FastRuby.io | Rails Upgrade Services](https://github.com/fastruby/points/raw/main/app/assets/images/fastruby-logo.png)
-
 
 `Points` is maintained and funded by [FastRuby.io](https://fastruby.io). The names and logos for FastRuby.io are trademarks of The Lean Software Boutique LLC.
