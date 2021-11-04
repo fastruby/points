@@ -21,8 +21,7 @@ RSpec.describe "managing estimates" do
     end
 
     it "allows me to add an estimate" do
-      select "3", from: "estimate[best_case_points]"
-      select "8", from: "estimate[worst_case_points]"
+      set_estimates(3, 8)
       click_button "Create"
       expect(Estimate.count).to eq 1
       expect(page).to have_content "Estimate created!"
@@ -43,8 +42,7 @@ RSpec.describe "managing estimates" do
     end
 
     it "allows me to edit an estimate" do
-      select "1", from: "estimate[best_case_points]"
-      select "2", from: "estimate[worst_case_points]"
+      set_estimates(1, 2)
       click_button "Save Changes"
       expect(page).to have_content "Estimate updated!"
     end
@@ -59,8 +57,7 @@ RSpec.describe "managing estimates" do
     end
 
     it "shows me an error message" do
-      select "21", from: "estimate[best_case_points]"
-      select "1", from: "estimate[worst_case_points]"
+      set_estimates(21, 1)
       click_button "Save Changes"
       expect(page).to have_content "Validation error Worst case estimate should be greater than best case estimate."
     end
@@ -83,66 +80,75 @@ RSpec.describe "managing estimates" do
       visit project_path(id: project.id)
       click_link "Add Estimate"
 
-      expect(page).to have_text("New Estimate")
-      expect(page).to have_content(story.description)
-      expect(current_path).to eq project_path(id: project.id)
+      within_modal do
+        expect(page).to have_text("New Estimate")
+        expect(page).to have_content(story.description)
+        expect(current_path).to eq project_path(id: project.id)
 
-      select "3", from: "estimate[best_case_points]"
-      select "8", from: "estimate[worst_case_points]"
-      click_button "Create"
+        set_estimates(3, 8)
+        click_button "Create"
+      end
+      expect_closed_modal
 
-      cell = find("#story_#{story.id} td:nth-child(2)")
-      expect(cell).to have_text("3")
+      expect_story_estimates(story, 3, 8)
       expect(page).to_not have_content(story.description)
 
       click_link "Edit Estimate"
 
-      expect(page).to have_text("Edit Estimate")
-      expect(current_path).to eq project_path(id: project.id)
-      expect(page).to have_content(story.description)
+      within_modal do
+        expect(page).to have_text("Edit Estimate")
+        expect(current_path).to eq project_path(id: project.id)
+        expect(page).to have_content(story.description)
 
-      select "5", from: "estimate[best_case_points]"
-      click_button "Save Changes"
+        set_estimates(5, 8)
+        click_button "Save Changes"
+      end
+      expect_closed_modal
 
-      cell = find("#story_#{story.id} td:nth-child(2)")
-      expect(cell).to have_text("5")
+      expect_story_estimates(story, 5, 8)
 
       click_link "Edit Estimate"
 
-      select "8", from: "estimate[best_case_points]"
-      click_button "Save Changes"
+      within_modal do
+        set_estimates(5, 13)
+        click_button "Save Changes"
+      end
+      expect_closed_modal
 
-      cell = find("#story_#{story.id} td:nth-child(2)")
-      expect(cell).to have_text("8")
+      expect_story_estimates(story, 5, 13)
     end
 
     it "allows estimation deletion" do
       visit project_path(id: project.id)
       click_link "Add Estimate"
 
-      expect(page).to have_text("New Estimate")
-      expect(page).to have_content(story.description)
-      expect(current_path).to eq project_path(id: project.id)
+      within_modal do
+        expect(page).to have_text("New Estimate")
+        expect(page).to have_content(story.description)
+        expect(current_path).to eq project_path(id: project.id)
 
-      select "5", from: "estimate[best_case_points]"
-      select "8", from: "estimate[worst_case_points]"
+        set_estimates(5, 8)
 
-      # make sure the delete button is not there during creation
-      expect(page).to have_selector("a", text: "Delete Estimate", count: 0)
+        # make sure the delete button is not there during creation
+        expect(page).to have_selector("a", text: "Delete Estimate", count: 0)
 
-      click_button "Create"
+        click_button "Create"
+      end
+      expect_closed_modal
 
-      cell = find("#story_#{story.id} td:nth-child(2)")
-      expect(cell).to have_text("5")
+      expect_story_estimates(story, 5, 8)
       expect(page).to_not have_content(story.description)
 
       click_link "Edit Estimate"
 
-      expect(page).to have_text("Edit Estimate")
+      within_modal do
+        expect(page).to have_text("Edit Estimate")
 
-      accept_confirm do
-        click_link "Delete Estimate"
+        accept_confirm do
+          click_link "Delete Estimate"
+        end
       end
+      expect_closed_modal
 
       expect(page).to_not have_text("Edit Estimate")
     end

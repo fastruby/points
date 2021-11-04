@@ -5,7 +5,7 @@ WORKDIR /app
 # Copy all the Gemfile files
 COPY Gemfile* ./
 
-RUN gem install bundler -v 2.2.26
+RUN gem install bundler -v "$(tail -n 1 Gemfile.lock)"
 RUN bundle install
 RUN BUNDLE_GEMFILE=Gemfile.next bundle install
 
