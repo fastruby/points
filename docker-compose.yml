@@ -13,7 +13,7 @@ services:
     command: bash -c "rm -f ./tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - .:/app
-      - ./config/database.yml.sample:./config/database.yml
+      - ./config/database.yml.sample:/app/config/database.yml
     environment: &envs
       POSTGRES_PASSWORD: password
       POSTGRES_USER: postgres
