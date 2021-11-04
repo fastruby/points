@@ -2,11 +2,15 @@ version: "3.9"
 services:
   db:
     image: postgres:10.9
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
     volumes:
-      - ./tmp/db:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
+
   web: &web
     build: .
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    command: bash -c "rm -f ./tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - .:/app
       - ./config/database.yml.sample:/app/config/database.yml
@@ -14,13 +18,17 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_USER: postgres
       POSTGRES_HOST: db
-  web-next:
-    <<: *web
-    command: bash -c "rm -rf /code/tmp/pids && bundle exec rails s -b 0.0.0.0"
-    environment:
-      <<: *envs
-      BUNDLE_GEMFILE: Gemfile.next
     ports:
       - "3000:3000"
     depends_on:
       - db
+
+  web-next:
+    <<: *web
+    environment:
+      <<: *envs
+      BUNDLE_GEMFILE: Gemfile.next
+
+# Declare the volumes that our application uses.
+volumes:
+  db_data:
