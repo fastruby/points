@@ -42,11 +42,10 @@ jobs:
 
       - name: Build App
         run: |
-          bundle install
           yarn install
-          cp config/database.yml.github config/database.yml
-          bundle exec rails db:create
-          bundle exec rails db:schema:load
+          cp config/database.yml.sample config/database.yml
+          gem update bundler
+          bundle exec rails db:setup
           gem install next_rails
           next bundle install 
 

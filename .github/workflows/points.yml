@@ -40,13 +40,12 @@ jobs:
         with:
           ruby-version: "3.0.2"
           bundler-cache: true
-
+      
       - name: Build App
         run: |
           yarn install
-          cp config/database.yml.github config/database.yml
-          bundle exec rails db:create
-          bundle exec rails db:schema:load
+          cp config/database.yml.sample config/database.yml
+          bundle exec rails db:setup
 
       - name: Run RSpec
         run: |
