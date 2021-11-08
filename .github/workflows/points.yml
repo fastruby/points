@@ -44,7 +44,6 @@ jobs:
       - name: YARN
         uses: bahmutov/npm-install@v1
         with:
-          working-directory: test/VanillaNestedTests
           install-command: yarn --frozen-lockfile --silent
       
       - name: Build App
