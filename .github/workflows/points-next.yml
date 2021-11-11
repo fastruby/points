@@ -45,8 +45,9 @@ jobs:
           yarn install
           cp config/database.yml.sample config/database.yml
           gem update bundler
+          export BUNDLE_GEMFILE=Gemfile.next
+          bundle update rails --jobs=4 --retry=3
           bundle exec rails db:setup
-          gem install next_rails
           next bundle install 
 
       - name: Run RSpec
