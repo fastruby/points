@@ -12,9 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      RAILS_ENV: test
+      DATABASE_URL: "postgres://postgres:postgres@localhost/points-test"
+      BUNDLE_GEMFILE: Gemfile.next
     
     services:
       postgres:
@@ -24,7 +23,6 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-        # needed because the postgres container does not provide a healthcheck
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
@@ -39,14 +37,10 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.0.2"
+          bundler-cache: true
 
       - name: Build App
         run: |
-          yarn install
-          cp config/database.yml.sample config/database.yml
-          gem update bundler
-          export BUNDLE_GEMFILE=Gemfile.next
-          bundle update rails --jobs=4 --retry=3
           bundle exec rails db:setup
           next bundle install 
 

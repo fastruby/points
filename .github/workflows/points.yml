@@ -12,9 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      RAILS_ENV: test
+      DATABASE_URL: "postgres://postgres:postgres@localhost/points-test"
     
     services:
       postgres:
@@ -43,8 +41,6 @@ jobs:
       
       - name: Build App
         run: |
-          yarn install
-          cp config/database.yml.sample config/database.yml
           bundle exec rails db:setup
 
       - name: Run RSpec
