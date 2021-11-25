@@ -5,6 +5,8 @@ class Story < ApplicationRecord
 
   has_many :estimates
 
+  before_create :add_position
+
   def best_estimate_average
     return 0 if estimates.length < 2
 
@@ -33,5 +35,14 @@ class Story < ApplicationRecord
     else
       0
     end
+  end
+
+  private
+
+  def add_position
+    return if position
+
+    last_position = project.stories.order(position: :asc).last&.position || 0
+    self.position = last_position + 1
   end
 end

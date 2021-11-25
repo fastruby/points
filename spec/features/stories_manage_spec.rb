@@ -96,4 +96,47 @@ RSpec.describe "managing stories", js: true do
       expect(page).to have_selector("pre", text: "some\ncode")
     end
   end
+
+  # see issue #9 on github
+  it "preserves order of stories when editing" do
+    empty_project = FactoryBot.create(:project)
+    visit project_path(id: empty_project.id)
+    click_link "Add a Story"
+    fill_in "Title", with: "Story 1"
+    fill_in "Description (Markdown)", with: "desc"
+    click_button "Create"
+
+    # check that it adds a position for new stories
+    story1 = Story.last
+    expect(story1.position).to be 1
+
+    click_link "Add a Story"
+    fill_in "Title", with: "Story 2"
+    fill_in "Description (Markdown)", with: "desc"
+    click_button "Create"
+
+    story2 = Story.last
+    expect(story2.position).to be 2
+
+    # check that the order is not broken after edit for stories with no position
+    story1.update_attribute(:position, nil)
+    story2.update_attribute(:position, nil)
+
+    within("#story_#{story1.id}") do
+      click_link("Edit")
+    end
+
+    expect(page).to have_text("Edit Story")
+
+    fill_in "Description (Markdown)", with: "desc2"
+
+    click_button "Save Changes"
+
+    expect(page).to have_text("Story updated!")
+
+    within("#stories") do
+      expect(find("tr:nth-child(1)")).to have_text story1.title
+      expect(find("tr:nth-child(2)")).to have_text story2.title
+    end
+  end
 end
