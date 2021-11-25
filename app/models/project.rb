@@ -51,6 +51,6 @@ class Project < ApplicationRecord
 
   # returns all the sub-projects from its parent's project except self
   def siblings
-    parent ? parent.projects.where.not(id: id) : []
+    parent_id ? Project.where(parent_id: parent_id).where.not(id: id) : []
   end
 end
