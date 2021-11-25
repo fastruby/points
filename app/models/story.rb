@@ -44,7 +44,7 @@ class Story < ApplicationRecord
   def add_position
     return if position
 
-    last_position = project.stories.order(position: :asc).last&.position || 0
+    last_position = project.stories.where.not(position: nil).order(position: :asc).last&.position || 0
     self.position = last_position + 1
   end
 end
