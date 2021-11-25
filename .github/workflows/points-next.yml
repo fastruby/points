@@ -46,4 +46,4 @@ jobs:
 
       - name: Run RSpec
         run: |
-          next bundle exec rspec
+          bundle exec rspec
