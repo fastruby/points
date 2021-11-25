@@ -45,6 +45,12 @@ module FeatureSpecsHelpers
     select worst.to_s, from: "estimate[worst_case_points]"
   end
 
+  def within_story_row(story, &block)
+    within "#story_#{story.id}" do
+      yield
+    end
+  end
+
   def within_modal(&block)
     within ".modal.in" do
       yield
@@ -56,7 +62,7 @@ module FeatureSpecsHelpers
   end
 
   def expect_story_estimates(story, best, worst)
-    within "#story_#{story.id}" do
+    within_story_row(story) do
       expect(find("td:nth-child(2)")).to have_text best.to_s
       expect(find("td:nth-child(3)")).to have_text worst.to_s
     end
