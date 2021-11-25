@@ -120,6 +120,7 @@ RSpec.describe "managing stories", js: true do
     end
 
     expect(page).to have_text "Story moved"
+    expect(page).not_to have_text story.title
     expect(story.reload.project).to eq project3
   end
 end

@@ -99,14 +99,14 @@ class StoriesController < ApplicationController
   def move
     @new_project = @project.siblings.find_by(id: params[:to_project])
 
-    if !@new_project
+    if @new_project
+      @story.update_attribute(:project_id, @new_project.id)
+      flash[:success] = "Story moved!"
+    else
       flash[:error] = "Selected project does not exists or is not a sibling."
-      redirect_back(fallback_location: project_path(@project)) and return
     end
 
-    @story.update_attribute(:project_id, @new_project.id)
-    flash[:success] = "Story moved!"
-    redirect_to @new_project
+    redirect_to @project
   end
 
   private
