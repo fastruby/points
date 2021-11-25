@@ -35,7 +35,7 @@
               <%= link_to 'Delete', project_story_path(@project.id, story, format: "json"), method: "delete",  data: { confirm: 'Are you sure?', story_id: story.id }, class: "button green delete", remote: true %>
               <% if @siblings.any? %>
                 <div class="move-story-wrapper">
-                  <button class="button green">Move</button>
+                  <button class="button green">Move to</button>
                   <div class="move-story-dropdown">
                     <% @siblings.each do |to_project| %>
                       <%= button_to to_project.title, project_story_move_path(@project, story, to_project: to_project), method: :put, data: {confirm: "Are you sure?"} %>

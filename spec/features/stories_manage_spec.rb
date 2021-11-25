@@ -108,7 +108,7 @@ RSpec.describe "managing stories", js: true do
       # move to options are hidden
       expect(page).not_to have_text project3.title
 
-      click_button "Move"
+      click_button "Move to"
 
       # only one option is to move to since there's only one sibling
       expect(page).to have_selector ".move-story-dropdown > form", count: 1
