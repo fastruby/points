@@ -7,6 +7,8 @@ class Story < ApplicationRecord
 
   before_create :add_position
 
+  scope :by_position, -> { order("position ASC NULLS FIRST, created_at ASC") }
+
   def best_estimate_average
     return 0 if estimates.length < 2
 

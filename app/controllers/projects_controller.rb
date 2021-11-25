@@ -59,7 +59,7 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.find(params[:id])
-    @stories = @project.stories.order(:position, :created_at)
+    @stories = @project.stories.by_position
   end
 
   def update

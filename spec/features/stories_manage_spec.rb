@@ -138,5 +138,21 @@ RSpec.describe "managing stories", js: true do
       expect(find("tr:nth-child(1)")).to have_text story1.title
       expect(find("tr:nth-child(2)")).to have_text story2.title
     end
+
+    # check that stories with nil position are listed first
+
+    click_link "Add a Story"
+    fill_in "Title", with: "Story 3"
+    fill_in "Description (Markdown)", with: "desc"
+    click_button "Create"
+
+    story3 = Story.last
+    expect(story3.position).to be 1
+
+    within("#stories") do
+      expect(find("tr:nth-child(1)")).to have_text story1.title
+      expect(find("tr:nth-child(2)")).to have_text story2.title
+      expect(find("tr:nth-child(3)")).to have_text story3.title
+    end
   end
 end

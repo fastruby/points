@@ -3,7 +3,10 @@ class ActionPlansController < ApplicationController
 
   def show
     @project = Project.find(params[:project_id])
-    @project_stories = @project.stories.order(:position, :created_at)
-    @children = Project.where(parent_id: @project.id).includes(:stories).references(:stories).order("stories.position")
+    @project_stories = @project.stories.by_position
+    @children =
+      Project.where(parent_id: @project.id)
+        .includes(:stories).references(:stories)
+        .order("stories.position ASC NULLS FIRST")
   end
 end
