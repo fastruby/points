@@ -76,6 +76,24 @@ or
 $ docker-compose up web-next
 ```
 
+## Admin Users
+
+Users are created without admin privileges by default, because admin users have access to a few more features related to reports and setting real score of stories.
+
+Currently, the only way to flag a user as `admin` is a direct database update using either postgres cli or the rails console.
+
+If you want to set the flag for a user, you can follow these steps:
+
+```bash
+$ rails c
+```
+
+and then:
+
+```ruby
+User.find_by(email: "user@example.com").update_attribute(:admin, true)
+```
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at [https://github.com/fastruby/points](https://github.com/fastruby/points). This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
