@@ -37,9 +37,14 @@ RSpec.describe "managing stories", js: true do
 
   it "allows me to delete a story", js: true do
     visit project_path(id: project.id)
+
+    expect(page).to have_text story.title
+
     accept_confirm do
       click_link "Delete"
     end
+
+    expect(page).not_to have_text story.title
     expect(Story.count).to eq 0
   end
 
