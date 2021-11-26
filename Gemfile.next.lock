@@ -12,7 +12,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/rails.git
-  revision: 21c6c225a3f668842e8a4c175f29b9466df4aaa9
+  revision: 0181f0edd57a2149278bd59c3519233ca1e0a413
   branch: main
   specs:
     actioncable (7.0.0.alpha2)
@@ -46,6 +46,7 @@ GIT
       activerecord (= 7.0.0.alpha2)
       activestorage (= 7.0.0.alpha2)
       activesupport (= 7.0.0.alpha2)
+      globalid (>= 0.6.0)
       nokogiri (>= 1.8.5)
     actionview (7.0.0.alpha2)
       activesupport (= 7.0.0.alpha2)
@@ -93,7 +94,7 @@ GIT
       method_source
       rake (>= 12.2)
       thor (~> 1.0)
-      zeitwerk (~> 2.5.0.beta6)
+      zeitwerk (~> 2.5)
 
 GIT
   remote: https://github.com/twalpole/apparition.git
@@ -123,8 +124,9 @@ GEM
       thor (~> 1.0)
     builder (3.2.4)
     byebug (11.1.3)
-    capybara (3.35.3)
+    capybara (3.36.0)
       addressable
+      matrix
       mini_mime (>= 0.1.3)
       nokogiri (~> 1.8)
       rack (>= 1.6.0)
@@ -134,7 +136,7 @@ GEM
     capybara-screenshot (1.0.25)
       capybara (>= 1.0, < 4)
       launchy
-    childprocess (3.0.0)
+    childprocess (4.1.0)
     coffee-script (2.4.1)
       coffee-script-source
       execjs
@@ -183,12 +185,12 @@ GEM
     faraday-patron (1.0.0)
     faraday-rack (1.0.0)
     ffi (1.15.4)
-    globalid (0.5.2)
+    globalid (1.0.0)
       activesupport (>= 5.0)
-    hashie (4.1.0)
-    i18n (1.8.10)
+    hashie (5.0.0)
+    i18n (1.8.11)
       concurrent-ruby (~> 1.0)
-    jbuilder (2.11.2)
+    jbuilder (2.11.3)
       activesupport (>= 5.0.0)
     jquery-rails (4.4.0)
       rails-dom-testing (>= 1, < 3)
@@ -208,6 +210,7 @@ GEM
     mail (2.7.1)
       mini_mime (>= 0.1.1)
     marcel (1.0.2)
+    matrix (0.4.2)
     method_source (1.0.0)
     mimemagic (0.3.10)
       nokogiri (~> 1)
@@ -237,7 +240,7 @@ GEM
     omniauth-github (2.0.0)
       omniauth (~> 2.0)
       omniauth-oauth2 (~> 1.7.1)
-    omniauth-oauth2 (1.7.1)
+    omniauth-oauth2 (1.7.2)
       oauth2 (~> 1.4)
       omniauth (>= 1.9, < 3)
     omniauth-rails_csrf_protection (1.0.0)
@@ -245,13 +248,13 @@ GEM
       omniauth (~> 2.0)
     orm_adapter (0.5.0)
     parallel (1.21.0)
-    parser (3.0.2.0)
+    parser (3.0.3.0)
       ast (~> 2.4.1)
     pg (1.2.3)
     public_suffix (4.0.6)
     puma (4.3.10)
       nio4r (~> 2.0)
-    racc (1.5.2)
+    racc (1.6.0)
     rack (2.2.3)
     rack-protection (2.1.0)
       rack
@@ -294,17 +297,17 @@ GEM
       rspec-expectations (~> 3.10)
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
-    rspec-support (3.10.2)
-    rubocop (1.20.0)
+    rspec-support (3.10.3)
+    rubocop (1.22.3)
       parallel (~> 1.10)
       parser (>= 3.0.0.0)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 1.8, < 3.0)
       rexml
-      rubocop-ast (>= 1.9.1, < 2.0)
+      rubocop-ast (>= 1.12.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 3.0)
-    rubocop-ast (1.12.0)
+    rubocop-ast (1.13.0)
       parser (>= 3.0.1.1)
     rubocop-performance (1.11.5)
       rubocop (>= 1.7.0, < 2.0)
@@ -325,8 +328,9 @@ GEM
       tilt (>= 1.1, < 3)
     sassc (2.4.0)
       ffi (~> 1.9)
-    selenium-webdriver (3.142.7)
-      childprocess (>= 0.5, < 4.0)
+    selenium-webdriver (4.1.0)
+      childprocess (>= 0.5, < 5.0)
+      rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2)
     shoulda-matchers (3.1.3)
       activesupport (>= 4.0.0)
@@ -343,12 +347,12 @@ GEM
     sprockets (3.7.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
-    sprockets-rails (3.2.2)
-      actionpack (>= 4.0)
-      activesupport (>= 4.0)
+    sprockets-rails (3.4.1)
+      actionpack (>= 5.2)
+      activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    standard (1.3.0)
-      rubocop (= 1.20.0)
+    standard (1.4.0)
+      rubocop (= 1.22.3)
       rubocop-performance (= 1.11.5)
     standardrb (1.0.0)
       standard
@@ -364,21 +368,21 @@ GEM
     unicode-display_width (2.1.0)
     warden (1.2.9)
       rack (>= 2.0.9)
-    web-console (4.1.0)
+    web-console (4.2.0)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
-    webdrivers (4.6.1)
+    webdrivers (5.0.0)
       nokogiri (~> 1.6)
       rubyzip (>= 1.3.0)
-      selenium-webdriver (>= 3.0, < 4.0)
+      selenium-webdriver (~> 4.0)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.5.0.beta6)
+    zeitwerk (2.5.1)
 
 PLATFORMS
   ruby
