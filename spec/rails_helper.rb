@@ -69,6 +69,18 @@ module FeatureSpecsHelpers
   end
 end
 
+# TODO: remove when rspec-rails is fixed for Rails 7
+# This PR in the main Rails branch https://github.com/rails/rails/pull/43734
+# added a call to the `executor_around_each_request` method
+# that it's not yet supported in RSpec
+# After updating RSpec when Rails 7 is released we will probably be able
+# to delete this
+module RSpec::Rails::RailsExampleGroup
+  def executor_around_each_request
+    true
+  end
+end
+
 RSpec.configure do |config|
   # Tracker deprecation messages in each file
   if ENV["DEPRECATION_TRACKER"]
