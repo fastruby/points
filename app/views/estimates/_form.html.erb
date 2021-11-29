@@ -1,4 +1,4 @@
-<%= remote ||= false %>
+<% remote ||= false %>
 
 <%= form_for [project, story, estimate], remote: remote do |f| %>
   <% if estimate.errors.any? %>
