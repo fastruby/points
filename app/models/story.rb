@@ -5,6 +5,10 @@ class Story < ApplicationRecord
 
   has_many :estimates
 
+  before_create :add_position
+
+  scope :by_position, -> { order("position ASC NULLS FIRST, created_at ASC") }
+
   def best_estimate_average
     return 0 if estimates.length < 2
 
@@ -33,5 +37,14 @@ class Story < ApplicationRecord
     else
       0
     end
+  end
+
+  private
+
+  def add_position
+    return if position
+
+    last_position = project.stories.where.not(position: nil).order(position: :asc).last&.position || 0
+    self.position = last_position + 1
   end
 end

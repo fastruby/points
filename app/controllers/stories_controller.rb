@@ -84,7 +84,7 @@ class StoriesController < ApplicationController
   def export
     csv = CSV.generate(headers: true) { |csv|
       csv << CSV_HEADERS
-      @project.stories.each do |story|
+      @project.stories.by_position.each do |story|
         csv << story.attributes.slice(*CSV_HEADERS)
       end
     }

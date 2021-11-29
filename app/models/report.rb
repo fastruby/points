@@ -10,7 +10,7 @@ class Report
   end
 
   def stories
-    project.stories
+    project.stories.by_position
   end
 
   def to_csv
