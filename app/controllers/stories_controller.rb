@@ -84,7 +84,7 @@ class StoriesController < ApplicationController
   def export
     csv = CSV.generate(headers: true) { |csv|
       csv << CSV_HEADERS
-      @project.stories.each do |story|
+      @project.stories.by_position.each do |story|
         csv << story.attributes.slice(*CSV_HEADERS)
       end
     }
@@ -103,7 +103,7 @@ class StoriesController < ApplicationController
       @story.update_attribute(:project_id, @new_project.id)
       flash[:success] = "Story moved!"
     else
-      flash[:error] = "Selected project does not exists or is not a sibling."
+      flash[:error] = "Selected project does not exist or is not a sibling."
     end
 
     redirect_to @project

@@ -9,7 +9,7 @@ class ReportsController < ApplicationController
   def show
     respond_to do |format|
       format.html do
-        @stories = @project.stories
+        @stories = @project.stories.by_position
         @estimates = @project.estimates
         @users = @project.users.uniq
         @real_score_exists = @stories.pluck(:real_score).any?

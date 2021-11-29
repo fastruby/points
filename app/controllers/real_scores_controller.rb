@@ -3,7 +3,7 @@ class RealScoresController < ApplicationController
   before_action :find_project
 
   def edit
-    @stories = @project.stories
+    @stories = @project.stories.by_position
   end
 
   def update

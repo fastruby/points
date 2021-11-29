@@ -115,7 +115,7 @@ RSpec.describe StoriesController, type: :controller do
       story = FactoryBot.create(:story, project: project2)
 
       put :move, params: {project_id: project2.id, story_id: story.id, to_project: project3.id}
-      expect(flash[:error]).to eq "Selected project does not exists or is not a sibling."
+      expect(flash[:error]).to eq "Selected project does not exist or is not a sibling."
       expect(response).to redirect_to project2
     end
   end
