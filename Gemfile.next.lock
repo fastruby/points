@@ -12,7 +12,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/rails.git
-  revision: 21c6c225a3f668842e8a4c175f29b9466df4aaa9
+  revision: 2a32c4b679a7fdc370d2f635c5285e4a4f161390
   branch: main
   specs:
     actioncable (7.0.0.alpha2)
@@ -46,6 +46,7 @@ GIT
       activerecord (= 7.0.0.alpha2)
       activestorage (= 7.0.0.alpha2)
       activesupport (= 7.0.0.alpha2)
+      globalid (>= 0.6.0)
       nokogiri (>= 1.8.5)
     actionview (7.0.0.alpha2)
       activesupport (= 7.0.0.alpha2)
@@ -93,7 +94,7 @@ GIT
       method_source
       rake (>= 12.2)
       thor (~> 1.0)
-      zeitwerk (~> 2.5.0.beta6)
+      zeitwerk (~> 2.5)
 
 GIT
   remote: https://github.com/twalpole/apparition.git
@@ -183,10 +184,10 @@ GEM
     faraday-patron (1.0.0)
     faraday-rack (1.0.0)
     ffi (1.15.4)
-    globalid (0.5.2)
+    globalid (1.0.0)
       activesupport (>= 5.0)
     hashie (4.1.0)
-    i18n (1.8.10)
+    i18n (1.8.11)
       concurrent-ruby (~> 1.0)
     jbuilder (2.11.2)
       activesupport (>= 5.0.0)
@@ -251,7 +252,7 @@ GEM
     public_suffix (4.0.6)
     puma (4.3.10)
       nio4r (~> 2.0)
-    racc (1.5.2)
+    racc (1.6.0)
     rack (2.2.3)
     rack-protection (2.1.0)
       rack
@@ -378,7 +379,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.5.0.beta6)
+    zeitwerk (2.5.1)
 
 PLATFORMS
   ruby
@@ -428,4 +429,4 @@ RUBY VERSION
    ruby 3.0.2p107
 
 BUNDLED WITH
-   2.2.26
+   2.2.22
