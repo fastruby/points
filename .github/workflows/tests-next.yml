@@ -1,0 +1,47 @@
+name: Points with next Rails
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-rails-next:
+    runs-on: ubuntu-latest
+
+    env:
+      DATABASE_URL: "postgres://postgres:postgres@localhost/points-test"
+      BUNDLE_GEMFILE: Gemfile.next
+
+    services:
+      postgres:
+        image: postgres:11.6-alpine
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v1
+
+      - name: Install PostgreSQL 11 client
+        run: |
+          sudo apt-get -yqq install libpq-dev
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.0.2"
+          bundler-cache: true
+
+      - name: Build App
+        run: |
+          bundle update rails --jobs=4 --retry=3   
+          bundle exec rails db:setup
+      - name: Run RSpec
+        run: |
+          bundle exec rspec
