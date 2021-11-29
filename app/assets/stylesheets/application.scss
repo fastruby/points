@@ -12,9 +12,9 @@
  *
  */
 
- // "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
- @import "bootstrap-sprockets";
- @import "bootstrap";
+// "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
+@import "bootstrap-sprockets";
+@import "bootstrap";
 //  @import "bourbon";
 
 // 1-UTILITIES
@@ -45,3 +45,30 @@
 @import "project";
 @import "stories";
 @import "action_plans";
+
+body {
+  display: grid;
+  grid-template-rows: min-content 1fr;
+  height: 100vh;
+  overflow: hidden;
+
+  header.navbar {
+    margin-bottom: 0px;
+  }
+
+  header + div {
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  main {
+    min-height: initial;
+    padding-top: 20px;
+    flex-grow: 1;
+  }
+
+  footer {
+    flex-shrink: 0;
+  }
+}
