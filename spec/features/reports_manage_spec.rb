@@ -92,5 +92,28 @@ RSpec.describe "managing reports" do
       expect(page).to have_content(percentage_off_estimate_total_best)
       expect(page).to have_content(percentage_off_estimate_total_worst)
     end
+
+    # there's a bug that allows estimators to have more than 1 estimate for a given story
+    # even after that bug gets fixed, we have to be sure we handle old data correctly
+    context "by the same user" do
+      it "uses the first estimation" do
+        anotherEstimation =
+          FactoryBot.create(:estimate, story: story, user: user,
+            best_case_points: 8,
+            worst_case_points: 13,
+            created_at: 2.minutes.from_now)
+            
+        visit project_report_path(project.id)
+
+        expect(find("tbody tr:first-child td:nth-child(2)")).to have_text "1"
+        expect(find("tbody tr:first-child td:nth-child(3)")).to have_text "4"
+        expect(find("tbody tr:first-child td:nth-child(7)")).to have_text "2"
+        expect(find("tbody tr:first-child td:nth-child(8)")).to have_text "6"
+        expect(find("tfoot tr:first-child td:nth-child(2)")).to have_text "1"
+        expect(find("tfoot tr:first-child td:nth-child(3)")).to have_text "4"
+        expect(find("tfoot tr:first-child td:nth-child(7)")).to have_text "2"
+        expect(find("tfoot tr:first-child td:nth-child(8)")).to have_text "6"
+      end
+    end
   end
 end
