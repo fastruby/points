@@ -2,7 +2,7 @@ require "csv"
 class StoriesController < ApplicationController
   before_action :authenticate_user!
   before_action :find_project, except: [:bulk_destroy, :render_markdown]
-  before_action :find_story, only: [:edit, :update, :destroy, :show]
+  before_action :find_story, only: [:edit, :update, :destroy, :show, :move]
   include ApplicationHelper
 
   CSV_HEADERS = %w[id title description position]
@@ -96,6 +96,19 @@ class StoriesController < ApplicationController
     render plain: markdown(params[:markdown])
   end
 
+  def move
+    @new_project = @project.siblings.find_by(id: params[:to_project])
+
+    if @new_project
+      @story.update_attribute(:project_id, @new_project.id)
+      flash[:success] = "Story moved!"
+    else
+      flash[:error] = "Selected project does not exist or is not a sibling."
+    end
+
+    redirect_to @project
+  end
+
   private
 
   def find_project
@@ -103,7 +116,7 @@ class StoriesController < ApplicationController
   end
 
   def find_story
-    @story = Story.find(params[:id])
+    @story = Story.find(params[:id] || params[:story_id])
   end
 
   def stories_params

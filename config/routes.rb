@@ -23,12 +23,14 @@ Rails.application.routes.draw do
     resource :report do
       get "download", to: "reports#download"
     end
+
     resources :stories do
       get :real_scores, on: :collection, to: "real_scores#edit"
       patch :real_scores, on: :collection, to: "real_scores#update"
       patch :import, on: :collection
       get :export, on: :collection
       resources :estimates, except: [:index, :show]
+      put :move
     end
     resource :action_plan, only: [:show]
   end

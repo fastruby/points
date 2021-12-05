@@ -74,3 +74,27 @@
     }
   }
 }
+
+.move-story-wrapper {
+  display: inline-block;
+  position: relative;
+
+  .move-story-dropdown {
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    position: absolute;
+    right: 0px;
+    top: 100%;
+    z-index: 2;
+
+    input[type="submit"]:hover {
+      background: lightgray;
+    }
+  }
+
+  &:focus-within .move-story-dropdown {
+    opacity: 1;
+    pointer-events: initial;
+  }
+}
