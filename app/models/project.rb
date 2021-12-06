@@ -48,4 +48,9 @@ class Project < ApplicationRecord
     new_status = archived? ? nil : "archived"
     update_column :status, new_status
   end
+
+  # returns all the sub-projects from its parent's project except self
+  def siblings
+    parent_id ? Project.where(parent_id: parent_id).where.not(id: id) : []
+  end
 end

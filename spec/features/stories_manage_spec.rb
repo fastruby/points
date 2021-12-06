@@ -20,7 +20,7 @@ RSpec.describe "managing stories", js: true do
 
   it "allows me to clone a story" do
     visit project_path(id: project.id)
-    within("#story_#{story.id}") { click_link "Clone" }
+    within_story_row(story) { click_link "Clone" }
     expect(page.find("#story_title").value).to eq story.title
     expect(page.find("#story_description").value).to eq story.description
     click_button "Create"
@@ -57,7 +57,7 @@ RSpec.describe "managing stories", js: true do
   it "allows me to bulk delete stories when one or more stories are selected" do
     visit project_path(id: project.id)
 
-    within("#story_#{story.id}") { check(option: story.id.to_s) }
+    within_story_row(story) { check(option: story.id.to_s) }
     expect(page).to have_no_selector("#bulk_delete[aria-disabled='true']")
     expect(page).to have_no_selector("#bulk_delete[disabled]")
     expect(page).to have_button("Bulk Delete (1 Story)")
@@ -90,7 +90,7 @@ RSpec.describe "managing stories", js: true do
     expect(page).to have_text(project.title)
 
     story = Story.last
-    within("#story_#{story.id}") do
+    within_story_row(story) do
       click_link("Edit")
     end
 
@@ -100,6 +100,33 @@ RSpec.describe "managing stories", js: true do
       expect(page).to have_selector("p", text: "This story allows users to add stories.")
       expect(page).to have_selector("pre", text: "some\ncode")
     end
+  end
+
+  it "can move stories between siblings" do
+    project2 = FactoryBot.create(:project, parent: project)
+    project3 = FactoryBot.create(:project, parent: project)
+    story = FactoryBot.create(:story, project: project2)
+
+    visit project_path(id: project2.id)
+
+    within_story_row(story) do
+      # move to options are hidden
+      expect(page).not_to have_text project3.title
+
+      click_button "Move to"
+
+      # only one option is to move to since there's only one sibling
+      expect(page).to have_selector ".move-story-dropdown > form", count: 1
+
+      # confirm moving the story
+      accept_confirm do
+        click_button project3.title
+      end
+    end
+
+    expect(page).to have_text "Story moved"
+    expect(page).not_to have_text story.title
+    expect(story.reload.project).to eq project3
   end
 
   # see issue #9 on github
