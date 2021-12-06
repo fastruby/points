@@ -5,9 +5,9 @@
     <thead class="table-header fixed-header">
       <tr class="project-table__row project-table__row--header">
         <th class="project-table__cell">Story Title</th>
-        <th class="project-table__cell">Best Estimate</th>
-        <th class="project-table__cell">Worst Estimate</th>
-        <th class="project-table__cell">
+        <th class="project-table__cell">Best<br />Estimate</th>
+        <th class="project-table__cell">Worst<br />Estimate</th>
+        <th class="project-table__cell story_actions">
           <%= link_to "Add a Story", new_project_story_path(@project.id), class: "button magenta"  %>
           <button id="bulk_delete" class="button magenta" aria-disabled="true" disabled>Bulk Delete</button>
         </th>
@@ -24,25 +24,44 @@
             </td>
             <td class="project-table__cell"><%= story.estimates.where(user: current_user)&.first&.best_case_points %></td>
             <td class="project-table__cell"><%= story.estimates.where(user: current_user)&.first&.worst_case_points %></td>
-            <td class="project-table__cell">
-              <%= link_to 'Clone', new_project_story_path(@project.id, story_id: story.id), class: "button green clone" %>
-              <%= link_to 'Edit', edit_project_story_path(@project.id, story), class: "button green edit" %>
+            <td class="project-table__cell story_actions">
               <% if estimated(story) %>
-                <%= link_to 'Edit Estimate', edit_project_story_estimate_path(@project.id, story, @estimate_id), class: "button green edit-estimate", remote: true %>
+                <%= link_to "Edit Estimate", edit_project_story_estimate_path(@project.id, story, @estimate_id), class: "button edit-estimate", remote: true %>
               <% else %>
-                <%= link_to 'Add Estimate', new_project_story_estimate_path(@project.id, story), class: "button green add-estimate", remote: true %>
+                <%= link_to "Add Estimate", new_project_story_estimate_path(@project.id, story), class: "button add-estimate", remote: true %>
               <% end %>
-              <%= link_to 'Delete', project_story_path(@project.id, story, format: "json"), method: "delete",  data: { confirm: 'Are you sure?', story_id: story.id }, class: "button green delete", remote: true %>
-              <% if @siblings.any? %>
-                <div class="move-story-wrapper">
-                  <button class="button green">Move to</button>
-                  <div class="move-story-dropdown">
-                    <% @siblings.each do |to_project| %>
-                      <%= button_to to_project.title, project_story_move_path(@project, story, to_project: to_project), method: :put, data: {confirm: "Are you sure?"} %>
-                    <% end %>
-                  </div>
+              <div class="dropdown-wrapper more-actions">
+                <button class="button" title="More actions">
+                  <i class="fa fa-ellipsis-v"></i>
+                </button>
+                <div class="dropdown">
+                  <%= link_to edit_project_story_path(@project.id, story), class: "button edit", title: "Edit" do %>
+                    <i class="fa fa-pencil-square-o"></i>
+                    <span>Edit</span>
+                  <% end %>
+                  <%= link_to new_project_story_path(@project.id, story_id: story.id), class: "clone", title: "Clone" do %>
+                    <i class="fa fa-files-o"></i>
+                    <span>Clone</span>
+                  <% end %>
+                  <% if @siblings.any? %>
+                    <div class="dropdown-wrapper move-story">
+                      <button title="Move to">
+                        <i class="fa fa-share-square-o"></i>
+                        <span>Move to</span>
+                      </button>
+                      <div class="dropdown">
+                        <% @siblings.each do |to_project| %>
+                          <%= button_to to_project.title, project_story_move_path(@project, story, to_project: to_project), method: :put, data: {confirm: "Are you sure?"} %>
+                        <% end %>
+                      </div>
+                    </div>
+                  <% end %>
+                  <%= link_to project_story_path(@project.id, story, format: "json"), method: "delete",  data: { confirm: 'Are you sure?', story_id: story.id }, class: "delete magenta", remote: true, title: "Delete" do %>
+                    <i class="fa fa-trash-o"></i>
+                    <span>Delete</span>
+                  <% end %>
                 </div>
-              <% end %>
+              </div>
             </td>
           </tr>
         <% end %>
