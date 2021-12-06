@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "managing estimates" do
+RSpec.describe "managing estimates", js: true do
   let(:user) { FactoryBot.create(:user) }
   let(:project) { FactoryBot.create(:project) }
   let!(:story) { FactoryBot.create(:story, project: project) }
@@ -24,7 +24,9 @@ RSpec.describe "managing estimates" do
       set_estimates(3, 8)
       click_button "Create"
       expect(Estimate.count).to eq 1
-      expect(page).to have_content "Estimate created!"
+
+      expect(page).to have_content "3"
+      expect(page).to have_content "8"
     end
   end
 
@@ -44,7 +46,9 @@ RSpec.describe "managing estimates" do
     it "allows me to edit an estimate" do
       set_estimates(1, 2)
       click_button "Save Changes"
-      expect(page).to have_content "Estimate updated!"
+
+      expect(page).to have_content "1"
+      expect(page).to have_content "2"
     end
   end
 
@@ -75,7 +79,7 @@ RSpec.describe "managing estimates" do
     end
   end
 
-  context "using ajax", js: true do
+  context "using ajax" do
     it "uses a modal to estimate" do
       visit project_path(id: project.id)
       click_link "Add Estimate"
