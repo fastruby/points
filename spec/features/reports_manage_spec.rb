@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "managing reports" do
+RSpec.describe "managing reports", js: true do
   let!(:user) { FactoryBot.create(:user, :admin, name: "John") }
   let!(:project) { FactoryBot.create(:project) }
   let!(:story) { FactoryBot.create(:story, project: project, real_score: 4) }
