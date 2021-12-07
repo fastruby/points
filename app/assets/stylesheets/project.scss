@@ -128,4 +128,9 @@
     content: "|";
     display: inline;
   }
+
+  .dropdown-wrapper.move-story .dropdown {
+    right: 100%;
+    top: 0px;
+  }
 }
