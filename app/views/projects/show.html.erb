@@ -56,7 +56,9 @@
         <td class="project-table__cell">Total estimates</td>
         <td class="project-table__cell"><%= @project.best_estimate_sum_per_user(current_user) %></td>
         <td class="project-table__cell"><%= @project.worst_estimate_sum_per_user(current_user) %></td>
-        <td class="project-table__cell"></td>
+        <td class="project-table__cell">
+          <%= link_to "Add a Story", new_project_story_path(@project.id), class: "button magenta"  %>
+        </td>
       </tr>
     </tfoot>
 
