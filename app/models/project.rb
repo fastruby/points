@@ -8,6 +8,8 @@ class Project < ApplicationRecord
   belongs_to :parent, class_name: "Project", required: false
   has_many :projects, class_name: "Project", foreign_key: :parent_id, dependent: :destroy
 
+  before_create :add_position
+
   def best_estimate_total
     stories.sum(&:best_estimate_average)
   end
@@ -52,5 +54,14 @@ class Project < ApplicationRecord
   # returns all the sub-projects from its parent's project except self
   def siblings
     parent_id ? Project.where(parent_id: parent_id).where.not(id: id) : []
+  end
+
+  private
+
+  def add_position
+    return if position
+
+    last_position = projects.where.not(position: nil).order(position: :asc).last&.position || 0
+    self.position = last_position + 1
   end
 end

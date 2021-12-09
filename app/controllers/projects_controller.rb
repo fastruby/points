@@ -14,6 +14,14 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
   end
 
+  def sort
+    @project = Project.find(params[:id])
+    params[:project].each_with_index do |id, index|
+      @project.projects.where(id: id).update_all(position: index + 1)
+    end
+    head :ok
+  end
+
   def sort_stories
     params[:story].each_with_index do |id, index|
       Story.where(id: id).update_all(position: index + 1)
