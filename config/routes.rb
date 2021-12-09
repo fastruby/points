@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   resources :projects do
     patch :sort, on: :member
+    patch :sort_stories, on: :member
     patch :toggle_archive, on: :member
     get :new_sub_project
     post :duplicate, on: :member
