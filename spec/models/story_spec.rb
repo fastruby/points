@@ -8,7 +8,7 @@ RSpec.describe Story, type: :model do
 
   it { should belong_to(:project) }
 
-  let!(:user) { FactoryBot.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
   let(:user2) { FactoryBot.create(:user) }
 
   describe "#best_estimate_average" do
