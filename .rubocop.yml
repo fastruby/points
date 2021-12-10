@@ -1,0 +1,18 @@
+require:
+  - standard
+
+inherit_gem:
+  standard: config/base.yml # use the standardrb config file as the base
+
+AllCops:
+  SuggestExtensions: false
+  NewCops: enable
+  Exclude: # ignore files in these directories when running the linter
+    - bin/**/*
+    - node_modules/**/*
+    - public/**/*
+    - vendor/**/*
+    - db/schema.rb
+
+Bundler/DuplicatedGem:
+  Enabled: false # ignore duplicated gem error

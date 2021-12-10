@@ -27,7 +27,7 @@ class Story < ApplicationRecord
     # cache the estimate for each user to not process it every time
     @estimate_for ||= {}
     # use the `estimates` association directly to use the cached query to prevent N+1
-    @estimate_for[user] ||= estimates.select{ |e| e.user == user }.sort_by{|e| e.id}.first
+    @estimate_for[user] ||= estimates.select { |e| e.user == user }.min_by { |e| e.id }
     @estimate_for[user]
   end
 
@@ -52,7 +52,7 @@ class Story < ApplicationRecord
   end
 
   def users_estimates
-    @users_estimates ||= users.distinct.map{ |u| estimate_for(u) }
+    @users_estimates ||= users.distinct.map { |u| estimate_for(u) }
   end
 
   private
