@@ -11,9 +11,7 @@ class EstimatesController < ApplicationController
   end
 
   def create
-    # TODO: change this to `@story.estimate_for(current_user) || ...
-    # when https://github.com/fastruby/points/pull/160 is merged
-    @estimate = @story.estimates.where(user: current_user).first || current_user.estimates.build(story: @story)
+    @estimate = @story.estimate_for(current_user) || current_user.estimates.build(story: @story)
     @estimate.attributes = estimate_params
 
     saved = @estimate.save
