@@ -99,9 +99,7 @@ RSpec.describe EstimatesController, type: :controller do
         }
       end
 
-      before :each do
-        @estimate = FactoryBot.create(:estimate, story: story, user: user, best_case_points: 2, worst_case_points: 5)
-      end
+      let!(:estimate) { FactoryBot.create(:estimate, story: story, user: user, best_case_points: 2, worst_case_points: 5) }
 
       it "does not create a new estimate" do
         expect {
@@ -110,14 +108,14 @@ RSpec.describe EstimatesController, type: :controller do
       end
 
       it "updates the current estimate" do
-        expect(@estimate.best_case_points).to be 2
-        expect(@estimate.worst_case_points).to be 5
+        expect(estimate.best_case_points).to be 2
+        expect(estimate.worst_case_points).to be 5
 
         post :create, params: params
 
-        @estimate.reload
-        expect(@estimate.best_case_points).to be 1
-        expect(@estimate.worst_case_points).to be 3
+        estimate.reload
+        expect(estimate.best_case_points).to be 1
+        expect(estimate.worst_case_points).to be 3
       end
     end
   end
