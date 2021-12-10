@@ -9,11 +9,11 @@ class Project < ApplicationRecord
   has_many :projects, class_name: "Project", foreign_key: :parent_id, dependent: :destroy
 
   def best_estimate_total
-    stories.sum(&:best_estimate_average)
+    stories.includes(:estimates).sum(&:best_estimate_average)
   end
 
   def worst_estimate_total
-    stories.sum(&:worst_estimate_average)
+    stories.includes(:estimates).sum(&:worst_estimate_average)
   end
 
   def real_score_total
@@ -21,11 +21,11 @@ class Project < ApplicationRecord
   end
 
   def best_estimate_sum_per_user(user)
-    stories.sum { |x| x.best_estimate_sum(user) }
+    stories.includes(:estimates).sum { |x| x.best_estimate_for(user) }
   end
 
   def worst_estimate_sum_per_user(user)
-    stories.sum { |x| x.worst_estimate_sum(user) }
+    stories.includes(:estimates).sum { |x| x.worst_estimate_for(user) }
   end
 
   def percentage_off_estimate_total(estimate_total, real_score_total)

@@ -22,8 +22,8 @@
               <input type="checkbox" name="stories[]" value=<%= story.id %>>
               <%= link_to story.title, [story.project, story] %>
             </td>
-            <td class="project-table__cell"><%= story.estimates.where(user: current_user)&.first&.best_case_points %></td>
-            <td class="project-table__cell"><%= story.estimates.where(user: current_user)&.first&.worst_case_points %></td>
+            <td class="project-table__cell"><%= story.estimate_for(current_user)&.best_case_points %></td>
+            <td class="project-table__cell"><%= story.estimate_for(current_user)&.worst_case_points %></td>
             <td class="project-table__cell">
               <%= link_to 'Clone', new_project_story_path(@project.id, story_id: story.id), class: "button green clone" %>
               <%= link_to 'Edit', edit_project_story_path(@project.id, story), class: "button green edit" %>
