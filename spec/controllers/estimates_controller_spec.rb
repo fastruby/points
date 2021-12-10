@@ -3,10 +3,10 @@ require "rails_helper"
 RSpec.describe EstimatesController, type: :controller do
   render_views
 
-  let!(:user) { FactoryBot.create(:user) }
-  let!(:project) { FactoryBot.create(:project) }
-  let!(:story) { FactoryBot.create(:story, project: project) }
-  let!(:estimate) { FactoryBot.create(:estimate, story: story, user: user) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:project) { FactoryBot.create(:project) }
+  let(:story) { FactoryBot.create(:story, project: project) }
+  let(:estimate) { FactoryBot.create(:estimate, story: story, user: user) }
 
   before do
     @request.env["devise.mapping"] = Devise.mappings[:user]
@@ -86,10 +86,46 @@ RSpec.describe EstimatesController, type: :controller do
         expect(flash[:error]).to be_present
       end
     end
+
+    context "if there is already an estimate" do
+      let(:params) do
+        {
+          story_id: story.id,
+          project_id: project.id,
+          estimate: {
+            best_case_points: 1,
+            worst_case_points: 3
+          }
+        }
+      end
+
+      before :each do
+        @estimate = FactoryBot.create(:estimate, story: story, user: user, best_case_points: 2, worst_case_points: 5)
+      end
+
+      it "does not create a new estimate" do
+        expect {
+          post :create, params: params
+        }.to change(Estimate, :count).by(0)
+      end
+
+      it "updates the current estimate" do
+        expect(@estimate.best_case_points).to be 2
+        expect(@estimate.worst_case_points).to be 5
+
+        post :create, params: params
+
+        @estimate.reload
+        expect(@estimate.best_case_points).to be 1
+        expect(@estimate.worst_case_points).to be 3
+      end
+    end
   end
 
   describe "#destroy" do
     it "deletes the estimate" do
+      estimate # call `estimate` so rspec creates the object
+
       expect {
         delete :destroy, params: {id: estimate.id, story_id: story.id, project_id: project.id}
       }.to change(Estimate, :count).by(-1)
