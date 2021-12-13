@@ -1,5 +1,6 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
+  before_action :find_project, only: [:show, :edit, :update, :sort, :sort_stories, :destroy]
 
   def index
     status = params[:archived] == "true" ? "archived" : nil
@@ -11,11 +12,9 @@ class ProjectsController < ApplicationController
   end
 
   def edit
-    @project = Project.find(params[:id])
   end
 
   def sort
-    @project = Project.find(params[:id])
     params[:project].each_with_index do |id, index|
       @project.projects.where(id: id).update_all(position: index + 1)
     end
@@ -23,11 +22,9 @@ class ProjectsController < ApplicationController
   end
 
   def sort_stories
-    @project = Project.find(params[:id])
     params[:story].each_with_index do |id, index|
       @project.stories.where(id: id).update_all(position: index + 1)
     end
-
     head :ok
   end
 
@@ -59,7 +56,6 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    @project = Project.find(params[:id])
     @project.destroy
     respond_to do |format|
       format.html { redirect_to projects_path, notice: "Project was successfully destroyed." }
@@ -67,13 +63,11 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @project = Project.find(params[:id])
     @stories = @project.stories.by_position
     @siblings = @project.siblings
   end
 
   def update
-    @project = Project.find(params[:id])
     if @project.update(projects_params)
       flash[:success] = "Project updated!"
       redirect_to project_path(@project.id)
@@ -89,6 +83,10 @@ class ProjectsController < ApplicationController
   end
 
   private
+
+  def find_project
+    @project = Project.find(params[:id])
+  end
 
   def projects_params
     params.require(:project).permit(:title, :status, :parent_id)
