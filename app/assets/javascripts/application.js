@@ -16,4 +16,5 @@
 //= require jquery-ui/widget
 //= require jquery-ui/sortable
 //= require turbolinks
+//= require sortable_list
 //= require_tree .
