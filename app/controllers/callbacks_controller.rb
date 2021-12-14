@@ -2,6 +2,7 @@ require "open-uri"
 
 class CallbacksController < Devise::OmniauthCallbacksController
   before_action :handle_proxy_requests
+  skip_before_action :verify_authenticity_token, only: :developer
 
   def github
     username = request.env["omniauth.auth"]["extra"]["raw_info"]["login"]
@@ -16,6 +17,11 @@ class CallbacksController < Devise::OmniauthCallbacksController
       flash[:error] = "This application is only available to members of #{organization_name}."
       redirect_to new_user_session_path
     end
+  end
+
+  def developer
+    @user = User.from_omniauth(request.env["omniauth.auth"])
+    sign_in_and_redirect @user
   end
 
   private
