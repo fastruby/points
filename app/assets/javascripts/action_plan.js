@@ -7,4 +7,6 @@ document.addEventListener("turbolinks:load", function() {
       el.innerText = `${prefix}${suffix} `
     })
   })
+
+  new ClipboardJS('.btn-clipboard');
 })
