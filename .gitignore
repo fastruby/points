@@ -8,3 +8,4 @@ coverage
 .env
 .byebug_history
 .tool-versions
+.DS_Store
