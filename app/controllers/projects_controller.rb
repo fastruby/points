@@ -59,6 +59,7 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.find(params[:id])
+    @sub_projects = @project.projects
     @stories = @project.stories.by_position.includes(:estimates)
     @siblings = @project.siblings
   end

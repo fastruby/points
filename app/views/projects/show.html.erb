@@ -78,8 +78,17 @@
         <td class="project-table__cell"></td>
       </tr>
     </tfoot>
-
   </table>
+
+  <% if @sub_projects.any? %>
+    <div class="row">
+      <h4> Sub Projects </h4>
+      <% @sub_projects.each do |sub_project| %>
+        <%= link_to sub_project.title, project_path(sub_project), class: "project-card" %>
+      <% end %>
+    </div>
+  <% end %>
+
   <%= render partial: "projects/import_export" %>
 
   <div class="btn-group">
