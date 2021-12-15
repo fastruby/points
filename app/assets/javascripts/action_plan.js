@@ -8,5 +8,9 @@ document.addEventListener("turbolinks:load", function() {
     })
   })
 
-  new ClipboardJS('.btn-clipboard');
+  let clipboard =  new ClipboardJS('.btn-clipboard');
+  clipboard.on('success', function(e) {
+    e.clearSelection();
+  });
+
 })
