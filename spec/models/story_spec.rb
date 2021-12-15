@@ -9,6 +9,7 @@ RSpec.describe Story, type: :model do
   it { should belong_to(:project) }
 
   let!(:user) { FactoryBot.create(:user) }
+  let!(:user2) { FactoryBot.create(:user) }
 
   describe "#best_estimate_average" do
     context "there are no estimates" do
@@ -30,7 +31,7 @@ RSpec.describe Story, type: :model do
     end
     context "there are two or more estimates" do
       let(:estimate_1) { Estimate.new(best_case_points: 10, worst_case_points: 20, user: user) }
-      let(:estimate_2) { Estimate.new(best_case_points: 100, worst_case_points: 200, user: user) }
+      let(:estimate_2) { Estimate.new(best_case_points: 100, worst_case_points: 200, user: user2) }
 
       subject {
         result = FactoryBot.create(:story)
@@ -100,7 +101,7 @@ RSpec.describe Story, type: :model do
     end
     context "there are two or more estimates" do
       let(:estimate_1) { Estimate.new(best_case_points: 10, worst_case_points: 20, user: user) }
-      let(:estimate_2) { Estimate.new(best_case_points: 100, worst_case_points: 200, user: user) }
+      let(:estimate_2) { Estimate.new(best_case_points: 100, worst_case_points: 200, user: user2) }
 
       subject {
         result = FactoryBot.create(:story)

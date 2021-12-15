@@ -9,7 +9,7 @@ class ReportsController < ApplicationController
   def show
     respond_to do |format|
       format.html do
-        @stories = @project.stories.by_position
+        @stories = @project.stories.by_position.includes(:estimates)
         @estimates = @project.estimates
         @users = @project.users.uniq
         @real_score_exists = @stories.pluck(:real_score).any?
@@ -26,7 +26,7 @@ class ReportsController < ApplicationController
   private
 
   def stories_have_minimum_estimates?
-    @stories.all? { |story| story.estimates.count >= Report::MINIMUM_ESTIMATES_PER_STORY }
+    @stories.all? { |story| story.estimates_count >= Report::MINIMUM_ESTIMATES_PER_STORY }
   end
 
   def ensure_admin

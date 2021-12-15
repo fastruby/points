@@ -16,7 +16,7 @@ module ReportsHelper
   end
 
   def user_estimate(story, user, estimate_type)
-    estimate = story.estimates.where(user_id: user.id).first
+    estimate = story.estimate_for(user)
 
     return "-" if estimate.nil?
 

@@ -63,7 +63,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @stories = @project.stories.by_position
+    @stories = @project.stories.by_position.includes(:estimates)
     @siblings = @project.siblings
   end
 
