@@ -1,5 +1,12 @@
 <div class="container">
-  <h1 class="dashboard-title-report"><%= render "shared/project_title", project: @project %></h1>
+  <div class="header">
+    <h1 class="dashboard-title-report"><%= render "shared/project_title", project: @project %></h1>
+
+    <div class="search-field">
+      <%= label_tag 'title_contains', "Filter by title" %>
+      <%= search_field_tag 'title_contains', nil, onkeyup: "filterStories()" %>
+    </div>
+  </div>
 
   <table class="project-table">
     <thead class="table-header fixed-header">
