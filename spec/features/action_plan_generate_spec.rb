@@ -56,4 +56,10 @@ RSpec.describe "generating an action plan", js: true do
     page.fill_in "action-plan-prefix", with: "3"
     expect(page.all(".action-plan_heading > span").map(&:text)).to eq(["3.1.", "3.1.1.", "3.1.2.", "3.2.", "3.2.1.", "3.2.2."])
   end
+
+  it "has a button to copy action plan to clipboard" do
+    visit project_path(parent)
+    click_link "Generate Action Plan"
+    expect(page).to have_selector(:link_or_button, "Copy to clipboard")
+  end
 end
