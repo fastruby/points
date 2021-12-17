@@ -11,19 +11,10 @@ RSpec.describe CallbacksController, type: :controller do
   end
 
   describe "#github" do
-    context "with a proxy_to param" do
-      it "redirects to provided host" do
-        get :github, params: {proxy_to: "http://example.com", code: "code", state: "state"}
-        expect(subject).to redirect_to("http://example.com/users/auth/github/callback?code=code&state=state")
-      end
-    end
-
-    context "without a proxy_to param" do
-      it "redirects user to sign in" do
-        allow_any_instance_of(CallbacksController).to receive(:organization_members).and_return([])
-        get :github, params: {code: "code", state: "state"}
-        expect(subject).to redirect_to("http://test.host/users/sign_in")
-      end
+    it "redirects user to sign in" do
+      allow_any_instance_of(CallbacksController).to receive(:organization_members).and_return([])
+      get :github, params: {code: "code", state: "state"}
+      expect(subject).to redirect_to("http://test.host/users/sign_in")
     end
   end
 end
