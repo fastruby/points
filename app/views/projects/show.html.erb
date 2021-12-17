@@ -4,7 +4,8 @@
   </h1>
 
   <div class="row project-details">
-    <div class="col-md-3 sub-project">
+  <% if has_projects?(@sub_projects, @siblings) %>
+    <div class="col-md-3">
       <% if @sub_projects.any? %>
         <h4> Sub Projects </h4>
         <div>
@@ -22,7 +23,8 @@
         </div>
       <% end %>
     </div>
-    <div class="col-md-9">
+    <% end %>
+    <div class="col-md-#{ has_projects?(@sub_projects, @siblings) ? 9 : 12}">
       <table class="project-table">
         <thead class="table-header fixed-header">
           <tr class="project-table__row project-table__row--header">
