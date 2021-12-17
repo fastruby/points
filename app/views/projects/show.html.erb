@@ -1,93 +1,109 @@
 <div class="container">
-  <h1 class="dashboard-title-report"><%= render "shared/project_title", project: @project %></h1>
+  <h1 class="dashboard-title-report">
+    <%= render "shared/project_title", project: @project %>
+  </h1>
 
-  <table class="project-table">
-    <thead class="table-header fixed-header">
-      <tr class="project-table__row project-table__row--header">
-        <th class="project-table__cell">Story Title</th>
-        <th class="project-table__cell">Best<br />Estimate</th>
-        <th class="project-table__cell">Worst<br />Estimate</th>
-        <th class="project-table__cell story_actions">
-          <%= link_to "Add a Story", new_project_story_path(@project.id), class: "button magenta"  %>
-          <button id="bulk_delete" class="button magenta" aria-disabled="true" disabled>Bulk Delete</button>
-        </th>
-      </tr>
-    </thead>
-
-    <tbody id="stories" data-url="<%= sort_project_path(@project.id) %>">
-      <% if @stories.present? %>
-        <% @stories.each do | story | %>
-          <tr class="project-table__row project-table__row--story" id="<%= dom_id(story)%>" >
-            <td class="project-table__cell">
-              <input type="checkbox" name="stories[]" value=<%= story.id %>>
-              <%= link_to story.title, [story.project, story] %>
-            </td>
-            <td class="project-table__cell"><%= story.estimate_for(current_user)&.best_case_points %></td>
-            <td class="project-table__cell"><%= story.estimate_for(current_user)&.worst_case_points %></td>
-            <td class="project-table__cell story_actions">
-              <% if estimated(story) %>
-                <%= link_to "Edit Estimate", edit_project_story_estimate_path(@project.id, story, @estimate_id), class: "button edit-estimate", remote: true %>
-              <% else %>
-                <%= link_to "Add Estimate", new_project_story_estimate_path(@project.id, story), class: "button add-estimate", remote: true %>
-              <% end %>
-              <div class="dropdown-wrapper more-actions">
-                <button class="button" title="More actions">
-                  <i class="fa fa-ellipsis-v"></i>
-                </button>
-                <div class="dropdown">
-                  <%= link_to edit_project_story_path(@project.id, story), class: "button edit", title: "Edit" do %>
-                    <i class="fa fa-pencil-square-o"></i>
-                    <span>Edit</span>
-                  <% end %>
-                  <%= link_to new_project_story_path(@project.id, story_id: story.id), class: "clone", title: "Clone" do %>
-                    <i class="fa fa-files-o"></i>
-                    <span>Clone</span>
-                  <% end %>
-                  <% if @siblings.any? %>
-                    <div class="dropdown-wrapper move-story">
-                      <button title="Move to">
-                        <i class="fa fa-share-square-o"></i>
-                        <span>Move to</span>
-                      </button>
-                      <div class="dropdown">
-                        <% @siblings.each do |to_project| %>
-                          <%= button_to to_project.title, project_story_move_path(@project, story, to_project: to_project), method: :put, data: {confirm: "Are you sure?"} %>
-                        <% end %>
-                      </div>
-                    </div>
-                  <% end %>
-                  <%= link_to project_story_path(@project.id, story, format: "json"), method: "delete",  data: { confirm: 'Are you sure?', story_id: story.id }, class: "delete magenta", remote: true, title: "Delete" do %>
-                    <i class="fa fa-trash-o"></i>
-                    <span>Delete</span>
-                  <% end %>
-                </div>
-              </div>
-            </td>
-          </tr>
+  <div class="row project-details">
+    <div class="col-md-3 sub-project">
+      <% if @sub_projects.any? %>
+        <h4> Sub Projects </h4>
+        <div>
+        <% @sub_projects.each do |sub_project| %>
+          <%= link_to sub_project.title, project_path(sub_project), class: "project-card" %>
         <% end %>
-      <% else %>
-          <p> You don't have any stories yet. </p>
+        </div>
       <% end %>
-    </tbody>
-
-    <tfoot>
-      <tr class="project-table__row project-table__row--footer">
-        <td class="project-table__cell">Total estimates</td>
-        <td class="project-table__cell"><%= @project.best_estimate_sum_per_user(current_user) %></td>
-        <td class="project-table__cell"><%= @project.worst_estimate_sum_per_user(current_user) %></td>
-        <td class="project-table__cell"></td>
-      </tr>
-    </tfoot>
-  </table>
-
-  <% if @sub_projects.any? %>
-    <div class="row">
-      <h4> Sub Projects </h4>
-      <% @sub_projects.each do |sub_project| %>
-        <%= link_to sub_project.title, project_path(sub_project), class: "project-card" %>
+      <% if @siblings.any? %>
+        <h4> Siblings </h4>
+        <div>
+        <% @siblings.each do |sibling| %>
+          <%= link_to sibling.title, project_path(sibling), class: "project-card" %>
+        <% end %>
+        </div>
       <% end %>
     </div>
-  <% end %>
+    <div class="col-md-9">
+      <table class="project-table">
+        <thead class="table-header fixed-header">
+          <tr class="project-table__row project-table__row--header">
+            <th class="project-table__cell">Story Title</th>
+            <th class="project-table__cell">Best<br />Estimate</th>
+            <th class="project-table__cell">Worst<br />Estimate</th>
+            <th class="project-table__cell story_actions">
+              <%= link_to "Add a Story", new_project_story_path(@project.id), class: "button magenta"  %>
+              <button id="bulk_delete" class="button magenta" aria-disabled="true" disabled>Bulk Delete</button>
+            </th>
+          </tr>
+        </thead>
+
+        <tbody id="stories" data-url="<%= sort_project_path(@project.id) %>">
+          <% if @stories.present? %>
+            <% @stories.each do | story | %>
+              <tr class="project-table__row project-table__row--story" id="<%= dom_id(story)%>" >
+                <td class="project-table__cell">
+                  <input type="checkbox" name="stories[]" value=<%= story.id %>>
+                  <%= link_to story.title, [story.project, story] %>
+                </td>
+                <td class="project-table__cell"><%= story.estimate_for(current_user)&.best_case_points %></td>
+                <td class="project-table__cell"><%= story.estimate_for(current_user)&.worst_case_points %></td>
+                <td class="project-table__cell story_actions">
+                  <% if estimated(story) %>
+                    <%= link_to "Edit Estimate", edit_project_story_estimate_path(@project.id, story, @estimate_id), class: "button edit-estimate", remote: true %>
+                  <% else %>
+                    <%= link_to "Add Estimate", new_project_story_estimate_path(@project.id, story), class: "button add-estimate", remote: true %>
+                  <% end %>
+                  <div class="dropdown-wrapper more-actions">
+                    <button class="button" title="More actions">
+                      <i class="fa fa-ellipsis-v"></i>
+                    </button>
+                    <div class="dropdown">
+                      <%= link_to edit_project_story_path(@project.id, story), class: "button edit", title: "Edit" do %>
+                        <i class="fa fa-pencil-square-o"></i>
+                        <span>Edit</span>
+                      <% end %>
+                      <%= link_to new_project_story_path(@project.id, story_id: story.id), class: "clone", title: "Clone" do %>
+                        <i class="fa fa-files-o"></i>
+                        <span>Clone</span>
+                      <% end %>
+                      <% if @siblings.any? %>
+                        <div class="dropdown-wrapper move-story">
+                          <button title="Move to">
+                            <i class="fa fa-share-square-o"></i>
+                            <span>Move to</span>
+                          </button>
+                          <div class="dropdown">
+                            <% @siblings.each do |to_project| %>
+                              <%= button_to to_project.title, project_story_move_path(@project, story, to_project: to_project), method: :put, data: {confirm: "Are you sure?"} %>
+                            <% end %>
+                          </div>
+                        </div>
+                      <% end %>
+                      <%= link_to project_story_path(@project.id, story, format: "json"), method: "delete",  data: { confirm: 'Are you sure?', story_id: story.id }, class: "delete magenta", remote: true, title: "Delete" do %>
+                        <i class="fa fa-trash-o"></i>
+                        <span>Delete</span>
+                      <% end %>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          <% else %>
+            <p> You don't have any stories yet. </p>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr class="project-table__row project-table__row--footer">
+            <td class="project-table__cell">Total estimates</td>
+            <td class="project-table__cell"><%= @project.best_estimate_sum_per_user(current_user) %></td>
+            <td class="project-table__cell"><%= @project.worst_estimate_sum_per_user(current_user) %></td>
+            <td class="project-table__cell"></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+
 
   <%= render partial: "projects/import_export" %>
 
