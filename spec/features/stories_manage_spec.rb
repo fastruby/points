@@ -20,7 +20,10 @@ RSpec.describe "managing stories", js: true do
 
   it "allows me to clone a story" do
     visit project_path(id: project.id)
-    within_story_row(story) { click_link "Clone" }
+    within_story_row(story) do
+      click_button "More actions"
+      click_link "Clone"
+    end
     expect(page.find("#story_title").value).to eq story.title
     expect(page.find("#story_description").value).to eq story.description
     click_button "Create"
@@ -29,6 +32,7 @@ RSpec.describe "managing stories", js: true do
 
   it "allows me to edit a story" do
     visit project_path(id: project.id)
+    click_button "More actions"
     click_link "Edit"
     fill_in "story[title]", with: "As a user, I want to edit stories"
     click_button "Save Changes"
@@ -41,6 +45,7 @@ RSpec.describe "managing stories", js: true do
     expect(page).to have_text story.title
 
     accept_confirm do
+      click_button "More actions"
       click_link "Delete"
     end
 
@@ -91,7 +96,8 @@ RSpec.describe "managing stories", js: true do
 
     story = Story.last
     within_story_row(story) do
-      click_link("Edit")
+      click_button "More actions"
+      click_link "Edit"
     end
 
     expect(page).to have_text("Edit Story")
@@ -113,10 +119,11 @@ RSpec.describe "managing stories", js: true do
       # move to options are hidden
       expect(page).not_to have_text project3.title
 
+      click_button "More actions"
       click_button "Move to"
 
       # only one option is to move to since there's only one sibling
-      expect(page).to have_selector ".move-story-dropdown > form", count: 1
+      expect(page).to have_selector ".move-story .dropdown > form", count: 1
 
       # confirm moving the story
       accept_confirm do
@@ -155,7 +162,8 @@ RSpec.describe "managing stories", js: true do
     story2.update_attribute(:position, nil)
 
     within("#story_#{story1.id}") do
-      click_link("Edit")
+      click_button "More actions"
+      click_link "Edit"
     end
 
     expect(page).to have_text("Edit Story")
