@@ -7,4 +7,10 @@ document.addEventListener("turbolinks:load", function() {
       el.innerText = `${prefix}${suffix} `
     })
   })
+
+  let clipboard =  new ClipboardJS('.btn-clipboard');
+  clipboard.on('success', function(e) {
+    e.clearSelection();
+  });
+
 })
