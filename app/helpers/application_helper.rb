@@ -10,6 +10,14 @@ module ApplicationHelper
     superscript: true
   }.freeze
 
+  def page_title_tag
+    page_title = ""
+    page_title += "#{@project&.parent&.title} - " if @project&.parent&.present?
+    page_title += "#{@project.title} - " if @project&.title&.present?
+    page_title += "Points"
+    page_title
+  end
+
   def header_link
     @project.presence || "/projects"
   end
