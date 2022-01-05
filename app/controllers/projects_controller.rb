@@ -23,7 +23,8 @@ class ProjectsController < ApplicationController
   end
 
   def toggle_archive
-    Project.find(params[:id]).toggle_archived!
+    @project = Project.find(params[:id])
+    @project.toggle_archived!
   end
 
   def duplicate
