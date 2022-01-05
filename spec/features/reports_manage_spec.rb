@@ -97,10 +97,11 @@ RSpec.describe "managing reports" do
     # even after that bug gets fixed, we have to be sure we handle old data correctly
     context "by the same user" do
       let!(:another_estimate) do
-        FactoryBot.create(:estimate, story: story, user: user,
+        x = FactoryBot.build(:estimate, story: story, user: user,
                                      best_case_points: 8,
                                      worst_case_points: 13,
                                      created_at: 2.minutes.from_now)
+        x.save(validate: false)
       end
 
       it "uses the first estimation" do
