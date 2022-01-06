@@ -1,5 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
+  before_action :find_project, except: [:index, :new, :create]
+  before_action :ensure_unarchived!, only: [:edit, :new_sub_project, :duplicate, :action_plan]
 
   def index
     status = params[:archived] == "true" ? "archived" : nil
@@ -11,7 +13,6 @@ class ProjectsController < ApplicationController
   end
 
   def edit
-    @project = Project.find(params[:id])
   end
 
   def sort
@@ -23,7 +24,7 @@ class ProjectsController < ApplicationController
   end
 
   def toggle_archive
-    Project.find(params[:id]).toggle_archived!
+    @project.toggle_archived!
   end
 
   def duplicate
@@ -50,7 +51,6 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    @project = Project.find(params[:id])
     @project.destroy
     respond_to do |format|
       format.html { redirect_to projects_path, notice: "Project was successfully destroyed." }
@@ -58,13 +58,11 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @project = Project.find(params[:id])
     @stories = @project.stories.by_position.includes(:estimates)
     @siblings = @project.siblings
   end
 
   def update
-    @project = Project.find(params[:id])
     if @project.update(projects_params)
       flash[:success] = "Project updated!"
       redirect_to project_path(@project.id)
@@ -83,5 +81,9 @@ class ProjectsController < ApplicationController
 
   def projects_params
     params.require(:project).permit(:title, :status, :parent_id)
+  end
+
+  def find_project
+    @project = Project.find(params[:id] || params[:project_id])
   end
 end

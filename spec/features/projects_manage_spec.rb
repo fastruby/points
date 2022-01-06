@@ -21,33 +21,47 @@ RSpec.describe "managing projects" do
     expect(Project.count).to eq 1
   end
 
-  it "allows me to clone a project" do
-    visit project_path(id: project.id)
-    click_link "Clone Project"
-    expect(Project.count).to eq 2
-    expect(Project.last.title).to eq "Copy of #{project.title}"
+  context "when the project is unarchived" do
+    it "allows me to clone a project" do
+      visit project_path(id: project.id)
+      click_link "Clone Project"
+      expect(Project.count).to eq 2
+      expect(Project.last.title).to eq "Copy of #{project.title}"
+    end
+
+    it "allows me to edit a project" do
+      visit project_path(id: project.id)
+      click_link "Edit or Delete Project"
+      fill_in "project[title]", with: "New Project"
+      click_button "Save Changes"
+      expect(page).to have_content "Project updated!"
+    end
+
+    it "allows me to archive a project", js: true do
+      visit project_path(id: project.id)
+      click_link "Archive Project"
+      expect(page).to have_content "Unarchive Project"
+      expect(project.reload).to be_archived
+    end
+
+    it "allows me to delete a project" do
+      visit project_path(id: project.id)
+      click_link "Edit or Delete Project"
+      click_link "Delete Project"
+      expect(Project.count).to eq 0
+    end
   end
 
-  it "allows me to edit a project" do
-    visit project_path(id: project.id)
-    click_link "Edit or Delete Project"
-    fill_in "project[title]", with: "New Project"
-    click_button "Save Changes"
-    expect(page).to have_content "Project updated!"
-  end
+  context "when the project is archived" do
+    before { project.toggle_archived! }
 
-  it "allows me to archive a project", js: true do
-    visit project_path(id: project.id)
-    click_link "Archive Project"
-    expect(page).to have_content "Unarchive Project"
-    expect(project.reload).to be_archived
-  end
-
-  it "allows me to delete a project" do
-    visit project_path(id: project.id)
-    click_link "Edit or Delete Project"
-    click_link "Delete Project"
-    expect(Project.count).to eq 0
+    it "doesn't allow me to change the project" do
+      visit project_path(id: project.id)
+      expect(page).to have_selector(:link_or_button, "Edit or Delete Project", disabled: true)
+      expect(page).to have_selector(:link_or_button, "Add Sub-Project", disabled: true)
+      expect(page).to have_selector(:link_or_button, "Clone Project", disabled: true)
+      expect(page).to have_selector(:link_or_button, "Generate Action Plan", disabled: true)
+    end
   end
 
   context "import & Export" do
