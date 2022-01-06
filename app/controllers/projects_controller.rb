@@ -26,16 +26,19 @@ class ProjectsController < ApplicationController
     Project.find(params[:id]).toggle_archived!
   end
 
-  def duplicate
+  def clone
+    @original = Project.includes(:projects, stories: :estimates).find(params[:id])
+  end
+
+  def do_clone
     original = Project.includes(stories: :estimates).find(params[:id])
-    duplicate = original.dup
-    duplicate.title = "Copy of #{original.title}"
-    duplicate.save
+    clone = Project.new(title: params[:project][:title])
+    clone.save
 
-    original.stories.each { |x| duplicate.stories.create(x.dup.attributes) }
+    original.stories.each { |x| clone.stories.create(x.dup.attributes) }
 
-    flash[:success] = "Project created!"
-    redirect_to "/projects/#{duplicate.id}"
+    flash[:success] = "Project cloned!"
+    redirect_to "/projects/#{clone.id}"
   end
 
   def create

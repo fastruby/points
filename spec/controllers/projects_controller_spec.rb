@@ -147,7 +147,7 @@ RSpec.describe ProjectsController, type: :controller do
   describe "duplicate" do
     context "with a project" do
       before do
-        post :duplicate, params: {id: project.id}
+        post :clone, params: {id: project.id}
       end
 
       it "creates a duplicate project" do
@@ -164,10 +164,10 @@ RSpec.describe ProjectsController, type: :controller do
     end
 
     context "with stories" do
-      it "creates a duplicate project with matching stories" do
+      it "creates a cloned project with matching stories" do
         story = project.stories.create({title: "Story 1"})
 
-        post :duplicate, params: {id: project.id}
+        post :clone, params: {id: project.id}
 
         expect(Project.last.stories.first.id).not_to eq story.id
         expect(Project.last.stories.first.title).to eq story.title
@@ -177,7 +177,7 @@ RSpec.describe ProjectsController, type: :controller do
         story = project.stories.create({title: "Story 1"})
         story.estimates.create({best_case_points: 1, worst_case_points: 3})
 
-        post :duplicate, params: {id: project.id}
+        post :clone, params: {id: project.id}
 
         expect(Project.last.stories.first.estimates).to be_empty
       end
