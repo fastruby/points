@@ -144,22 +144,49 @@ RSpec.describe ProjectsController, type: :controller do
     end
   end
 
-  describe "duplicate" do
-    context "with a project" do
-      before do
-        post :clone, params: {id: project.id}
+  describe "cloning" do
+    it "redirects to cloned project" do
+      expect {
+        post :do_clone, params: {id: project.id, project: {title: "New project"}}
+      }.to change(Project.parents, :count).by(1)
+
+      expect(Project.parents.last.title).to eq("New project")
+      expect(response).to redirect_to "/projects/#{Project.last.id}"
+      expect(flash[:success]).to eq "Project cloned!"
+    end
+
+    context "with a sub project" do
+      let!(:sub_project) { FactoryBot.create(:project, parent: project) }
+
+      it "clones the sub projects when cloning a parent" do
+        expect {
+          post :do_clone, params: {id: project.id, project: {title: "New title"}}
+        }.to change(Project.parents, :count).by(1)
+
+        last_project = Project.parents.last
+        expect(last_project.id).not_to eq(project.id)
+        expect(project.projects.reload.count).to eq(1)
+        expect(last_project.projects.reload.count).to eq project.projects.count
       end
 
-      it "creates a duplicate project" do
-        expect(Project.last.title).to eq "Copy of #{project.title}"
+      it "clones a sub project as a parent project" do
+        expect {
+          post :do_clone, params: {id: sub_project.id, project: {title: "New title", parent_id: nil}}
+        }.to change(Project, :count).by(1)
+
+        last_project = Project.last
+        expect(last_project.parent).to be_nil
       end
 
-      it "redirects to new project" do
-        expect(response).to redirect_to "/projects/#{Project.last.id}"
-      end
+      it "clones a sub project in another parent" do
+        other_project = FactoryBot.create(:project)
 
-      it "adds a success message" do
-        expect(flash[:success]).to be_present
+        expect {
+          post :do_clone, params: {id: sub_project.id, project: {title: "New title", parent_id: other_project.id}}
+        }.to change(other_project.projects.reload, :count).by(1)
+
+        last_project = other_project.projects.reload.last
+        expect(last_project.parent).to eq(other_project)
       end
     end
 
@@ -167,7 +194,7 @@ RSpec.describe ProjectsController, type: :controller do
       it "creates a cloned project with matching stories" do
         story = project.stories.create({title: "Story 1"})
 
-        post :clone, params: {id: project.id}
+        post :do_clone, params: {id: project.id, project: {title: "New title"}}
 
         expect(Project.last.stories.first.id).not_to eq story.id
         expect(Project.last.stories.first.title).to eq story.title
@@ -177,7 +204,7 @@ RSpec.describe ProjectsController, type: :controller do
         story = project.stories.create({title: "Story 1"})
         story.estimates.create({best_case_points: 1, worst_case_points: 3})
 
-        post :clone, params: {id: project.id}
+        post :do_clone, params: {id: project.id, project: {title: "New title"}}
 
         expect(Project.last.stories.first.estimates).to be_empty
       end

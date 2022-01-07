@@ -21,13 +21,6 @@ RSpec.describe "managing projects" do
     expect(Project.count).to eq 1
   end
 
-  it "allows me to clone a project" do
-    visit project_path(id: project.id)
-    click_link "Clone Project"
-    expect(Project.count).to eq 2
-    expect(Project.last.title).to eq "Copy of #{project.title}"
-  end
-
   it "allows me to edit a project" do
     visit project_path(id: project.id)
     click_link "Edit or Delete Project"
@@ -99,5 +92,41 @@ RSpec.describe "managing projects" do
     CSV.parse(csv, headers: true).each do |row|
       row["description"] = "blank!"
     end.to_csv
+  end
+
+  context "cloning", js: true do
+    it "allows cloning a project" do
+      visit project_path(id: project.id)
+
+      click_link "Clone Project"
+
+      expect(page).to have_text("Clone project #{project.title}")
+
+      fill_in :project_title, with: "Cloned Project"
+
+      expect {
+        click_button "Clone"
+      }.to change(Project, :count).by(1)
+
+      expect(page).to have_text("Project cloned")
+
+      last_project = Project.last
+      expect(last_project.id).not_to eq(project.id)
+      expect(last_project.stories.count).to eq project.stories.count
+
+      expect(page).to have_text(last_project.title)
+    end
+
+    it "defaults to same parent" do
+      sub_project = FactoryBot.create(:project, parent: project)
+
+      # None if the project is a parent
+      visit clone_project_path(project)
+      expect(page).to have_select(:project_parent_id, selected: "None")
+
+      # The parent if the project is a sub project
+      visit clone_project_path(sub_project)
+      expect(page).to have_select(:project_parent_id, selected: project.title)
+    end
   end
 end

@@ -32,10 +32,9 @@ class ProjectsController < ApplicationController
 
   def do_clone
     original = Project.includes(stories: :estimates).find(params[:id])
-    clone = Project.new(title: params[:project][:title])
-    clone.save
-
-    original.stories.each { |x| clone.stories.create(x.dup.attributes) }
+    clone = Project.create(clone_params)
+    original.clone_stories_into(clone)
+    original.clone_projects_into(clone) if clone.parent.nil? && original.projects
 
     flash[:success] = "Project cloned!"
     redirect_to "/projects/#{clone.id}"
@@ -86,5 +85,9 @@ class ProjectsController < ApplicationController
 
   def projects_params
     params.require(:project).permit(:title, :status, :parent_id)
+  end
+
+  def clone_params
+    params.require(:project).permit(:title, :parent_id)
   end
 end
