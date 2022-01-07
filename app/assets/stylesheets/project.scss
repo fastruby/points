@@ -178,3 +178,35 @@
     color: gray;
   }
 }
+
+.copy-link {
+  background: none;
+  border: none;
+  padding: 8px;
+  color: #F70A7C;
+
+  i {
+    position: relative;
+    border-radius: 50%;
+    padding: 5px;
+    opacity: 0;
+    transition: transform 0.5s,
+                opacity 0.5s;
+    transform: translateX(-100%)
+  }
+
+  &:hover {
+    i {
+      opacity: 1;
+      transform: translateX(0)
+    }
+  }
+
+  &:active {
+    i {
+      background: #F70A7C;
+      color: white;
+    }
+  }
+}
+
