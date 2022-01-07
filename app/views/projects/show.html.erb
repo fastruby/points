@@ -30,6 +30,7 @@
                 <td class="project-table__cell">
                   <input type="checkbox" name="stories[]" value=<%= story.id %>>
                   <%= link_to story.title, [story.project, story] %>
+                  <button class="btn-clipboard" data-clipboard-text="<%= project_story_url(@project, story) %>"><i class="fa fa-link"></i></button>
                 </td>
                 <td class="project-table__cell"><%= story.estimate_for(current_user)&.best_case_points %></td>
                 <td class="project-table__cell"><%= story.estimate_for(current_user)&.worst_case_points %></td>
