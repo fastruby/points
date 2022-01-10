@@ -13,11 +13,8 @@
             <% end %>
             <div class="sortable-projects" data-url="<%= sort_project_path(project.id) %>">
               <% project.projects.each do |subproj| %>
-                <div id="<%= dom_id(subproj)%>">
-                  <%= link_to subproj.title, project_path(subproj), class: "project-card" %>
-                </div>
+                <%= link_to subproj.title, project_path(subproj), class: "project-card", id: dom_id(subproj) %>
               <% end %>
-            </div>
             </div>
           </div>
         </div>
