@@ -101,30 +101,40 @@ RSpec.describe "managing projects" do
     end.to_csv
   end
 
-  context "with sub projects" do
-    let!(:sub_project1) { FactoryBot.create(:project, parent: project) }
-    let!(:sub_project2) { FactoryBot.create(:project, parent: project) }
+  context "hierarchy sidebar" do
+    context "with sub projects" do
+      let!(:sub_project1) { FactoryBot.create(:project, parent: project) }
+      let!(:sub_project2) { FactoryBot.create(:project, parent: project) }
 
-    it "renders a sidebar with the hierarchy" do
-      visit project_path(project)
-      within ".hierarchy" do
-        expect(page).to have_selector('a', text: project.title)
-        expect(page).to have_selector('a', text: sub_project1.title)
-        expect(page).to have_selector('a', text: sub_project2.title)
+      it "renders a sidebar" do
+        visit project_path(project)
+        within "aside.hierarchy" do
+          expect(page).to have_selector('a', text: project.title)
+          expect(page).to have_selector('a', text: sub_project1.title)
+          expect(page).to have_selector('a', text: sub_project2.title)
+        end
+
+        visit project_path(sub_project1)
+        within "aside.hierarchy" do
+          expect(page).to have_selector('a', text: project.title)
+          expect(page).to have_selector('a', text: sub_project1.title)
+          expect(page).to have_selector('a', text: sub_project2.title)
+        end
+
+        visit project_path(sub_project2)
+        within "aside.hierarchy" do
+          expect(page).to have_selector('a', text: project.title)
+          expect(page).to have_selector('a', text: sub_project1.title)
+          expect(page).to have_selector('a', text: sub_project2.title)
+        end
       end
+    end
 
-      visit project_path(sub_project1)
-      within ".hierarchy" do
-        expect(page).to have_selector('a', text: project.title)
-        expect(page).to have_selector('a', text: sub_project1.title)
-        expect(page).to have_selector('a', text: sub_project2.title)
-      end
+    context "with no sub projects" do
+      it "renders no sidebar" do
+        visit project_path(project)
 
-      visit project_path(sub_project2)
-      within ".hierarchy" do
-        expect(page).to have_selector('a', text: project.title)
-        expect(page).to have_selector('a', text: sub_project1.title)
-        expect(page).to have_selector('a', text: sub_project2.title)
+        expect(page).not_to have_selector('aside.hierarchy')
       end
     end
   end

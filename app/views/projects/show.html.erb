@@ -82,8 +82,8 @@
       </table>
     </div>
 
-    <aside class="col-xs-2 hierarchy">
-      <% if @sidebar_projects.any? %>
+    <% if @sidebar_projects.any? %>
+      <aside class="col-xs-2 hierarchy">
         <h4>Hierarchy</h4>
         <label>Parent:</label>
         <% top = @project.parent ? @project.parent : @project %>
@@ -94,8 +94,8 @@
             <li><%= link_to sub_project.title, project_path(sub_project) %></li>
           <% end %>
         </ul>
-      <% end %>
-    </aside>
+      </aside>
+    <% end %>
   </div>
 
 
