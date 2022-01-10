@@ -57,10 +57,6 @@
   }
 }
 
-.project-details {
-  margin-top: 15px;
-}
-
 .card-deck {
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
@@ -136,5 +132,25 @@
   .dropdown-wrapper.move-story .dropdown {
     right: 100%;
     top: 0px;
+  }
+}
+
+.hierarchy {
+  position: sticky;
+  top: 0px;
+  h3,
+  h4 {
+    margin-bottom: 10px;
+  }
+  ul {
+    padding-left: 1.5em;
+    list-style-type: initial;
+    li {
+      padding-bottom: 0.2rem;
+      a {
+        display: inline-block;
+        vertical-align: text-top;
+      }
+    }
   }
 }

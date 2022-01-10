@@ -1,30 +1,8 @@
 <div class="container">
-  <h1 class="dashboard-title-report">
-    <%= render "shared/project_title", project: @project %>
-  </h1>
+  <h1 class="dashboard-title"><%= render "shared/project_title", project: @project %></h1>
 
   <div class="row project-details">
-  <% if has_projects?(@sub_projects, @siblings) %>
-    <div class="col-md-3">
-      <% if @sub_projects.any? %>
-        <h4> Sub Projects </h4>
-        <div>
-        <% @sub_projects.each do |sub_project| %>
-          <%= link_to sub_project.title, project_path(sub_project), class: "project-card" %>
-        <% end %>
-        </div>
-      <% end %>
-      <% if @siblings.any? %>
-        <h4> Siblings </h4>
-        <div>
-        <% @siblings.each do |sibling| %>
-          <%= link_to sibling.title, project_path(sibling), class: "project-card" %>
-        <% end %>
-        </div>
-      <% end %>
-    </div>
-    <% end %>
-    <div class="col-md-#{ has_projects?(@sub_projects, @siblings) ? 9 : 12}">
+    <div class="col-xs-<%= @sidebar_projects.any? ? 10 : 12 %>">
       <table class="project-table">
         <thead class="table-header fixed-header">
           <tr class="project-table__row project-table__row--header">
@@ -103,6 +81,21 @@
         </tfoot>
       </table>
     </div>
+
+    <aside class="col-xs-2 hierarchy">
+      <% if @sidebar_projects.any? %>
+        <h4>Hierarchy</h4>
+        <label>Parent:</label>
+        <% top = @project.parent ? @project.parent : @project %>
+        <%= link_to top.title, project_path(top) %>
+        <label>Sub Projects:</label>
+        <ul>
+          <% @sidebar_projects.each do |sub_project| %>
+            <li><%= link_to sub_project.title, project_path(sub_project) %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </aside>
   </div>
 
 
