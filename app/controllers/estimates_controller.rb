@@ -11,8 +11,8 @@ class EstimatesController < ApplicationController
   end
 
   def create
-    @estimate = current_user.estimates.build(estimate_params)
-    @estimate.story_id = params[:story_id]
+    @estimate = @story.estimate_for(current_user) || current_user.estimates.build(story: @story)
+    @estimate.attributes = estimate_params
 
     saved = @estimate.save
     respond_to do |format|
@@ -30,7 +30,6 @@ class EstimatesController < ApplicationController
   end
 
   def update
-    @project = Project.find(params[:project_id])
     updated = @estimate.update(estimate_params)
     respond_to do |format|
       format.html do
