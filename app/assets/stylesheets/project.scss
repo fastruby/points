@@ -134,3 +134,24 @@
     top: 0px;
   }
 }
+
+.header {
+  display: flex;
+}
+
+.search-field {
+  position: relative;
+  padding: 0;
+  min-width: 250px;
+  
+  label {
+    position: absolute;
+    margin-top: 0;
+    top: -10px;
+    left: 5px;
+    padding: 0px 3px;
+    background: white;
+    font-size: 90%;
+    color: gray;
+  }
+}

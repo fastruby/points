@@ -64,3 +64,22 @@ window.addEventListener("load", () => {
     });
   });
 });
+
+const filterStories = () => {
+  const searchTerm = document.getElementById("title_contains").value.toLowerCase().trim();
+  if (searchTerm.length == 0) {
+    $("#stories").sortable("enable");
+  } else {
+    $("#stories").sortable("disable");
+  }
+
+  document.querySelectorAll("#stories tr").forEach(function(element) {
+    const cl = element.classList
+    const storyTitle = element.querySelector("td:first-child").innerText.toLowerCase()
+    if (storyTitle.includes(searchTerm)) {
+      cl.remove("hidden")
+    } else {
+      cl.add("hidden")
+    }
+  })
+};
