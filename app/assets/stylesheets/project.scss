@@ -156,12 +156,16 @@
 
 .header {
   display: flex;
+  h1 {
+    flex-grow: 1;
+  }
 }
 
 .search-field {
   position: relative;
   padding: 0;
   min-width: 250px;
+  margin-top: 25px;
 
   label {
     position: absolute;
