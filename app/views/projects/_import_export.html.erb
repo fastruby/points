@@ -1,12 +1,21 @@
 <details id="import-export">
   <summary class="import-export-header"">
     <i class="fa fa-lg fa-chevron-down rotate"></i>
-    <h4 class="import-export-header__text">CSV Import / Export</h4> </summary>
+    <h4 class="import-export-header__text">CSV Import / Export</h4>
+  </summary>
   <section>
     <div id="import" class="card-deck mb-3">
       <div class="card mb-6 box-shadow">
         <div class="card-header">
           <h4 class="my-0 font-weight-normal">Import CSV</h4>
+        </div>
+        <div id="instructions">
+          <b>Instructions:</b>
+          <ul class="list">
+            <li class="list-item">The file must have the following columns and headers: id, title (required), description and position.</li>
+            <li class="list-item">The columns needs to be in the order above.</li>
+            <li class="list-item">The headers are required.</li>
+          </ul>
         </div>
         <div class="card-body">
           <%= form_with(url: import_project_stories_path(@project), method: :patch, remote: false) do |f| %>

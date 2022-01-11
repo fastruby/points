@@ -60,3 +60,11 @@ h3{
 abbr{
 	text-decoration: none;
 }
+
+ul.list {
+  li.list-item {
+    font-size: 12px;
+    list-style: inside;
+    font-weight: normal;
+  }
+}
