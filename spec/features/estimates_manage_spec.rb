@@ -28,6 +28,13 @@ RSpec.describe "managing estimates", js: true do
       expect(page).to have_content "3"
       expect(page).to have_content "8"
     end
+
+    it "allows me to add an estimate", js: false do
+      set_estimates(3, 8)
+      click_button "Create"
+      expect(Estimate.count).to eq 1
+      expect(page).to have_content "Estimate created!"
+    end
   end
 
   context "with one estimated story" do
@@ -49,6 +56,12 @@ RSpec.describe "managing estimates", js: true do
 
       expect(page).to have_content "1"
       expect(page).to have_content "2"
+    end
+
+    it "allows me to edit an estimate", js: false do
+      set_estimates(1, 2)
+      click_button "Save Changes"
+      expect(page).to have_content "Estimate updated!"
     end
   end
 
