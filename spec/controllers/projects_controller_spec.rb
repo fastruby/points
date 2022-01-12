@@ -147,7 +147,7 @@ RSpec.describe ProjectsController, type: :controller do
   describe "cloning" do
     it "redirects to cloned project" do
       expect {
-        post :do_clone, params: {id: project.id, project: {title: "New project"}}
+        post :clone, params: {id: project.id, project: {title: "New project"}}
       }.to change(Project.parents, :count).by(1)
 
       expect(Project.parents.last.title).to eq("New project")
@@ -160,7 +160,7 @@ RSpec.describe ProjectsController, type: :controller do
 
       it "clones the sub projects when cloning a parent" do
         expect {
-          post :do_clone, params: {id: project.id, project: {title: "New title"}}
+          post :clone, params: {id: project.id, project: {title: "New title"}}
         }.to change(Project.parents, :count).by(1)
 
         last_project = Project.parents.last
@@ -171,7 +171,7 @@ RSpec.describe ProjectsController, type: :controller do
 
       it "clones a sub project as a parent project" do
         expect {
-          post :do_clone, params: {id: sub_project.id, project: {title: "New title", parent_id: nil}}
+          post :clone, params: {id: sub_project.id, project: {title: "New title", parent_id: nil}}
         }.to change(Project, :count).by(1)
 
         last_project = Project.last
@@ -182,7 +182,7 @@ RSpec.describe ProjectsController, type: :controller do
         other_project = FactoryBot.create(:project)
 
         expect {
-          post :do_clone, params: {id: sub_project.id, project: {title: "New title", parent_id: other_project.id}}
+          post :clone, params: {id: sub_project.id, project: {title: "New title", parent_id: other_project.id}}
         }.to change(other_project.projects.reload, :count).by(1)
 
         last_project = other_project.projects.reload.last
@@ -194,7 +194,7 @@ RSpec.describe ProjectsController, type: :controller do
       it "creates a cloned project with matching stories" do
         story = project.stories.create({title: "Story 1"})
 
-        post :do_clone, params: {id: project.id, project: {title: "New title"}}
+        post :clone, params: {id: project.id, project: {title: "New title"}}
 
         expect(Project.last.stories.first.id).not_to eq story.id
         expect(Project.last.stories.first.title).to eq story.title
@@ -204,7 +204,7 @@ RSpec.describe ProjectsController, type: :controller do
         story = project.stories.create({title: "Story 1"})
         story.estimates.create({best_case_points: 1, worst_case_points: 3})
 
-        post :do_clone, params: {id: project.id, project: {title: "New title"}}
+        post :clone, params: {id: project.id, project: {title: "New title"}}
 
         expect(Project.last.stories.first.estimates).to be_empty
       end

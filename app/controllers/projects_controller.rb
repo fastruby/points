@@ -26,11 +26,11 @@ class ProjectsController < ApplicationController
     Project.find(params[:id]).toggle_archived!
   end
 
-  def clone
+  def new_clone
     @original = Project.includes(:projects, stories: :estimates).find(params[:id])
   end
 
-  def do_clone
+  def clone
     original = Project.includes(stories: :estimates).find(params[:id])
     clone = Project.create(clone_params)
     original.clone_stories_into(clone)

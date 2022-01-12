@@ -121,11 +121,11 @@ RSpec.describe "managing projects" do
       sub_project = FactoryBot.create(:project, parent: project)
 
       # None if the project is a parent
-      visit clone_project_path(project)
+      visit new_clone_project_path(project)
       expect(page).to have_select(:project_parent_id, selected: "None")
 
       # The parent if the project is a sub project
-      visit clone_project_path(sub_project)
+      visit new_clone_project_path(sub_project)
       expect(page).to have_select(:project_parent_id, selected: project.title)
     end
   end

@@ -18,8 +18,8 @@ Rails.application.routes.draw do
     member do
       patch :sort
       patch :toggle_archive
-      get :clone
-      post :clone, action: :do_clone
+      get :new_clone
+      post :clone
     end
 \
     get :new_sub_project
