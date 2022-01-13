@@ -116,7 +116,12 @@ class StoriesController < ApplicationController
   end
 
   def find_story
-    @story = Story.find(params[:id] || params[:story_id])
+    begin
+      @story = Story.find(params[:id] || params[:story_id])
+    rescue ActiveRecord::RecordNotFound
+      flash[:error] = "This story could not be found."
+      redirect_to @project
+    end
   end
 
   def stories_params
