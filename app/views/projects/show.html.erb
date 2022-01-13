@@ -94,30 +94,14 @@
   <%= render partial: "projects/import_export" %>
 
   <div class="btn-group actions">
-    <% if @project.archived? %>
-      <button class="button magenta disabled" aria-disabled="true" disabled>Edit or Delete Project</button>
-      <button class="button magenta disabled" aria-disabled="true" disabled>Add Sub-Project</button>
-      <button class="button magenta disabled" aria-disabled="true" disabled>Clone Project</button>
-    <% else %>
-      <%= link_to "Edit or Delete Project", edit_project_path(@project.id), class: "button magenta" %>
-      <% unless @project.parent_id %>
-        <%= link_to 'Add Sub-Project', project_new_sub_project_path(@project.id), id:"subproject", class: "button magenta" %>
-      <% end %>
-      <%= link_to 'Clone Project', duplicate_project_path(@project.id), method: :post, disable_with: 'Cloning...', class: "button magenta" %>
-    <% end %>
-
+    <%= link_unless_archived(@project, "Edit or Delete Project", edit_project_path(@project), color: "magenta") %>
+    <%= link_unless_archived(@project, "Add Sub-Project", project_new_sub_project_path(@project), color: "magenta") unless @project.parent_id %>
+    <%= link_unless_archived(@project, "Clone Project", duplicate_project_path(@project), method: :post, color: "magenta") %>
     <%= link_to "#{@project.archived? ? 'Unarchive' : 'Archive'} Project", toggle_archive_project_path(@project.id), method: "patch", id: "toggle_archive", class: "button magenta", remote: true %>
+    <%= link_unless_archived(@project, "Generate Action Plan", project_action_plan_path(@project), color: "yellow") %>
 
-    <% if @project.archived? %>
-      <button class="button magenta disabled" aria-disabled="true" disabled>Generate Action Plan</button>
-    <% else %>
-      <%= link_to "Generate Action Plan", project_action_plan_path(@project.id), class: "button" %>
-    <% end %>
-
-    <% if current_user.admin? %>
-      <%= link_to "View Report", project_report_path(@project.id), class: "button"  %>
-    <% end %>
+    <%= link_to "View Report", project_report_path(@project.id), class: "button" if current_user.admin? %>
+    <%= link_to 'Return to Projects Page', projects_path, id:"back", class: "button" %>
   </div>
 
-  <%= link_to 'Return to Projects Page', projects_path, id:"back", class: "button" %>
 </div>

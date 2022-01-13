@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
   before_action :find_project, except: [:index, :new, :create]
-  before_action :ensure_unarchived!, only: [:edit, :new_sub_project, :duplicate, :action_plan]
+  before_action :ensure_unarchived!, only: [:edit, :new_sub_project, :duplicate, :action_plan, :update]
 
   def index
     status = params[:archived] == "true" ? "archived" : nil
