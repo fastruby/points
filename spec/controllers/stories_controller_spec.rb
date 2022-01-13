@@ -83,6 +83,11 @@ RSpec.describe StoriesController, type: :controller do
     it "shows the attributes for the right story" do
       expect(assigns(:story)).to eq story
     end
+
+    it "redirects to the project page if the story doesn't exist" do
+      get :show, params: {id: story.id + 1, project_id: project.id}
+      expect(response).to redirect_to project_path(project)
+    end
   end
 
   describe "#update" do
