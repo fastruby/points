@@ -100,4 +100,42 @@ RSpec.describe "managing projects" do
       row["description"] = "blank!"
     end.to_csv
   end
+
+  context "hierarchy sidebar" do
+    context "with sub projects" do
+      let!(:sub_project1) { FactoryBot.create(:project, parent: project) }
+      let!(:sub_project2) { FactoryBot.create(:project, parent: project) }
+
+      it "renders a sidebar" do
+        visit project_path(project)
+        within "aside.hierarchy" do
+          expect(page).to have_selector('a', text: project.title)
+          expect(page).to have_selector('a', text: sub_project1.title)
+          expect(page).to have_selector('a', text: sub_project2.title)
+        end
+
+        visit project_path(sub_project1)
+        within "aside.hierarchy" do
+          expect(page).to have_selector('a', text: project.title)
+          expect(page).to have_selector('a', text: sub_project1.title)
+          expect(page).to have_selector('a', text: sub_project2.title)
+        end
+
+        visit project_path(sub_project2)
+        within "aside.hierarchy" do
+          expect(page).to have_selector('a', text: project.title)
+          expect(page).to have_selector('a', text: sub_project1.title)
+          expect(page).to have_selector('a', text: sub_project2.title)
+        end
+      end
+    end
+
+    context "with no sub projects" do
+      it "renders no sidebar" do
+        visit project_path(project)
+
+        expect(page).not_to have_selector('aside.hierarchy')
+      end
+    end
+  end
 end
