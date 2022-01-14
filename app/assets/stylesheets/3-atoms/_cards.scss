@@ -1,11 +1,17 @@
-.project-card{
+.project-card {
   background-color: $white;
   color: $black;
   padding: 1rem;
   border: 1px solid $orange;
   display: block;
   margin: 1rem 0;
-  &:hover{
+  &:hover {
+    border: 4px solid $orange;
+  }
+  &.sub:hover {
     background-color: $orange;
+  }
+  &.sub:active {
+    background-color: #ffd633;
   }
 }

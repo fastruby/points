@@ -12,7 +12,7 @@
               </div>
             <% end %>
             <% project.projects.each do |subproj| %>
-              <%= link_to subproj.title, project_path(subproj), class: "project-card" %>
+              <%= link_to subproj.title, project_path(subproj), class: "project-card sub" %>
             <% end %>
           </div>
         </div>
