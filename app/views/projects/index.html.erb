@@ -9,6 +9,7 @@
             <%= link_to project_path(project.id) do %>
               <div>
                 <h2><%= project.title %></h2>
+                <span class="status-badge <%= project.status %>"><%= project.status %></span>
               </div>
             <% end %>
             <% project.projects.each do |subproj| %>

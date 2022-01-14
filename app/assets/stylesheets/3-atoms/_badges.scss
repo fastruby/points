@@ -1,0 +1,15 @@
+.status-badge {
+  display: inline-block;
+  padding: 10px 20px;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 20px;
+
+  &.archived {
+    background-color: rgba(29,78,216,0.2);
+    border-color: #1d4ed8;
+  }
+}
