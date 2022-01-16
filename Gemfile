@@ -15,7 +15,7 @@ if next?
   gem "rails", github: "rails/rails", branch: "main"
   gem "devise", github: "heartcombo/devise", branch: "main"
 else
-  gem "rails", "~> 6.1.4"
+  gem "rails", "~> 7.0.0"
   gem "devise"
 end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
