@@ -35,11 +35,11 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.0.2"
+          ruby-version: "3.1.0"
 
       - name: Build App
         run: |
-          bundle update rails --jobs=4 --retry=3   
+          bundle update rails --jobs=4 --retry=3
           bundle exec rails db:setup
       - name: Run RSpec
         run: |
