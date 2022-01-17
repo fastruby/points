@@ -59,9 +59,10 @@ class Project < ApplicationRecord
   private
 
   def add_position
+    return unless parent
     return if position
 
-    last_position = projects.where.not(position: nil).order(position: :asc).last&.position || 0
+    last_position = parent.projects.where.not(position: nil).order(position: :asc).last&.position || 0
     self.position = last_position + 1
   end
 end
