@@ -1,5 +1,9 @@
-
 (function() {
+  toggleButtonText();
+  toggleProjectStatus();
+})()
+
+function toggleButtonText() {
   let button_text = document.querySelector('#toggle_archive');
 
   if (button_text.textContent == "Archive Project") {
@@ -7,4 +11,19 @@
   } else {
     button_text.textContent = "Archive Project"
   }
-})()
+}
+
+function toggleProjectStatus() {
+  let statusBadge = document.querySelector(".status-badge");
+  let projectStatus = "<%= @project.status %>";
+
+  if (projectStatus === ""){
+    statusBadge.classList.add("hide")
+    statusBadge.textContent = ""
+  }
+  else{
+    statusBadge.classList.remove("hide")
+    statusBadge.classList.add(projectStatus)
+    statusBadge.textContent = projectStatus
+  }
+}

@@ -1,10 +1,10 @@
 <div class="container">
+  <h1 class="dashboard-title"><%= render "shared/project_title", project: @project %></h1>
   <% provide(:button_text, 'Save Changes') %>
   <h2 class="new-edit-title">Edit Story</h2>
 
   <%= render 'form', story: @story %>
 
   <hr>
-
-  <%= link_to 'Back', project_path(@project.id), id:"back", class: "button" %>
+  <%= link_to 'Back', project_path(@project), id:"back", class: "button" %>
 </div>

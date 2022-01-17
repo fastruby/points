@@ -134,3 +134,47 @@
     top: 0px;
   }
 }
+
+.hierarchy {
+  position: sticky;
+  top: 0px;
+  h4 {
+    margin-bottom: 10px;
+  }
+  ul {
+    padding-left: 1.5em;
+    list-style-type: initial;
+    li {
+      padding-bottom: 0.2rem;
+      a {
+        display: inline-block;
+        vertical-align: text-top;
+      }
+    }
+  }
+}
+
+.header {
+  display: flex;
+  h1 {
+    flex-grow: 1;
+  }
+}
+
+.search-field {
+  position: relative;
+  padding: 0;
+  min-width: 250px;
+  margin-top: 25px;
+
+  label {
+    position: absolute;
+    margin-top: 0;
+    top: -10px;
+    left: 5px;
+    padding: 0px 3px;
+    background: white;
+    font-size: 90%;
+    color: gray;
+  }
+}

@@ -23,7 +23,8 @@ class ProjectsController < ApplicationController
   end
 
   def toggle_archive
-    Project.find(params[:id]).toggle_archived!
+    @project = Project.find(params[:id])
+    @project.toggle_archived!
   end
 
   def new_clone
@@ -61,6 +62,7 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.find(params[:id])
+    @sidebar_projects = @project.parent ? @project.parent.projects : @project.projects
     @stories = @project.stories.by_position.includes(:estimates)
     @siblings = @project.siblings
   end

@@ -1,7 +1,9 @@
 <div class="container">
+  <h1 class="dashboard-title"><%= render "shared/project_title", project: @project %></h1>
+
   <%= render "shared/story", story: @story %>
   <div class="btn-group">
-    <%= link_to 'Edit', edit_project_story_path(@project.id), id:"back", class: "button" %>
-    <%= link_to 'Back', project_path(@project.id), id:"back", class: "button" %>
+    <%= link_to 'Edit', edit_project_story_path(@project), id:"back", class: "button" %>
+    <%= link_to 'Back', project_path(@project), id:"back", class: "button" %>
   </div>
 </div>
