@@ -29,7 +29,8 @@ class ProjectsController < ApplicationController
   end
 
   def toggle_archive
-    Project.find(params[:id]).toggle_archived!
+    @project = Project.find(params[:id])
+    @project.toggle_archived!
   end
 
   def duplicate
@@ -63,6 +64,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
+    @sidebar_projects = @project.parent ? @project.parent.projects : @project.projects
     @stories = @project.stories.by_position.includes(:estimates)
     @siblings = @project.siblings
   end

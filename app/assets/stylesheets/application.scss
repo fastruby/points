@@ -31,6 +31,7 @@
 @import "2-quarks/code";
 
 // 3-ATOMS
+@import "3-atoms/badges";
 @import "3-atoms/buttons";
 @import "3-atoms/forms";
 @import "3-atoms/cards";
@@ -64,7 +65,6 @@ body {
 
   main {
     min-height: initial;
-    padding-top: 20px;
     flex-grow: 1;
   }
 
