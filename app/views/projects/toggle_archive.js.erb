@@ -1,4 +1,9 @@
 (function() {
+  toggleButtonText();
+  toggleProjectStatus();
+})()
+
+function toggleButtonText() {
   let button_text = document.querySelector('#toggle_archive');
 
   if (button_text.textContent == "Archive Project") {
