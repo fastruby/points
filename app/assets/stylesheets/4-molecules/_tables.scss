@@ -42,10 +42,13 @@
       font-weight: bold;
     }
     &.project-table__row--story {
-      cursor: pointer;
+      cursor: grab;
       border-bottom: 1px solid $medium_grey;
       &:hover {
         background-color: #d9f1f1;
+      }
+      &:active {
+        cursor: grabbing;
       }
     }
   }
