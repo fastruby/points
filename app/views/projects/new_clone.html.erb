@@ -1,0 +1,20 @@
+<div class="container">
+  <h2>Clone project <%= @original.title %></h2>
+
+  <%= form_for @original, url: clone_project_path(@original), method: :post do |f| %>
+    <div class="field">
+      <%= f.label :title %>
+      <%= f.text_field :title, placeholder: "Project Title", class: "project-story-title" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :parent_id %>
+      <%= f.select :parent_id, options_from_collection_for_select(Project.active.parents, :id, :title, selected: @original.parent_id), include_blank: "None" %>
+    </div>
+
+    <div class="actions">
+      <%= button_tag "Clone", class: "button", type: "submit" %>
+      <%= link_to 'Back', project_path(@original.id), id:"back", class: "button" %>
+    </div>
+  <% end %>
+</div>
