@@ -17,12 +17,8 @@
             <th class="project-table__cell">Best<br />Estimate</th>
             <th class="project-table__cell">Worst<br />Estimate</th>
             <th class="project-table__cell story_actions">
-              <% if @project.archived? %>
-                <%= link_to "Add a Story", new_project_story_path(@project.id), class: "button magenta"  %>
-                <button id="bulk_delete" class="button magenta" aria-disabled="true" disabled>Bulk Delete</button>
-                <% else %>
-                  <%= link_to "Add a Story", new_project_story_path(@project.id), class: "button magenta"  %>
-                <% end %>
+              <%= link_unless_archived(@project, "Add a Story", new_project_story_path(@project), color: "magenta") %>
+              <button id="bulk_delete" class="button magenta" aria-disabled="true" disabled>Bulk Delete</button>
             </th>
           </tr>
         </thead>
@@ -39,18 +35,20 @@
                 <td class="project-table__cell"><%= story.estimate_for(current_user)&.worst_case_points %></td>
                 <td class="project-table__cell story_actions">
                   <% if estimated(story) %>
-                    <%= link_to "Edit Estimate", edit_project_story_estimate_path(@project.id, story, @estimate_id), class: "button edit-estimate", remote: true %>
+                    <%= link_unless_archived(@project, "Edit Estimate", edit_project_story_estimate_path(@project.id, story, @estimate_id), color: "edit-estimate", remote: true) %>
                   <% else %>
-                    <%= link_to "Add Estimate", new_project_story_estimate_path(@project.id, story), class: "button add-estimate", remote: true %>
+                    <%= link_unless_archived(@project, "Add Estimate", new_project_story_estimate_path(@project.id, story), color: "edit-estimate", remote: true) %>
                   <% end %>
                   <div class="dropdown-wrapper more-actions">
                     <button class="button" title="More actions">
                       <i class="fa fa-ellipsis-v"></i>
                     </button>
                     <div class="dropdown">
-                      <%= link_to edit_project_story_path(@project.id, story), class: "button edit", title: "Edit" do %>
-                        <i class="fa fa-pencil-square-o"></i>
-                        <span>Edit</span>
+                      <% unless @project.archived? %>
+                        <%= link_to edit_project_story_path(@project.id, story), class: "button edit", title: "Edit" do %>
+                          <i class="fa fa-pencil-square-o"></i>
+                          <span>Edit</span>
+                        <% end %>
                       <% end %>
                       <%= link_to new_project_story_path(@project.id, story_id: story.id), class: "clone", title: "Clone" do %>
                         <i class="fa fa-files-o"></i>

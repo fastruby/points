@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   end
 
   def ensure_unarchived!
-    if @project.archived?
+    if @project.archived? || @project.parent&.archived?
       flash[:error] = "You can't perform this action in an archived project."
       redirect_to project_path(@project.id)
     end

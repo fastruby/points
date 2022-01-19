@@ -1,16 +1,14 @@
 (function() {
   toggleButtonText();
-  toggleProjectStatus();
+  window.location.reload();
 })()
 
 function toggleButtonText() {
   let button_text = document.querySelector('#toggle_archive');
 
   if (button_text.textContent == "Archive Project") {
-    button_text.textContent = "Unarchive Project"
+    button_text.textContent = "Unarchive Project";
   } else {
-    button_text.textContent = "Archive Project"
+    button_text.textContent = "Archive Project";
   }
-
-  window.location.reload();
-})()
+}
