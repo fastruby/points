@@ -52,7 +52,7 @@
     "title preview"
     "description preview"
     "submit .";
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(50%, 1fr));
   grid-column-gap: 10px;
 
   #error_explanation {
@@ -76,6 +76,10 @@
     .content {
       overflow: auto;
       max-height: min(50vh, 700px);
+      // prevent long links from overflowing
+      a {
+        word-break: break-all;
+      }
     }
   }
 
