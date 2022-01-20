@@ -22,14 +22,19 @@ RSpec.describe "managing projects" do
   end
 
   context "when the project is archived" do
-    before { project.toggle_archived! }
+    before do
+      project.toggle_archived!
+      visit project_path(id: project.id)
+    end
 
     it "doesn't allow me to change the project" do
-      visit project_path(id: project.id)
       expect(page).to have_selector(:link_or_button, "Edit or Delete Project", disabled: true)
       expect(page).to have_selector(:link_or_button, "Add Sub-Project", disabled: true)
-      expect(page).to have_selector(:link_or_button, "Clone Project", disabled: true)
       expect(page).to have_selector(:link_or_button, "Generate Action Plan", disabled: true)
+    end
+
+    it "allow me to clone the project" do
+      expect(page).to have_selector(:link_or_button, "Clone Project", disabled: false)
     end
   end
 
