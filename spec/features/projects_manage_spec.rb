@@ -21,37 +21,6 @@ RSpec.describe "managing projects" do
     expect(Project.count).to eq 1
   end
 
-  context "when the project is unarchived" do
-    it "allows me to clone a project" do
-      visit project_path(id: project.id)
-      click_link "Clone Project"
-      expect(Project.count).to eq 2
-      expect(Project.last.title).to eq "Copy of #{project.title}"
-    end
-
-    it "allows me to edit a project" do
-      visit project_path(id: project.id)
-      click_link "Edit or Delete Project"
-      fill_in "project[title]", with: "New Project"
-      click_button "Save Changes"
-      expect(page).to have_content "Project updated!"
-    end
-
-    it "allows me to archive a project", js: true do
-      visit project_path(id: project.id)
-      click_link "Archive Project"
-      expect(page).to have_content "Unarchive Project"
-      expect(project.reload).to be_archived
-    end
-
-    it "allows me to delete a project" do
-      visit project_path(id: project.id)
-      click_link "Edit or Delete Project"
-      click_link "Delete Project"
-      expect(Project.count).to eq 0
-    end
-  end
-
   context "when the project is archived" do
     before { project.toggle_archived! }
 
@@ -61,6 +30,44 @@ RSpec.describe "managing projects" do
       expect(page).to have_selector(:link_or_button, "Add Sub-Project", disabled: true)
       expect(page).to have_selector(:link_or_button, "Clone Project", disabled: true)
       expect(page).to have_selector(:link_or_button, "Generate Action Plan", disabled: true)
+    end
+  end
+
+  context "when the project is unarchived" do
+    describe "#clone", js: true do
+      it "allows cloning a project" do
+        visit project_path(id: project.id)
+
+        click_link "Clone Project"
+
+        expect(page).to have_text("Clone project #{project.title}")
+
+        fill_in :project_title, with: "Cloned Project"
+
+        expect {
+          click_button "Clone"
+        }.to change(Project, :count).by(1)
+
+        expect(page).to have_text("Project cloned")
+
+        last_project = Project.last
+        expect(last_project.id).not_to eq(project.id)
+        expect(last_project.stories.count).to eq project.stories.count
+
+        expect(page).to have_text(last_project.title)
+      end
+
+      it "defaults to same parent" do
+        sub_project = FactoryBot.create(:project, parent: project)
+
+        # None if the project is a parent
+        visit new_clone_project_path(project)
+        expect(page).to have_select(:project_parent_id, selected: "None")
+
+        # The parent if the project is a sub project
+        visit new_clone_project_path(sub_project)
+        expect(page).to have_select(:project_parent_id, selected: project.title)
+      end
     end
   end
 
@@ -101,56 +108,6 @@ RSpec.describe "managing projects" do
     end
   end
 
-  def download_csv_file(path)
-    visit project_path(id: project.id)
-    find("#import-export").click
-    click_on "Export"
-    csv = adjust_csv_descriptions(page.source)
-    File.write(path, csv)
-  end
-
-  def adjust_csv_descriptions(csv)
-    CSV.parse(csv, headers: true).each do |row|
-      row["description"] = "blank!"
-    end.to_csv
-  end
-
-  context "cloning", js: true do
-    it "allows cloning a project" do
-      visit project_path(id: project.id)
-
-      click_link "Clone Project"
-
-      expect(page).to have_text("Clone project #{project.title}")
-
-      fill_in :project_title, with: "Cloned Project"
-
-      expect {
-        click_button "Clone"
-      }.to change(Project, :count).by(1)
-
-      expect(page).to have_text("Project cloned")
-
-      last_project = Project.last
-      expect(last_project.id).not_to eq(project.id)
-      expect(last_project.stories.count).to eq project.stories.count
-
-      expect(page).to have_text(last_project.title)
-    end
-
-    it "defaults to same parent" do
-      sub_project = FactoryBot.create(:project, parent: project)
-
-      # None if the project is a parent
-      visit new_clone_project_path(project)
-      expect(page).to have_select(:project_parent_id, selected: "None")
-
-      # The parent if the project is a sub project
-      visit new_clone_project_path(sub_project)
-      expect(page).to have_select(:project_parent_id, selected: project.title)
-    end
-  end
-
   context "hierarchy sidebar" do
     context "with sub projects" do
       let!(:sub_project1) { FactoryBot.create(:project, parent: project) }
@@ -187,5 +144,19 @@ RSpec.describe "managing projects" do
         expect(page).not_to have_selector("aside.hierarchy")
       end
     end
+  end
+
+  def download_csv_file(path)
+    visit project_path(id: project.id)
+    find("#import-export").click
+    click_on "Export"
+    csv = adjust_csv_descriptions(page.source)
+    File.write(path, csv)
+  end
+
+  def adjust_csv_descriptions(csv)
+    CSV.parse(csv, headers: true).each do |row|
+      row["description"] = "blank!"
+    end.to_csv
   end
 end

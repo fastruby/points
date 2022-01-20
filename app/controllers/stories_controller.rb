@@ -3,6 +3,8 @@ class StoriesController < ApplicationController
   before_action :authenticate_user!
   before_action :find_project, except: [:bulk_destroy, :render_markdown]
   before_action :find_story, only: [:edit, :update, :destroy, :show, :move]
+  before_action :ensure_unarchived!, except: [:show]
+
   include ApplicationHelper
 
   CSV_HEADERS = %w[id title description position]

@@ -38,7 +38,7 @@
                   <% if estimated(story) %>
                     <%= link_unless_archived(@project, "Edit Estimate", edit_project_story_estimate_path(@project.id, story, @estimate_id), color: "edit-estimate", remote: true) %>
                   <% else %>
-                    <%= link_unless_archived(@project, "Add Estimate", new_project_story_estimate_path(@project.id, story), color: "edit-estimate", remote: true) %>
+                    <%= link_unless_archived(@project, "Add Estimate", new_project_story_estimate_path(@project.id, story), color: "add-estimate", remote: true) %>
                   <% end %>
 
                   <div class="dropdown-wrapper more-actions">
@@ -46,16 +46,8 @@
                       <i class="fa fa-ellipsis-v"></i>
                     </button>
                     <div class="dropdown">
-                      <% unless @project.archived? %>
-                        <%= link_to edit_project_story_path(@project.id, story), class: "button edit", title: "Edit" do %>
-                          <i class="fa fa-pencil-square-o"></i>
-                          <span>Edit</span>
-                        <% end %>
-                      <% end %>
-                      <%= link_to new_project_story_path(@project.id, story_id: story.id), class: "clone", title: "Clone" do %>
-                        <i class="fa fa-files-o"></i>
-                        <span>Clone</span>
-                      <% end %>
+                      <%= link_unless_archived(@project, "Edit", edit_project_story_path(@project, story), color: "edit", icon: 'pencil-square-o') %>
+
                       <% if @siblings.any? %>
                         <div class="dropdown-wrapper move-story">
                           <button title="Move to">
@@ -69,10 +61,15 @@
                           </div>
                         </div>
                       <% end %>
-                      <%= link_to project_story_path(@project.id, story, format: "json"), method: "delete",  data: { confirm: 'Are you sure?', story_id: story.id }, class: "delete magenta", remote: true, title: "Delete" do %>
-                        <i class="fa fa-trash-o"></i>
-                        <span>Delete</span>
+
+                      <%= link_unless_archived(@project, "Delete", project_story_path(@project.id, story, format: "json"), color: "delete", icon: 'trash-o', method: :delete, remote: true, data_attr: { confirm: 'Are you sure?', story_id: story.id }) %>
+
+                      <% link_to new_project_story_path(@project.id, story_id: story.id), class: "clone", title: "Clone" do %>
+                        <i class="fa fa-files-o"></i>
+                        <span>Clone</span>
                       <% end %>
+
+                      <%= link_unless_archived(@project, "Clone", new_project_story_path(@project.id, story_id: story.id), color: "clone", icon: 'files-o') %>
                     </div>
                   </div>
                 </td>
@@ -114,7 +111,7 @@
   <div class="btn-group actions">
     <%= link_unless_archived(@project, "Edit or Delete Project", edit_project_path(@project), color: "magenta") %>
     <%= link_unless_archived(@project, "Add Sub-Project", project_new_sub_project_path(@project), color: "magenta") unless @project.parent_id %>
-    <%= link_unless_archived(@project, "Clone Project", new_clone_project_path(@project), method: :post, color: "magenta") %>
+    <%= link_to 'Clone Project', new_clone_project_path(@project.id), class: "button magenta" %>
     <%= link_to "#{@project.archived? ? 'Unarchive' : 'Archive'} Project", toggle_archive_project_path(@project.id), method: "patch", id: "toggle_archive", class: "button magenta", remote: true %>
     <%= link_unless_archived(@project, "Generate Action Plan", project_action_plan_path(@project), color: "yellow") %>
     <%= link_to "View Report", project_report_path(@project.id), class: "button" if current_user.admin? %>
