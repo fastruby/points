@@ -23,19 +23,22 @@ class ProjectsController < ApplicationController
   end
 
   def toggle_archive
-    Project.find(params[:id]).toggle_archived!
+    @project = Project.find(params[:id])
+    @project.toggle_archived!
   end
 
-  def duplicate
+  def new_clone
+    @original = Project.includes(:projects, stories: :estimates).find(params[:id])
+  end
+
+  def clone
     original = Project.includes(stories: :estimates).find(params[:id])
-    duplicate = original.dup
-    duplicate.title = "Copy of #{original.title}"
-    duplicate.save
+    clone = Project.create(clone_params)
+    original.clone_stories_into(clone)
+    original.clone_projects_into(clone) if clone.parent.nil? && original.projects
 
-    original.stories.each { |x| duplicate.stories.create(x.dup.attributes) }
-
-    flash[:success] = "Project created!"
-    redirect_to "/projects/#{duplicate.id}"
+    flash[:success] = "Project cloned!"
+    redirect_to "/projects/#{clone.id}"
   end
 
   def create
@@ -59,6 +62,7 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.find(params[:id])
+    @sidebar_projects = @project.parent ? @project.parent.projects : @project.projects
     @stories = @project.stories.by_position.includes(:estimates)
     @siblings = @project.siblings
   end
@@ -83,5 +87,9 @@ class ProjectsController < ApplicationController
 
   def projects_params
     params.require(:project).permit(:title, :status, :parent_id)
+  end
+
+  def clone_params
+    params.require(:project).permit(:title, :parent_id)
   end
 end

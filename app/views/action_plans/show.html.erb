@@ -1,5 +1,5 @@
 <div class="container">
-  <h1 class="dashboard-title"><%= @project.title %></h1>
+  <h1 class="dashboard-title"><%= render "shared/project_title", project: @project %></h1>
   <button class="btn btn-clipboard" data-clipboard-target="#action-plan-content">Copy to clipboard</button>
 
   <div id="action-plan">

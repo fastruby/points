@@ -145,14 +145,37 @@
   }
 }
 
+.hierarchy {
+  position: sticky;
+  top: 0px;
+  h4 {
+    margin-bottom: 10px;
+  }
+  ul {
+    padding-left: 1.5em;
+    list-style-type: initial;
+    li {
+      padding-bottom: 0.2rem;
+      a {
+        display: inline-block;
+        vertical-align: text-top;
+      }
+    }
+  }
+}
+
 .header {
   display: flex;
+  h1 {
+    flex-grow: 1;
+  }
 }
 
 .search-field {
   position: relative;
   padding: 0;
   min-width: 250px;
+  margin-top: 25px;
 
   label {
     position: absolute;
@@ -163,5 +186,36 @@
     background: white;
     font-size: 90%;
     color: gray;
+  }
+}
+
+.copy-link {
+  background: none;
+  border: none;
+  padding: 8px;
+  color: #F70A7C;
+
+  i {
+    position: relative;
+    border-radius: 50%;
+    padding: 5px;
+    opacity: 0;
+    transition: transform 0.5s,
+                opacity 0.5s;
+    transform: translateX(-100%)
+  }
+
+  &:hover {
+    i {
+      opacity: 1;
+      transform: translateX(0)
+    }
+  }
+
+  &:active {
+    i {
+      background: #F70A7C;
+      color: white;
+    }
   }
 }
