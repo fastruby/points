@@ -5,13 +5,21 @@ module ProjectsHelper
   end
 
   def link_unless_archived(project, text, url, color: nil, method: :get, remote: false, icon: nil, data_attr: nil)
+    link_text = text_content(icon, text)
     if project.archived? || project.parent&.archived?
-      button_tag(text, disabled: true, class: "button #{color} disabled", aria: {disabled: true})
+      button_tag(link_text, disabled: true, class: "button #{color} disabled", aria: {disabled: true})
     else
-      if icon
-        icon_tag = content_tag(:i, "", class: "fa fa-#{icon}").concat(content_tag(:span, text))
-      end
-      link_to(icon_tag || text, url, class: "button #{color}", title: text, method: method, remote: remote, data: data_attr)
+      link_to(link_text, url, class: "button #{color}", title: text, method: method, remote: remote, data: data_attr)
     end
+  end
+
+  private
+
+  def text_content(icon, text)
+    if icon
+      icon_tag = content_tag(:i, "", class: "fa fa-#{icon}").concat(content_tag(:span, text))
+    end
+
+    icon_tag || text
   end
 end
