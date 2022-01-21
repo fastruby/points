@@ -12,23 +12,25 @@ RSpec.describe ProjectsController, type: :controller do
     sign_in user
   end
 
-  describe "#index without archived params" do
-    before do
-      get :index
+  describe "#index" do
+    context "with archived params" do
+      before do
+        get :index, params: {archived: true}
+      end
+
+      it "shows me a list of all the archived projects" do
+        expect(assigns(:projects)).to eq [archived_project]
+      end
     end
 
-    it "shows me a list of all the projects" do
-      expect(assigns(:projects)).to eq [project]
-    end
-  end
+    context "without archived params" do
+      before do
+        get :index
+      end
 
-  describe "#index with archived params" do
-    before do
-      get :index, params: {archived: true}
-    end
-
-    it "shows me a list of all the archived projects" do
-      expect(assigns(:projects)).to eq [archived_project]
+      it "shows me a list of all the projects" do
+        expect(assigns(:projects)).to eq [project]
+      end
     end
   end
 
@@ -45,20 +47,6 @@ RSpec.describe ProjectsController, type: :controller do
     end
 
     it { expect(response).to render_template :new_sub_project }
-  end
-
-  describe "#edit" do
-    before do
-      get :edit, params: {id: project.id}
-    end
-
-    it "redirects to the edit page" do
-      expect(response).to render_template :edit
-    end
-
-    it "shows the fields for the project" do
-      expect(assigns(:project)).to eq project
-    end
   end
 
   describe "#create" do
@@ -114,14 +102,6 @@ RSpec.describe ProjectsController, type: :controller do
     end
   end
 
-  describe "#destroy" do
-    it "deletes the project" do
-      expect {
-        delete :destroy, params: {id: project.id}
-      }.to change(Project, :count).by(-1)
-    end
-  end
-
   describe "#show" do
     before do
       get :show, params: {id: project.id}
@@ -133,14 +113,6 @@ RSpec.describe ProjectsController, type: :controller do
 
     it "shows the attributes for the right project" do
       expect(assigns(:project)).to eq project
-    end
-  end
-
-  describe "#update" do
-    it "should update the project" do
-      put :update, params: {id: project.id, project: {title: "New Project Title"}}
-
-      expect(project.reload.title).to eq "New Project Title"
     end
   end
 
@@ -207,6 +179,54 @@ RSpec.describe ProjectsController, type: :controller do
         post :clone, params: {id: project.id, project: {title: "New title"}}
 
         expect(Project.last.stories.first.estimates).to be_empty
+      end
+    end
+  end
+
+  context "when the project is archived" do
+    before do
+      project.toggle_archived!
+    end
+
+    it "doesn't allow me to edit the project" do
+      get :edit, params: {id: project.id}
+      expect(response).to redirect_to project_path(project)
+    end
+
+    it "doesn't allow me to update the project" do
+      put :update, params: {id: project.id, project: {title: "New Project Title"}}
+      expect(response).to redirect_to project_path(project)
+    end
+  end
+
+  context "when the project is unarchived" do
+    describe "#edit" do
+      before do
+        get :edit, params: {id: project.id}
+      end
+
+      it "redirects to the edit page" do
+        expect(response).to render_template :edit
+      end
+
+      it "shows the fields for the project" do
+        expect(assigns(:project)).to eq project
+      end
+    end
+
+    describe "#destroy" do
+      it "deletes the project" do
+        expect {
+          delete :destroy, params: {id: project.id}
+        }.to change(Project, :count).by(-1)
+      end
+    end
+
+    describe "#update" do
+      it "should update the project" do
+        put :update, params: {id: project.id, project: {title: "New Project Title"}}
+
+        expect(project.reload.title).to eq "New Project Title"
       end
     end
   end

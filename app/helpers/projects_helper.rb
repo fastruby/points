@@ -5,7 +5,7 @@ module ProjectsHelper
   end
 
   def link_unless_archived(project, text, url, color: nil, method: :get, remote: false, icon: nil, data_attr: nil)
-    if project.archived?
+    if project.archived? || project.parent&.archived?
       button_tag(text, disabled: true, class: "button #{color} disabled", aria: {disabled: true})
     else
       if icon
