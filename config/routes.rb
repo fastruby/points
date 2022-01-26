@@ -15,11 +15,14 @@ Rails.application.routes.draw do
   end
 
   resources :projects do
-    patch :sort, on: :member
-    patch :sort_stories, on: :member
-    patch :toggle_archive, on: :member
+    member do
+      patch :sort
+      patch :sort_stories
+      patch :toggle_archive
+      get :new_clone
+      post :clone
+    end
     get :new_sub_project
-    post :duplicate, on: :member
 
     resource :report do
       get "download", to: "reports#download"

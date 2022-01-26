@@ -10,6 +10,9 @@ class Project < ApplicationRecord
 
   before_create :add_position
 
+  scope :active, -> { where.not(status: "archived").or(where(status: nil)) }
+  scope :parents, -> { where(parent: nil) }
+
   def best_estimate_total
     stories.includes(:estimates).sum(&:best_estimate_average)
   end
@@ -54,6 +57,17 @@ class Project < ApplicationRecord
   # returns all the sub-projects from its parent's project except self
   def siblings
     parent_id ? Project.where(parent_id: parent_id).where.not(id: id) : []
+  end
+
+  def clone_stories_into(clone)
+    stories.each { |story| clone.stories.create(story.dup.attributes) }
+  end
+
+  def clone_projects_into(clone)
+    projects.each do |sub_project|
+      sub_project_clone = clone.projects.create(sub_project.dup.attributes)
+      sub_project.clone_stories_into(sub_project_clone)
+    end
   end
 
   private
