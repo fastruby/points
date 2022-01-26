@@ -50,8 +50,7 @@ class Project < ApplicationRecord
   end
 
   def toggle_archived!
-    new_status = archived? ? nil : "archived"
-    update_column :status, new_status
+    archived? ? unarchive : archive
   end
 
   # returns all the sub-projects from its parent's project except self
@@ -78,5 +77,19 @@ class Project < ApplicationRecord
 
     last_position = parent.projects.where.not(position: nil).order(position: :asc).last&.position || 0
     self.position = last_position + 1
+  end
+
+  def archive
+    update_column :status, "archived"
+    projects.each do |sub_project|
+      sub_project.update_column :status, "archived"
+    end
+  end
+
+  def unarchive
+    update_column :status, nil
+    projects.each do |sub_project|
+      sub_project.update_column :status, nil
+    end
   end
 end
