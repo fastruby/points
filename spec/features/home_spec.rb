@@ -23,10 +23,12 @@ RSpec.describe "home specs" do
 
         last.drag_to(first, html5: false)
 
+        # we need some `sleep` calls around the dragging because it uses a javascript
+        # delay internally
+        sleep(2)
+
         expect(page).not_to have_selector("#project_#{project.id}.project-card.sorting")
 
-        # we need some `sleep` calls around the dragging simulation because it uses a javascript
-        # delay internally
         sleep(2)
 
         expect(sub_project1.reload.position).to eq 2
