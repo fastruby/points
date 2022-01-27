@@ -43,6 +43,45 @@ RSpec.describe "managing projects" do
     expect(Project.count).to eq 0
   end
 
+  context "Sub-Projects" do
+    it "allows me to add sub projects" do
+      visit project_path(id: project.id)
+      click_link "Add Sub-Project"
+      fill_in "project[title]", with: "Super Sub Project"
+      click_button "Create"
+      expect(page).to have_content "Project created!"
+      expect(current_path).to eq projects_path
+    end
+
+    it "lists available sub projects with a link" do
+      sub_project_one = FactoryBot.create(:project, title: "Sub-project 1", parent_id: project.id)
+      sub_project_two = FactoryBot.create(:project, title: "Sub-project 2", parent_id: project.id)
+      project_two = FactoryBot.create(:project)
+      visit projects_path
+
+      within(".project-card", text: project.title) do
+        expect(page).to have_link(project.title)
+        expect(page).to_not have_link(project_two.title)
+
+        expect(page).to have_link(sub_project_one.title)
+        expect(page).to have_link(sub_project_two.title)
+      end
+    end
+
+    it "allow me to visit sub-projects with a link" do
+      sub_project_one = FactoryBot.create(:project, title: "Sub-project 1", parent_id: project.id)
+      visit projects_path
+
+      within(".project-card", text: project.title) do
+        expect(page).to have_link(project.title)
+        expect(page).to have_link(sub_project_one.title)
+
+        click_link sub_project_one.title
+      end
+      expect(current_path).to eq project_path(sub_project_one)
+    end
+  end
+
   context "import & Export" do
     before do
       project.stories.create(title: "php upgrade", description: "quick php upgrade")

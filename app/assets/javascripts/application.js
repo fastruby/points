@@ -17,4 +17,5 @@
 //= require jquery-ui/sortable
 //= require turbolinks
 //= require clipboard.min
+//= require sortable_list
 //= require_tree .

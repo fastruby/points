@@ -5,16 +5,18 @@
     <div class="row">
       <% @projects.each do | project | %>
         <div class="col-sm-6 col-lg-4">
-          <div class="project-card">
+          <div class="project-card" id="project_<%= project.id %>">
             <%= link_to project_path(project.id) do %>
               <div>
                 <h2><%= project.title %></h2>
                 <span class="status-badge <%= project.status %>"><%= project.status %></span>
               </div>
             <% end %>
-            <% project.projects.each do |subproj| %>
-              <%= link_to subproj.title, project_path(subproj), class: "project-card sub" %>
-            <% end %>
+            <div class="sortable-projects" data-url="<%= sort_project_path(project.id) %>">
+              <% project.projects.each do |subproj| %>
+                <%= link_to subproj.title, project_path(subproj), class: "project-card sub", id: dom_id(subproj) %>
+              <% end %>
+            </div>
           </div>
         </div>
       <% end %>
