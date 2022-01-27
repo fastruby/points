@@ -17,14 +17,19 @@ RSpec.describe "home specs" do
 
       it "allows re-arranging the sub projects", js: true do
         visit root_path
+        save_screenshot
 
         first = find("a", text: sub_project1.title)
         last = find("a", text: sub_project3.title)
 
         # this will move `last` BEFORE `first`
+        save_screenshot
         last.drag_to(first)
-        expect(page).to have_selector("#project_#{project.id}.project-card.sorting")
+        save_screenshot
+        sleep(0.1)
+        save_screenshot
         expect(page).not_to have_selector("#project_#{project.id}.project-card.sorting")
+        save_screenshot
 
         expect(sub_project1.reload.position).to eq 2
         expect(sub_project2.reload.position).to eq 3

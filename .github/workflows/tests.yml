@@ -43,4 +43,11 @@ jobs:
           bundle exec rails db:setup
       - name: Run RSpec
         run: |
-          bundle exec rspec
+          bundle exec rspec spec/features/home_spec.rb
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: Screenshots and logs
+          path: |
+            tmp/capybara
+            log
