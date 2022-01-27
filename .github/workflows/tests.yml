@@ -43,7 +43,7 @@ jobs:
           bundle exec rails db:setup
       - name: Run RSpec
         run: |
-          bundle exec rspec spec/features/home_spec.rb
+          bundle exec rspec
       - uses: actions/upload-artifact@v2
         if: failure()
         with:
