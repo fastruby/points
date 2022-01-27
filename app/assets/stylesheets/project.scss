@@ -35,6 +35,16 @@
       margin: 0 0 10px 0;
     }
   }
+
+  #instructions {
+    padding: 10px 0;
+    font-weight: bold;
+    ul li {
+      font-size: 12px;
+      list-style: inside;
+      font-weight: normal;
+    }
+  }
 }
 
 .import-export-header {
@@ -209,4 +219,3 @@
     }
   }
 }
-
