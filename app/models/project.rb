@@ -80,16 +80,10 @@ class Project < ApplicationRecord
   end
 
   def archive
-    update_column :status, "archived"
-    projects.each do |sub_project|
-      sub_project.update_column :status, "archived"
-    end
+    Project.where(id: id).or(Project.where(parent_id: id)).update_all(status: "archived")
   end
 
   def unarchive
-    update_column :status, nil
-    projects.each do |sub_project|
-      sub_project.update_column :status, nil
-    end
+    Project.where(id: id).or(Project.where(parent_id: id)).update_all(status: nil)
   end
 end
