@@ -17,11 +17,11 @@ Rails.application.routes.draw do
   resources :projects do
     member do
       patch :sort
+      patch :sort_stories
       patch :toggle_archive
       get :new_clone
       post :clone
     end
-\
     get :new_sub_project
 
     resource :report do

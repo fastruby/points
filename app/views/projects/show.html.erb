@@ -22,7 +22,12 @@
             </th>
           </tr>
         </thead>
+<<<<<<< HEAD
         <tbody id="stories" data-url="<%= sort_project_path(@project.id) %>">
+=======
+
+        <tbody id="stories" data-url="<%= sort_stories_project_path(@project.id) %>">
+>>>>>>> main
           <% if @stories.present? %>
             <% @stories.each do | story | %>
               <tr class="project-table__row project-table__row--story" id="<%= dom_id(story)%>" >

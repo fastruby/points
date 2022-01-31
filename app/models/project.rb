@@ -8,6 +8,8 @@ class Project < ApplicationRecord
   belongs_to :parent, class_name: "Project", required: false
   has_many :projects, class_name: "Project", foreign_key: :parent_id, dependent: :destroy
 
+  before_create :add_position
+
   scope :active, -> { where.not(status: "archived").or(where(status: nil)) }
   scope :parents, -> { where(parent: nil) }
 
@@ -66,5 +68,15 @@ class Project < ApplicationRecord
       sub_project_clone = clone.projects.create(sub_project.dup.attributes)
       sub_project.clone_stories_into(sub_project_clone)
     end
+  end
+
+  private
+
+  def add_position
+    return unless parent
+    return if position
+
+    last_position = parent.projects.where.not(position: nil).order(position: :asc).last&.position || 0
+    self.position = last_position + 1
   end
 end

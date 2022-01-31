@@ -44,3 +44,10 @@ jobs:
       - name: Run RSpec
         run: |
           bundle exec rspec
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: Screenshots and logs
+          path: |
+            tmp/capybara
+            log
