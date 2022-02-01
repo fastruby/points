@@ -21,6 +21,9 @@ RSpec.describe "home specs" do
         first = find("a", text: sub_project1.title)
         last = find("a", text: sub_project3.title)
 
+        # The use expect_any_instance_of is discouraged by the RSpec team, but the drag_to
+        # method is not always consistent on the distance it drags elements and the order
+        # is not always the expected. So I'm using expect_any_instance_of on purpose here.
         expect_any_instance_of(ProjectsController).to receive(:sort)
 
         last.drag_to(first, delay: 0, html5: false)
