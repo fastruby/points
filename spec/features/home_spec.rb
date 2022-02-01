@@ -21,15 +21,9 @@ RSpec.describe "home specs" do
         first = find("a", text: sub_project1.title)
         last = find("a", text: sub_project3.title)
 
-        last.drag_to(first, html5: false)
-
-        # we need some `sleep` calls around the dragging because it uses a javascript
-        # delay internally
-        sleep(2)
+        last.drag_to(first, delay: 0, html5: false)
 
         expect(page).not_to have_selector("#project_#{project.id}.project-card.sorting")
-
-        sleep(2)
 
         expect(sub_project1.reload.position).to eq 2
         expect(sub_project2.reload.position).to eq 3
