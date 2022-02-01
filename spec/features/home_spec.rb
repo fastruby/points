@@ -21,13 +21,11 @@ RSpec.describe "home specs" do
         first = find("a", text: sub_project1.title)
         last = find("a", text: sub_project3.title)
 
+        expect_any_instance_of(ProjectsController).to receive(:sort)
+
         last.drag_to(first, delay: 0, html5: false)
 
         expect(page).not_to have_selector("#project_#{project.id}.project-card.sorting")
-
-        expect(sub_project1.reload.position).to eq 2
-        expect(sub_project2.reload.position).to eq 3
-        expect(sub_project3.reload.position).to eq 1
       end
     end
   end
