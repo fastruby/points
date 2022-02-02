@@ -167,6 +167,71 @@ RSpec.describe "managing projects" do
       visit new_clone_project_path(sub_project)
       expect(page).to have_select(:project_parent_id, selected: project.title)
     end
+
+    context "picking sub-projects" do
+      let!(:sub_project1) { FactoryBot.create(:project, parent: project) }
+      let!(:sub_project2) { FactoryBot.create(:project, parent: project) }
+      let!(:sub_project3) { FactoryBot.create(:project, parent: project) }
+
+      it "allows selecting which sub-projects to clone" do
+        visit new_clone_project_path(project)
+
+        [sub_project1, sub_project2, sub_project3].each do |sub|
+          expect(page).to have_selector "label", text: sub.title
+        end
+
+        uncheck sub_project2.title
+
+        expect {
+          click_button "Clone"
+        }.to change(Project.parents, :count).by(1)
+
+        expect(page).to have_text("Project cloned")
+
+        last_project = Project.parents.last
+        expect(last_project.id).not_to eq(project.id)
+        expect(last_project.projects.count).to eq 2
+        expect(last_project.projects[0].title).to eq sub_project1.title
+        expect(last_project.projects[1].title).to eq sub_project3.title
+      end
+
+      it "allows to select/unselect all sub-projects at once" do
+        visit new_clone_project_path(project)
+
+        [sub_project1, sub_project2, sub_project3].each do |sub|
+          expect(page).to have_checked_field sub.title
+        end
+
+        click_button "Unselect all"
+
+        [sub_project1, sub_project2, sub_project3].each do |sub|
+          expect(page).to have_selector "label", text: sub.title
+        end
+
+        click_button "Select all"
+
+        [sub_project1, sub_project2, sub_project3].each do |sub|
+          expect(page).to have_checked_field sub.title
+        end
+      end
+
+      it "disallows selecting sub-project if not cloned as parent" do
+        other_parent = FactoryBot.create(:project)
+
+        visit new_clone_project_path(project)
+
+        [sub_project1, sub_project2, sub_project3].each do |sub|
+          expect(page).to have_selector "label", text: sub.title
+        end
+
+        select other_parent.title, from: "Parent"
+
+        [sub_project1, sub_project2, sub_project3].each do |sub|
+          expect(page).to have_selector "label", text: sub.title, count: 0
+        end
+        expect(page).to have_text "Can't clone sub-projects if it's not a parent project"
+      end
+    end
   end
 
   context "hierarchy sidebar" do

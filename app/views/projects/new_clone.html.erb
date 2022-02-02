@@ -12,6 +12,20 @@
       <%= f.select :parent_id, options_from_collection_for_select(Project.active.parents, :id, :title, selected: @original.parent_id), include_blank: "None" %>
     </div>
 
+    <div id="sub-projects-to-clone">
+      <h4>Sub-projects to clone</h4>
+      <p>Select which sub-projects will be cloned</p>
+      <% @original.projects.each do |sub| %>
+        <label>
+          <%= check_box_tag "sub_project_ids[]", sub.id, checked: true %>
+          <%= sub.title %>
+        </label>
+      <% end %>
+      <%= button_tag "Select all", id: "select-all" %>
+      <%= button_tag "Unselect all", id: "unselect-all" %>
+      <p class="no-parent-disclaimer">Can't clone sub-projects if it's not a parent project</p>
+    </div>
+
     <div class="actions">
       <%= button_tag "Clone", class: "button", type: "submit" %>
       <%= link_to 'Back', project_path(@original.id), id:"back", class: "button" %>

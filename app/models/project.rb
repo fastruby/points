@@ -63,8 +63,11 @@ class Project < ApplicationRecord
     stories.each { |story| clone.stories.create(story.dup.attributes) }
   end
 
-  def clone_projects_into(clone)
-    projects.each do |sub_project|
+  def clone_projects_into(clone, only: nil)
+    return if only == []
+
+    to_clone = only.nil? ? projects : projects.where(id: only)
+    to_clone.each do |sub_project|
       sub_project_clone = clone.projects.create(sub_project.dup.attributes)
       sub_project.clone_stories_into(sub_project_clone)
     end
