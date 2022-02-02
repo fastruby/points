@@ -66,15 +66,14 @@ document.addEventListener("turbolinks:load", function () {
 
   // unselect all if clone is not a parent
   const projectCloneParent = document.getElementById("project_parent_id");
-  if (projectCloneParent) {
+  const subProjects = document.getElementById("sub-projects-to-clone");
+
+  if (projectCloneParent && subProjects) {
     projectCloneParent.addEventListener("change", (e) => {
-      const classes = document.getElementById(
-        "sub-projects-to-clone"
-      ).classList;
       if (projectCloneParent.value !== "") {
-        classes.add("is-not-parent");
+        subProjects.classList.add("is-not-parent");
       } else {
-        classes.remove("is-not-parent");
+        subProjects.classList.remove("is-not-parent");
       }
     });
   }
