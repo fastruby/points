@@ -221,4 +221,17 @@ RSpec.describe ProjectsController, type: :controller do
       end
     end
   end
+
+  describe "PATCH sort" do
+    let!(:sub_project1) { FactoryBot.create(:project, parent: project, position: 1) }
+    let!(:sub_project2) { FactoryBot.create(:project, parent: project, position: 2) }
+    let!(:sub_project3) { FactoryBot.create(:project, parent: project, position: 3) }
+
+    it "changes the positions of the sub-projects" do
+      patch :sort, params: {id: project.id, project: [sub_project3.id, sub_project1.id, sub_project2.id]}
+      expect(sub_project3.reload.position).to eq 1
+      expect(sub_project1.reload.position).to eq 2
+      expect(sub_project2.reload.position).to eq 3
+    end
+  end
 end

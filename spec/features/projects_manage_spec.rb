@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "managing projects" do
+RSpec.describe "managing projects", js: true do
   let(:user) { FactoryBot.create(:user) }
   let(:project) { FactoryBot.create(:project) }
 
@@ -29,17 +29,27 @@ RSpec.describe "managing projects" do
     expect(page).to have_content "Project updated!"
   end
 
-  it "allows me to archive a project", js: true do
+  it "allows me to archive a project" do
     visit project_path(id: project.id)
     click_link "Archive Project"
     expect(page).to have_content "Unarchive Project"
     expect(project.reload).to be_archived
   end
 
-  it "allows me to delete a project" do
+  it "allows me to delete a project", js: false do
     visit project_path(id: project.id)
     click_link "Edit or Delete Project"
     click_link "Delete Project"
+    expect(Project.count).to eq 0
+  end
+
+  it "allows me to delete a project" do
+    visit project_path(id: project.id)
+    click_link "Edit or Delete Project"
+    accept_confirm do
+      click_link "Delete Project"
+    end
+    expect(page).not_to have_content 'Edit or Delete Project'
     expect(Project.count).to eq 0
   end
 
@@ -87,11 +97,20 @@ RSpec.describe "managing projects" do
       project.stories.create(title: "php upgrade", description: "quick php upgrade")
     end
 
+    it "allows me to export a CSV", js: false do
+      visit project_path(id: project.id)
+      find("#import-export").click
+
+      click_on "Export"
+      expect(page.response_headers["Content-Type"]).to eql "text/csv"
+      expect(page.source).to include("php upgrade")
+    end
+
     it "allows me to export a CSV" do
       visit project_path(id: project.id)
       find("#import-export").click
+
       click_on "Export"
-      expect(page.response_headers["Content-Type"]).to eql "text/csv"
       expect(page.source).to include("php upgrade")
     end
 
@@ -108,7 +127,10 @@ RSpec.describe "managing projects" do
 
     it "allows me to update existing stories on import" do
       csv_path = (Rails.root + "tmp/stories.csv").to_s
-      download_csv_file(csv_path)
+      story = project.stories.first
+      csv_content = "id,title,description,position\n#{story.id},#{story.title},blank!,#{story.position}"
+      File.write(csv_path, csv_content)
+
       story_count = project.stories.count
       visit project_path(id: project.id)
       find("#import-export").click
@@ -117,20 +139,6 @@ RSpec.describe "managing projects" do
       expect(project.stories.count).to be story_count
       expect(project.stories.map(&:description).join).to_not include("quick")
     end
-  end
-
-  def download_csv_file(path)
-    visit project_path(id: project.id)
-    find("#import-export").click
-    click_on "Export"
-    csv = adjust_csv_descriptions(page.source)
-    File.write(path, csv)
-  end
-
-  def adjust_csv_descriptions(csv)
-    CSV.parse(csv, headers: true).each do |row|
-      row["description"] = "blank!"
-    end.to_csv
   end
 
   context "cloning", js: true do
