@@ -10,7 +10,7 @@ document.addEventListener("turbolinks:load", function () {
       });
   });
 
-  const toggleBack = function (id) {
+  const togglePopup = function (id) {
     setTimeout(() => {
       $(`#story_${id} .popup`).toggle(300);
     }, 1000);
@@ -18,9 +18,10 @@ document.addEventListener("turbolinks:load", function () {
 
   let clipboard = new ClipboardJS(".btn-clipboard");
   clipboard.on("success", function (e) {
+    // e.text is the story url, for example: "points.com/stories/xxxx"
     const id = e.text.split("/").slice(-1);
 
-    $(`#story_${id} .popup`).toggle(300, toggleBack(id));
+    $(`#story_${id} .popup`).toggle(300, togglePopup(id));
     e.clearSelection();
   });
 });
