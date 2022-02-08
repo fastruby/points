@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "exporting reports to csv" do
+RSpec.describe "exporting reports to csv", js: true do
   let(:user) { FactoryBot.create(:user, :admin) }
 
   before { login_as(user, scope: :user) }
