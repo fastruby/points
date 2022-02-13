@@ -84,3 +84,15 @@
     grid-area: submit;
   }
 }
+
+.popup {
+  display: none;
+  position: absolute;
+  top: 5px;
+  left: 30px;
+  background: #d9f1f1;
+  height: 30px;
+  width: 140px;
+  border: 1px solid #9b054d;
+  padding: 5px;
+}
