@@ -29,13 +29,6 @@ RSpec.describe "managing projects", js: true do
     expect(page).to have_content "Project updated!"
   end
 
-  it "allows me to archive a project" do
-    visit project_path(id: project.id)
-    click_link "Archive Project"
-    expect(page).to have_content "Unarchive Project"
-    expect(project.reload).to be_archived
-  end
-
   it "allows me to delete a project", js: false do
     visit project_path(id: project.id)
     click_link "Edit or Delete Project"
@@ -138,6 +131,22 @@ RSpec.describe "managing projects", js: true do
       click_on "Import"
       expect(project.stories.count).to be story_count
       expect(project.stories.map(&:description).join).to_not include("quick")
+    end
+  end
+
+  context "when archiving", js: true do
+    it "allows me to archive a project" do
+      visit project_path(id: project.id)
+      click_link "Archive Project"
+      expect(page).to have_content "Unarchive Project"
+      expect(project.reload).to be_archived
+    end
+
+    it "archives sub projects" do
+      sub_project = FactoryBot.create(:project, parent: project)
+      visit project_path(id: project.id)
+      click_link "Archive Project"
+      expect(sub_project.reload).to be_archived
     end
   end
 

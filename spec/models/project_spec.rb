@@ -20,4 +20,54 @@ RSpec.describe Project, type: :model do
     expect(sub_project1.position).to eq 1
     expect(sub_project2.position).to eq 2
   end
+
+  describe "#toggle_archived!" do
+    context "when unarchived" do
+      before(:each) do
+        subject.update_column :status, nil
+      end
+
+      it "archives the project" do
+        subject.toggle_archived!
+        expect(subject.reload).to be_archived
+      end
+
+      it "archives sub projects" do
+        add_sub_project
+
+        subject.toggle_archived!
+
+        expect(subject.projects).to_not be_empty
+        subject.projects.each do |project|
+          expect(project).to be_archived
+        end
+      end
+    end
+
+    context "when archived" do
+      before(:each) do
+        subject.update_column :status, "archived"
+      end
+
+      it "unarchives the project" do
+        subject.toggle_archived!
+        expect(subject.reload).to_not be_archived
+      end
+
+      it "unarchives sub projects" do
+        add_sub_project
+
+        subject.toggle_archived!
+
+        expect(subject.projects).to_not be_empty
+        subject.projects.each do |project|
+          expect(project).to_not be_archived
+        end
+      end
+    end
+  end
+
+  def add_sub_project
+    FactoryBot.create(:project, parent: subject, status: subject.status)
+  end
 end
