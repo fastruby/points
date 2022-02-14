@@ -41,7 +41,9 @@ class ProjectsController < ApplicationController
     original = Project.includes(stories: :estimates).find(params[:id])
     clone = Project.create(clone_params)
     original.clone_stories_into(clone)
-    original.clone_projects_into(clone) if clone.parent.nil? && original.projects
+    if clone.parent.nil? && original.projects
+      original.clone_projects_into(clone, only: params[:sub_project_ids])
+    end
 
     flash[:success] = "Project cloned!"
     redirect_to "/projects/#{clone.id}"

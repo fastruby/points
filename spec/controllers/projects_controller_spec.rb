@@ -188,6 +188,17 @@ RSpec.describe ProjectsController, type: :controller do
         last_project = other_project.projects.reload.last
         expect(last_project.parent).to eq(other_project)
       end
+
+      it "ignores sub-projects if not cloned as a parent" do
+        other_project = FactoryBot.create(:project)
+
+        expect {
+          post :clone, params: {id: project.id, project: {title: "New title", parent_id: other_project.id}, sub_project_ids: [sub_project.id]}
+        }.to change(Project, :count).by(1)
+
+        last_project = other_project.projects.reload.last
+        expect(last_project.projects).to be_empty
+      end
     end
 
     context "with stories" do
