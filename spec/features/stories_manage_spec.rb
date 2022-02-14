@@ -212,7 +212,7 @@ RSpec.describe "managing stories", js: true do
 
     last.drag_to(first, delay: 0, html5: false)
 
-    sleep(0.1)
+    sleep(1)
 
     expect(page).not_to have_selector(".project-table.sorting")
   end
