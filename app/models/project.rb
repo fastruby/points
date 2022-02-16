@@ -50,8 +50,7 @@ class Project < ApplicationRecord
   end
 
   def toggle_archived!
-    new_status = archived? ? nil : "archived"
-    update_column :status, new_status
+    archived? ? unarchive : archive
   end
 
   # returns all the sub-projects from its parent's project except self
@@ -63,8 +62,11 @@ class Project < ApplicationRecord
     stories.each { |story| clone.stories.create(story.dup.attributes) }
   end
 
-  def clone_projects_into(clone)
-    projects.each do |sub_project|
+  def clone_projects_into(clone, only: nil)
+    return if only == []
+
+    to_clone = only.nil? ? projects : projects.where(id: only)
+    to_clone.each do |sub_project|
       sub_project_clone = clone.projects.create(sub_project.dup.attributes)
       sub_project.clone_stories_into(sub_project_clone)
     end
@@ -78,5 +80,13 @@ class Project < ApplicationRecord
 
     last_position = parent.projects.where.not(position: nil).order(position: :asc).last&.position || 0
     self.position = last_position + 1
+  end
+
+  def archive
+    Project.where(id: id).or(Project.where(parent_id: id)).update_all(status: "archived")
+  end
+
+  def unarchive
+    Project.where(id: id).or(Project.where(parent_id: id)).update_all(status: nil)
   end
 end
