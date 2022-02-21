@@ -80,7 +80,9 @@ class ProjectsController < ApplicationController
           flash[:success] = "Project updated!"
           redirect_to project_path(@project.id)
         end
-        format.js
+        format.js do
+          @sidebar_projects = @project.parent ? @project.parent.projects : @project.projects
+        end
       end
     else
       flash[:error] = @project.errors.full_messages
