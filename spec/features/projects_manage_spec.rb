@@ -21,29 +21,42 @@ RSpec.describe "managing projects", js: true do
     expect(Project.count).to eq 1
   end
 
-  it "allows me to edit a project" do
-    visit project_path(id: project.id)
-    click_link "Edit or Delete Project"
-    fill_in "project[title]", with: "New Project"
-    click_button "Save Changes"
-    expect(page).to have_content "Project updated!"
-  end
-
   it "allows me to delete a project", js: false do
     visit project_path(id: project.id)
-    click_link "Edit or Delete Project"
-    click_link "Delete Project"
+    click_button "Delete Project"
     expect(Project.count).to eq 0
   end
 
   it "allows me to delete a project" do
     visit project_path(id: project.id)
-    click_link "Edit or Delete Project"
     accept_confirm do
-      click_link "Delete Project"
+      click_button "Delete Project"
     end
-    expect(page).not_to have_content 'Edit or Delete Project'
+    expect(page).not_to have_content "Delete Project"
     expect(Project.count).to eq 0
+  end
+
+  it "allowes editing the project's title inline" do
+    visit project_path(id: project.id)
+
+    within ".dashboard-title" do
+      click_button project.title
+      expect(page).to have_selector("form")
+
+      click_button "Cancel"
+      expect(page).to have_selector("form", count: 0)
+
+      click_button project.title
+      expect(page).to have_selector(" form")
+
+      fill_in "project_title", with: "New Title"
+
+      click_button "Save"
+      expect(page).to have_selector("form", count: 0)
+
+      project.reload
+      expect(project.title).to eq "New Title"
+    end
   end
 
   context "Sub-Projects" do

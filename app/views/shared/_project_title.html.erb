@@ -1,5 +1,24 @@
-<% if project.parent %>
-  <%= link_to project.parent.title, project_path(project.parent) %> &raquo;&nbsp;
-<% end %><%= project.title %>
+<% allow_edit ||= false %>
 
-<span class="status-badge <%= project.status %>"><%= project.status %></span>
+<% if project.parent %>
+  <span class="parent-link">
+    <%= link_to project.parent.title, project_path(project.parent) %> &raquo;
+  </span>
+<% end %>
+
+<% if allow_edit %>
+  <div class="project-title">
+    <button><%= project.title %></button>
+    <%= form_for project, remote: true do |f| %>
+      <%= f.text_field :title, required: true %>
+      <%= f.submit "Save", class: "button" %>
+      <%= button_tag "Cancel", class: "button cancel magenta" %>
+    <% end %>
+  </div>
+<% else %>
+  <%= project.title %>
+<% end %>
+
+<% if project.archived? %>
+  <span class="status-badge <%= project.status %>"><%= project.status %></span>
+<% end %>

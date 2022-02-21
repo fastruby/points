@@ -1,6 +1,6 @@
 <div class="container">
   <div class="header">
-    <h1 class="dashboard-title"><%= render "shared/project_title", project: @project %></h1>
+    <h1 class="dashboard-title"><%= render partial: "shared/project_title", locals: {allow_edit: true, project: @project} %></h1>
 
     <div class="search-field">
       <%= label_tag 'title_contains', "Filter by title" %>
@@ -110,7 +110,7 @@
   <%= render partial: "projects/import_export" %>
 
   <div class="btn-group">
-    <%= link_to "Edit or Delete Project", edit_project_path(@project.id), class: "button magenta"  %>
+    <%= button_to 'Delete Project', project_path(@project.id), method: "delete",  data: { confirm: 'Are you sure?' }, class: "button magenta", id: "delete" %>
 
     <% unless @project.parent_id %>
       <%= link_to 'Add Sub-Project', project_new_sub_project_path(@project.id), id:"subproject", class: "button magenta" %>
