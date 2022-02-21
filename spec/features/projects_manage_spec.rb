@@ -36,7 +36,7 @@ RSpec.describe "managing projects", js: true do
     expect(Project.count).to eq 0
   end
 
-  it "allowes editing the project's title inline" do
+  it "allows editing the project's title inline" do
     visit project_path(id: project.id)
 
     within ".dashboard-title" do
