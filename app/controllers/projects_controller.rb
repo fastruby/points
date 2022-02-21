@@ -75,9 +75,11 @@ class ProjectsController < ApplicationController
 
   def update
     if @project.update(projects_params)
-      flash[:success] = "Project updated!"
       respond_to do |format|
-        format.html { redirect_to project_path(@project.id) }
+        format.html do
+          flash[:success] = "Project updated!"
+          redirect_to project_path(@project.id)
+        end
         format.js
       end
     else
