@@ -8,3 +8,25 @@
   margin-top: 20px;
   margin-bottom: 30px;
 }
+
+.project-card.sorting {
+  position: relative;
+  &:after {
+    font-family: "FontAwesome";
+    content: "\f110";
+    display: block;
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    animation: rotate 0.5s linear infinite;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

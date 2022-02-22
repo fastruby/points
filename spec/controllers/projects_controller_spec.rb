@@ -160,6 +160,17 @@ RSpec.describe ProjectsController, type: :controller do
         last_project = other_project.projects.reload.last
         expect(last_project.parent).to eq(other_project)
       end
+
+      it "ignores sub-projects if not cloned as a parent" do
+        other_project = FactoryBot.create(:project)
+
+        expect {
+          post :clone, params: {id: project.id, project: {title: "New title", parent_id: other_project.id}, sub_project_ids: [sub_project.id]}
+        }.to change(Project, :count).by(1)
+
+        last_project = other_project.projects.reload.last
+        expect(last_project.projects).to be_empty
+      end
     end
 
     context "with stories" do
@@ -228,6 +239,19 @@ RSpec.describe ProjectsController, type: :controller do
 
         expect(project.reload.title).to eq "New Project Title"
       end
+    end
+  end
+
+  describe "PATCH sort" do
+    let!(:sub_project1) { FactoryBot.create(:project, parent: project, position: 1) }
+    let!(:sub_project2) { FactoryBot.create(:project, parent: project, position: 2) }
+    let!(:sub_project3) { FactoryBot.create(:project, parent: project, position: 3) }
+
+    it "changes the positions of the sub-projects" do
+      patch :sort, params: {id: project.id, project: [sub_project3.id, sub_project1.id, sub_project2.id]}
+      expect(sub_project3.reload.position).to eq 1
+      expect(sub_project1.reload.position).to eq 2
+      expect(sub_project2.reload.position).to eq 3
     end
   end
 end

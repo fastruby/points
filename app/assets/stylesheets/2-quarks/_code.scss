@@ -1,3 +1,7 @@
-code {
-  white-space: pre;
+pre {
+  code {
+    overflow-x: scroll;
+    white-space: pre;
+    font-family: $font-monospace;
+  }
 }

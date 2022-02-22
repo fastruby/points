@@ -1,4 +1,4 @@
-document.addEventListener("turbolinks:load", function() {
+document.addEventListener("turbolinks:load", function () {
   $("input[name='stories[]']").click(() => {
     const selected = $("input[name='stories[]']:checked");
 
@@ -12,74 +12,111 @@ document.addEventListener("turbolinks:load", function() {
       $("#bulk_delete")
         .text("Bulk Delete")
         .attr("aria-disabled", "true")
-        .prop("disabled", true)
+        .prop("disabled", true);
     }
-  })
+  });
 
   $(".import-export-header").click(function () {
     $(this).children(".rotate").toggleClass("left");
-  })
+  });
 
   $("#bulk_delete").click((event) => {
-    let stories_ids = []
+    let stories_ids = [];
     $("input[name='stories[]']:checked").each((_, checkbox) => {
-      stories_ids.push($(checkbox).val())
-    })
+      stories_ids.push($(checkbox).val());
+    });
 
     $(event.target)
       .text("Bulk Delete")
       .attr("aria-disabled", "true")
-      .prop("disabled", true)
+      .prop("disabled", true);
 
-    let token = $("meta[name='csrf-token']").attr("content")
+    let token = $("meta[name='csrf-token']").attr("content");
     $.ajaxSetup({
       beforeSend: function (xhr) {
         xhr.setRequestHeader("X-CSRF-Token", token);
-      }
+      },
     });
 
     $.ajax({
       url: "/stories/bulk_destroy",
-      data: {ids: stories_ids},
+      data: { ids: stories_ids },
       type: "POST",
       success: () => {
         $(stories_ids).each((_, id) => {
-          console.log(id)
+          console.log(id);
           $("#story_" + id).remove();
-        })
+        });
       },
       error: (result) => {
-        console.log("There was an error destroying the stories")
+        console.log("There was an error destroying the stories");
+      },
+    });
+  });
+
+  // bind select/unselect all when cloning projects
+  document.querySelectorAll("#select-all, #unselect-all").forEach((button) => {
+    const setCheck = button.id === "select-all" ? true : false;
+
+    button.addEventListener("click", (e) => {
+      e.preventDefault();
+      toggleCloneSubProjects(setCheck);
+    });
+  });
+
+  // unselect all if clone is not a parent
+  const projectCloneParent = document.getElementById("project_parent_id");
+  const subProjects = document.getElementById("sub-projects-to-clone");
+
+  if (projectCloneParent && subProjects) {
+    projectCloneParent.addEventListener("change", (e) => {
+      if (projectCloneParent.value !== "") {
+        subProjects.classList.add("is-not-parent");
+      } else {
+        subProjects.classList.remove("is-not-parent");
       }
-    })
-  })
-})
+    });
+  }
+});
 
 window.addEventListener("load", () => {
-  const links = document.querySelectorAll(".project-table__row--story a.delete");
+  const links = document.querySelectorAll(
+    ".project-table__row--story a.delete"
+  );
   links.forEach((element) => {
     element.addEventListener("ajax:success", () => {
-      document.getElementById(`story_${element.dataset.storyId}`).remove()
+      document.getElementById(`story_${element.dataset.storyId}`).remove();
       console.log("The story was deleted.");
     });
   });
 });
 
 const filterStories = () => {
-  const searchTerm = document.getElementById("title_contains").value.toLowerCase().trim();
+  const searchTerm = document
+    .getElementById("title_contains")
+    .value.toLowerCase()
+    .trim();
   if (searchTerm.length == 0) {
     $("#stories").sortable("enable");
   } else {
     $("#stories").sortable("disable");
   }
 
-  document.querySelectorAll("#stories tr").forEach(function(element) {
-    const cl = element.classList
-    const storyTitle = element.querySelector("td:first-child").innerText.toLowerCase()
+  document.querySelectorAll("#stories tr").forEach(function (element) {
+    const cl = element.classList;
+    const storyTitle = element
+      .querySelector("td:first-child")
+      .innerText.toLowerCase();
     if (storyTitle.includes(searchTerm)) {
-      cl.remove("hidden")
+      cl.remove("hidden");
     } else {
-      cl.add("hidden")
+      cl.add("hidden");
     }
-  })
+  });
 };
+
+function toggleCloneSubProjects(value) {
+  document
+    .querySelectorAll("#sub-projects-to-clone input[type='checkbox']")
+    .forEach((el) => (el.checked = value));
+}

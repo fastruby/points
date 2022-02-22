@@ -39,7 +39,7 @@ RSpec.describe "managing stories", js: true do
     expect(page).to have_content "Story updated!"
   end
 
-  it "allows me to delete a story", js: true do
+  it "allows me to delete a story" do
     visit project_path(id: project.id)
 
     expect(page).to have_text story.title
@@ -194,5 +194,26 @@ RSpec.describe "managing stories", js: true do
       expect(find("tr:nth-child(2)")).to have_text story2.title
       expect(find("tr:nth-child(3)")).to have_text story3.title
     end
+  end
+
+  it "allows sorting stories", js: true do
+    FactoryBot.create(:story, project: project)
+    story3 = FactoryBot.create(:story, project: project)
+
+    visit project_path(project)
+
+    first = find(".project-table__cell", text: story.title)
+    last = find(".project-table__cell", text: story3.title)
+
+    # The use expect_any_instance_of is discouraged by the RSpec team, but the drag_to
+    # method is not always consistent on the distance it drags elements and the order
+    # is not always the expected. So I'm using expect_any_instance_of on purpose here.
+    expect_any_instance_of(ProjectsController).to receive(:sort_stories)
+
+    last.drag_to(first, delay: 0, html5: false)
+
+    sleep(1)
+
+    expect(page).not_to have_selector(".project-table.sorting")
   end
 end
