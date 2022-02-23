@@ -42,7 +42,7 @@ RSpec.describe "managing projects", js: true do
     accept_confirm do
       click_link "Delete Project"
     end
-    expect(page).not_to have_content 'Edit or Delete Project'
+    expect(page).not_to have_content "Edit or Delete Project"
     expect(Project.count).to eq 0
   end
 
