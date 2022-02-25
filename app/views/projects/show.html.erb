@@ -65,7 +65,7 @@
                           </div>
                         </div>
                       <% end %>
-                      <%= link_to project_story_path(@project.id, story, format: "json"), method: "delete",  data: { confirm: 'Are you sure?', story_id: story.id }, class: "delete magenta", remote: true, title: "Delete" do %>
+                      <%= link_to project_story_path(@project.id, story), method: "delete",  data: { confirm: 'Are you sure?', story_id: story.id }, class: "delete magenta", remote: true, title: "Delete" do %>
                         <i class="fa fa-trash-o"></i>
                         <span>Delete</span>
                       <% end %>
