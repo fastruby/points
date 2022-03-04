@@ -21,6 +21,19 @@ RSpec.describe Project, type: :model do
     expect(sub_project2.position).to eq 2
   end
 
+  describe ".with_ordered_stories" do
+    it "orders sub projects properly" do
+      parent = FactoryBot.create(:project)
+      sub_project1 = FactoryBot.create(:project, parent: parent)
+      FactoryBot.create(:story, project: sub_project1, position: 2)
+      sub_project2 = FactoryBot.create(:project, parent: parent)
+      FactoryBot.create(:story, project: sub_project2, position: 1)
+
+      results = Project.with_ordered_stories(parent.id)
+      expect(results[0].id).to eq sub_project1.id
+    end
+  end
+
   describe "#toggle_archived!" do
     context "when unarchived" do
       before(:each) do
