@@ -7,4 +7,4 @@ If changes to the UI are made, please include screenshots of the before and afte
 
 ___
 
-I will abide by the [code of conduct](https://github.com/fastruby/points/blob/main/pull_request_template.md).
+I will abide by the [code of conduct](https://github.com/fastruby/points/blob/main/CODE_OF_CONDUCT.md).
