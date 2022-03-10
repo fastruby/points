@@ -29,7 +29,6 @@
                 <td class="project-table__cell">
                   <input type="checkbox" name="stories[]" value=<%= story.id %>>
                   <%= link_to story.title, [story.project, story] %>
-                  <button class="copy-link btn-clipboard" data-clipboard-text="<%= project_story_url(@project, story) %>" title='Copy story'><i class="fa fa-link"></i><span class= "popup">Copied to clipboard</span></button>
                 </td>
                 <td class="project-table__cell"><%= story.estimate_for(current_user)&.best_case_points %></td>
                 <td class="project-table__cell"><%= story.estimate_for(current_user)&.worst_case_points %></td>
@@ -48,6 +47,8 @@
                         <i class="fa fa-pencil-square-o"></i>
                         <span>Edit</span>
                       <% end %>
+                      <button class="copy-link btn-clipboard" data-clipboard-text="<%= project_story_url(@project, story) %>" title='Copy story'>
+                        <i class="fa fa-link"></i>Copy Link  <span class= "popup">Copied to clipboard</span></button>
                       <%= link_to new_project_story_path(@project.id, story_id: story.id), class: "clone", title: "Clone" do %>
                         <i class="fa fa-files-o"></i>
                         <span>Clone</span>

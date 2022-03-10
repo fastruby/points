@@ -263,24 +263,7 @@
   i {
     position: relative;
     border-radius: 50%;
-    padding: 5px;
-    opacity: 0;
-    transition: transform 0.5s, opacity 0.5s;
-    transform: translateX(-100%);
-  }
-
-  &:hover {
-    i {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  &:active {
-    i {
-      background: #f70a7c;
-      color: white;
-    }
+    padding-right: 5px;
   }
 }
 
