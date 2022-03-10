@@ -122,7 +122,7 @@ class StoriesController < ApplicationController
   end
 
   def validate_url_product_id
-    raise ActionController::RoutingError.new('This story was not found for this project') unless params[:project_id] == @project.id.to_s
+    raise ActionController::RoutingError.new("This story was not found for this project") unless params[:project_id] == @project.id.to_s
   end
 
   def stories_params
