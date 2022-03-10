@@ -40,6 +40,26 @@
   overflow: auto;
 }
 
+.story-description em {
+  font-style: italic;
+}
+
+.story-description strong {
+  font-weight: bold;
+}
+
+.story-description ul {
+  padding-top: 1em;
+  padding-bottom: 1em;
+  list-style-position: inside;
+  list-style-type: circle;
+}
+
+.modal .story-description p {
+  overflow: auto;
+  margin-bottom: 1.5em;
+}
+
 .modal p {
   padding-bottom: 1.3em;
 }
@@ -90,6 +110,25 @@
     // prevent long links from overflowing
     a {
       word-break: break-all;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    strong {
+      font-weight: bold;
+    }
+
+    ul {
+      padding-top: 1em;
+      padding-bottom: 1em;
+      list-style-position: inside;
+      list-style-type: circle;
+    }
+
+    p {
+      margin-bottom: 1em;
     }
   }
 

@@ -1,6 +1,6 @@
 module ApplicationHelper
   OPTIONS = {
-    filter_html: true,
+    hard_wrap: true,
     link_attributes: {rel: "nofollow", target: "_blank"},
     no_intra_emphasis: true
   }.freeze
