@@ -6,7 +6,7 @@
   display: block;
   margin: 1rem 0;
   &:hover {
-    border: 4px solid $orange;
+    box-shadow: 0px 0px 6px $orange;
   }
   &.sub:hover {
     background-color: $orange;
