@@ -26,7 +26,7 @@
           <% if @stories.present? %>
             <% @stories.each do | story | %>
               <tr class="project-table__row project-table__row--story" id="<%= dom_id(story)%>" >
-                <td class="project-table__cell">
+                <td class="project-table__cell"><span class="popup">Copied to clipboard</span>
                   <input type="checkbox" name="stories[]" value=<%= story.id %>>
                   <%= link_to story.title, [story.project, story] %>
                 </td>
@@ -47,8 +47,15 @@
                         <i class="fa fa-pencil-square-o"></i>
                         <span>Edit</span>
                       <% end %>
+
+
+
                       <button class="copy-link btn-clipboard" data-clipboard-text="<%= project_story_url(@project, story) %>" title='Copy story'>
-                        <i class="fa fa-link"></i>Copy Link  <span class= "popup">Copied to clipboard</span></button>
+                        <i class="fa fa-link"></i>Copy Link</button>
+
+
+
+
                       <%= link_to new_project_story_path(@project.id, story_id: story.id), class: "clone", title: "Clone" do %>
                         <i class="fa fa-files-o"></i>
                         <span>Clone</span>
