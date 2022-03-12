@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   root to: "home#index"
   get "home/index"
   get "reports/index"
+  get :search, to: "search#index"
 
   resource :stories do
     post :bulk_destroy, to: "stories#bulk_destroy"

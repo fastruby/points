@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="header">
+    <h1 class="dashboard-title">Search</h1>
+    <div class="search-field">
+      <%= form_with url: "/search", method: :get, remote: true  do |form| %>
+        <%= form.label :query, "Search by title or description" %>
+        <%= form.text_field :query %>
+      <% end %>
+    </div>
+  </div>
+  <div class="row project-details">
+      <table class="search-table">
+        <thead class="table-header fixed-header">
+          <tr class="search-table__row search-table__row--header">
+            <th scope="col" class="search-table__cell">Project</th>
+            <th scope="col" class="search-table__cell">Sub-Project</th>
+            <th scope="col" class="search-table__cell">Story</th>
+            <th scope="col" class="search-table__cell-right">Date</th>
+            <th scope="col" class="search-table__cell-right">Best</th>
+            <th scope="col" class="search-table__cell-right">Worst</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @results.each do |story| %>
+            <tr class="search-table__row search-table__row--story">
+              <td class="search-table__cell"><%= story.project.parent.nil? ? link_to(story.project.title, story.project) : link_to(story.project.parent.title, story.project.parent) %></td>
+              <td class="search-table__cell"><%= story.project.parent.nil? ? "" : link_to(story.project.title, story.project) %></td>
+              <td class="search-table__cell"><%= link_to(story.title, [story.project, story]) %></td>
+              <td class="search-table__cell-right"><%= story.created_at.strftime("%F") %></td>
+              <td class="search-table__cell-right"><%= story.best_estimate_average %></td>
+              <td class="search-table__cell-right"><%= story.worst_estimate_average %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+  </div>
+</div>

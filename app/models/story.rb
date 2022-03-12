@@ -1,4 +1,17 @@
 class Story < ApplicationRecord
+  include PgSearch::Model
+
+  # Using this scope we can pass a list of words and postgres will find any
+  #   stories with a title or description that contain any of those words or
+  #   english variations of those words. Search hits in the title will be given
+  #   sort preference over hits in the description (we can add up to four
+  #   columns to `against` with values A-D).
+  pg_search_scope :search_any_word,
+                  against: { title: 'A', description: 'B' },
+                  using: {
+                    tsearch: {dictionary: 'english', any_word: true, tsvector_column: 'searchable'}
+                  }
+
   validates :title, presence: true
 
   belongs_to :project

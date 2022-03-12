@@ -53,3 +53,32 @@
     }
   }
 }
+
+.search-table {
+  display: grid;
+  padding: 0 0 50px;
+  &__header {
+    position: sticky;
+    background: #ffffff;
+    z-index: 1;
+    top: 54px;
+    margin-left: -20px;
+    padding-left: 20px;
+  }
+  &__row {
+    display: grid;
+    grid-template-columns: 200px 200px 1fr 100px 70px 70px;
+    align-items: center;
+    padding: 10px 0;
+
+    &.search-table__row--header {
+      font-weight: bold;
+    }
+    &.search-table__row--story {
+      border-bottom: 1px solid $medium_grey;
+    }
+  }
+  &__cell-right {
+    text-align: right;
+  }
+}

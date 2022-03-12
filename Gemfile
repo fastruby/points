@@ -50,6 +50,7 @@ gem "jbuilder", "~> 2.5"
 gem "jquery-rails"
 
 gem "pg", "~> 1.1"
+gem 'pg_search'
 
 gem "jquery-ui-rails", "~> 5.0", ">= 5.0.5"
 gem "acts_as_list"
