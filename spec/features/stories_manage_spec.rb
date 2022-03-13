@@ -14,6 +14,7 @@ RSpec.describe "managing stories", js: true do
     click_link "Add a Story"
     fill_in "story[title]", with: "As a user, I want to add stories"
     fill_in "story[description]", with: "This story allows users to add stories."
+    fill_in "story[extra_info]", with: "This story allows users to add extra details."
     click_button "Create"
     expect(Story.count).to eq 2
   end
@@ -105,6 +106,44 @@ RSpec.describe "managing stories", js: true do
     within(".story_preview .content") do
       expect(page).to have_selector("p", text: "This story allows users to add stories.")
       expect(page).to have_selector("pre", text: "some\ncode")
+    end
+  end
+
+  it "shows a preview of the extra information while typing" do
+    visit project_path(id: project.id)
+    click_link "Add a Story"
+    fill_in "story[title]", with: "As a user, I want to add stories"
+
+    desc = <<~DESC
+      This story allows users to add extra information.
+
+          some
+          codes
+
+    DESC
+
+    fill_in "story[extra_info]", with: desc
+
+    within(".extra_info_preview .content") do
+      expect(page).to have_selector("p", text: "This story allows users to add extra information.")
+      expect(page).to have_selector("pre", text: "some\ncodes")
+    end
+
+    click_button "Create"
+
+    expect(page).to have_text(project.title)
+
+    story = Story.last
+    within_story_row(story) do
+      click_button "More actions"
+      click_link "Edit"
+    end
+
+    expect(page).to have_text("Edit Story")
+
+    within(".extra_info_preview .content") do
+      expect(page).to have_selector("p", text: "This story allows users to add extra information.")
+      expect(page).to have_selector("pre", text: "some\ncodes")
     end
   end
 

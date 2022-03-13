@@ -11,6 +11,8 @@
     </div>
   <% end %>
 
+  <%= f.hidden_field :project_id, value: params[:project_id] %>
+
   <div class="field story_title">
     <%= f.label :title %>
     <%= f.text_field :title, placeholder: "Story Title", class: "project-story-title" %>
@@ -21,12 +23,21 @@
     <%= f.text_area :description, placeholder: "Description", class: "story-description", rows: 20 %>
   </div>
 
-  <%= f.hidden_field :project_id, value: params[:project_id] %>
-
   <div class="story_preview">
     <label>Description Preview</label>
     <div class="content"><%= markdown(@story.description) %></div>
   </div>
+
+  <div class="field story_extra_info">
+    <%= f.label :extra_info, "Extra Info (Markdown - for context only, not added to action plan)" %>
+    <%= f.text_area :extra_info, placeholder: "Extra Indo", class: "story-extra-info", rows: 20 %>
+  </div>
+
+  <div class="extra_info_preview">
+    <label>Extra Info Preview</label>
+    <div class="content"><%= markdown(@story.extra_info) %></div>
+  </div>
+
 
   <div class="btn-group">
     <%= f.submit yield(:button_text), class: "button", id: "edit" %>
