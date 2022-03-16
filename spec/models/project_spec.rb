@@ -47,26 +47,26 @@ RSpec.describe Project, type: :model do
   end
 
   describe "#archived?" do
-    it "returns true if archived" do
-      expect(Project.new(status: "archived").archived?).to eql(true)
+    it "returns true if status is archived" do
+      expect(Project.new(status: "archived")).to be_archived
     end
 
     it "returns false if status is not `archived`" do
-      expect(Project.new(status: nil).archived?).to eql(false)
+      expect(Project.new(status: nil)).not_to be_archived
     end
 
     it "returns true if the parent is archived" do
       parent = FactoryBot.create(:project, status: "archived")
       sub_project1 = FactoryBot.create(:project, parent: parent)
 
-      expect(sub_project1.archived?).to eql(true)
+      expect(sub_project1).to be_archived
     end
 
     it "returns false if the parent is not archived" do
       parent = FactoryBot.create(:project)
       sub_project1 = FactoryBot.create(:project, parent: parent)
 
-      expect(sub_project1.archived?).to eql(false)
+      expect(sub_project1).not_to be_archived
     end    
   end
 
@@ -120,13 +120,15 @@ RSpec.describe Project, type: :model do
       sub_project1 = FactoryBot.create(:project, parent: parent)
       sub_project2 = FactoryBot.create(:project, parent: parent, status: "archived")
 
+      expect(sub_project1).to_not be_archived
       expect(sub_project1.toggle_archived!).to eql(nil)
       sub_project1.reload
-      expect(sub_project1.status).to eql(nil)
+      expect(sub_project1).to_not be_archived
 
+      expect(sub_project2).to_not be_archived
       expect(sub_project2.toggle_archived!).to eql(nil)
       sub_project2.reload
-      expect(sub_project2.status).to eql("archived")
+      expect(sub_project2).to_not be_archived
     end
   end
 
