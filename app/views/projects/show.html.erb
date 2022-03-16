@@ -26,7 +26,8 @@
           <% if @stories.present? %>
             <% @stories.each do | story | %>
               <tr class="project-table__row project-table__row--story" id="<%= dom_id(story)%>" >
-                <td class="project-table__cell"><span class="popup">Copied to clipboard</span>
+                <td class="project-table__cell">
+                  <span class="popup">Copied to clipboard</span>
                   <input type="checkbox" name="stories[]" value=<%= story.id %>>
                   <%= link_to story.title, [story.project, story] %>
                 </td>
