@@ -12,7 +12,7 @@ class Project < ApplicationRecord
 
   scope :active, -> { where.not(status: "archived").or(where(status: nil)) }
   scope :parents, -> { where(parent: nil) }
-  scope :with_ordered_stories, ->(project_id) {
+  scope :sub_projects_with_ordered_stories, ->(project_id) {
     where(parent_id: project_id)
       .includes(:stories).references(:stories)
       .order("projects.position ASC, stories.position ASC NULLS FIRST")

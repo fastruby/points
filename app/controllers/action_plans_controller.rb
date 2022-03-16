@@ -4,6 +4,6 @@ class ActionPlansController < ApplicationController
   def show
     @project = Project.find(params[:project_id])
     @project_stories = @project.stories.by_position
-    @children = Project.with_ordered_stories(@project.id)
+    @children = Project.sub_projects_with_ordered_stories(@project.id)
   end
 end
