@@ -20,7 +20,7 @@
 
   <div class="field story_description">
     <%= f.label :description, "Description (Markdown)" %>
-    <%= f.text_area :description, placeholder: "Description", class: "story-description", rows: 20 %>
+    <%= f.text_area :description, placeholder: "Description", class: "story-description", rows: 20, 'data-has-preview': true, 'data-preview-target': 'story_preview' %>
   </div>
 
   <div class="story_preview">
@@ -30,7 +30,7 @@
 
   <div class="field story_extra_info">
     <%= f.label :extra_info, "Extra Info (Markdown - for context only, not added to action plan)" %>
-    <%= f.text_area :extra_info, placeholder: "Extra Indo", class: "story-extra-info", rows: 20 %>
+    <%= f.text_area :extra_info, placeholder: "Extra Indo", class: "story-extra-info", rows: 20, 'data-has-preview': true, 'data-preview-target': 'extra_info_preview' %>
   </div>
 
   <div class="extra_info_preview">
