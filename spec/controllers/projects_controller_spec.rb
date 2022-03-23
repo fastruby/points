@@ -148,14 +148,12 @@ RSpec.describe ProjectsController, type: :controller do
     context "should set the status of the project to" do
       it "archived when it is unarchived" do
         put :toggle_archive, params: {id: project.id}, xhr: true
-        project.reload
-        expect(assigns[:project].status).to eq(project.status)
+        expect(assigns[:project]).to be_archived
       end
 
       it "nil when it is archived" do
         put :toggle_archive, params: {id: archived_project.id}, xhr: true
-        archived_project.reload
-        expect(assigns[:project].status).to eq(archived_project.status)
+        expect(assigns[:project]).not_to be_archived
       end
     end
   end
