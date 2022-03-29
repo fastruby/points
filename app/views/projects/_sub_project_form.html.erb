@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :title %>
-    <%= f.text_field :title, placeholder: "Subproject Title", class: "project-story-title" %>
+    <%= f.text_field :title, placeholder: "Subproject Title", class: "project-story-title", autofocus: true %>
     <%= f.hidden_field :parent_id, value: parent.id %>
   </div><div class="btn-group">
     <%= f.submit yield(:button_text), class: "button", id: "edit" %>
