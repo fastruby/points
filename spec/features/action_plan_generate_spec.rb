@@ -8,7 +8,7 @@ RSpec.describe "generating an action plan", js: true do
 
   let!(:project) do
     FactoryBot.create(:project, parent: parent).tap do |project|
-      FactoryBot.create(:story, title: "Second Story", description: "Second", position: 2, project: project)
+      FactoryBot.create(:story, title: "Second Story", description: "Second", position: 2, project: project, extra_info: "Extra Information")
       FactoryBot.create(:story, title: "First Story", description: "First", position: 1, project: project)
     end
   end
@@ -32,6 +32,7 @@ RSpec.describe "generating an action plan", js: true do
     expect(page).to have_selector("input[name='action-plan-prefix']")
     expect(page).to have_selector("h3.action-plan_heading > span", visible: false)
     expect(page.all("#action-plan h3").map(&:text)).to eq(["First Story", "Second Story"])
+    # This assertion alsp ensure the extra_info key we populated doesn't appear
     expect(page.all("#action-plan p").map(&:text)).to eq(["First", "Second"])
 
     # Set prefix
