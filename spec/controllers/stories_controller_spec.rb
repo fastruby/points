@@ -85,6 +85,14 @@ RSpec.describe StoriesController, type: :controller do
     end
   end
 
+  describe "#show failure" do
+    it "Throws 404 if the project_id doesn't match the story's project" do
+      expect {
+        get :show, params: {id: story.id, project_id: project.id + 1}
+      }.to raise_error(ActionController::RoutingError)
+    end
+  end
+
   describe "#update" do
     it "updates the story" do
       put :update, params: {id: story.id,
