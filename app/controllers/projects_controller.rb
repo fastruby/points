@@ -31,7 +31,6 @@ class ProjectsController < ApplicationController
   def toggle_archive
     @project = Project.find(params[:id])
     @project.toggle_archived!
-    @project.reload
   end
 
   def new_clone

@@ -84,9 +84,11 @@ class Project < ApplicationRecord
 
   def archive
     Project.where(id: id).or(Project.where(parent_id: id)).update_all(status: "archived")
+    self.status = "archived"
   end
 
   def unarchive
     Project.where(id: id).or(Project.where(parent_id: id)).update_all(status: nil)
+    self.status = nil
   end
 end
