@@ -26,6 +26,8 @@ document.addEventListener("turbolinks:load", function () {
       stories_ids.push($(checkbox).val());
     });
 
+    const ending = stories_ids.length == 1 ? "y" : "ies";
+
     $(event.target)
       .text("Bulk Delete")
       .attr("aria-disabled", "true")
