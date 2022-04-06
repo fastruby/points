@@ -67,7 +67,9 @@ RSpec.describe "managing stories", js: true do
     expect(page).to have_no_selector("#bulk_delete[aria-disabled='true']")
     expect(page).to have_no_selector("#bulk_delete[disabled]")
     expect(page).to have_button("Bulk Delete (1 Story)")
-    click_button("Bulk Delete (1 Story)")
+    page.accept_alert do
+      click_button("Bulk Delete (1 Story)")
+    end
     expect(Story.count).to eq 0
   end
 
