@@ -54,6 +54,19 @@ RSpec.describe "managing stories", js: true do
     expect(Story.count).to eq 0
   end
 
+  it "allows me to delete a story from show page" do
+    visit project_story_path(project, story)
+
+    expect(page).to have_text story.title
+
+    accept_confirm do
+      click_link "Delete"
+    end
+
+    expect(page).not_to have_text story.title
+    expect(Story.count).to eq 0
+  end
+
   it "does not allow me to bulk delete stories when there are none selected" do
     visit project_path(id: project.id)
     expect(page).to have_selector("#bulk_delete[aria-disabled='true']")
