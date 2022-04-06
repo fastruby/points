@@ -71,7 +71,7 @@ RSpec.describe "managing stories", js: true do
     expect(Story.count).to eq 0
   end
 
-  it "shows a preview of the description while typing" do
+  it "shows a preview of the description while typing", js: true do
     visit project_path(id: project.id)
     click_link "Add a Story"
     fill_in "story[title]", with: "As a user, I want to add stories"
