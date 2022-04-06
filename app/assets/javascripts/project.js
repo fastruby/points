@@ -28,7 +28,7 @@ document.addEventListener("turbolinks:load", function () {
 
     const ending = stories_ids.length == 1 ? "y" : "ies";
     let user_confirmation = confirm(
-      `Are you sure you want to bulk delete ${stories_ids.length} stor${ending}?`
+      `Are you sure you want to delete ${stories_ids.length} stor${ending}?`
     );
     if (!user_confirmation) return;
 
