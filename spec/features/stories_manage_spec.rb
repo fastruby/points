@@ -98,6 +98,7 @@ RSpec.describe "managing stories", js: true do
     DESC
 
     fill_in "story[description]", with: desc
+    expect(page).to have_css ".story_preview .content"
 
     within(".story_preview .content") do
       expect(page).to have_selector("p", text: "This story allows users to add stories.")
