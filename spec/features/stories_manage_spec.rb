@@ -80,10 +80,26 @@ RSpec.describe "managing stories", js: true do
     expect(page).to have_no_selector("#bulk_delete[aria-disabled='true']")
     expect(page).to have_no_selector("#bulk_delete[disabled]")
     expect(page).to have_button("Bulk Delete (1 Story)")
-    click_button("Bulk Delete (1 Story)")
+    page.accept_confirm "Are you sure you want to delete 1 story?" do
+      click_button("Bulk Delete (1 Story)")
+    end
+    sleep(1)
     expect(Story.count).to eq 0
   end
 
+  it "does not bulk delete stories when confirmation is dismissed" do
+    visit project_path(id: project.id)
+
+    within_story_row(story) { check(option: story.id.to_s) }
+    expect(page).to have_no_selector("#bulk_delete[aria-disabled='true']")
+    expect(page).to have_no_selector("#bulk_delete[disabled]")
+    expect(page).to have_button("Bulk Delete (1 Story)")
+    page.dismiss_confirm "Are you sure you want to delete 1 story?" do
+      click_button("Bulk Delete (1 Story)")
+    end
+    expect(Story.count).to eq 1
+  end
+  
   it "shows a preview of the description while typing", js: true do
     visit project_path(id: project.id)
     click_link "Add a Story"
