@@ -54,6 +54,19 @@ RSpec.describe "managing stories", js: true do
     expect(Story.count).to eq 0
   end
 
+  it "allows me to delete a story from show page" do
+    visit project_story_path(project, story)
+
+    expect(page).to have_text story.title
+
+    accept_confirm do
+      click_link "Delete"
+    end
+
+    expect(page).not_to have_text story.title
+    expect(Story.count).to eq 0
+  end
+
   it "does not allow me to bulk delete stories when there are none selected" do
     visit project_path(id: project.id)
     expect(page).to have_selector("#bulk_delete[aria-disabled='true']")
@@ -87,7 +100,7 @@ RSpec.describe "managing stories", js: true do
     fill_in "story[description]", with: desc
 
     within(".story_preview .content") do
-      expect(page).to have_selector("p", text: "This story allows users to add stories.")
+      expect(page).to have_text("This story allows users to add stories.")
       expect(page).to have_selector("pre", text: "some\ncode")
     end
 
@@ -104,7 +117,7 @@ RSpec.describe "managing stories", js: true do
     expect(page).to have_text("Edit Story")
 
     within(".story_preview .content") do
-      expect(page).to have_selector("p", text: "This story allows users to add stories.")
+      expect(page).to have_text("This story allows users to add stories.")
       expect(page).to have_selector("pre", text: "some\ncode")
     end
   end
@@ -237,7 +250,7 @@ RSpec.describe "managing stories", js: true do
 
   it "allows sorting stories", js: true do
     FactoryBot.create(:story, project: project)
-    story3 = FactoryBot.create(:story, project: project)
+    story3 = FactoryBot.create(:story, project: project, title: "Last story")
 
     visit project_path(project)
 
