@@ -10,11 +10,25 @@
   word-break: break-all;
 }
 
-.story-description, .extra-info {
+.story-description, .extra-info, .story_preview {
   margin-bottom: 25px;
   font-size: 15px;
   p{
     margin-top: 1em;
+  }
+  em {
+    font-style: italic;
+  }
+
+  strong {
+    font-weight: bold;
+  }
+
+  ul {
+    padding-top: 1em;
+    padding-bottom: 1em;
+    list-style-position: inside;
+    list-style-type: circle;
   }
 }
 
@@ -38,7 +52,9 @@
 
 .modal .story-description p {
   overflow: auto;
+  margin-bottom: 1.5em;
 }
+
 
 .modal p {
   padding-bottom: 1.3em;
