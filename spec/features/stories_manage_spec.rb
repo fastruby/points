@@ -113,6 +113,7 @@ RSpec.describe "managing stories", js: true do
 
     DESC
 
+    sleep(1)
     fill_in "story[description]", with: desc
 
     within(".story_preview .content") do
@@ -151,6 +152,7 @@ RSpec.describe "managing stories", js: true do
 
     DESC
 
+    sleep(1)
     fill_in "story[extra_info]", with: desc
 
     within(".extra_info_preview .content") do
