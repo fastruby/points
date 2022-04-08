@@ -70,6 +70,7 @@ RSpec.describe "managing stories", js: true do
     page.accept_confirm "Are you sure you want to delete 1 story?" do
       click_button("Bulk Delete (1 Story)")
     end
+    sleep(1)
     expect(Story.count).to eq 0
   end
 
