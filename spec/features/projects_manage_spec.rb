@@ -152,6 +152,7 @@ RSpec.describe "managing projects", js: true do
       visit project_path(id: project.id)
       click_link "Archive Project"
       expect(page).to have_content "Unarchive Project"
+      expect(page).to have_content "archived"
       expect(project.reload).to be_archived
     end
 
@@ -160,6 +161,16 @@ RSpec.describe "managing projects", js: true do
       visit project_path(id: project.id)
       click_link "Archive Project"
       expect(sub_project.reload).to be_archived
+    end
+  end
+
+  context "when unarchiving", js: true do
+    it "allows me to unarchive a project" do
+      project.toggle_archived!
+      visit project_path(id: project.id)
+      click_link "Unarchive Project"
+      expect(page).to have_content "Archive Project"
+      expect(project.reload).not_to be_archived
     end
   end
 
