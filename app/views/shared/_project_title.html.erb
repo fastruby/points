@@ -19,6 +19,4 @@
   <%= project.title %>
 <% end %>
 
-<% if project.archived? %>
-  <span class="status-badge <%= project.status %>"><%= project.status %></span>
-<% end %>
+<span class="status-badge <%= project.status %> <%= "hide" if project.status == nil %>"><%= project.status %></span>
