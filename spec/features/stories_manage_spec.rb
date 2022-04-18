@@ -100,7 +100,7 @@ RSpec.describe "managing stories", js: true do
     end
     expect(Story.count).to eq 1
   end
-  
+
   it "shows a preview of the description while typing", js: true do
     visit project_path(id: project.id)
     click_link "Add a Story"
@@ -116,6 +116,7 @@ RSpec.describe "managing stories", js: true do
 
     expect(page).to have_text("Description Preview")
     fill_in "story[description]", with: desc
+    expect(find("#story_description").value).to have_text("This story allows users to add stories.\n\n    some\n    code\n\n")
 
     within(".story_preview .content") do
       expect(page).to have_text("This story allows users to add stories.")
