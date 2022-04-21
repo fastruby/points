@@ -83,7 +83,8 @@ RSpec.describe "managing stories", js: true do
     page.accept_confirm "Are you sure you want to delete 1 story?" do
       click_button("Bulk Delete (1 Story)")
     end
-    sleep(1)
+    # Make sure tbody empty
+    expect(find("tbody")).to have_no_css("*")
     expect(Story.count).to eq 0
   end
 
@@ -99,7 +100,7 @@ RSpec.describe "managing stories", js: true do
     end
     expect(Story.count).to eq 1
   end
-  
+
   it "shows a preview of the description while typing", js: true do
     visit project_path(id: project.id)
     click_link "Add a Story"
@@ -113,7 +114,9 @@ RSpec.describe "managing stories", js: true do
 
     DESC
 
+    expect(page).to have_text("Description Preview")
     fill_in "story[description]", with: desc
+    expect(find("#story_description").value).to have_text("This story allows users to add stories.\n\n    some\n    code\n\n")
 
     within(".story_preview .content") do
       expect(page).to have_text("This story allows users to add stories.")
@@ -151,6 +154,7 @@ RSpec.describe "managing stories", js: true do
 
     DESC
 
+    expect(page).to have_text("Extra Info Preview")
     fill_in "story[extra_info]", with: desc
 
     within(".extra_info_preview .content") do
@@ -280,7 +284,10 @@ RSpec.describe "managing stories", js: true do
 
     last.drag_to(first, delay: 0, html5: false)
 
-    sleep(1)
+    within("#stories") do
+      expect(find("tr:nth-child(1)")).to have_text story3.title
+      expect(find("tr:nth-child(2)")).to have_text story.title
+    end
 
     expect(page).not_to have_selector(".project-table.sorting")
   end

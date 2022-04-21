@@ -67,7 +67,7 @@ RSpec.describe Project, type: :model do
       sub_project1 = FactoryBot.create(:project, parent: parent)
 
       expect(sub_project1).not_to be_archived
-    end    
+    end
   end
 
   describe "#toggle_archived!" do

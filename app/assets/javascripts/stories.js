@@ -1,5 +1,5 @@
-document.addEventListener("turbolinks:load", function () {
-  document.addEventListener("input", (e) => {
+document.addEventListener("input", (e) => {
+  const updateMarkdown = () => {
     document.querySelectorAll("[data-has-preview]").forEach((element) => {
       const form = element.closest("form");
       const preview = form.querySelector(
@@ -17,5 +17,9 @@ document.addEventListener("turbolinks:load", function () {
         });
       }
     });
-  });
+  };
+
+  var debounceTimer;
+  window.clearTimeout(debounceTimer);
+  debounceTimer = window.setTimeout(updateMarkdown, 300);
 });
