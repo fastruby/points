@@ -413,7 +413,7 @@ DEPENDENCIES
   puma (~> 4.3)
   pundit (~> 2.2)
   rack-mini-profiler
-  rails (~> 7.0.2.4)
+  rails (~> 7.0.2)
   rails-controller-testing
   recursive-open-struct
   redcarpet (~> 3.5.1)
