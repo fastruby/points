@@ -42,5 +42,7 @@ Rails.application.configure do
   # In Rails 6.1+, Active Record provides a new internal API for connection management.
   # for more details check here
   # https://guides.rubyonrails.org/active_record_multiple_databases.html#migrate-to-the-new-connection-handling
-  config.active_record.legacy_connection_handling = false
+  if Rails::VERSION::MAJOR == 7 && Rails::VERSION::MINOR == 0
+    config.active_record.legacy_connection_handling = false
+  end
 end
