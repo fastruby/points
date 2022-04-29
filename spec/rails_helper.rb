@@ -13,7 +13,7 @@ require "capybara/rspec"
 Capybara.register_driver :headless_firefox do |app|
   browser_options = ::Selenium::WebDriver::Firefox::Options.new
   browser_options.args << "-headless"
-  Capybara::Selenium::Driver.new(app, browser: :firefox, options: browser_options)
+  Capybara::Selenium::Driver.new(app, browser: :firefox, capabilities: browser_options)
 end
 Capybara.javascript_driver = :headless_firefox
 Capybara.server = :puma, {Silent: true}

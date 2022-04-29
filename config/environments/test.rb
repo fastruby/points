@@ -39,4 +39,8 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+  # In Rails 6.1+, Active Record provides a new internal API for connection management.
+  # for more details check here
+  # https://guides.rubyonrails.org/active_record_multiple_databases.html#migrate-to-the-new-connection-handling
+  config.active_record.legacy_connection_handling = false
 end
