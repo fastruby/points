@@ -27,7 +27,7 @@
   <% end %>
 
   <div class="btn-group">
-    <%= link_to "Add a Project", new_project_path, class: "button", id: "create-button" %>
+    <%= link_to "Add a Project", new_project_path, class: "button green", id: "create-button" %>
     <% if params[:archived] == "true" %>
       <%= link_to "Hide Archived Projects", projects_path, class: "button" %>
     <% else %>

@@ -17,7 +17,7 @@
             <th class="project-table__cell">Best<br />Estimate</th>
             <th class="project-table__cell">Worst<br />Estimate</th>
             <th class="project-table__cell story_actions">
-              <%= link_unless_archived(@project, "Add a Story", new_project_story_path(@project), classes: "magenta") if is_unlocked?(@project) %>
+              <%= link_unless_archived(@project, "Add a Story", new_project_story_path(@project), classes: "green") if is_unlocked?(@project) %>
               <button id="bulk_delete" class="button magenta" aria-disabled="true" disabled>Bulk Delete</button>
             </th>
           </tr>
@@ -38,9 +38,14 @@
                   <% if estimated(story) %>
                     <%= link_unless_archived(@project, "Edit Estimate", edit_project_story_estimate_path(@project.id, story, @estimate_id), classes: "edit-estimate", remote: true) %>
                   <% else %>
+<<<<<<< HEAD
                     <%= link_unless_archived(@project, "Add Estimate", new_project_story_estimate_path(@project.id, story), classes: "add-estimate", remote: true) %>
                   <% end %>
 
+=======
+                    <%= link_to "Add Estimate", new_project_story_estimate_path(@project.id, story), class: "button green add-estimate", remote: true %>
+                 <% end %>
+>>>>>>> d6394bf ([DT-262] Fix button colors are not consistent)
                   <div class="dropdown-wrapper more-actions">
                     <button class="button" title="More actions">
                       <i class="fa fa-ellipsis-v"></i>
@@ -102,6 +107,7 @@
 
   <div class="btn-group actions">
 
+<<<<<<< HEAD
     <% if current_user.admin? %>
       <%= button_to is_unlocked?(@project) ? 'Lock Project' : 'Unlock Project', toggle_locked_project_path(@project.id), method: :patch, class: "button magenta ", id: "lock-btn", remote: true %>
     <% end %>
@@ -115,9 +121,30 @@
     <%= link_to 'Clone Project', new_clone_project_path(@project.id), class: "button magenta" %>
     <% unless @project.parent_id %>
       <%= link_to "#{@project.archived? ? 'Unarchive' : 'Archive'} Project", toggle_archive_project_path(@project.id), method: "patch", id: "toggle_archive", class: "button magenta", remote: true %>
+=======
+  <%= render partial: "projects/import_export" %>
+
+  <div class="btn-group">
+    <%= link_to 'Return to Projects Page', projects_path, id:"back", class: "button" %>
+
+    <% unless @project.parent_id %>
+      <%= link_to 'Add Sub-Project', project_new_sub_project_path(@project.id), id:"subproject", class: "button green" %>
+>>>>>>> d6394bf ([DT-262] Fix button colors are not consistent)
     <% end %>
+    <%= link_to 'Clone Project', new_clone_project_path(@project.id), class: "button green" %>
     <%= link_to "Generate Action Plan", project_action_plan_path(@project.id), class: "button" %>
+<<<<<<< HEAD
     <%= link_to "View Report", project_report_path(@project.id), class: "button" if current_user.admin? %>
     <%= link_to 'Return to Projects Page', projects_path, id:"back", class: "button" %>
+=======
+    <% if current_user.admin? %>
+      <%= link_to "View Report", project_report_path(@project.id), class: "button"  %>
+    <% end %>
+
+    <% unless @project.parent_id %>
+      <%= link_to "#{@project.archived? ? 'Unarchive' : 'Archive'} Project", toggle_archive_project_path(@project.id), method: "patch", id: "toggle_archive", class: "button magenta", remote: true %>
+    <% end %>
+    <%= button_to 'Delete Project', project_path(@project.id), method: "delete",  data: { confirm: 'Are you sure?' }, class: "button magenta", id: "delete" %>
+>>>>>>> d6394bf ([DT-262] Fix button colors are not consistent)
   </div>
 </div>
