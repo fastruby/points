@@ -59,6 +59,8 @@ gem "mimemagic", "~> 0.3.8"
 gem "omniauth-github", "~> 2.0.0"
 gem "omniauth-rails_csrf_protection"
 
+gem "rack-mini-profiler"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
