@@ -16,6 +16,11 @@ class CallbacksController < Devise::OmniauthCallbacksController
       flash[:error] = "This application is only available to members of #{organization_name}."
       redirect_to new_user_session_path
     end
+
+
+
+
+    
   end
 
   def developer
