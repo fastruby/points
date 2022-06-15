@@ -4,12 +4,12 @@ module ProjectsHelper
     @estimate_id.present?
   end
 
-  def link_unless_archived(project, text, url, color: nil, method: :get, remote: false, icon: nil, data_attr: nil)
+  def link_unless_archived(project, text, url, classes: nil, method: :get, remote: false, icon: nil, data_attr: nil)
     link_text = text_content(icon, text)
     if project.archived? || project.parent&.archived?
-      button_tag(link_text, disabled: true, class: "button #{color} disabled", aria: {disabled: true})
+      button_tag(link_text, disabled: true, class: "button #{classes} disabled", aria: {disabled: true})
     else
-      link_to(link_text, url, class: "button #{color}", title: text, method: method, remote: remote, data: data_attr)
+      link_to(link_text, url, class: "button #{classes}", title: text, method: method, remote: remote, data: data_attr)
     end
   end
 

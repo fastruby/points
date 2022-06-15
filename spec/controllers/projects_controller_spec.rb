@@ -207,6 +207,7 @@ RSpec.describe ProjectsController, type: :controller do
     it "doesn't allow me to update the project" do
       put :update, params: {id: project.id, project: {title: "New Project Title"}}
       expect(response).to redirect_to project_path(project)
+      expect(project.reload.title).not_to eq "New Project Title"
     end
   end
 

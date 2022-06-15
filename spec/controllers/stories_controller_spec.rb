@@ -135,6 +135,7 @@ RSpec.describe StoriesController, type: :controller do
     it "doesn't allow me to update the story" do
       put :update, params: {id: story.id, project_id: project.id, story: {title: "Changed Title"}}
       expect(response).to redirect_to project_path(project)
+      expect(project.reload.title).not_to eq "Changed Title"
     end
   end
 end
