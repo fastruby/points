@@ -1,6 +1,6 @@
 <div class="container">
   <div class="header">
-    <h1 class="dashboard-title"><%= render "shared/project_title", project: @project %></h1>
+    <h1 class="dashboard-title"><%= render partial: "shared/project_title", locals: {allow_edit: true, project: @project} %></h1>
 
     <div class="search-field">
       <%= label_tag 'title_contains', "Filter by title" %>
@@ -91,16 +91,7 @@
 
     <% if @sidebar_projects.any? %>
       <aside class="col-xs-2 hierarchy">
-        <h4>Hierarchy</h4>
-        <label>Parent:</label>
-        <% top = @project.parent ? @project.parent : @project %>
-        <%= link_to top.title, project_path(top) %>
-        <label>Sub Projects:</label>
-        <ul>
-          <% @sidebar_projects.each do |sub_project| %>
-            <li><%= link_to sub_project.title, project_path(sub_project) %></li>
-          <% end %>
-        </ul>
+        <%= render partial: "hierarchy", locals: {project: @project, sub_projects: @sidebar_projects} %>
       </aside>
     <% end %>
   </div>
@@ -111,7 +102,9 @@
     <%= link_unless_archived(@project, "Edit or Delete Project", edit_project_path(@project), classes: "magenta") %>
     <%= link_unless_archived(@project, "Add Sub-Project", project_new_sub_project_path(@project), classes: "magenta") unless @project.parent_id %>
     <%= link_to 'Clone Project', new_clone_project_path(@project.id), class: "button magenta" %>
-    <%= link_to "#{@project.archived? ? 'Unarchive' : 'Archive'} Project", toggle_archive_project_path(@project.id), method: "patch", id: "toggle_archive", class: "button magenta", remote: true %>
+    <% unless @project.parent_id %>
+      <%= link_to "#{@project.archived? ? 'Unarchive' : 'Archive'} Project", toggle_archive_project_path(@project.id), method: "patch", id: "toggle_archive", class: "button magenta", remote: true %>
+    <% end %>
     <%= link_to "Generate Action Plan", project_action_plan_path(@project.id), class: "button" %>
     <%= link_to "View Report", project_report_path(@project.id), class: "button" if current_user.admin? %>
     <%= link_to 'Return to Projects Page', projects_path, id:"back", class: "button" %>

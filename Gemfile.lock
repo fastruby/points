@@ -181,14 +181,17 @@ GEM
       nokogiri (~> 1)
       rake
     mini_mime (1.1.2)
+    mini_portile2 (2.8.0)
     minitest (5.14.4)
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
+    newrelic_rpm (8.8.0)
     next_rails (1.0.4)
       colorize (>= 0.8.1)
     nio4r (2.5.8)
-    nokogiri (1.12.5)
+    nokogiri (1.13.4)
+      mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     oauth2 (1.4.7)
       faraday (>= 0.8, < 2.0)
@@ -215,10 +218,12 @@ GEM
       ast (~> 2.4.1)
     pg (1.2.3)
     public_suffix (4.0.6)
-    puma (4.3.11)
+    puma (4.3.12)
       nio4r (~> 2.0)
-    racc (1.5.2)
-    rack (2.2.3)
+    racc (1.6.0)
+    rack (2.2.3.1)
+    rack-mini-profiler (3.0.0)
+      rack (>= 1.2.0)
     rack-protection (2.1.0)
       rack
     rack-test (1.1.0)
@@ -390,11 +395,13 @@ DEPENDENCIES
   jquery-ui-rails (~> 5.0, >= 5.0.5)
   listen (~> 3.7)
   mimemagic (~> 0.3.8)
+  newrelic_rpm
   next_rails
   omniauth-github (~> 2.0.0)
   omniauth-rails_csrf_protection
   pg (~> 1.1)
   puma (~> 4.3)
+  rack-mini-profiler
   rails (~> 6.1.4)
   rails-controller-testing
   recursive-open-struct

@@ -75,8 +75,15 @@ class ProjectsController < ApplicationController
 
   def update
     if @project.update(projects_params)
-      flash[:success] = "Project updated!"
-      redirect_to project_path(@project.id)
+      respond_to do |format|
+        format.html do
+          flash[:success] = "Project updated!"
+          redirect_to project_path(@project.id)
+        end
+        format.js do
+          @sidebar_projects = @project.parent ? @project.parent.projects : @project.projects
+        end
+      end
     else
       flash[:error] = @project.errors.full_messages
       render :edit

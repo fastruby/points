@@ -14,6 +14,7 @@ RSpec.describe "managing stories", js: true do
     click_link "Add a Story"
     fill_in "story[title]", with: "As a user, I want to add stories"
     fill_in "story[description]", with: "This story allows users to add stories."
+    fill_in "story[extra_info]", with: "This story allows users to add extra details."
     click_button "Create"
     expect(Story.count).to eq 2
   end
@@ -53,6 +54,19 @@ RSpec.describe "managing stories", js: true do
     expect(Story.count).to eq 0
   end
 
+  it "allows me to delete a story from show page" do
+    visit project_story_path(project, story)
+
+    expect(page).to have_text story.title
+
+    accept_confirm do
+      click_link "Delete"
+    end
+
+    expect(page).not_to have_text story.title
+    expect(Story.count).to eq 0
+  end
+
   it "does not allow me to bulk delete stories when there are none selected" do
     visit project_path(id: project.id)
     expect(page).to have_selector("#bulk_delete[aria-disabled='true']")
@@ -66,11 +80,28 @@ RSpec.describe "managing stories", js: true do
     expect(page).to have_no_selector("#bulk_delete[aria-disabled='true']")
     expect(page).to have_no_selector("#bulk_delete[disabled]")
     expect(page).to have_button("Bulk Delete (1 Story)")
-    click_button("Bulk Delete (1 Story)")
+    page.accept_confirm "Are you sure you want to delete 1 story?" do
+      click_button("Bulk Delete (1 Story)")
+    end
+    # Make sure tbody empty
+    expect(find("tbody")).to have_no_css("*")
     expect(Story.count).to eq 0
   end
 
-  it "shows a preview of the description while typing" do
+  it "does not bulk delete stories when confirmation is dismissed" do
+    visit project_path(id: project.id)
+
+    within_story_row(story) { check(option: story.id.to_s) }
+    expect(page).to have_no_selector("#bulk_delete[aria-disabled='true']")
+    expect(page).to have_no_selector("#bulk_delete[disabled]")
+    expect(page).to have_button("Bulk Delete (1 Story)")
+    page.dismiss_confirm "Are you sure you want to delete 1 story?" do
+      click_button("Bulk Delete (1 Story)")
+    end
+    expect(Story.count).to eq 1
+  end
+
+  it "shows a preview of the description while typing", js: true do
     visit project_path(id: project.id)
     click_link "Add a Story"
     fill_in "story[title]", with: "As a user, I want to add stories"
@@ -83,10 +114,12 @@ RSpec.describe "managing stories", js: true do
 
     DESC
 
+    expect(page).to have_text("Description Preview")
     fill_in "story[description]", with: desc
+    expect(find("#story_description").value).to have_text("This story allows users to add stories.\n\n    some\n    code\n\n")
 
     within(".story_preview .content") do
-      expect(page).to have_selector("p", text: "This story allows users to add stories.")
+      expect(page).to have_text("This story allows users to add stories.")
       expect(page).to have_selector("pre", text: "some\ncode")
     end
 
@@ -103,8 +136,47 @@ RSpec.describe "managing stories", js: true do
     expect(page).to have_text("Edit Story")
 
     within(".story_preview .content") do
-      expect(page).to have_selector("p", text: "This story allows users to add stories.")
+      expect(page).to have_text("This story allows users to add stories.")
       expect(page).to have_selector("pre", text: "some\ncode")
+    end
+  end
+
+  it "shows a preview of the extra information while typing" do
+    visit project_path(id: project.id)
+    click_link "Add a Story"
+    fill_in "story[title]", with: "As a user, I want to add stories"
+
+    desc = <<~DESC
+      This story allows users to add extra information.
+
+          some
+          codes
+
+    DESC
+
+    expect(page).to have_text("Extra Info Preview")
+    fill_in "story[extra_info]", with: desc
+
+    within(".extra_info_preview .content") do
+      expect(page).to have_selector("p", text: "This story allows users to add extra information.")
+      expect(page).to have_selector("pre", text: "some\ncodes")
+    end
+
+    click_button "Create"
+
+    expect(page).to have_text(project.title)
+
+    story = Story.last
+    within_story_row(story) do
+      click_button "More actions"
+      click_link "Edit"
+    end
+
+    expect(page).to have_text("Edit Story")
+
+    within(".extra_info_preview .content") do
+      expect(page).to have_selector("p", text: "This story allows users to add extra information.")
+      expect(page).to have_selector("pre", text: "some\ncodes")
     end
   end
 
@@ -198,7 +270,7 @@ RSpec.describe "managing stories", js: true do
 
   it "allows sorting stories", js: true do
     FactoryBot.create(:story, project: project)
-    story3 = FactoryBot.create(:story, project: project)
+    story3 = FactoryBot.create(:story, project: project, title: "Last story")
 
     visit project_path(project)
 
@@ -212,7 +284,10 @@ RSpec.describe "managing stories", js: true do
 
     last.drag_to(first, delay: 0, html5: false)
 
-    sleep(1)
+    within("#stories") do
+      expect(find("tr:nth-child(1)")).to have_text story3.title
+      expect(find("tr:nth-child(2)")).to have_text story.title
+    end
 
     expect(page).not_to have_selector(".project-table.sorting")
   end

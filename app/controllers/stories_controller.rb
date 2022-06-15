@@ -1,8 +1,9 @@
 require "csv"
 class StoriesController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_project, except: [:bulk_destroy, :render_markdown]
+  before_action :find_project, except: [:bulk_destroy, :render_markdown, :edit, :update, :destroy, :show, :move]
   before_action :find_story, only: [:edit, :update, :destroy, :show, :move]
+  before_action :validate_url_product_id, only: [:edit, :update, :destroy, :show, :move]
   before_action :ensure_unarchived!, except: [:show, :bulk_destroy, :render_markdown, :move]
 
   include ApplicationHelper
@@ -119,10 +120,15 @@ class StoriesController < ApplicationController
 
   def find_story
     @story = Story.find(params[:id] || params[:story_id])
+    @project = @story.project
+  end
+
+  def validate_url_product_id
+    raise ActionController::RoutingError.new("This story was not found for this project") unless params[:project_id] == @project.id.to_s
   end
 
   def stories_params
-    params.require(:story).permit(:title, :description, :project_id)
+    params.require(:story).permit(:title, :description, :extra_info, :project_id)
   end
 
   def expected_csv_headers?(file)

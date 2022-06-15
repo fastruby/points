@@ -12,6 +12,11 @@ class Project < ApplicationRecord
 
   scope :active, -> { where.not(status: "archived").or(where(status: nil)) }
   scope :parents, -> { where(parent: nil) }
+  scope :sub_projects_with_ordered_stories, ->(project_id) {
+    where(parent_id: project_id)
+      .includes(:stories).references(:stories)
+      .order("projects.position ASC, stories.position ASC NULLS FIRST")
+  }
 
   def best_estimate_total
     stories.includes(:estimates).sum(&:best_estimate_average)
@@ -42,7 +47,9 @@ class Project < ApplicationRecord
   end
 
   def archived?
-    status == "archived"
+    return status == "archived" if parent_id.nil?
+
+    parent.archived?
   end
 
   def breadcrumb
@@ -50,6 +57,8 @@ class Project < ApplicationRecord
   end
 
   def toggle_archived!
+    return unless parent_id.nil?
+
     archived? ? unarchive : archive
   end
 
@@ -84,9 +93,11 @@ class Project < ApplicationRecord
 
   def archive
     Project.where(id: id).or(Project.where(parent_id: id)).update_all(status: "archived")
+    self.status = "archived"
   end
 
   def unarchive
     Project.where(id: id).or(Project.where(parent_id: id)).update_all(status: nil)
+    self.status = nil
   end
 end

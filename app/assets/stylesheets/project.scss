@@ -13,6 +13,16 @@
       }
     }
   }
+  &.show-action {
+    .btn-group .button_to {
+      display: inline-block;
+      .button:focus {
+        outline: 5px auto -webkit-focus-ring-color;
+        outline-offset: -2px;
+        border: none;
+      }
+    }
+  }
 }
 
 .totals {
@@ -172,6 +182,60 @@
   display: flex;
   h1 {
     flex-grow: 1;
+  }
+}
+
+.dashboard-title {
+  .parent-link {
+    display: block;
+    font-size: 0.5em;
+    line-height: 1em;
+  }
+  .project-title {
+    & > button {
+      cursor: pointer;
+      display: block;
+      width: 95%;
+      background: none;
+      border: none;
+      text-align: left;
+      &:hover,
+      &:focus {
+        &:after {
+          display: inline;
+          font-family: "FontAwesome";
+          content: "\f040";
+          font-size: 0.7em;
+          vertical-align: top;
+          margin-left: 10px;
+        }
+      }
+    }
+    form {
+      display: none;
+      width: 95%;
+      input[type="text"] {
+        padding: 0;
+        border: 0;
+        background: none;
+        outline: 1px solid gray;
+      }
+      .button {
+        flex-basis: 0%;
+        font-size: 0.5em;
+        line-height: 1em;
+        margin-left: 0.2rem;
+      }
+    }
+
+    &.editing {
+      & > button {
+        display: none;
+      }
+      form {
+        display: flex;
+      }
+    }
   }
 }
 

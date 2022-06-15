@@ -1,18 +1,25 @@
 document.addEventListener("input", (e) => {
-  if (e.target.classList.contains("story-description")) {
-    const desc = e.target;
-    const form = desc.closest("form");
-    const preview = form.querySelector(".story_preview .content");
-    if (preview) {
-      Rails.ajax({
-        type: "POST",
-        url: "/stories/render_markdown",
-        data: `markdown=${encodeURIComponent(desc.value)}`,
-        dataType: "text",
-        success: (response) => {
-          preview.innerHTML = response;
-        },
-      });
-    }
-  }
+  const updateMarkdown = () => {
+    document.querySelectorAll("[data-has-preview]").forEach((element) => {
+      const form = element.closest("form");
+      const preview = form.querySelector(
+        "." + element.dataset.previewTarget + " .content"
+      );
+      if (preview) {
+        Rails.ajax({
+          type: "POST",
+          url: "/stories/render_markdown",
+          data: `markdown=${encodeURIComponent(element.value)}`,
+          dataType: "text",
+          success: (response) => {
+            preview.innerHTML = response;
+          },
+        });
+      }
+    });
+  };
+
+  var debounceTimer;
+  window.clearTimeout(debounceTimer);
+  debounceTimer = window.setTimeout(updateMarkdown, 300);
 });

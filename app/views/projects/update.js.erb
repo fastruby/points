@@ -1,0 +1,8 @@
+(function(){
+  document.querySelector(".project-title > button").innerText = "<%= @project.title %>";
+  document.querySelector(".project-title").classList.remove("editing");
+  document.getElementById("logo").innerText = "<%= j header_title %>";
+  <% if @project.parent || @project.projects.any? %>
+    document.querySelector(".hierarchy").innerHTML = "<%= j(render partial: "hierarchy", locals: {project: @project, sub_projects: @sidebar_projects}) %>";
+  <% end%>
+})()

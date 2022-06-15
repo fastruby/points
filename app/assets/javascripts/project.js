@@ -26,6 +26,12 @@ document.addEventListener("turbolinks:load", function () {
       stories_ids.push($(checkbox).val());
     });
 
+    const ending = stories_ids.length == 1 ? "y" : "ies";
+    let user_confirmation = confirm(
+      `Are you sure you want to delete ${stories_ids.length} stor${ending}?`
+    );
+    if (!user_confirmation) return;
+
     $(event.target)
       .text("Bulk Delete")
       .attr("aria-disabled", "true")
@@ -77,18 +83,6 @@ document.addEventListener("turbolinks:load", function () {
       }
     });
   }
-});
-
-window.addEventListener("load", () => {
-  const links = document.querySelectorAll(
-    ".project-table__row--story a.delete"
-  );
-  links.forEach((element) => {
-    element.addEventListener("ajax:success", () => {
-      document.getElementById(`story_${element.dataset.storyId}`).remove();
-      console.log("The story was deleted.");
-    });
-  });
 });
 
 const filterStories = () => {

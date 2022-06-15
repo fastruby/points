@@ -1,141 +1,219 @@
 require "rails_helper"
 
-RSpec.describe StoriesController, type: :controller do
-  render_views
-
-  let!(:project) { FactoryBot.create(:project) }
+RSpec.describe "managing stories", js: true do
+  let(:user) { FactoryBot.create(:user) }
+  let(:project) { FactoryBot.create(:project) }
   let!(:story) { FactoryBot.create(:story, project: project) }
 
   before do
-    @request.env["devise.mapping"] = Devise.mappings[:user]
-    user = FactoryBot.create(:user)
-    sign_in user
+    login_as(user, scope: :user)
   end
 
-  describe "#new" do
-    it "redirects to the new page" do
-      get :new, params: {id: story.id, project_id: project.id}
-      expect(response).to render_template :new
-    end
+  it "allows me to add a story" do
+    visit project_path(id: project.id)
+    click_link "Add a Story"
+    fill_in "story[title]", with: "As a user, I want to add stories"
+    fill_in "story[description]", with: "This story allows users to add stories."
+    click_button "Create"
+    expect(Story.count).to eq 2
   end
 
-  describe "#create" do
-    context "with valid attributes" do
-      let(:valid_params) { FactoryBot.attributes_for(:story) }
-
-      it "creates a new story" do
-        expect {
-          post :create, params: {project_id: project.id, story: valid_params}
-        }.to change(Story, :count).by(1)
-      end
-
-      it "redirects to the project path" do
-        post :create, params: {project_id: project.id, story: valid_params}
-
-        expect(response).to redirect_to project_path(project.id)
-      end
+  it "allows me to clone a story" do
+    visit project_path(id: project.id)
+    within_story_row(story) do
+      click_button "More actions"
+      click_link "Clone"
     end
-
-    context "with invalid attributes" do
-      let(:invalid_attributes) { {title: ""} }
-
-      before do
-        post :create, params: {project_id: project.id, story: invalid_attributes}
-      end
-
-      it "stays on the new template page" do
-        expect(response).to render_template :new
-      end
-    end
+    expect(page.find("#story_title").value).to eq story.title
+    expect(page.find("#story_description").value).to eq story.description
+    click_button "Create"
+    expect(Story.count).to eq 2
   end
 
-  describe "#destroy" do
-    it "deletes the story" do
-      expect {
-        delete :destroy, params: {id: story.id, project_id: project.id}
-      }.to change(Story, :count).by(-1)
-    end
+  it "allows me to edit a story" do
+    visit project_path(id: project.id)
+    click_button "More actions"
+    click_link "Edit"
+    fill_in "story[title]", with: "As a user, I want to edit stories"
+    click_button "Save Changes"
+    expect(page).to have_content "Story updated!"
   end
 
-  context "when the story project is unarchived" do
-    describe "#show" do
-      before do
-        get :show, params: {id: story.id, project_id: project.id}
-      end
+  it "allows me to delete a story" do
+    visit project_path(id: project.id)
 
-      it "redirects to the show page" do
-        expect(response).to render_template :show
-      end
+    expect(page).to have_text story.title
 
-      it "shows the attributes for the right story" do
-        expect(assigns(:story)).to eq story
-      end
+    accept_confirm do
+      click_button "More actions"
+      click_link "Delete"
     end
 
-    describe "#edit" do
-      before do
-        get :edit, params: {id: story.id, project_id: project.id}
-      end
+    expect(page).not_to have_text story.title
+    expect(Story.count).to eq 0
+  end
 
-      it "redirects to the edit page" do
-        expect(response).to render_template :edit
-      end
+  it "does not allow me to bulk delete stories when there are none selected" do
+    visit project_path(id: project.id)
+    expect(page).to have_selector("#bulk_delete[aria-disabled='true']")
+    expect(page).to have_selector("#bulk_delete[disabled]")
+  end
 
-      it "shows the fields for the story" do
-        expect(assigns(:story)).to eq story
-      end
+  it "allows me to bulk delete stories when one or more stories are selected" do
+    visit project_path(id: project.id)
+
+    within_story_row(story) { check(option: story.id.to_s) }
+    expect(page).to have_no_selector("#bulk_delete[aria-disabled='true']")
+    expect(page).to have_no_selector("#bulk_delete[disabled]")
+    expect(page).to have_button("Bulk Delete (1 Story)")
+    click_button("Bulk Delete (1 Story)")
+    expect(Story.count).to eq 0
+  end
+
+  it "shows a preview of the description while typing" do
+    visit project_path(id: project.id)
+    click_link "Add a Story"
+    fill_in "story[title]", with: "As a user, I want to add stories"
+
+    desc = <<~DESC
+      This story allows users to add stories.
+
+          some
+          code
+
+    DESC
+
+    fill_in "story[description]", with: desc
+
+    within(".story_preview .content") do
+      expect(page).to have_selector("p", text: "This story allows users to add stories.")
+      expect(page).to have_selector("pre", text: "some\ncode")
     end
 
-    describe "#update" do
-      it "updates the story" do
-        put :update, params: {id: story.id,
-                              project_id: project.id,
-                              story: {title: "New Story"}}
+    click_button "Create"
 
-        expect(story.reload.title).to eq "New Story"
-      end
+    expect(page).to have_text(project.title)
+
+    story = Story.last
+    within_story_row(story) do
+      click_button "More actions"
+      click_link "Edit"
     end
 
-    describe "#bulk_destroy" do
-      it "deletes multiple stories" do
-        ids = [99, 100]
-        ids.each do |id|
-          FactoryBot.create(:story, id: id, project: project)
-        end
+    expect(page).to have_text("Edit Story")
 
-        expect {
-          post :bulk_destroy, params: {ids: ids}, format: :json
-        }.to change(Story, :count).by(-2)
-      end
-    end
-
-    describe "#move" do
-      it "does not allow moving stories to non-sibling projects" do
-        project2 = FactoryBot.create(:project, parent: project)
-        project3 = FactoryBot.create(:project)
-        story = FactoryBot.create(:story, project: project2)
-
-        put :move, params: {project_id: project2.id, story_id: story.id, to_project: project3.id}
-        expect(flash[:error]).to eq "Selected project does not exist or is not a sibling."
-        expect(response).to redirect_to project2
-      end
+    within(".story_preview .content") do
+      expect(page).to have_selector("p", text: "This story allows users to add stories.")
+      expect(page).to have_selector("pre", text: "some\ncode")
     end
   end
 
-  context "when the story project is archived" do
-    before do
-      story.project.toggle_archived!
+  it "can move stories between siblings" do
+    project2 = FactoryBot.create(:project, parent: project)
+    project3 = FactoryBot.create(:project, parent: project)
+    story = FactoryBot.create(:story, project: project2)
+
+    visit project_path(id: project2.id)
+
+    within_story_row(story) do
+      # move to options are hidden
+      expect(page).not_to have_text project3.title
+
+      click_button "More actions"
+      click_button "Move to"
+
+      # only one option is to move to since there's only one sibling
+      expect(page).to have_selector ".move-story .dropdown > form", count: 1
+
+      # confirm moving the story
+      accept_confirm do
+        click_button project3.title
+      end
     end
 
-    it "doesn't allow me to edit the story" do
-      get :edit, params: {id: story.id, project_id: project.id}
-      expect(response).to redirect_to project_path(project)
+    expect(page).to have_text "Story moved"
+    expect(page).not_to have_text story.title
+    expect(story.reload.project).to eq project3
+  end
+
+  # see issue #9 on github
+  it "preserves order of stories when editing" do
+    empty_project = FactoryBot.create(:project)
+    visit project_path(id: empty_project.id)
+    click_link "Add a Story"
+    fill_in "Title", with: "Story 1"
+    fill_in "Description (Markdown)", with: "desc"
+    click_button "Create"
+
+    # check that it adds a position for new stories
+    story1 = Story.last
+    expect(story1.position).to be 1
+
+    click_link "Add a Story"
+    fill_in "Title", with: "Story 2"
+    fill_in "Description (Markdown)", with: "desc"
+    click_button "Create"
+
+    story2 = Story.last
+    expect(story2.position).to be 2
+
+    # check that the order is not broken after edit for stories with no position
+    story1.update_attribute(:position, nil)
+    story2.update_attribute(:position, nil)
+
+    within("#story_#{story1.id}") do
+      click_button "More actions"
+      click_link "Edit"
     end
 
-    it "doesn't allow me to update the story" do
-      put :update, params: {id: story.id, project_id: project.id, story: {title: "Changed Title"}}
-      expect(response).to redirect_to project_path(project)
-      expect(project.reload.title).not_to eq "Changed Title"
+    expect(page).to have_text("Edit Story")
+
+    fill_in "Description (Markdown)", with: "desc2"
+
+    click_button "Save Changes"
+
+    expect(page).to have_text("Story updated!")
+
+    within("#stories") do
+      expect(find("tr:nth-child(1)")).to have_text story1.title
+      expect(find("tr:nth-child(2)")).to have_text story2.title
     end
+
+    # check that stories with nil position are listed first
+
+    click_link "Add a Story"
+    fill_in "Title", with: "Story 3"
+    fill_in "Description (Markdown)", with: "desc"
+    click_button "Create"
+
+    story3 = Story.last
+    expect(story3.position).to be 1
+
+    within("#stories") do
+      expect(find("tr:nth-child(1)")).to have_text story1.title
+      expect(find("tr:nth-child(2)")).to have_text story2.title
+      expect(find("tr:nth-child(3)")).to have_text story3.title
+    end
+  end
+
+  it "allows sorting stories", js: true do
+    FactoryBot.create(:story, project: project)
+    story3 = FactoryBot.create(:story, project: project)
+
+    visit project_path(project)
+
+    first = find(".project-table__cell", text: story.title)
+    last = find(".project-table__cell", text: story3.title)
+
+    # The use expect_any_instance_of is discouraged by the RSpec team, but the drag_to
+    # method is not always consistent on the distance it drags elements and the order
+    # is not always the expected. So I'm using expect_any_instance_of on purpose here.
+    expect_any_instance_of(ProjectsController).to receive(:sort_stories)
+
+    last.drag_to(first, delay: 0, html5: false)
+
+    sleep(1)
+
+    expect(page).not_to have_selector(".project-table.sorting")
   end
 end
