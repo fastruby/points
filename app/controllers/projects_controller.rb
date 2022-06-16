@@ -1,6 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_project, only: [:show, :edit, :update, :sort, :sort_stories, :destroy]
+  before_action :find_project, only: [:show, :edit, :update, :sort, :sort_stories, :destroy, :new_sub_project]
+  before_action :ensure_unarchived!, only: [:edit, :new_sub_project, :update]
 
   def index
     status = params[:archived] == "true" ? "archived" : nil
@@ -91,14 +92,13 @@ class ProjectsController < ApplicationController
   end
 
   def new_sub_project
-    @project = Project.find(params[:project_id])
     @sub = Project.new(parent_id: @project)
   end
 
   private
 
   def find_project
-    @project = Project.find(params[:id])
+    @project = Project.find(params[:id] || params[:project_id])
   end
 
   def projects_params

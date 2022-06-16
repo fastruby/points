@@ -23,14 +23,14 @@ RSpec.describe "managing projects", js: true do
 
   it "allows me to delete a project", js: false do
     visit project_path(id: project.id)
-    click_button "Delete Project"
+    click_link "Delete Project"
     expect(Project.count).to eq 0
   end
 
   it "allows me to delete a project" do
     visit project_path(id: project.id)
     accept_confirm do
-      click_button "Delete Project"
+      click_link "Delete Project"
     end
     expect(page).not_to have_content "Delete Project"
     expect(Project.count).to eq 0
