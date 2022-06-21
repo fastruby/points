@@ -16,10 +16,8 @@ module ProjectsHelper
   private
 
   def text_content(icon, text)
-    if icon
-      icon_tag = content_tag(:i, "", class: "fa fa-#{icon}").concat(content_tag(:span, text))
-    end
+    return text if icon.nil?
 
-    icon_tag || text
+    content_tag(:i, "", class: "fa fa-#{icon}").concat(content_tag(:span, text))
   end
 end
