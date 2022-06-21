@@ -16,4 +16,11 @@ class ApplicationController < ActionController::Base
   def enable_rack_mini_profiler
     Rack::MiniProfiler.authorize_request
   end
+
+  def ensure_unarchived!
+    if @project.archived? || @project.parent&.archived?
+      flash[:error] = "You can't perform this action on an archived project."
+      redirect_to project_path(@project.id)
+    end
+  end
 end
