@@ -47,6 +47,8 @@ class Project < ApplicationRecord
   end
 
   def archived?
+    # return parent.archived? if parent_id.present?
+    # status == "archived"
     return status == "archived" if parent_id.nil?
 
     parent.archived?
