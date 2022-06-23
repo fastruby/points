@@ -62,7 +62,7 @@ class ProjectsController < ApplicationController
       flash[:success] = "Project created!"
       redirect_to "/projects"
     else
-      flash[:error] = @project.errors.full_messages
+      flash.now[:error] = @project.errors.full_messages
       render :new
     end
   end
