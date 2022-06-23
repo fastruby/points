@@ -17,7 +17,7 @@
             <th class="project-table__cell">Best<br />Estimate</th>
             <th class="project-table__cell">Worst<br />Estimate</th>
             <th class="project-table__cell story_actions">
-              <%= link_to "Add a Story", new_project_story_path(@project.id), class: "button magenta"  %>
+              <%= link_to "Add a Story", new_project_story_path(@project.id), class: "button magenta" if is_locked?(@project) %>
               <button id="bulk_delete" class="button magenta" aria-disabled="true" disabled>Bulk Delete</button>
             </th>
           </tr>
@@ -34,11 +34,12 @@
                 <td class="project-table__cell"><%= story.estimate_for(current_user)&.best_case_points %></td>
                 <td class="project-table__cell"><%= story.estimate_for(current_user)&.worst_case_points %></td>
                 <td class="project-table__cell story_actions">
+                <% if is_locked?(@project) %>
                   <% if estimated(story) %>
                     <%= link_to "Edit Estimate", edit_project_story_estimate_path(@project.id, story, @estimate_id), class: "button edit-estimate", remote: true %>
                   <% else %>
                     <%= link_to "Add Estimate", new_project_story_estimate_path(@project.id, story), class: "button add-estimate", remote: true %>
-                 <% end %>
+                  <% end %>                
                   <div class="dropdown-wrapper more-actions">
                     <button class="button" title="More actions">
                       <i class="fa fa-ellipsis-v"></i>
@@ -71,6 +72,7 @@
                       <% end %>
                     </div>
                   </div>
+                <% end %>
                 </td>
               </tr>
             <% end %>
@@ -96,15 +98,19 @@
     <% end %>
   </div>
 
-
-
-  <%= render partial: "projects/import_export" %>
+  <%= render partial: "projects/import_export" if is_locked?(@project) %> 
 
   <div class="btn-group">
-    <%= button_to 'Delete Project', project_path(@project.id), method: "delete",  data: { confirm: 'Are you sure?' }, class: "button magenta", id: "delete" %>
+    <% if is_locked?(@project) && current_user.admin? %>
+      <%= button_to 'Lock Project', toggle_locked_project_path(@project.id), method: "patch", class: "button magenta ", id: "lock-btn", remote: true %>
+    <% end %>
 
-    <% unless @project.parent_id %>
-      <%= link_to 'Add Sub-Project', project_new_sub_project_path(@project.id), id:"subproject", class: "button magenta" %>
+    <% if is_locked?(@project) %> 
+      <%= button_to 'Delete Project', project_path(@project.id), method: "delete",  data: { confirm: 'Are you sure?' }, class: "button magenta", id: "delete" %>
+
+      <% unless @project.parent_id %>
+        <%= link_to 'Add Sub-Project', project_new_sub_project_path(@project.id), id:"subproject", class: "button magenta" %>
+      <% end %>
     <% end %>
     <%= link_to 'Clone Project', new_clone_project_path(@project.id), class: "button magenta" %>
     <% unless @project.parent_id %>

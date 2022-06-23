@@ -312,4 +312,29 @@ RSpec.describe "managing projects", js: true do
       end
     end
   end
+
+  context "as an admin user", :js do
+    let(:user) { FactoryBot.create(:user, admin: true) }
+    let(:story) { FactoryBot.create(:story) }
+
+    it "locks a project" do
+      visit project_path(id: project.id)
+      expect(page).to have_selector(:link_or_button, "Lock Project")
+      click_button "Lock Project"
+      ["Delete Project", "Lock Project", "Add Sub-Project", "Add a Story"].each do |btn|
+        expect(page).not_to have_selector(:link_or_button, btn)
+      end
+    end
+
+    before do
+    end
+
+    it "locks project stories" do
+      story.project.update(locked: Time.current)
+      visit project_story_path(story.project_id, story.id)
+      ["Edit", "Delete"].each do |btn|
+        expect(page).not_to have_selector(:link_or_button, btn)
+      end
+    end
+  end
 end
