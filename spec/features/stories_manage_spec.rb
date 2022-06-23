@@ -269,7 +269,7 @@ RSpec.describe "managing stories", js: true do
   end
 
   it "allows sorting stories", js: true do
-    FactoryBot.create(:story, project: project)
+    FactoryBot.create(:story, project: project, title: "Juan and Aysan Code!")
     story3 = FactoryBot.create(:story, project: project, title: "Last story")
 
     visit project_path(project)
