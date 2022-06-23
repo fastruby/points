@@ -8,6 +8,6 @@ class ProjectPolicy < ApplicationPolicy
 
   # this is so that the project can be edited
   def update?
-    !project.locked?
+    !project.locked_at?
   end
 end

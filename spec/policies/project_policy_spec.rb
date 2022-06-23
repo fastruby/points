@@ -6,10 +6,10 @@ describe ProjectPolicy do
   permissions :update? do
     let(:user) { FactoryBot.build(:user) }
     let(:locked_project) do
-      FactoryBot.build(:project, locked: Time.current)
+      FactoryBot.build(:project, locked_at: Time.current)
     end
     let(:project) do
-      FactoryBot.build(:project, locked: nil)
+      FactoryBot.build(:project, locked_at: nil)
     end
 
     it "denies access if project is locked" do

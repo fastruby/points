@@ -344,14 +344,13 @@ RSpec.describe "managing projects", js: true do
       end
     end
 
-    before do
-    end
-
-    it "locks project stories" do
-      story.project.update(locked: Time.current)
-      visit project_story_path(story.project_id, story.id)
-      ["Edit", "Delete"].each do |btn|
-        expect(page).not_to have_selector(:link_or_button, btn)
+    context "when a project is locked" do
+      it "hides project stories edit and delete buttons" do
+        story.project.update(locked_at: Time.current)
+        visit project_story_path(story.project_id, story.id)
+        ["Edit", "Delete"].each do |btn|
+          expect(page).not_to have_selector(:link_or_button, btn)
+        end
       end
     end
   end

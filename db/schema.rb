@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 2022_06_21_141342) do
     t.datetime "updated_at", null: false
     t.integer "parent_id"
     t.integer "position"
-    t.datetime "locked"
+    t.datetime "locked_at"
   end
 
   create_table "stories", force: :cascade do |t|

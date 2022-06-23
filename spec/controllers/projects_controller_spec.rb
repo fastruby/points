@@ -162,7 +162,7 @@ RSpec.describe ProjectsController, type: :controller do
     context "when locking a project" do
       it "returns a datetime" do
         patch :toggle_locked, params: {id: project.id}, xhr: true
-        expect(assigns[:project]).to be_locked
+        expect(assigns[:project]).to be_locked_at
       end
 
       it "returns a js response" do
