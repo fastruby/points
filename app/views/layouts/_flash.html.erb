@@ -1,6 +1,8 @@
 <% bootstrap_alert_names = {"success" => "success", "error" => "danger"}%>
-<% if flash[:success] || flash[:error] %>
-  <% flash.each do |key, value| %>
-    <div class="alert alert-<%= bootstrap_alert_names[key] %>"><%= value %></div>
+<div class="container">
+  <% if flash[:success] || flash[:error] %>
+    <% flash.each do |key, value| %>
+      <div class="alert alert-<%= bootstrap_alert_names[key] %>"><%= value %></div>
+    <% end %>
   <% end %>
-<% end %>
+</div>
