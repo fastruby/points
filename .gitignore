@@ -9,3 +9,8 @@ coverage
 .byebug_history
 .tool-versions
 .DS_Store
+
+node_modules
+yarn-error.log
+yarn-debug.log*
+.yarn-integrity
