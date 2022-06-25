@@ -4,7 +4,7 @@ module ProjectsHelper
     @estimate_id.present?
   end
 
-  def is_locked?(model)
+  def is_unlocked?(model)
     policy(model).update?
   end
 

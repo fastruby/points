@@ -17,7 +17,7 @@
             <th class="project-table__cell">Best<br />Estimate</th>
             <th class="project-table__cell">Worst<br />Estimate</th>
             <th class="project-table__cell story_actions">
-              <%= link_unless_archived(@project, "Add a Story", new_project_story_path(@project), classes: "magenta") if is_locked?(@project) %>
+              <%= link_unless_archived(@project, "Add a Story", new_project_story_path(@project), classes: "magenta") if is_unlocked?(@project) %>
               <button id="bulk_delete" class="button magenta" aria-disabled="true" disabled>Bulk Delete</button>
             </th>
           </tr>
@@ -34,7 +34,7 @@
                 <td class="project-table__cell"><%= story.estimate_for(current_user)&.best_case_points %></td>
                 <td class="project-table__cell"><%= story.estimate_for(current_user)&.worst_case_points %></td>
                 <td class="project-table__cell story_actions">
-                <% if is_locked?(@project) %>
+                <% if is_unlocked?(@project) %>
                   <% if estimated(story) %>
                     <%= link_unless_archived(@project, "Edit Estimate", edit_project_story_estimate_path(@project.id, story, @estimate_id), classes: "edit-estimate", remote: true) %>
                   <% else %>
@@ -98,19 +98,17 @@
     <% end %>
   </div>
 
-  <%= render partial: "projects/import_export" if is_locked?(@project) %>
+  <%= render partial: "projects/import_export" if is_unlocked?(@project) %>
 
   <div class="btn-group actions">
-    <% if is_locked?(@project) && current_user.admin? %>
-      <%= button_to 'Lock Project', toggle_locked_project_path(@project.id), method: "patch", class: "button magenta ", id: "lock-btn", remote: true %>
+    <% if is_unlocked?(@project) && current_user.admin? %>
+      <%= button_to 'Lock Project', toggle_locked_project_path(@project.id), method: :patch, class: "button magenta ", id: "lock-btn", remote: true %>
     <% end %>
 
-    <% if is_locked?(@project) %>
+    <% if is_unlocked?(@project) %>
       <%= link_unless_archived(@project, "Delete Project", project_path(@project.id), classes: "delete", method: :delete, remote: true, data_attr: { confirm: 'Are you sure?' }, id: "delete")%>
 
-      <% unless @project.parent_id %>
-        <%= link_unless_archived(@project, "Add Sub-Project", project_new_sub_project_path(@project), classes: "magenta") unless @project.parent_id %>
-      <% end %>
+      <%= link_unless_archived(@project, "Add Sub-Project", project_new_sub_project_path(@project), classes: :magenta) unless @project.parent_id.present? %>
     <% end %>
 
     <%= link_to 'Clone Project', new_clone_project_path(@project.id), class: "button magenta" %>

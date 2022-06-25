@@ -6,8 +6,9 @@ class ProjectPolicy < ApplicationPolicy
     @project = project
   end
 
-  # this is so that the project can be edited
   def update?
-    !project.locked_at?
+    return !project.locked_at? if project.parent_id.nil?
+
+    !project.parent.locked_at?
   end
 end
