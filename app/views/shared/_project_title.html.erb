@@ -6,7 +6,7 @@
   </span>
 <% end %>
 
-<% if allow_edit %>
+<% if allow_edit && is_unlocked?(project) %>
   <div class="project-title">
     <button><%= project.title %></button>
     <%= form_for project, remote: true do |f| %>

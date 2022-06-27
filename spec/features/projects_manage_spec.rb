@@ -330,4 +330,45 @@ RSpec.describe "managing projects", js: true do
       end
     end
   end
+
+  describe "as an admin user" do
+    let(:user) { FactoryBot.create(:user, admin: true) }
+    let(:story) { FactoryBot.create(:story) }
+
+    context "when a project is unlocked" do
+      it "locks a project" do
+        visit project_path(id: project.id)
+
+        expect(page).to have_selector(:link_or_button, "Lock Project")
+        click_button "Lock Project"
+
+        ["Delete Project", "Lock Project", "Add Sub-Project", "Add a Story"].each do |btn|
+          expect(page).not_to have_selector(:link_or_button, btn)
+        end
+      end
+    end
+
+    context "when a project is locked" do
+      before do
+        story.project.update(locked_at: Time.current)
+      end
+
+      it "hides project stories edit and delete buttons" do
+        visit project_story_path(story.project_id, story.id)
+
+        ["Edit", "Delete"].each do |btn|
+          expect(page).not_to have_selector(:link_or_button, btn)
+        end
+      end
+
+      it "doesn't enable the bulk delete button" do
+        visit project_path(story.project)
+
+        within "tr#story_#{story.id}" do
+          find("input[type='checkbox'][value='#{story.id}']").set(true)
+        end
+        expect(page).to have_button("Bulk Delete", disabled: true)
+      end
+    end
+  end
 end

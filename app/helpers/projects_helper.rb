@@ -4,6 +4,10 @@ module ProjectsHelper
     @estimate_id.present?
   end
 
+  def is_unlocked?(model)
+    policy(model).update?
+  end
+
   def link_unless_archived(project, text, url, classes: nil, method: :get, remote: false, icon: nil, data_attr: nil, id: nil)
     link_text = text_content(icon, text)
     if project.archived? || project.parent&.archived?

@@ -34,6 +34,12 @@ class ProjectsController < ApplicationController
     @project.toggle_archived!
   end
 
+  # PATCH /projects/1/toggle_locked.js
+  def toggle_locked
+    @project = Project.find(params[:id])
+    @project.update(locked_at: Time.current)
+  end
+
   def new_clone
     @original = Project.includes(:projects, stories: :estimates).find(params[:id])
   end
@@ -75,6 +81,7 @@ class ProjectsController < ApplicationController
   end
 
   def update
+    authorize(@project)
     if @project.update(projects_params)
       respond_to do |format|
         format.html do

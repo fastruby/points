@@ -17,23 +17,24 @@
             <th class="project-table__cell">Best<br />Estimate</th>
             <th class="project-table__cell">Worst<br />Estimate</th>
             <th class="project-table__cell story_actions">
-              <%= link_unless_archived(@project, "Add a Story", new_project_story_path(@project), classes: "magenta") %>
+              <%= link_unless_archived(@project, "Add a Story", new_project_story_path(@project), classes: "magenta") if is_unlocked?(@project) %>
               <button id="bulk_delete" class="button magenta" aria-disabled="true" disabled>Bulk Delete</button>
             </th>
           </tr>
         </thead>
-        <tbody id="stories" data-url="<%= sort_stories_project_path(@project.id) %>">
+        <tbody id="stories" data-url="<%= sort_stories_project_path(@project.id) %>" data-unlocked="<%= is_unlocked?(@project) %>">
           <% if @stories.present? %>
             <% @stories.each do | story | %>
               <tr class="project-table__row project-table__row--story" id="<%= dom_id(story)%>" >
                 <td class="project-table__cell">
-                  <input type="checkbox" name="stories[]" value=<%= story.id %>>
+                  <input type="checkbox" name="stories[]" value="<%= story.id %>">
                   <%= link_to story.title, [story.project, story] %>
                   <button class="copy-link btn-clipboard" data-clipboard-text="<%= project_story_url(@project, story) %>" title='Copy story'><i class="fa fa-link"></i><span class= "popup">Copied to clipboard</span></button>
                 </td>
                 <td class="project-table__cell"><%= story.estimate_for(current_user)&.best_case_points %></td>
                 <td class="project-table__cell"><%= story.estimate_for(current_user)&.worst_case_points %></td>
                 <td class="project-table__cell story_actions">
+                <% if is_unlocked?(@project) %>
                   <% if estimated(story) %>
                     <%= link_unless_archived(@project, "Edit Estimate", edit_project_story_estimate_path(@project.id, story, @estimate_id), classes: "edit-estimate", remote: true) %>
                   <% else %>
@@ -71,6 +72,7 @@
                       <%= link_unless_archived(@project, "Clone", new_project_story_path(@project.id, story_id: story.id), classes: "clone", icon: 'files-o') %>
                     </div>
                   </div>
+                <% end %>
                 </td>
               </tr>
             <% end %>
@@ -96,11 +98,19 @@
     <% end %>
   </div>
 
-  <%= render partial: "projects/import_export" %>
+  <%= render partial: "projects/import_export" if is_unlocked?(@project) %>
 
   <div class="btn-group actions">
-    <%= link_unless_archived(@project, "Delete Project", project_path(@project.id), classes: "delete", method: :delete, remote: true, data_attr: { confirm: 'Are you sure?' }, id: "delete")%>
-    <%= link_unless_archived(@project, "Add Sub-Project", project_new_sub_project_path(@project), classes: "magenta") unless @project.parent_id %>
+    <% if is_unlocked?(@project) && current_user.admin? %>
+      <%= button_to 'Lock Project', toggle_locked_project_path(@project.id), method: :patch, class: "button magenta ", id: "lock-btn", remote: true %>
+    <% end %>
+
+    <% if is_unlocked?(@project) %>
+      <%= link_unless_archived(@project, "Delete Project", project_path(@project.id), classes: "delete", method: :delete, remote: true, data_attr: { confirm: 'Are you sure?' }, id: "delete")%>
+
+      <%= link_unless_archived(@project, "Add Sub-Project", project_new_sub_project_path(@project), classes: :magenta) unless @project.parent_id.present? %>
+    <% end %>
+
     <%= link_to 'Clone Project', new_clone_project_path(@project.id), class: "button magenta" %>
     <% unless @project.parent_id %>
       <%= link_to "#{@project.archived? ? 'Unarchive' : 'Archive'} Project", toggle_archive_project_path(@project.id), method: "patch", id: "toggle_archive", class: "button magenta", remote: true %>
