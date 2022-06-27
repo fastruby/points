@@ -19,7 +19,7 @@ describe ProjectPolicy do
     end
 
     context "when sub project belongs to a locked parent" do
-      let(:sub_project) { FactoryBot.create(:project, locked_at: nil, parent: locked_project) }
+      let(:sub_project) { FactoryBot.build_stubbed(:project, locked_at: nil, parent: locked_project) }
 
       it "denies access" do
         expect(subject).not_to permit(user, sub_project)
@@ -27,7 +27,7 @@ describe ProjectPolicy do
     end
 
     context "when sub project belongs to an unlocked parent" do
-      let(:sub_project) { FactoryBot.create(:project, locked_at: nil, parent: project) }
+      let(:sub_project) { FactoryBot.build_stubbed(:project, locked_at: nil) }
 
       it "grants access" do
         expect(subject).to permit(user, sub_project)

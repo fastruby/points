@@ -1,6 +1,10 @@
 document.addEventListener("turbolinks:load", function () {
   $("input[name='stories[]']").click(() => {
     const selected = $("input[name='stories[]']:checked");
+    const is_unlocked = $("#stories").data("unlocked");
+    if (!is_unlocked) {
+      return;
+    }
 
     if (selected.length > 0) {
       const ending = selected.length == 1 ? "y" : "ies";
