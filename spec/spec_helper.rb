@@ -1,4 +1,5 @@
 require "faker"
+require "pundit/rspec"
 
 if ENV["COVERAGE"] == "true"
   require "simplecov"

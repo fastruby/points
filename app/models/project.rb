@@ -47,9 +47,9 @@ class Project < ApplicationRecord
   end
 
   def archived?
-    return status == "archived" if parent_id.nil?
+    return parent.archived? if parent_id.present?
 
-    parent.archived?
+    status == "archived"
   end
 
   def breadcrumb

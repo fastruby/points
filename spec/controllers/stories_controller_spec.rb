@@ -19,20 +19,6 @@ RSpec.describe StoriesController, type: :controller do
     end
   end
 
-  describe "#edit" do
-    before do
-      get :edit, params: {id: story.id, project_id: project.id}
-    end
-
-    it "redirects to the edit page" do
-      expect(response).to render_template :edit
-    end
-
-    it "shows the fields for the story" do
-      expect(assigns(:story)).to eq story
-    end
-  end
-
   describe "#create" do
     context "with valid attributes" do
       let(:valid_params) { FactoryBot.attributes_for(:story) }
@@ -71,60 +57,92 @@ RSpec.describe StoriesController, type: :controller do
     end
   end
 
-  describe "#show" do
+  context "when the story project is archived" do
     before do
-      get :show, params: {id: story.id, project_id: project.id}
+      story.project.toggle_archived!
     end
 
-    it "redirects to the show page" do
-      expect(response).to render_template :show
+    it "doesn't allow me to edit the story" do
+      get :edit, params: {id: story.id, project_id: project.id}
+      expect(response).to redirect_to project_path(project)
     end
 
-    it "shows the attributes for the right story" do
-      expect(assigns(:story)).to eq story
-    end
-  end
-
-  describe "#show failure" do
-    it "Throws 404 if the project_id doesn't match the story's project" do
-      expect {
-        get :show, params: {id: story.id, project_id: project.id + 1}
-      }.to raise_error(ActionController::RoutingError)
+    it "doesn't allow me to update the story" do
+      put :update, params: {id: story.id, project_id: project.id, story: {title: "Changed Title"}}
+      expect(response).to redirect_to project_path(project)
+      expect(project.reload.title).not_to eq "Changed Title"
     end
   end
 
-  describe "#update" do
-    it "updates the story" do
-      put :update, params: {id: story.id,
-                            project_id: project.id,
-                            story: {title: "New Story"}}
-
-      expect(story.reload.title).to eq "New Story"
-    end
-  end
-
-  describe "#bulk_destroy" do
-    it "deletes multiple stories" do
-      ids = [99, 100]
-      ids.each do |id|
-        FactoryBot.create(:story, id: id, project: project)
+  context "when the story project is unarchived" do
+    describe "#show" do
+      before do
+        get :show, params: {id: story.id, project_id: project.id}
       end
 
-      expect {
-        post :bulk_destroy, params: {ids: ids}, format: :json
-      }.to change(Story, :count).by(-2)
+      it "redirects to the show page" do
+        expect(response).to render_template :show
+      end
+
+      it "shows the attributes for the right story" do
+        expect(assigns(:story)).to eq story
+      end
     end
-  end
 
-  describe "#move" do
-    it "does not allow moving stories to non-sibling projects" do
-      project2 = FactoryBot.create(:project, parent: project)
-      project3 = FactoryBot.create(:project)
-      story = FactoryBot.create(:story, project: project2)
+    describe "#show failure" do
+      it "Throws 404 if the project_id doesn't match the story's project" do
+        expect {
+          get :show, params: {id: story.id, project_id: project.id + 1}
+        }.to raise_error(ActionController::RoutingError)
+      end
+    end
 
-      put :move, params: {project_id: project2.id, story_id: story.id, to_project: project3.id}
-      expect(flash[:error]).to eq "Selected project does not exist or is not a sibling."
-      expect(response).to redirect_to project2
+    describe "#edit" do
+      before do
+        get :edit, params: {id: story.id, project_id: project.id}
+      end
+
+      it "redirects to the edit page" do
+        expect(response).to render_template :edit
+      end
+
+      it "shows the fields for the story" do
+        expect(assigns(:story)).to eq story
+      end
+    end
+
+    describe "#update" do
+      it "updates the story" do
+        put :update, params: {id: story.id,
+                              project_id: project.id,
+                              story: {title: "New Story"}}
+
+        expect(story.reload.title).to eq "New Story"
+      end
+    end
+
+    describe "#bulk_destroy" do
+      let(:stories) { FactoryBot.create_list(:story, 2, project: project) }
+
+      it "deletes multiple stories" do
+        ids = stories.map(&:id)
+
+        expect {
+          post :bulk_destroy, params: {ids: ids}, format: :json
+        }.to change(Story, :count).by(-2)
+      end
+    end
+
+    describe "#move" do
+      it "does not allow moving stories to non-sibling projects" do
+        project2 = FactoryBot.create(:project, parent: project)
+        project3 = FactoryBot.create(:project)
+        story = FactoryBot.create(:story, project: project2)
+
+        put :move, params: {project_id: project2.id, story_id: story.id, to_project: project3.id}
+        expect(flash[:error]).to eq "Selected project does not exist or is not a sibling."
+        expect(response).to redirect_to project2
+      end
     end
   end
 end

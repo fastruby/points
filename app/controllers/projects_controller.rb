@@ -1,6 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_project, only: [:show, :edit, :update, :sort, :sort_stories, :destroy]
+  before_action :find_project, only: [:show, :edit, :update, :sort, :sort_stories, :destroy, :new_sub_project]
+  before_action :ensure_unarchived!, only: [:edit, :new_sub_project, :update]
 
   def index
     status = params[:archived] == "true" ? "archived" : nil
@@ -31,6 +32,12 @@ class ProjectsController < ApplicationController
   def toggle_archive
     @project = Project.find(params[:id])
     @project.toggle_archived!
+  end
+
+  # PATCH /projects/1/toggle_locked.js
+  def toggle_locked
+    @project = Project.find(params[:id])
+    @project.update(locked_at: Time.current)
   end
 
   def new_clone
@@ -74,6 +81,7 @@ class ProjectsController < ApplicationController
   end
 
   def update
+    authorize(@project)
     if @project.update(projects_params)
       respond_to do |format|
         format.html do
@@ -91,14 +99,13 @@ class ProjectsController < ApplicationController
   end
 
   def new_sub_project
-    @project = Project.find(params[:project_id])
     @sub = Project.new(parent_id: @project)
   end
 
   private
 
   def find_project
-    @project = Project.find(params[:id])
+    @project = Project.find(params[:id] || params[:project_id])
   end
 
   def projects_params

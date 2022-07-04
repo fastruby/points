@@ -4,8 +4,10 @@
   <%= render "shared/story", story: @story %>
 
   <div class="btn-group">
-    <%= link_to 'Edit', edit_project_story_path(@project), id:"back", class: "button" %>
+    <% if is_unlocked?(@project) %>
+      <%= link_unless_archived(@project, "Edit", edit_project_story_path(@project), classes: "magenta", id: "back") %>
+      <%= link_to "Delete", project_story_path(@project.id, @story), method: :delete, data: { confirm: "Are you sure?", story_id: @story.id }, class: "button red", remote: true , title: "Delete" %>
+    <% end %>
     <%= link_to 'Back', project_path(@project), id:"back", class: "button" %>
-    <%= link_to "Delete", project_story_path(@project.id, @story), method: :delete, data: { confirm: "Are you sure?", story_id: @story.id }, class: "button red", remote: true , title: "Delete" %>
   </div>
 </div>
