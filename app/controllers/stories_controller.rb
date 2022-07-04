@@ -91,7 +91,7 @@ class StoriesController < ApplicationController
         csv << story.attributes.slice(*CSV_HEADERS)
       end
     }
-    filename = "#{@project.title.gsub(/[^\w]/, "_")}-#{Time.now.to_fs(:short).tr(" ", "_")}.csv"
+    filename = "#{@project.title.gsub(/[^\w]/, "_")}-#{Time.now.to_formatted_s(:short).tr(" ", "_")}.csv"
     send_data csv, filename: filename
   end
 
