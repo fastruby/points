@@ -68,7 +68,7 @@
   <div class="btn-group">
     <%= link_to 'Back', reports_index_path, id:"back", class: "button" %>
     <%= link_to 'Edit Real Scores', real_scores_project_stories_path(@project), class: "button" %>
-    <%= link_to_if @can_generate_estimate_report, 'Download Average Estimate Report', project_report_path(@project, format: 'csv'), class: "button" do %>
+    <%= link_to_if @can_generate_estimate_report, 'Download Average Estimate Report', project_report_path(@project, format: 'csv'), class: "button green" do %>
       Stories need at least 2 estimates to generate report
     <% end %>
   </div>
