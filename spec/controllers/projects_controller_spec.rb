@@ -86,7 +86,7 @@ RSpec.describe ProjectsController, type: :controller do
       end
 
       it "stays on the new template page" do
-        expect(response).to redirect_to "projects/new"
+        expect(response).to render_template(:new)
       end
 
       it "shows a flash message" do
@@ -105,7 +105,7 @@ RSpec.describe ProjectsController, type: :controller do
       end
 
       it "stays on the new template page" do
-        expect(response).to redirect_to back_path
+        expect(response).to render_template(:new)
       end
 
       it "shows a flash message" do

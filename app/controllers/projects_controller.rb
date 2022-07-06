@@ -62,8 +62,8 @@ class ProjectsController < ApplicationController
       flash[:success] = "Project created!"
       redirect_to "/projects"
     else
-      flash[:error] = @project.errors.full_messages
-      redirect_back(fallback_location: "projects/new")
+      flash.now[:error] = @project.errors.full_messages
+      render :new
     end
   end
 
