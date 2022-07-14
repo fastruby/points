@@ -4,7 +4,7 @@ def next?
   File.basename(__FILE__) == "Gemfile.next"
 end
 
-ruby "3.0.2"
+ruby "3.1.0"
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
