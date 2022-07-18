@@ -18,5 +18,6 @@
 <% else %>
   <%= project.title %>
 <% end %>
-
-<span class="status-badge <%= project.status %> <%= "hide" if project.status == nil %>"><%= project.status %></span>
+<br>
+<span class="status-badge locked <%= "hide" if project.locked_at.nil? %>">Locked</span>
+<span class="status-badge <%= project.status %> <%= "hide" if project.status.nil? %>"><%= project.status %></span>
