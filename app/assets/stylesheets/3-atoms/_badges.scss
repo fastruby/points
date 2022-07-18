@@ -2,7 +2,7 @@
   display: inline-block;
   padding: 10px 20px;
   font-weight: 700;
-  line-height: 1;
+  line-height: 0.5;
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
@@ -11,5 +11,22 @@
   &.archived {
     background-color: rgba(29,78,216,0.2);
     border-color: #1d4ed8;
+    font-weight: 600;
+    padding: 10px 20px;
+    font-size: 20px;
+  }
+
+  &.locked {
+    background-color: rgba(255, 0, 0, 32%);
+    border-color: #d77e72;
+    font-weight: 600;
+    padding: 10px 20px;
+    font-size: 20px;
+  }
+
+  &.list {
+    font-weight: 500;
+    padding: 5px 10px;
+    font-size: 10px;
   }
 }
