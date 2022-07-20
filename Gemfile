@@ -4,7 +4,7 @@ def next?
   File.basename(__FILE__) == "Gemfile.next"
 end
 
-ruby "3.0.2"
+ruby "3.1.0"
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
@@ -12,7 +12,11 @@ git_source(:github) do |repo_name|
 end
 
 if next?
-  gem "rails", github: "rails/rails", branch: "main"
+  # using the 7-0-stable branch for the time being until the fix is merged into main
+  # to make it work with ruby 3.1
+  # read more about it here: https://github.com/rails/rails/issues/43998,
+  # and here: https://gist.github.com/claudiug/bdc2fb70b10d19513208c816588aed92
+  gem "rails", github: "rails/rails", branch: "7-0-stable"
   gem "devise", github: "heartcombo/devise", branch: "main"
 else
   gem "rails", "~> 7.0.2"
@@ -32,6 +36,7 @@ gem "sass-rails", "~> 5.0"
 gem "uglifier", ">= 1.3.0"
 
 gem "bourbon"
+gem "matrix"
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
