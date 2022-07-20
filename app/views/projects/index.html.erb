@@ -2,7 +2,7 @@
   <h1 class="home-title">Projects</h1>
 
   <% if @projects.any? %>
-    <div class="row">
+    <div class="row" id="projects">
       <% @projects.each do | project | %>
         <div class="col-sm-6 col-lg-4">
           <div class="project-card" id="project_<%= project.id %>">
