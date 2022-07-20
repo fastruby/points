@@ -347,7 +347,7 @@ RSpec.describe "managing projects", js: true do
           expect(page).to have_selector(:link_or_button, "Lock Project")
           click_button "Lock Project"
 
-          hide_locked_project_buttons
+          expect_buttons_to_be_hidden
         end
       end
     end
@@ -371,19 +371,37 @@ RSpec.describe "managing projects", js: true do
         it "does not allow project to be edited" do
           visit project_path(id: locked_project.id)
 
-          hide_locked_project_buttons
+          expect_buttons_to_be_hidden
         end
       end
     end
 
     context "when a project is locked" do
-      let(:locked_project) { FactoryBot.create(:project, :locked, title: "Some Project") }
+      let!(:locked_project) { FactoryBot.create(:project, :locked, title: "Some Project") }
       let(:story) { FactoryBot.create(:story) }
 
-      it "has a locked label" do
+      it "shows a locked label for projects" do
+        visit projects_path
+        within "#projects" do
+          expect(page).to have_text("Locked", count: 1)
+        end
+
         visit project_path(locked_project)
         within ".dashboard-title" do
           expect(page).to have_text("Locked")
+        end
+      end
+
+      it "shows a locked label for archived projects" do
+        archived_project = FactoryBot.create(:project, :locked, status: "archived")
+        visit projects_path(archived: true)
+        within "#projects" do
+          expect(page).to have_text("Locked", count: 1)
+        end
+
+        visit project_path(archived_project)
+        within ".dashboard-title" do
+          expect(page).to have_text("Locked", count: 1)
         end
       end
 
@@ -409,7 +427,7 @@ RSpec.describe "managing projects", js: true do
     end
   end
 
-  def hide_locked_project_buttons
+  def expect_buttons_to_be_hidden
     ["Delete Project", "Lock Project", "Add Sub-Project", "Add a Story"].each do |btn|
       expect(page).not_to have_selector(:link_or_button, btn)
     end
