@@ -4,5 +4,8 @@ FactoryBot.define do
     trait :locked do
       locked_at { Time.current }
     end
+    trait :archived do
+      status { "archived" }
+    end
   end
 end
