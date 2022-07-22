@@ -14,7 +14,10 @@
       <% if @projects.present? %>
         <% @projects.each do | project | %>
         <tr class="project-table__row project-table__row--project-reports project-table__row--story">
-          <td class="project-table__cell"><span class="status-badge locked list <%= "hide" if project.locked_at.nil? %>">Locked</span> <%= project.title%></td>
+          <td class="project-table__cell">
+            <span class="status-badge locked list <%= "hide" if project.locked_at.nil? %>">Locked</span>
+            <%= project.title%>
+          </td>
           <td class="project-table__cell"><%= link_to "View Report", project_report_path(project.id), class: "button green" %></td>
         </tr>
         <% end %>
