@@ -1,27 +1,22 @@
 .status-badge {
   display: inline-block;
-  padding: 10px 20px;
-  font-weight: 700;
-  line-height: 0.5;
+  padding: 7px 15px;
+  font-weight: 600;
+  line-height: 1;
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
   border-radius: 20px;
+  font-size: 11px;
 
   &.archived {
     background-color: rgba(29,78,216,0.2);
     border-color: #1d4ed8;
-    font-weight: 600;
-    padding: 10px 20px;
-    font-size: 20px;
   }
 
   &.locked {
     background-color: rgba(255, 0, 0, 32%);
     border-color: #d77e72;
-    font-weight: 600;
-    padding: 10px 20px;
-    font-size: 20px;
   }
 
   &.list {
