@@ -127,7 +127,6 @@ RSpec.describe "managing reports", js: true do
   end
 
   context "when a project is locked" do
-
     it "shows a locked label for projects on reports page" do
       locked_project = FactoryBot.create(:project, :locked)
       visit reports_index_path
@@ -136,7 +135,7 @@ RSpec.describe "managing reports", js: true do
         end
 
       visit project_report_path(locked_project)
-      within ".dashboard-title-report" do
+      within ".status-badge.locked" do
         expect(page).to have_text("Locked")
       end
     end
