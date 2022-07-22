@@ -9,8 +9,8 @@
             <%= link_to project_path(project.id) do %>
               <div>
                 <h2><%= project.title %></h2>
-                <span class="status-badge locked list <%= "hide" if project.locked_at.nil? %>">Locked</span>
-                <span class="status-badge <%= project.status %> list "><%= project.status %></span>
+                <span class="status-badge locked <%= "hide" if project.locked_at.nil? %>">Locked</span>
+                <span class="status-badge <%= project.status %>"><%= project.status %></span>
               </div>
             <% end %>
             <div class="sortable-projects" data-url="<%= sort_project_path(project.id) %>">
