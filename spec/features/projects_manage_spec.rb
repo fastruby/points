@@ -37,7 +37,7 @@ RSpec.describe "managing projects", js: true do
     end
 
     it "has an archived label" do
-      expect(page).to have_selector("span.archived")
+      expect(page).to have_text("archived")
     end
   end
 
@@ -393,7 +393,7 @@ RSpec.describe "managing projects", js: true do
       end
 
       it "shows a locked label for archived projects" do
-        archived_project = FactoryBot.create(:project, :locked, status: "archived")
+        archived_project = FactoryBot.create(:project, :locked, :archived)
         visit projects_path(archived: true)
         within "#projects" do
           expect(page).to have_text("Locked", count: 1)
