@@ -35,6 +35,10 @@ RSpec.describe "managing projects", js: true do
     it "allow me to clone the project" do
       expect(page).to have_selector(:link_or_button, "Clone Project", disabled: false)
     end
+
+    it "has an archived label" do
+      expect(page).to have_text("archived")
+    end
   end
 
   context "when the project is unarchived" do
@@ -331,29 +335,78 @@ RSpec.describe "managing projects", js: true do
     end
   end
 
-  describe "as an admin user" do
-    let(:user) { FactoryBot.create(:user, admin: true) }
-    let(:story) { FactoryBot.create(:story) }
+  describe "when locking a project" do
 
-    context "when a project is unlocked" do
-      it "locks a project" do
-        visit project_path(id: project.id)
+    context "when a user is an admin" do
+      let(:user) { FactoryBot.create(:user, admin: true) }
 
-        expect(page).to have_selector(:link_or_button, "Lock Project")
-        click_button "Lock Project"
+      context "if a project is unlocked" do
+        it "locks a project" do
+          visit project_path(id: project.id)
 
-        ["Delete Project", "Lock Project", "Add Sub-Project", "Add a Story"].each do |btn|
-          expect(page).not_to have_selector(:link_or_button, btn)
+          expect(page).to have_selector(:link_or_button, "Lock Project")
+          click_button "Lock Project"
+
+          expect_buttons_to_be_hidden
+        end
+      end
+    end
+
+    context "when a user is not an admin" do
+      let(:user) { FactoryBot.create(:user) }
+
+      context "if a project is unlocked" do
+        let(:project) { FactoryBot.create(:project) }
+
+        it "does not render locked button" do
+          visit project_path(id: project.id)
+
+          expect(page).to have_no_selector(:link_or_button, "Lock Project")
+        end
+      end
+
+      context "if a project is locked" do
+        let(:locked_project) { FactoryBot.create(:project, :locked) }
+
+        it "does not allow project to be edited" do
+          visit project_path(id: locked_project.id)
+
+          expect_buttons_to_be_hidden
         end
       end
     end
 
     context "when a project is locked" do
-      before do
-        story.project.update(locked_at: Time.current)
+      let!(:locked_project) { FactoryBot.create(:project, :locked, title: "Some Project") }
+      let(:story) { FactoryBot.create(:story) }
+
+      it "shows a locked label for projects" do
+        visit projects_path
+        within "#projects" do
+          expect(page).to have_text("Locked", count: 1)
+        end
+
+        visit project_path(locked_project)
+        within ".dashboard-title" do
+          expect(page).to have_text("Locked")
+        end
+      end
+
+      it "shows a locked label for archived projects" do
+        archived_project = FactoryBot.create(:project, :locked, :archived)
+        visit projects_path(archived: true)
+        within "#projects" do
+          expect(page).to have_text("Locked", count: 1)
+        end
+
+        visit project_path(archived_project)
+        within ".dashboard-title" do
+          expect(page).to have_text("Locked", count: 1)
+        end
       end
 
       it "hides project stories edit and delete buttons" do
+        story.project.update(locked_at: Time.current)
         visit project_story_path(story.project_id, story.id)
 
         ["Edit", "Delete"].each do |btn|
@@ -362,13 +415,21 @@ RSpec.describe "managing projects", js: true do
       end
 
       it "doesn't enable the bulk delete button" do
+        story.project.update(locked_at: Time.current)
         visit project_path(story.project)
 
         within "tr#story_#{story.id}" do
           find("input[type='checkbox'][value='#{story.id}']").set(true)
         end
+
         expect(page).to have_button("Bulk Delete", disabled: true)
       end
+    end
+  end
+
+  def expect_buttons_to_be_hidden
+    ["Delete Project", "Lock Project", "Add Sub-Project", "Add a Story"].each do |btn|
+      expect(page).not_to have_selector(:link_or_button, btn)
     end
   end
 end
