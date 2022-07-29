@@ -37,7 +37,11 @@ class ProjectsController < ApplicationController
   # PATCH /projects/1/toggle_locked.js
   def toggle_locked
     @project = Project.find(params[:id])
-    @project.update(locked_at: Time.current)
+    if @project.locked_at.nil?
+      @project.update(locked_at: Time.current)
+    else
+      @project.update(locked_at: nil)
+    end
   end
 
   def new_clone
