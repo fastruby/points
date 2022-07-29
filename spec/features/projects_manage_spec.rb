@@ -336,7 +336,6 @@ RSpec.describe "managing projects", js: true do
   end
 
   describe "when locking a project" do
-
     context "when a user is an admin" do
       let(:user) { FactoryBot.create(:user, admin: true) }
 
@@ -372,6 +371,12 @@ RSpec.describe "managing projects", js: true do
           visit project_path(id: locked_project.id)
 
           expect_buttons_to_be_hidden
+        end
+
+        it "does not render unlocked button" do
+          visit project_path(id: project.id)
+
+          expect(page).to have_no_selector(:link_or_button, "Unlock Project")
         end
       end
     end
@@ -427,9 +432,39 @@ RSpec.describe "managing projects", js: true do
     end
   end
 
+  describe "when unlocking a project" do
+    context "when a user is an admin" do
+      let(:user) { FactoryBot.create(:user, admin: true) }
+
+      context "if a project is locked" do
+        let(:locked_project) { FactoryBot.create(:project, :locked) }
+
+        it "shows an unlocked button" do
+          visit project_path(locked_project)
+          within "div.btn-group.actions" do
+            expect(page).to have_text("Unlock Project")
+          end
+        end
+
+        it "unlocks a project" do
+          visit project_path(locked_project)
+
+          click_button "Unlock Project"
+
+          within "div.btn-group.actions" do
+            expect(page).to have_text("Lock Project")
+            expect(page).not_to have_text("Unlock Project")
+          end
+        end
+      end
+    end
+  end
+
   def expect_buttons_to_be_hidden
     ["Delete Project", "Lock Project", "Add Sub-Project", "Add a Story"].each do |btn|
-      expect(page).not_to have_selector(:link_or_button, btn)
+      within "div.btn-group.actions" do
+        expect(page).not_to have_text(btn)
+      end
     end
   end
 end
