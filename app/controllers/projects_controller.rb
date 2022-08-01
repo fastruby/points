@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_project, only: [:show, :edit, :update, :sort, :sort_stories, :destroy, :new_sub_project]
+  before_action :find_project, only: [:show, :edit, :update, :sort, :sort_stories, :destroy, :new_sub_project, :toggle_archive,:toggle_locked]
   before_action :ensure_unarchived!, only: [:edit, :new_sub_project, :update]
 
   def index
@@ -30,13 +30,11 @@ class ProjectsController < ApplicationController
   end
 
   def toggle_archive
-    @project = Project.find(params[:id])
     @project.toggle_archived!
   end
 
   # PATCH /projects/1/toggle_locked.js
   def toggle_locked
-    @project = Project.find(params[:id])
     if @project.locked_at.nil?
       @project.update(locked_at: Time.current)
     else
