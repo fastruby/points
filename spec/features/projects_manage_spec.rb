@@ -446,11 +446,9 @@ RSpec.describe "managing projects", js: true do
           end
         end
 
-        it "unlocks a project" do
+        it "unlocks a project when 'Unlock Project' is clicked" do
           visit project_path(locked_project)
-
           click_button "Unlock Project"
-
           within "div.btn-group.actions" do
             expect(page).to have_text("Lock Project")
             expect(page).not_to have_text("Unlock Project")
