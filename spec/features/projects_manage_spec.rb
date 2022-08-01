@@ -460,7 +460,7 @@ RSpec.describe "managing projects", js: true do
 
   def expect_buttons_to_be_hidden
     ["Delete Project", "Lock Project", "Add Sub-Project", "Add a Story"].each do |btn|
-      within "div.btn-group.actions" do
+      within "div.container" do
         expect(page).not_to have_text(btn)
       end
     end
