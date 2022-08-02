@@ -460,7 +460,7 @@ RSpec.describe "managing projects", js: true do
 
   def expect_buttons_to_be_hidden
     ["Delete Project", "Lock Project", "Add Sub-Project", "Add a Story"].each do |btn|
-        expect(page).not_to have_selector(:link_or_button, btn)
+      expect(page).not_to have_selector(:link_or_button, btn)
     end
   end
 end

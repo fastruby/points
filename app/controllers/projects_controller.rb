@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_project, only: [:show, :edit, :update, :sort, :sort_stories, :destroy, :new_sub_project, :toggle_archive,:toggle_locked]
+  before_action :find_project, only: [:show, :edit, :update, :sort, :sort_stories, :destroy, :new_sub_project, :toggle_archive, :toggle_locked]
   before_action :ensure_unarchived!, only: [:edit, :new_sub_project, :update]
 
   def index
