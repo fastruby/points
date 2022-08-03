@@ -336,7 +336,6 @@ RSpec.describe "managing projects", js: true do
   end
 
   describe "when locking a project" do
-
     context "when a user is an admin" do
       let(:user) { FactoryBot.create(:user, admin: true) }
 
