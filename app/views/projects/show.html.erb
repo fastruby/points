@@ -101,8 +101,9 @@
   <%= render partial: "projects/import_export" if is_unlocked?(@project) %>
 
   <div class="btn-group actions">
-    <% if is_unlocked?(@project) && current_user.admin? %>
-      <%= button_to 'Lock Project', toggle_locked_project_path(@project.id), method: :patch, class: "button magenta ", id: "lock-btn", remote: true %>
+
+    <% if current_user.admin? %>
+      <%= button_to is_unlocked?(@project) ? 'Lock Project' : 'Unlock Project', toggle_locked_project_path(@project.id), method: :patch, class: "button magenta ", id: "lock-btn", remote: true %>
     <% end %>
 
     <% if is_unlocked?(@project) %>
