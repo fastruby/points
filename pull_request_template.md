@@ -3,7 +3,7 @@
 ### Jira Ticket 
 <!--- Add a link to the Jira ticket associated with this PR -->
 
-### Motivation and Context
+### Motivation / Context
 <!--- Why is this change required? What problem does it solve? -->
 <!--- Describe the approach to solve the problem or complete the task -->
     
