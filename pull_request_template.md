@@ -7,7 +7,7 @@
 <!--- Why is this change required? What problem does it solve? -->
 <!--- Describe the approach to solve the problem or complete the task -->
     
-### QA and Testing Instructions
+### QA / Testing Instructions
 <!--- Include any relevant details about testing and QA steps to be followed -->
 
 ### Screenshots:
