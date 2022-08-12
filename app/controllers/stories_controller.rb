@@ -45,7 +45,7 @@ class StoriesController < ApplicationController
   end
 
   def show
-    @estimate = Estimate.where(story: @story, user: current_user).first
+    @estimate = Estimate.find_by(story: @story, user: current_user)
   end
 
   def update
@@ -76,7 +76,7 @@ class StoriesController < ApplicationController
       redirect_to(@project) && return
     else
       file.each do |story_csv|
-        story = @project.stories.where(id: story_csv["id"]).first || @project.stories.new
+        story = @project.stories.find_by(id: story_csv["id"]) || @project.stories.new
         story.update(title: story_csv["title"], description: story_csv["description"], position: story_csv["position"])
       end
       flash[:success] = "CSV import was successful"

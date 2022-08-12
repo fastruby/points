@@ -2,13 +2,14 @@
   <h1 class="home-title">Projects</h1>
 
   <% if @projects.any? %>
-    <div class="row">
+    <div class="row" id="projects">
       <% @projects.each do | project | %>
         <div class="col-sm-6 col-lg-4">
           <div class="project-card" id="project_<%= project.id %>">
             <%= link_to project_path(project.id) do %>
               <div>
                 <h2><%= project.title %></h2>
+                <span class="status-badge locked <%= "hide" if project.locked_at.nil? %>">Locked</span>
                 <span class="status-badge <%= project.status %>"><%= project.status %></span>
               </div>
             <% end %>

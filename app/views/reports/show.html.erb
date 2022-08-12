@@ -1,6 +1,8 @@
 <div class="container">
-  <h1 class="dashboard-title-report"><%= @project.title %> Report</h1>
-
+  <div class="heading">
+    <h1 class="dashboard-title-report"><%= @project.title %> Report</h1>
+    <span class="status-badge locked <%= "hide" if @project.locked_at.nil? %>">Locked</span>
+  </div>
   <table class="project-table">
     <thead class="fixed-header">
       <tr class="project-table__row project-table__row--reports project-table__row--header">
