@@ -1,0 +1,4 @@
+#!/bin/bash
+
+docker-compose up -d web && docker attach $(docker-compose ps -q web)
+

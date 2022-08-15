@@ -1,0 +1,38 @@
+#!/usr/bin/env ruby
+require "pathname"
+require "fileutils"
+include FileUtils
+
+# path to your application root.
+APP_ROOT = Pathname.new File.expand_path("../../", __FILE__)
+
+def system!(*args)
+  system(*args) || abort("\n== Command #{args} failed ==")
+end
+
+DOCKER_PREFIX = "docker-compose run --rm web "
+
+chdir APP_ROOT do
+  puts "== Copy .env =="
+  unless File.exist?(".env")
+    cp ".env.sample", ".env"
+  end
+
+  puts "== Build container =="
+  system! "docker-compose build"
+
+  puts "== Configuring app  =="
+  unless File.exist?("config/database.yml")
+    puts "\n== Copying sample files =="
+    cp "config/database.yml.sample", "config/database.yml"
+  end
+
+  puts "\n== Setting up the database  =="
+  system! "#{DOCKER_PREFIX} rails db:setup"
+
+  puts "== Install yarn packages =="
+  system! "#{DOCKER_PREFIX} yarn install"
+
+  puts "== Configuration finished successfully!! =="
+end
+

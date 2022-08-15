@@ -56,24 +56,18 @@ $ rails spec
 
 Build the points docker image
 
-```
-$ docker-compose build
-```
-
-Setup database and run migrations
-
-```
-$ docker-compose run web rails db:setup
+```bash
+./bin/setup_with_docker
 ```
 
 Run the app
 
 ```
-$ docker-compose up web
+./bin/start_with_docker
 
 or
 
-$ docker-compose up web-next
+docker-compose up web-next
 ```
 
 ## Admin Users
@@ -85,7 +79,11 @@ Currently, the only way to flag a user as `admin` is a direct database update us
 If you want to set the flag for a user, you can follow these steps:
 
 ```bash
-$ rails c
+rails console
+
+or
+
+docker-compose run --rm web rails console
 ```
 
 and then:
