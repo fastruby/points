@@ -92,6 +92,12 @@ and then:
 User.find_by(email: "user@example.com").update_attribute(:admin, true)
 ```
 
+## Rack Mini Profiler
+
+To enable the Rack Mini Profiler widget, add the `?enable_rack_mini_profiler` query string to any url. The widget will stay on for all requests until disabled.
+
+To disable the Rack Mini Profiler widget, add the `?disable_rack_mini_profiler` query string to any url.
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at [https://github.com/fastruby/points](https://github.com/fastruby/points). This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.

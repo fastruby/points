@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
   protect_from_forgery with: :exception
-  before_action :enable_rack_mini_profiler
+  before_action :toggle_rack_mini_profiler
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def hello
@@ -15,8 +15,19 @@ class ApplicationController < ActionController::Base
   private
 
   # we can enable this for everybody, it's hidden by default
-  def enable_rack_mini_profiler
-    Rack::MiniProfiler.authorize_request
+  def toggle_rack_mini_profiler
+    show =
+      if params.key?(:enable_rack_mini_profiler)
+        cookies[:rack_mini_profiler] = "show"
+        true
+      elsif params.key?(:disable_rack_mini_profiler)
+        cookies.delete(:rack_mini_profiler)
+        false
+      end
+
+    if show || cookies[:rack_mini_profiler]
+      Rack::MiniProfiler.authorize_request
+    end
   end
 
   def user_not_authorized
