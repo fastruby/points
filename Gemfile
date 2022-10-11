@@ -87,7 +87,6 @@ group :test do
   gem "webdrivers"
   gem "database_cleaner"
   gem "capybara-screenshot"
-  gem "simplecov", require: false
 end
 
 group :development do
