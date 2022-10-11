@@ -193,7 +193,6 @@ GEM
       digest
       net-protocol
       timeout
-    newrelic_rpm (8.8.0)
     next_rails (1.0.5)
       colorize (>= 0.8.1)
     nio4r (2.5.8)
@@ -398,7 +397,6 @@ DEPENDENCIES
   listen (~> 3.7)
   matrix
   mimemagic (~> 0.3.8)
-  newrelic_rpm
   next_rails
   omniauth-github (~> 2.0.0)
   omniauth-rails_csrf_protection
