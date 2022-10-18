@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class DeviseCreateOmbuLabsAuthUsers < ActiveRecord::Migration[7.0]
+class DeviseCreateUsers < ActiveRecord::Migration[7.0]
   def change
-    create_table :ombu_labs_auth_users do |t|
+    create_table :users do |t|
       ## Database authenticatable
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
@@ -36,9 +36,9 @@ class DeviseCreateOmbuLabsAuthUsers < ActiveRecord::Migration[7.0]
       t.timestamps null: false
     end
 
-    add_index :ombu_labs_auth_users, :email,                unique: true
-    add_index :ombu_labs_auth_users, :reset_password_token, unique: true
-    # add_index :ombu_labs_auth_users, :confirmation_token,   unique: true
-    # add_index :ombu_labs_auth_users, :unlock_token,         unique: true
+    add_index :users, :email,                unique: true
+    add_index :users, :reset_password_token, unique: true
+    # add_index :users, :confirmation_token,   unique: true
+    # add_index :users, :unlock_token,         unique: true
   end
 end
