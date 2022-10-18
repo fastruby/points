@@ -111,3 +111,5 @@ gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "coffee-script"
 
 gem "pundit", "~> 2.2"
+
+gem 'ombu_labs-auth', path: 'lib/ombu_labs-auth'
