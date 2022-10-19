@@ -8,9 +8,9 @@
         <nav>
           <ul class="nav">
             <% if current_user %>
-              <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "button magenta" %>
+              <%= link_to "Sign out", ombu_labs_auth.destroy_user_session_path, method: :delete, class: "button magenta" %>
             <% else %>
-              <%= link_to "Sign in", new_user_session_path, class: "button" %>
+              <%= link_to "Sign in", ombu_labs_auth.new_user_session_path, class: "button" %>
             <% end %>
           </ul>
         </nav>
