@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  mount OmbuLabs::Auth::Engine, at: '/', as: 'ombu_labs_auth'
 
   authenticated do
     root to: "projects#index", as: :authenticated_root
