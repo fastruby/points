@@ -64,6 +64,7 @@ RSpec.describe ProjectsController, type: :controller do
   describe "#create" do
     context "with valid attributes" do
       let(:valid_params) { FactoryBot.attributes_for(:project) }
+      let(:valid_sub_proj_params) { FactoryBot.attributes_for(:project, parent_id: project.id) }
 
       it "creates a new project" do
         expect {
@@ -74,7 +75,13 @@ RSpec.describe ProjectsController, type: :controller do
       it "redirects to the new project" do
         post :create, params: {project: valid_params}
 
-        expect(response).to redirect_to "/projects"
+        expect(response).to redirect_to project_path(Project.last)
+      end
+
+      it "redirects to parent of new sub project" do
+        post :create, params: {project: valid_sub_proj_params}
+
+        expect(response).to redirect_to project_path(project)
       end
     end
 
