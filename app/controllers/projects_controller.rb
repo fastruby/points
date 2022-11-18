@@ -62,7 +62,7 @@ class ProjectsController < ApplicationController
     @project = Project.new(projects_params)
     if @project.save
       flash[:success] = "Project created!"
-      redirect_to "/projects"
+      redirect_to project_path(parent_id)
     else
       flash.now[:error] = @project.errors.full_messages
       render :new
@@ -116,5 +116,13 @@ class ProjectsController < ApplicationController
 
   def clone_params
     params.require(:project).permit(:title, :parent_id)
+  end
+
+  def parent_id
+    if @project.parent_id.nil?
+      @project.id
+    else
+      @project.parent_id
+    end
   end
 end
