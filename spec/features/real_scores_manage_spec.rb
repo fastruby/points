@@ -11,7 +11,8 @@ RSpec.describe "managing real scores", js: true do
 
   it "allows me to edit a real score" do
     visit project_report_path(project.id)
-    click_link "Populate Real Scores"
+    click_link "Edit Real Scores"
+    expect(page).to have_field("stories[story_#{story.id}]", with: story.real_score.to_s)
     fill_in "stories[story_#{story.id}]", with: 5
     click_button "Submit"
     expect(story.reload.real_score).to eq 5
