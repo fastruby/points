@@ -1,9 +1,9 @@
 <div class="container">
   <h1 class="dashboard-title"><%= @project.title %> Real Scores</h1>
   <%= form_with scope: :stories, url: real_scores_project_stories_path(@project), method: :patch do |form| %>
-    
+
     <table class="project-table">
-      
+
       <thead>
         <tr class="project-table__row project-table__row--real-scores project-table__row--header">
           <td class="project-table__cell">Story Title</td>
@@ -20,7 +20,7 @@
               <td class="project-table__cell"><%= link_to story.title, [@project, story], target: "_blank" %></td>
               <td class="project-table__cell"><%= best_estimate_for_story(story) %></td>
               <td class="project-table__cell"><%= worst_estimate_for_story(story) %></td>
-              <td class="project-table__cell"><%= form.number_field "story_#{story.id}" %></td>
+              <td class="project-table__cell"><%= form.number_field "story_#{story.id}", value: "#{story.real_score}" %></td>
             </tr>
           <% end %>
         <% else %>
@@ -42,7 +42,5 @@
 
   <div class="btn-group">
     <%= link_to 'Back', reports_index_path, id:"back", class: "button" %>
-
-    <%= link_to 'Populate Real Scores', class: "button" %>
   </div>
 </div>
