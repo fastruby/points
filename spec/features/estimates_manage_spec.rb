@@ -22,7 +22,7 @@ RSpec.describe "managing estimates", js: true do
 
     it "allows me to add an estimate" do
       set_estimates(3, 8)
-      click_button "Create"
+      click_button "Save changes"
       expect(Estimate.count).to eq 1
 
       expect(page).to have_content "3"
@@ -31,7 +31,7 @@ RSpec.describe "managing estimates", js: true do
 
     it "allows me to add an estimate", js: false do
       set_estimates(3, 8)
-      click_button "Create"
+      click_button "Save changes"
       expect(Estimate.count).to eq 1
       expect(page).to have_content "Estimate created!"
     end
@@ -52,7 +52,7 @@ RSpec.describe "managing estimates", js: true do
 
     it "allows me to edit an estimate" do
       set_estimates(1, 2)
-      click_button "Save Changes"
+      click_button "Save changes"
 
       expect(page).to have_content "1"
       expect(page).to have_content "2"
@@ -60,7 +60,7 @@ RSpec.describe "managing estimates", js: true do
 
     it "allows me to edit an estimate", js: false do
       set_estimates(1, 2)
-      click_button "Save Changes"
+      click_button "Save changes"
       expect(page).to have_content "Estimate updated!"
     end
   end
@@ -75,7 +75,7 @@ RSpec.describe "managing estimates", js: true do
 
     it "shows me an error message" do
       set_estimates(21, 1)
-      click_button "Save Changes"
+      click_button "Save changes"
       expect(page).to have_content "Validation error Worst case estimate should be greater than best case estimate."
     end
   end
@@ -103,7 +103,7 @@ RSpec.describe "managing estimates", js: true do
         expect(current_path).to eq project_path(id: project.id)
 
         set_estimates(3, 8)
-        click_button "Create"
+        click_button "Save changes"
       end
       expect_closed_modal
 
@@ -118,7 +118,7 @@ RSpec.describe "managing estimates", js: true do
         expect(page).to have_content(story.description)
 
         set_estimates(5, 8)
-        click_button "Save Changes"
+        click_button "Save changes"
       end
       expect_closed_modal
 
@@ -128,7 +128,7 @@ RSpec.describe "managing estimates", js: true do
 
       within_modal do
         set_estimates(5, 13)
-        click_button "Save Changes"
+        click_button "Save changes"
       end
       expect_closed_modal
 
@@ -149,7 +149,7 @@ RSpec.describe "managing estimates", js: true do
         # make sure the delete button is not there during creation
         expect(page).to have_selector("a", text: "Delete Estimate", count: 0)
 
-        click_button "Create"
+        click_button "Save changes"
       end
       expect_closed_modal
 
