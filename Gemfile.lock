@@ -415,7 +415,7 @@ DEPENDENCIES
   next_rails
   omniauth-github (~> 2.0.0)
   omniauth-rails_csrf_protection
-  pg (~> 1.1)
+  pg
   puma (~> 6.2)
   pundit (~> 2.2)
   rack-mini-profiler
@@ -436,7 +436,7 @@ DEPENDENCIES
   webdrivers
 
 RUBY VERSION
-   ruby 3.1.3p185
+   ruby 3.2.2p53
 
 BUNDLED WITH
    2.4.10
