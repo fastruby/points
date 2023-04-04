@@ -20,6 +20,6 @@ module ReportsHelper
 
     return "-" if estimate.nil?
 
-    estimate_type == "best" ? estimate.best_case_points : estimate.worst_case_points
+    (estimate_type == "best") ? estimate.best_case_points : estimate.worst_case_points
   end
 end

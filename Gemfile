@@ -4,7 +4,7 @@ def next?
   File.basename(__FILE__) == "Gemfile.next"
 end
 
-ruby "3.1.1"
+ruby "3.2.2"
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
@@ -54,7 +54,7 @@ gem "jbuilder", "~> 2.5"
 # gem 'capistrano-rails', group: :development
 gem "jquery-rails"
 
-gem "pg", "~> 1.1"
+gem "pg"
 
 gem "jquery-ui-rails", "~> 5.0", ">= 5.0.5"
 gem "acts_as_list"

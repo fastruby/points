@@ -4,7 +4,7 @@ class ProjectsController < ApplicationController
   before_action :ensure_unarchived!, only: [:edit, :new_sub_project, :update]
 
   def index
-    status = params[:archived] == "true" ? "archived" : nil
+    status = (params[:archived] == "true") ? "archived" : nil
     @projects = Project.where(parent_id: nil, status: status)
   end
 
