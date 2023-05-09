@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  draw :madmin
   devise_for :users, controllers: {omniauth_callbacks: "callbacks"}
 
   authenticated do
