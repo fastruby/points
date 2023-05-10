@@ -2,15 +2,8 @@ class UserResource < Madmin::Resource
   # Attributes
   attribute :id, form: false
   attribute :email
-  attribute :sign_in_count, form: false
-  attribute :current_sign_in_at
-  attribute :last_sign_in_at
-  attribute :current_sign_in_ip
-  attribute :last_sign_in_ip
-  attribute :admin
   attribute :name
-  attribute :provider
-  attribute :uid
+  attribute :admin
 
   # Associations
   attribute :estimates
