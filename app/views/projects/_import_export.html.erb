@@ -21,7 +21,7 @@
           <%= form_with(url: import_project_stories_path(@project), method: :patch, remote: false) do |f| %>
             <%= f.file_field :file %>
             <div class="btn-group">
-              <%= f.submit 'Import', class: 'button magenta' %>
+              <%= f.submit 'Import', class: 'button green' %>
             </div>
           <% end %>
         </div>
@@ -31,7 +31,7 @@
           <h4 class="my-0 font-weight-normal">Export CSV</h4>
         </div>
         <div class="card-body">
-          <%= link_to 'Export', export_project_stories_path(@project), class:"button magenta" %>
+          <%= link_to 'Export', export_project_stories_path(@project), class: "button green" %>
         </div>
       </div>
     </div>

@@ -14,7 +14,9 @@
   <div class="field">
     <%= f.label :title %>
     <%= f.text_field :title, placeholder: "Project Title", class: "project-story-title", autofocus: true %>
-  </div><div class="btn-group">
-    <%= f.submit yield(:button_text), class: "button", id: "edit" %>
+  </div>
+
+  <div class="btn-group">
+    <%= f.submit yield(:button_text), class: "button green", id: "edit" %>
   </div>
 <% end %>
