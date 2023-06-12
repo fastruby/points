@@ -17,10 +17,8 @@ if next?
   # read more about it here: https://github.com/rails/rails/issues/43998,
   # and here: https://gist.github.com/claudiug/bdc2fb70b10d19513208c816588aed92
   gem "rails", github: "rails/rails", branch: "7-0-stable"
-  gem "devise", github: "heartcombo/devise", branch: "main"
 else
   gem "rails", "~> 7.0.2"
-  gem "devise"
 end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 
@@ -61,8 +59,7 @@ gem "acts_as_list"
 
 gem "mimemagic", "~> 0.3.8"
 
-gem "omniauth-github", "~> 2.0.0"
-gem "omniauth-rails_csrf_protection"
+gem "ombu_labs-auth"
 
 gem "rack-mini-profiler"
 

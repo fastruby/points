@@ -36,6 +36,8 @@ GITHUB_APP_ID=xxxxxxxxxxxxxxxxxxxx
 GITHUB_APP_SECRET=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
+`SHOW_DEVELOPER_AUTH=true` can be used to allow easy login without requiring GitHub's setup during local development or in safe review environments.
+
 ## Starting the Server
 
 ```
