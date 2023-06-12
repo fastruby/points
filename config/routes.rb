@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   draw :madmin
-  devise_for :users, controllers: {omniauth_callbacks: "callbacks"}
+
+  mount OmbuLabs::Auth::Engine, at: "/", as: "ombu_labs_auth"
 
   authenticated do
     root to: "projects#index", as: :authenticated_root

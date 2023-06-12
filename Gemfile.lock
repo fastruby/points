@@ -117,7 +117,7 @@ GEM
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
     date (3.3.3)
-    devise (4.9.1)
+    devise (4.8.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 4.1.0)
@@ -209,6 +209,12 @@ GEM
       rack (>= 1.2, < 4)
       snaky_hash (~> 2.0)
       version_gem (~> 1.1)
+    ombu_labs-auth (1.0.0)
+      devise (~> 4.8.1)
+      omniauth (~> 2.1.0)
+      omniauth-github (~> 2.0.0)
+      omniauth-rails_csrf_protection
+      rails (>= 6.0)
     omniauth (2.1.1)
       hashie (>= 3.4.6)
       rack (>= 2.2.3)
@@ -419,8 +425,7 @@ DEPENDENCIES
   mimemagic (~> 0.3.8)
   newrelic_rpm
   next_rails
-  omniauth-github (~> 2.0.0)
-  omniauth-rails_csrf_protection
+  ombu_labs-auth
   pg
   puma (~> 6.2)
   pundit (~> 2.2)

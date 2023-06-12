@@ -6,7 +6,7 @@ RSpec.describe ActionPlansController, type: :controller do
   describe "#show" do
     it "redirects to sign_in route if not authenticated" do
       get :show, params: {project_id: project.id}
-      expect(response).to redirect_to(new_user_session_path)
+      expect(response).to redirect_to(ombu_labs_auth.new_user_session_path)
     end
 
     it "returns view when user is signed in" do

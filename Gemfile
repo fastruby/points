@@ -61,8 +61,7 @@ gem "acts_as_list"
 
 gem "mimemagic", "~> 0.3.8"
 
-gem "omniauth-github", "~> 2.0.0"
-gem "omniauth-rails_csrf_protection"
+gem "ombu_labs-auth"
 
 gem "rack-mini-profiler"
 
