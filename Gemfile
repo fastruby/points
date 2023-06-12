@@ -17,10 +17,8 @@ if next?
   # read more about it here: https://github.com/rails/rails/issues/43998,
   # and here: https://gist.github.com/claudiug/bdc2fb70b10d19513208c816588aed92
   gem "rails", github: "rails/rails", branch: "7-0-stable"
-  gem "devise", github: "heartcombo/devise", branch: "main"
 else
   gem "rails", "~> 7.0.2"
-  gem "devise"
 end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 

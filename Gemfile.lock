@@ -412,7 +412,6 @@ DEPENDENCIES
   capybara-screenshot
   coffee-script
   database_cleaner
-  devise
   dotenv-rails
   factory_bot_rails
   faker
