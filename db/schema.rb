@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_21_141342) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_31_175732) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -31,6 +31,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_21_141342) do
     t.integer "parent_id"
     t.integer "position"
     t.datetime "locked_at", precision: nil
+    t.bigint "version_jump_id"
+    t.index ["version_jump_id"], name: "index_projects_on_version_jump_id"
   end
 
   create_table "stories", force: :cascade do |t|
@@ -63,6 +65,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_21_141342) do
     t.string "uid"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "version_jumps", force: :cascade do |t|
+    t.string "technology"
+    t.string "initial_version"
+    t.string "target_version"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

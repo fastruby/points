@@ -4,5 +4,6 @@ namespace :madmin do
   resources :stories
   resources :estimates, except: [:update, :edit, :create]
   resources :users, except: [:update, :edit, :create]
+  resources :version_jumps
   root to: "dashboard#show"
 end

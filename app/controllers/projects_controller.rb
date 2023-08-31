@@ -43,7 +43,7 @@ class ProjectsController < ApplicationController
   end
 
   def new_clone
-    @original = Project.includes(:projects, stories: :estimates).find(params[:id])
+    @original = Project.includes(:projects, :version_jump, stories: :estimates).find(params[:id])
   end
 
   def clone
@@ -111,11 +111,11 @@ class ProjectsController < ApplicationController
   end
 
   def projects_params
-    params.require(:project).permit(:title, :status, :parent_id)
+    params.require(:project).permit(:title, :status, :parent_id, :version_jump_id)
   end
 
   def clone_params
-    params.require(:project).permit(:title, :parent_id)
+    params.require(:project).permit(:title, :parent_id, :version_jump_id)
   end
 
   def parent_id

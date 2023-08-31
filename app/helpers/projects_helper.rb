@@ -17,6 +17,13 @@ module ProjectsHelper
     end
   end
 
+  def version_jump_badge(project)
+    return "" unless project.version_jump
+
+    jump = project.version_jump
+    content_tag(:span, jump.to_label, class: "status-badge version-jump")
+  end
+
   private
 
   def text_content(icon, text)

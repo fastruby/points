@@ -4,6 +4,7 @@ class Project < ApplicationRecord
   has_many :stories
   has_many :estimates, through: :stories
   has_many :users, through: :estimates
+  belongs_to :version_jump, optional: true
 
   belongs_to :parent, class_name: "Project", required: false
   has_many :projects, class_name: "Project", foreign_key: :parent_id, dependent: :destroy
@@ -50,6 +51,10 @@ class Project < ApplicationRecord
     return parent.archived? if parent_id.present?
 
     status == "archived"
+  end
+
+  def locked?
+    locked_at.present?
   end
 
   def breadcrumb

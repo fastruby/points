@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe "managing projects", js: true do
   let(:user) { FactoryBot.create(:user) }
   let(:project) { FactoryBot.create(:project) }
+  let!(:version_jump) { VersionJump.create(technology: "Rails", initial_version: "4.2", target_version: "5.0") }
 
   before do
     login_as(user, scope: :user)
@@ -16,9 +17,16 @@ RSpec.describe "managing projects", js: true do
   it "allows me to add a project" do
     visit root_path
     click_link "Add a Project"
-    fill_in "project[title]", with: "Super Project"
-    click_button "Create"
-    expect(Project.count).to eq 1
+    fill_in "Title", with: "Super Project"
+    select "Rails / 4.2 - 5.0", from: "Version jump"
+
+    expect {
+      click_button "Create"
+    }.to change(Project, :count).by 1
+
+    project = Project.last
+    expect(project.title).to eq "Super Project"
+    expect(project.version_jump.to_label).to eq "Rails / 4.2 - 5.0"
   end
 
   context "when the project is archived" do
@@ -84,10 +92,14 @@ RSpec.describe "managing projects", js: true do
       it "allows me to add sub projects" do
         visit project_path(id: project.id)
         click_link "Add Sub-Project"
-        fill_in "project[title]", with: "Super Sub Project"
-        click_button "Create"
-        expect(page).to have_content "Project created!"
+        fill_in "Title", with: "Super Sub Project"
+        expect {
+          click_button "Create"
+        }.to change(Project, :count).by 1
         expect(current_path).to eq project_path(id: project.id)
+
+        sub = project.projects.last
+        expect(sub.title).to eq "Super Sub Project"
       end
 
       it "lists available sub projects with a link" do
@@ -203,7 +215,7 @@ RSpec.describe "managing projects", js: true do
 
         expect(page).to have_text("Clone project #{project.title}")
 
-        fill_in :project_title, with: "Cloned Project"
+        fill_in "Title", with: "Cloned Project"
 
         expect {
           click_button "Clone"
