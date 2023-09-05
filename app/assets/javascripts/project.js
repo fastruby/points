@@ -105,7 +105,7 @@ const filterStories = () => {
     const storyTitle = element
       .querySelector("td:first-child")
       .innerText.toLowerCase();
-    if (storyTitle.includes(searchTerm) || element.id.includes(searchTerm)) {
+    if (storyTitle.includes(searchTerm) || element.id.replace(/\D/g, '').includes(searchTerm)) {
       cl.remove("hidden");
     } else {
       cl.add("hidden");
