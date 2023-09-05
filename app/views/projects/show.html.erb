@@ -28,7 +28,7 @@
               <tr class="project-table__row project-table__row--story" id="<%= dom_id(story)%>" >
                 <td class="project-table__cell">
                   <input type="checkbox" name="stories[]" value="<%= story.id %>">
-                  <%= link_to story.title, [story.project, story] %>
+                  <%= link_to "#{story.id} - #{story.title}", [story.project, story] %>
                   <button class="copy-link btn-clipboard" data-clipboard-text="<%= project_story_url(@project, story) %>" title='Copy story'><i class="fa fa-link"></i><span class= "popup">Copied to clipboard</span></button>
                 </td>
                 <td class="project-table__cell"><%= story.estimate_for(current_user)&.best_case_points %></td>
