@@ -3,7 +3,7 @@
     <h1 class="dashboard-title"><%= render partial: "shared/project_title", locals: {allow_edit: true, project: @project} %></h1>
 
     <div class="search-field">
-      <%= label_tag 'title_contains', "Filter by title" %>
+      <%= label_tag 'title_contains', "Filter by title or ID" %>
       <%= search_field_tag 'title_contains', nil, onkeyup: "filterStories()" %>
     </div>
   </div>
