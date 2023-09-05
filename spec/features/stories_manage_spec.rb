@@ -101,82 +101,109 @@ RSpec.describe "managing stories", js: true do
     expect(Story.count).to eq 1
   end
 
-  it "shows a preview of the description while typing", js: true do
-    visit project_path(id: project.id)
-    click_link "Add a Story"
-    fill_in "story[title]", with: "As a user, I want to add stories"
+  context "previews" do
+    it "shows a preview of the description while typing", js: true do
+      visit project_path(id: project.id)
+      click_link "Add a Story"
+      fill_in "story[title]", with: "As a user, I want to add stories"
 
-    desc = <<~DESC
-      This story allows users to add stories.
+      desc = <<~DESC
+        This story allows users to add stories.
 
-          some
-          code
+            some
+            code
 
-    DESC
+      DESC
 
-    expect(page).to have_text("Description Preview")
-    fill_in "story[description]", with: desc
-    expect(find("#story_description").value).to have_text("This story allows users to add stories.\n\n    some\n    code\n\n")
+      expect(page).to have_text("Description Preview")
+      fill_in "story[description]", with: desc
+      expect(find("#story_description").value).to have_text("This story allows users to add stories.\n\n    some\n    code\n\n")
 
-    within(".story_preview .content") do
-      expect(page).to have_text("This story allows users to add stories.")
-      expect(page).to have_selector("pre", text: "some\ncode")
+      within(".story_preview .content") do
+        expect(page).to have_text("This story allows users to add stories.")
+        expect(page).to have_selector("pre", text: "some\ncode")
+      end
+
+      click_button "Create"
+
+      expect(page).to have_text(project.title)
+
+      story = Story.last
+      within_story_row(story) do
+        click_button "More actions"
+        click_link "Edit"
+      end
+
+      expect(page).to have_text("Edit Story")
+
+      within(".story_preview .content") do
+        expect(page).to have_text("This story allows users to add stories.")
+        expect(page).to have_selector("pre", text: "some\ncode")
+      end
     end
 
-    click_button "Create"
+    it "shows a preview of the extra information while typing" do
+      visit project_path(id: project.id)
+      click_link "Add a Story"
+      fill_in "story[title]", with: "As a user, I want to add stories"
 
-    expect(page).to have_text(project.title)
+      desc = <<~DESC
+        This story allows users to add extra information.
 
-    story = Story.last
-    within_story_row(story) do
-      click_button "More actions"
-      click_link "Edit"
+            some
+            codes
+
+      DESC
+
+      expect(page).to have_text("Extra Info Preview")
+      fill_in "story[extra_info]", with: desc
+
+      within(".extra_info_preview .content") do
+        expect(page).to have_selector("p", text: "This story allows users to add extra information.")
+        expect(page).to have_selector("pre", text: "some\ncodes")
+      end
+
+      click_button "Create"
+
+      expect(page).to have_text(project.title)
+
+      story = Story.last
+      within_story_row(story) do
+        click_button "More actions"
+        click_link "Edit"
+      end
+
+      expect(page).to have_text("Edit Story")
+
+      within(".extra_info_preview .content") do
+        expect(page).to have_selector("p", text: "This story allows users to add extra information.")
+        expect(page).to have_selector("pre", text: "some\ncodes")
+      end
     end
 
-    expect(page).to have_text("Edit Story")
+    it "debounces the requests to update the preview to not flood the server" do
+      renderer = double(:markdown_renderer)
+      allow(renderer).to receive(:render).and_return("<span>preview</span>")
+      allow(Redcarpet::Markdown).to receive(:new).and_return(renderer)
 
-    within(".story_preview .content") do
-      expect(page).to have_text("This story allows users to add stories.")
-      expect(page).to have_selector("pre", text: "some\ncode")
-    end
-  end
+      visit project_path(id: project.id)
+      click_link "Add a Story"
+      fill_in "story[title]", with: "As a user, I want to add stories"
 
-  it "shows a preview of the extra information while typing" do
-    visit project_path(id: project.id)
-    click_link "Add a Story"
-    fill_in "story[title]", with: "As a user, I want to add stories"
+      fill_in "story[description]", with: "desc 1"
+      fill_in "story[description]", with: "desc 2"
+      fill_in "story[description]", with: "desc 3"
 
-    desc = <<~DESC
-      This story allows users to add extra information.
+      # wait until requests are triggered
+      sleep(0.5)
 
-          some
-          codes
+      fill_in "story[description]", with: "desc 4"
+      sleep(0.5)
 
-    DESC
-
-    expect(page).to have_text("Extra Info Preview")
-    fill_in "story[extra_info]", with: desc
-
-    within(".extra_info_preview .content") do
-      expect(page).to have_selector("p", text: "This story allows users to add extra information.")
-      expect(page).to have_selector("pre", text: "some\ncodes")
-    end
-
-    click_button "Create"
-
-    expect(page).to have_text(project.title)
-
-    story = Story.last
-    within_story_row(story) do
-      click_button "More actions"
-      click_link "Edit"
-    end
-
-    expect(page).to have_text("Edit Story")
-
-    within(".extra_info_preview .content") do
-      expect(page).to have_selector("p", text: "This story allows users to add extra information.")
-      expect(page).to have_selector("pre", text: "some\ncodes")
+      # twice for the initial render of the page (description and extra info)
+      # once for the preview of the 3 consecutive inputs
+      # once for the preview of the 4th input
+      expect(renderer).to have_received(:render).exactly(4).times
     end
   end
 
