@@ -10,6 +10,7 @@ class ProjectResource < Madmin::Resource
   attribute :users
   attribute :parent
   attribute :projects
+  attribute :version_jump
 
   def self.display_name(record)
     record.title.truncate(20)
