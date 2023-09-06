@@ -108,6 +108,7 @@
     <% end %>
 
     <%= link_to 'Clone Project', new_clone_project_path(@project.id), class: "button green" %>
+    <%= link_to 'Edit Project', edit_project_path(@project.id), class: "button green" %>
 
     <% if is_unlocked?(@project) %>
       <%= link_unless_archived(@project, "Add Sub-Project", project_new_sub_project_path(@project), classes: :green) unless @project.parent_id.present? %>

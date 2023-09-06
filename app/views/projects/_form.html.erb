@@ -16,6 +16,11 @@
     <%= f.text_field :title, placeholder: "Project Title", class: "project-story-title", autofocus: true %>
   </div>
 
+  <div class="select">
+    <%= f.label :version_jump_id %>
+    <%= f.select :version_jump_id, options_from_collection_for_select(VersionJump.all, :id, :to_label) %>
+  </div>
+
   <div class="btn-group">
     <%= f.submit yield(:button_text), class: "button green", id: "edit" %>
   </div>

@@ -12,6 +12,11 @@
       <%= f.select :parent_id, options_from_collection_for_select(Project.active.parents, :id, :title, selected: @original.parent_id), include_blank: "None" %>
     </div>
 
+    <div class="select">
+      <%= f.label :version_jump_id %>
+      <%= f.select :version_jump_id, options_from_collection_for_select(VersionJump.all, :id, :to_label) %>
+    </div>
+
     <% if @original.projects.any? %>
       <div id="sub-projects-to-clone">
         <h4>Sub-projects to clone</h4>

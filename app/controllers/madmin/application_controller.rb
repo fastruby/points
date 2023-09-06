@@ -1,5 +1,6 @@
 module Madmin
   class ApplicationController < Madmin::BaseController
+    include Pundit::Authorization
     before_action :ensure_admin
 
     def ensure_admin

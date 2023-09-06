@@ -1,19 +1,16 @@
-class ProjectResource < Madmin::Resource
+class VersionJumpResource < Madmin::Resource
   # Attributes
   attribute :id, form: false
-  attribute :title
-  attribute :status
+  attribute :technology
+  attribute :initial_version
+  attribute :target_version
 
   # Associations
-  attribute :stories
-  attribute :estimates
-  attribute :users
-  attribute :parent
-  attribute :projects
-  attribute :version_jump
+  attribute :projects, form: false
 
+  # Uncomment this to customize the display name of records in the admin area.
   def self.display_name(record)
-    record.title.truncate(20)
+    record.to_label
   end
 
   # Uncomment this to customize the default sort column and direction.

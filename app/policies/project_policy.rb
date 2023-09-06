@@ -7,6 +7,8 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def update?
+    return false unless project.is_a?(Project)
+
     return !project.locked_at? if project.parent_id.nil?
 
     !project.parent.locked_at?

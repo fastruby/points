@@ -10,7 +10,7 @@
   font-size: 11px;
 
   &.archived {
-    background-color: rgba(29,78,216,0.2);
+    background-color: rgba(29, 78, 216, 0.2);
     border-color: #1d4ed8;
   }
 
@@ -19,4 +19,7 @@
     border-color: #d77e72;
   }
 
+  &.version-jump {
+    background-color: #57ce81;
+  }
 }

@@ -17,6 +17,11 @@
     <%= f.hidden_field :parent_id, value: parent.id %>
   </div>
 
+  <div class="select">
+    <%= f.label :version_jump_id %>
+    <%= f.select :version_jump_id, options_from_collection_for_select(VersionJump.all, :id, :to_label) %>
+  </div>
+
   <div class="btn-group">
     <%= f.submit yield(:button_text), class: "button green", id: "edit" %>
   </div>
