@@ -46,6 +46,8 @@ class StoriesController < ApplicationController
 
   def show
     @estimate = Estimate.find_by(story: @story, user: current_user)
+    @comments = Comment.find_by(story: @story)
+    @comment = Comment.new
   end
 
   def update
