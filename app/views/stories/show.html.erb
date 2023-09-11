@@ -3,6 +3,22 @@
 
   <%= render "shared/story", story: @story %>
 
+  <%= form_with model: [@project, @story, @comment] do |form| %>
+    <div class="field">
+      <%= form.label :body %>
+      <%= form.text_field :body %>
+    </div>
+
+    <%= form.submit %>
+  <% end %>
+
+  <% if @story.comments %>
+    <% @story.comments.each do |comment| %>
+      <p><%= comment.body %></p>
+      <p><%= comment.created_at %><p>
+    <% end %>
+  <% end %>
+
   <div class="btn-group">
     <%= link_to 'Back', project_path(@project), id: "back", class: "button" %>
     <% if is_unlocked?(@project) %>
