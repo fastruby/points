@@ -38,6 +38,7 @@ Rails.application.routes.draw do
       get :export, on: :collection
       resources :estimates, except: [:index, :show]
       put :move
+      resources :comments
     end
     resource :action_plan, only: [:show]
   end
