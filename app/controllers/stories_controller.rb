@@ -46,7 +46,7 @@ class StoriesController < ApplicationController
 
   def show
     @estimate = Estimate.find_by(story: @story, user: current_user)
-    @comments = Comment.find_by(story: @story)
+    @comments = Comment.order("created_at").where(story: @story)
     @comment = Comment.new
   end
 

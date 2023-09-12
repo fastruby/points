@@ -15,7 +15,7 @@ class CommentsController < ApplicationController
       format.html do
         if saved
           flash[:success] = "Comment created!"
-          redirect_to story_path(@comment.story_id)
+          redirect_to project_story_path(@comment.story.project_id, @comment.story_id)
         else
           flash[:error] = @comment.errors.full_messages
           render :new
@@ -31,7 +31,7 @@ class CommentsController < ApplicationController
       format.html do
         if updated
           flash[:success] = "Comment updated!"
-          redirect_to story_path(@comment.story_id)
+          redirect_to project_story_path(@comment.story.project_id, @comment.story_id)
         else
           flash[:error] = @comment.errors.full_messages
           render :edit
@@ -44,7 +44,7 @@ class CommentsController < ApplicationController
   def destroy
     @comment.destroy
     respond_to do |format|
-      format.html { redirect_to story_path(@comment.story_id), notice: "comment was successfully destroyed." }
+      format.html { redirect_to project_story_path(@comment.story.project_id, @comment.story_id), notice: "comment was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -55,7 +55,7 @@ class CommentsController < ApplicationController
     @comment = current_user.comments.where(story_id: params[:story_id]).find(params[:id])
   rescue ActiveRecord::RecordNotFound
     flash[:error] = "Comment not found"
-    redirect_to story_path(params[:story_id])
+    redirect_to project_story_path(@comment.story.project_id, params[:story_id])
   end
 
   def load_story_and_project

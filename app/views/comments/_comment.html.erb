@@ -1,0 +1,7 @@
+<div class="comment-card">
+  <p class="bold"><%= comment.user.name %>:</p>
+  <p><%= comment.body %></p>
+  <p><%= comment.created_at %><p>
+  <%= link_to "Edit Comment", edit_project_story_comment_path(@project.id, @story.id, comment.id), class: "link-blue" %> |
+  <%= link_to "Delete", project_story_comment_path(@project.id, @story.id, comment.id), method: :delete, data: { confirm: "Are you sure?", comment_id: @comment.id }, remote: true , title: "Delete" %>
+</div>

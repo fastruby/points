@@ -3,27 +3,25 @@
 
   <%= render "shared/story", story: @story %>
 
-  <%= form_with model: [@project, @story, @comment] do |form| %>
-    <div class="field">
-      <%= form.label :body %>
-      <%= form.text_field :body %>
-    </div>
-
-    <%= form.submit %>
-  <% end %>
-
-  <% if @story.comments %>
-    <% @story.comments.each do |comment| %>
-      <p><%= comment.body %></p>
-      <p><%= comment.created_at %><p>
-    <% end %>
-  <% end %>
-
   <div class="btn-group">
     <%= link_to 'Back', project_path(@project), id: "back", class: "button" %>
     <% if is_unlocked?(@project) %>
       <%= link_unless_archived(@project, "Edit", edit_project_story_path(@project), classes: "magenta", id: "back") %>
       <%= link_to "Delete", project_story_path(@project.id, @story), method: :delete, data: { confirm: "Are you sure?", story_id: @story.id }, class: "button red", remote: true , title: "Delete" %>
     <% end %>
+  </div>
+
+  <% if @comments %>
+    <div class="comments-section">
+      <h4>Comments</h4>
+      <% @comments.each do |comment| %>
+        <%= render "comments/comment", story: @story, project: @project, comment: comment %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="comment-form-container">
+    <p class="bold">Add a new comment</p>
+    <%= render "comments/form", story: @story, project: @project, comment: @comment %>
   </div>
 </div>
