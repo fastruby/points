@@ -31,7 +31,14 @@
           <h4 class="my-0 font-weight-normal">Export CSV</h4>
         </div>
         <div class="card-body">
-          <%= link_to 'Export', export_project_stories_path(@project), class: "button green" %>
+          <%= form_with url: export_project_stories_path(@project), method: :get do |f| %>
+            <%= f.submit "Export", class: "button green" %>
+            <br/>
+            <%= f.label :export_with_comments do %>
+              <%= f.check_box :export_with_comments %>
+              Export with comments
+            <% end %>
+          <% end %>
         </div>
       </div>
     </div>

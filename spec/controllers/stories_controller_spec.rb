@@ -144,5 +144,38 @@ RSpec.describe StoriesController, type: :controller do
         expect(response).to redirect_to project2
       end
     end
+
+    describe "#export" do
+      it "exports a CSV file" do
+        get :export, params: {project_id: project.id}
+        expect(response).to have_http_status(:ok)
+
+        csv_data = CSV.parse(response.body)
+        expected_csv_content = [
+          ["id", "title", "description", "position"],
+          [story.id.to_s, story.title, story.description, story.position.to_s]
+        ]
+        expect(csv_data).to eq(expected_csv_content)
+      end
+
+      context "with comments" do
+        it "exports a CSV file" do
+          user = FactoryBot.create(:user)
+          comment = FactoryBot.create(:comment, user: user, story: story)
+
+          get :export, params: {project_id: project.id, export_with_comments: "1"}
+
+          expect(response).to have_http_status(:ok)
+
+          csv_data = CSV.parse(response.body)
+          expected_csv_content = [
+            ["id", "title", "description", "position", "comment_#{comment.id}"],
+            [story.id.to_s, story.title, story.description, story.position.to_s, comment.body]
+          ]
+
+          expect(csv_data).to eq(expected_csv_content)
+        end
+      end
+    end
   end
 end
