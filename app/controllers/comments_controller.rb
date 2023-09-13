@@ -15,11 +15,11 @@ class CommentsController < ApplicationController
       format.html do
         if saved
           flash[:success] = "Comment created!"
-          redirect_to project_story_path(@comment.story.project_id, @comment.story_id)
         else
           flash[:error] = @comment.errors.full_messages
-          render :new
         end
+
+        redirect_to project_story_path(@comment.story.project_id, @comment.story_id)
       end
       format.js
     end
@@ -55,7 +55,7 @@ class CommentsController < ApplicationController
     @comment = current_user.comments.where(story_id: params[:story_id]).find(params[:id])
   rescue ActiveRecord::RecordNotFound
     flash[:error] = "Comment not found"
-    redirect_to project_story_path(@comment.story.project_id, params[:story_id])
+    redirect_to project_story_path(params[:project_id], params[:story_id])
   end
 
   def load_story_and_project
