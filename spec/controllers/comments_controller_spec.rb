@@ -42,15 +42,33 @@ RSpec.describe CommentsController, type: :controller do
 
   describe "#destroy" do
     it "deletes the comment" do
-      expect {
-        delete :destroy, params: {id: comment.id, story_id: story.id, project_id: project.id}
-      }.to change(Comment, :count).by(-1)
+      delete :destroy, params: {project_id: project.id, story_id: story.id, id: comment.id}
+      expect(Comment.exists?(comment.id)).to be_falsey
+      expect(response).to redirect_to project_story_path(project.id, story.id)
     end
   end
 
   describe "#edit" do
+    before do
+      get :edit, params: {id: comment.id, story_id: story.id, project_id: project.id}
+    end
+
+    it "redirects to the edit page" do
+      expect(response).to render_template :edit
+    end
+
+    it "shows the fields for the comment" do
+      expect(assigns(:comment)).to eq comment
+    end
   end
 
   describe "#update" do
+    it "updates the body for the comment" do
+      put :update, params: {id: comment.id,
+        story_id: story.id,
+        project_id: project.id,
+        comment: {body: "test123"}}
+      expect(comment.reload.body).to eq "test123"
+    end
   end
 end
