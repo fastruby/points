@@ -6,7 +6,7 @@ RSpec.describe CommentsController, type: :controller do
   let!(:user) { FactoryBot.create(:user) }
   let!(:project) { FactoryBot.create(:project) }
   let!(:story) { FactoryBot.create(:story, project: project) }
-  let!(:comment) { FactoryBot.create(:comment, story: story) }
+  let!(:comment) { FactoryBot.create(:comment, story: story, user: user) }
 
   before do
     @request.env["devise.mapping"] = Devise.mappings[:user]
@@ -64,10 +64,14 @@ RSpec.describe CommentsController, type: :controller do
 
   describe "#update" do
     it "updates the body for the comment" do
-      put :update, params: {id: comment.id,
+      put :update, params: {
+        id: comment.id,
         story_id: story.id,
         project_id: project.id,
-        comment: {body: "test123"}}
+        comment: {
+          body: "test123"
+        }
+      }
       expect(comment.reload.body).to eq "test123"
     end
   end
