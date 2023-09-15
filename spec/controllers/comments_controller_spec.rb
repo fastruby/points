@@ -46,6 +46,16 @@ RSpec.describe CommentsController, type: :controller do
       expect(Comment.exists?(comment.id)).to be_falsey
       expect(response).to redirect_to project_story_path(project.id, story.id)
     end
+
+    it "disallows destroying another users' estimate" do
+      user2 = FactoryBot.create(:user)
+      comment2 = FactoryBot.create(:comment, story: story, user: user2)
+
+      delete :destroy, params: {id: comment2.id, story_id: story.id, project_id: project.id}
+
+      expect(response).to redirect_to project_story_path(project.id, story.id)
+      expect(flash[:error]).to eq "Comment not found"
+    end
   end
 
   describe "#edit" do
@@ -62,6 +72,18 @@ RSpec.describe CommentsController, type: :controller do
     end
   end
 
+  describe "#edit as other user" do
+    it "disallows editing another users' estimate" do
+      user2 = FactoryBot.create(:user)
+      comment2 = FactoryBot.create(:comment, story: story, user: user2)
+
+      get :edit, params: {id: comment2.id, story_id: story.id, project_id: project.id}
+
+      expect(response).to redirect_to project_story_path(project.id, story.id)
+      expect(flash[:error]).to eq "Comment not found"
+    end
+  end
+
   describe "#update" do
     it "updates the body for the comment" do
       put :update, params: {
@@ -73,6 +95,19 @@ RSpec.describe CommentsController, type: :controller do
         }
       }
       expect(comment.reload.body).to eq "test123"
+    end
+
+    it "disallows updating another users' estimate" do
+      user2 = FactoryBot.create(:user)
+      comment2 = FactoryBot.create(:comment, story: story, user: user2)
+
+      put :update, params: {id: comment2.id,
+                            story_id: story.id,
+                            project_id: project.id,
+                            comment: {body: "test123"}}
+
+      expect(response).to redirect_to project_story_path(project.id, story.id)
+      expect(flash[:error]).to eq "Comment not found"
     end
   end
 end
