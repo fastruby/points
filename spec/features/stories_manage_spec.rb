@@ -302,12 +302,14 @@ RSpec.describe "managing stories", js: true do
 
     within("#stories") do
       expect(find("td:nth-child(1)")).to have_text story4.title
+      expect(all("#stories > tr").count).to eq(1)
     end
 
     fill_in "title_contains", with: story5.id
 
     within("#stories") do
       expect(find("td:nth-child(1)")).to have_text story5.title
+      expect(all("#stories > tr").count).to eq(1)
     end
   end
 end
