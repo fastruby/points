@@ -47,7 +47,7 @@ RSpec.describe CommentsController, type: :controller do
       expect(response).to redirect_to project_story_path(project.id, story.id)
     end
 
-    it "disallows destroying another users' estimate" do
+    it "disallows destroying another users' comment" do
       user2 = FactoryBot.create(:user)
       comment2 = FactoryBot.create(:comment, story: story, user: user2)
 
@@ -73,7 +73,7 @@ RSpec.describe CommentsController, type: :controller do
   end
 
   describe "#edit as other user" do
-    it "disallows editing another users' estimate" do
+    it "disallows editing another users' comment" do
       user2 = FactoryBot.create(:user)
       comment2 = FactoryBot.create(:comment, story: story, user: user2)
 
@@ -97,7 +97,7 @@ RSpec.describe CommentsController, type: :controller do
       expect(comment.reload.body).to eq "test123"
     end
 
-    it "disallows updating another users' estimate" do
+    it "disallows updating another users' comment" do
       user2 = FactoryBot.create(:user)
       comment2 = FactoryBot.create(:comment, story: story, user: user2)
 

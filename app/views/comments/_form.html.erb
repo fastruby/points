@@ -1,7 +1,5 @@
-<div>
-  <%= form_with model: [@project, @story, @comment] do |form| %>
-    <%= form.text_area :body, rows: 6 %>
-    <%= form.submit class: "button green"%>
-    <%= link_to "Back", project_story_path(@comment.story.project_id, @comment.story_id), id:"back", class: "button" if action_name == "edit" %>
-  <% end %>
-</div>
+<%= form_with model: [project, story, comment] do |form| %>
+  <%= form.text_area :body, rows: 6 %>
+  <%= form.submit class: "button green"%>
+  <%= link_to "Back", project_story_path(comment.story.project_id, @comment.story_id), id:"back", class: "button" if action_name == "edit" %>
+<% end %>

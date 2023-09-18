@@ -11,14 +11,12 @@
     <% end %>
   </div>
 
-  <% if @comments %>
-    <div class="comments-section">
-      <h4>Comments</h4>
-      <% @comments.each do |comment| %>
-        <%= render "comments/comment", story: @story, project: @project, comment: comment %>
-      <% end %>
-    </div>
-  <% end %>
+  <div class="comments-section">
+    <h4>Comments</h4>
+    <% @comments.each do |comment| %>
+      <%= render "comments/comment", story: @story, project: @project, comment: comment %>
+    <% end %>
+  </div>
 
   <div class="comment-form-container">
     <p class="bold">Add a new comment</p>

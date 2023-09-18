@@ -9,7 +9,6 @@ class CommentsController < ApplicationController
   def create
     @comment = current_user.comments.build(story: @story)
     @comment.attributes = comment_params
-    @comment.user_id = current_user.id
     saved = @comment.save
     respond_to do |format|
       format.html do
@@ -21,7 +20,6 @@ class CommentsController < ApplicationController
 
         redirect_to project_story_path(@comment.story.project_id, @comment.story_id)
       end
-      format.js
     end
   end
 
@@ -37,15 +35,14 @@ class CommentsController < ApplicationController
           render :edit
         end
       end
-      format.js
     end
   end
 
   def destroy
     @comment.destroy
     respond_to do |format|
-      format.html { redirect_to project_story_path(@comment.story.project_id, @comment.story_id), notice: "comment was successfully destroyed." }
-      format.json { head :no_content }
+        flash[:success] = "Comment deleted!"
+        format.html { redirect_to project_story_path(@comment.story.project_id, @comment.story_id) }
     end
   end
 
