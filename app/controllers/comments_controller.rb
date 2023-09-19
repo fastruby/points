@@ -41,8 +41,8 @@ class CommentsController < ApplicationController
   def destroy
     @comment.destroy
     respond_to do |format|
-        flash[:success] = "Comment deleted!"
-        format.html { redirect_to project_story_path(@comment.story.project_id, @comment.story_id) }
+      flash[:success] = "Comment deleted!"
+      format.html { redirect_to project_story_path(@comment.story.project_id, @comment.story_id) }
     end
   end
 
@@ -58,6 +58,9 @@ class CommentsController < ApplicationController
   def load_story_and_project
     @project = Project.find(params[:project_id])
     @story = Story.find(params[:story_id])
+  rescue ActiveRecord::RecordNotFound
+    flash[:error] = "Project or Story not found"
+    redirect_to projects_path
   end
 
   def comment_params
