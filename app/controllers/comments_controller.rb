@@ -10,40 +10,30 @@ class CommentsController < ApplicationController
     @comment = current_user.comments.build(story: @story)
     @comment.attributes = comment_params
     saved = @comment.save
-    respond_to do |format|
-      format.html do
-        if saved
-          flash[:success] = "Comment created!"
-        else
-          flash[:error] = @comment.errors.full_messages
-        end
-
-        redirect_to project_story_path(@comment.story.project_id, @comment.story_id)
-      end
+    if saved
+      flash[:success] = "Comment created!"
+    else
+      flash[:error] = @comment.errors.full_messages
     end
+
+    redirect_to project_story_path(@comment.story.project_id, @comment.story_id)
   end
 
   def update
     updated = @comment.update(comment_params)
-    respond_to do |format|
-      format.html do
-        if updated
-          flash[:success] = "Comment updated!"
-          redirect_to project_story_path(@comment.story.project_id, @comment.story_id)
-        else
-          flash[:error] = @comment.errors.full_messages
-          render :edit
-        end
-      end
+    if updated
+      flash[:success] = "Comment updated!"
+      redirect_to project_story_path(@comment.story.project_id, @comment.story_id)
+    else
+      flash[:error] = @comment.errors.full_messages
+      render :edit
     end
   end
 
   def destroy
     @comment.destroy
-    respond_to do |format|
-      flash[:success] = "Comment deleted!"
-      format.html { redirect_to project_story_path(@comment.story.project_id, @comment.story_id) }
-    end
+    flash[:success] = "Comment deleted!"
+    redirect_to project_story_path(@comment.story.project_id, @comment.story_id)
   end
 
   private
