@@ -87,10 +87,10 @@ class StoriesController < ApplicationController
   end
 
   def export
-    comments_headers = []
     csv = CSV.generate(headers: true) { |csv|
       @project.stories.by_position.each do |story|
         if params[:export_with_comments] == "1"
+          comments_headers = []
           comments = {}
           story.comments.each do |c|
             comments["comment_#{c.id}"] = c.body
@@ -99,9 +99,9 @@ class StoriesController < ApplicationController
           csv << CSV_HEADERS + comments_headers
           csv << story.attributes.merge(comments).slice(*CSV_HEADERS + comments_headers)
         else
-          csv << CSV_HEADERS + comments_headers
+          csv << CSV_HEADERS
           @project.stories.by_position.each do |story|
-            csv << story.attributes.slice(*CSV_HEADERS + comments_headers)
+            csv << story.attributes.slice(*CSV_HEADERS)
           end
         end
       end
