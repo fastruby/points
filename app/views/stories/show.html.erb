@@ -1,7 +1,7 @@
 <div class="container">
   <h1 class="dashboard-title"><%= render "shared/project_title", project: @project %></h1>
 
-  <%= render "shared/story", story: @story %>
+  <%= render partial: "shared/story", locals: { story: @story } %>
 
   <div class="btn-group">
     <%= link_to 'Back', project_path(@project), id: "back", class: "button" %>
@@ -14,12 +14,12 @@
   <div class="comments-section">
     <h4>Comments</h4>
     <% @comments.each do |comment| %>
-      <%= render "comments/comment", story: @story, project: @project, comment: comment %>
+      <%= render partial: "comments/comment", locals: { story: @story, project: @project, comment: comment } %>
     <% end %>
   </div>
 
   <div class="comment-form-container">
     <p class="bold">Add a new comment</p>
-    <%= render "comments/form", story: @story, project: @project, comment: @comment %>
+    <%= render partial: "comments/form", locals: { story: @story, project: @project, comment: @comment } %>
   </div>
 </div>

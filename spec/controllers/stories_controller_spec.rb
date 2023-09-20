@@ -158,10 +158,11 @@ RSpec.describe StoriesController, type: :controller do
         expect(csv_data).to eq(expected_csv_content)
       end
 
-      context "with comments" do
+      context "with comment" do
         it "exports a CSV file" do
           user = FactoryBot.create(:user)
           comment = FactoryBot.create(:comment, user: user, story: story)
+          comment2 = FactoryBot.create(:comment, user: user, story: story)
 
           get :export, params: {project_id: project.id, export_with_comments: "1"}
 
@@ -169,8 +170,8 @@ RSpec.describe StoriesController, type: :controller do
 
           csv_data = CSV.parse(response.body)
           expected_csv_content = [
-            ["id", "title", "description", "position", "comment_#{comment.id}"],
-            [story.id.to_s, story.title, story.description, story.position.to_s, comment.body]
+            ["id", "title", "description", "position", "comment"],
+            [story.id.to_s, story.title, story.description, story.position.to_s, "#{comment.user.name}: #{comment.body}", "#{comment2.user.name}: #{comment2.body}"]
           ]
 
           expect(csv_data).to eq(expected_csv_content)
