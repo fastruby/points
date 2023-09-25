@@ -89,7 +89,7 @@ class StoriesController < ApplicationController
   def export
     csv = if params[:export_with_comments] == "1"
       CSV.generate(headers: true) do |csv|
-        csv << CSV_HEADERS.append("comment")
+        csv << CSV_HEADERS + ["comment"]
         @project.stories.includes(:comments).by_position.each do |story|
           comments = []
           story.comments.each do |comment|
