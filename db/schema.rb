@@ -44,6 +44,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_31_175732) do
     t.integer "position"
     t.integer "real_score"
     t.string "extra_info"
+    t.boolean "approved"
   end
 
   create_table "users", force: :cascade do |t|
