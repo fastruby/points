@@ -32,7 +32,7 @@
         </div>
         <div class="card-body">
           <%= form_with url: export_project_stories_path(@project), method: :get do |f| %>
-            <%= f.submit "Export", class: "button green" %>
+            <%= f.submit "Export", class: "button green", data: { disable_with: false } %>
             <br/>
             <%= f.label :export_with_comments do %>
               <%= f.check_box :export_with_comments %>
