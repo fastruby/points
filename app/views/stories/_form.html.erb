@@ -13,6 +13,11 @@
 
   <%= f.hidden_field :project_id, value: params[:project_id] %>
 
+  <div class="field story_status">
+    <%= f.label :approved, "Status" %>
+    <%= f.select :approved, options_for_select({"Pending" => nil, "Approved" => true, "Rejected" => false}, selected: @story.approved), class: "project-story-approved" %>
+  </div>
+
   <div class="field story_title">
     <%= f.label :title %>
     <%= f.text_field :title, placeholder: "Story Title", class: "project-story-title", autofocus: true %>

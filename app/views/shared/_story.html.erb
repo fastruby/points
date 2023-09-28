@@ -1,4 +1,17 @@
-<h4 class="word-break">Story #<%= story.id %>: <%= story.title %></h4>
+<div class="story-title">
+  <h4 class="word-break">Story #<%= story.id %>: <%= story.title %></h4>
+  <div class="dropdown-wrapper">
+    <button class="button">
+      <%= status_string(story) %>
+      <i class="fa fa-solid fa-caret-down"></i>
+    </button>
+    <div class="dropdown">
+      <%= button_to "Approve", update_status_stories_path, params: { approved: true, story_id: story.id }, class: "status-selector", method: :patch %>
+      <%= button_to "Reject", update_status_stories_path, params: { approved: false, story_id: story.id }, class: "status-selector",  method: :patch %>
+      <%= button_to "Pending", update_status_stories_path, params: { story_id: story.id }, class: "status-selector",  method: :patch %>
+    </div>
+  </div>
+</div>
 
 <div class="story-description">
   <%= markdown(story.description) %>
