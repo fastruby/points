@@ -144,5 +144,40 @@ RSpec.describe StoriesController, type: :controller do
         expect(response).to redirect_to project2
       end
     end
+
+    describe "#update_status" do
+      context "given any one of the possible statuses" do
+        it "updates the story" do
+          patch :update_status, params: {
+            story_id: story.id,
+            approved: "true"
+          }
+
+          expect(story.reload.approved).to eq(true)
+
+          patch :update_status, params: {
+            story_id: story.id,
+            approved: "false"
+          }
+
+          expect(story.reload.approved).to eq(false)
+
+          patch :update_status, params: {
+            story_id: story.id
+          }
+
+          expect(story.reload.approved).to eq(nil)
+        end
+
+        it "redirects to the story show page" do
+          patch :update_status, params: {
+            story_id: story.id,
+            approved: "true"
+          }
+
+          expect(response).to redirect_to project_story_url(project_id: project.id, id: story.id)
+        end
+      end
+    end
   end
 end
