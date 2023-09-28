@@ -55,6 +55,10 @@ class Story < ApplicationRecord
     @users_estimates ||= users.distinct.map { |u| estimate_for(u) }
   end
 
+  def pending?
+    approved.nil?
+  end
+
   private
 
   def add_position
