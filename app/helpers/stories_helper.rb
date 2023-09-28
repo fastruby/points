@@ -14,4 +14,15 @@ module StoriesHelper
 
     "rejected"
   end
+
+  def status_color(story)
+    case story.approved
+    when true
+      "green"
+    when false
+      "magenta"
+    else
+      "orange"
+    end
+  end
 end
