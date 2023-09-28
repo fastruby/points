@@ -114,7 +114,7 @@ class StoriesController < ApplicationController
 
   def update_status
     @story.update_attribute(:approved, params[:approved])
-    redirect_to project_story_url(project_id: @project.id, id: @story.id)
+    redirect_to project_story_path(project_id: @project.id, id: @story.id)
   end
 
   private
