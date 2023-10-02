@@ -26,3 +26,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+function updateStatusButton(color, status) {
+  const button = document.querySelector(".story-title .dropdown-wrapper > button");
+  button.className = `button ${color}`;
+
+  const span = button.querySelector("span");
+  span.textContent = status;
+
+  document.querySelector(":focus").blur();
+}

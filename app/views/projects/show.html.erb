@@ -33,8 +33,8 @@
                   <button class="copy-link btn-clipboard" data-clipboard-text="<%= project_story_url(@project, story) %>" title='Copy story'><i class="fa fa-link"></i><span class= "popup">Copied to clipboard</span></button>
                 </td>
                 <td class="project-table__cell status"><%= status_label(story) %></td>
-                <td class="project-table__cell"><%= story.estimate_for(current_user)&.best_case_points %></td>
-                <td class="project-table__cell"><%= story.estimate_for(current_user)&.worst_case_points %></td>
+                <td class="project-table__cell" id="best_estimate_<%= story.id %>"><%= story.estimate_for(current_user)&.best_case_points %></td>
+                <td class="project-table__cell" id="worst_estimate_<%= story.id %>"><%= story.estimate_for(current_user)&.worst_case_points %></td>
                 <td class="project-table__cell story_actions">
                 <% if is_unlocked?(@project) %>
                   <% if estimated(story) %>
@@ -85,8 +85,9 @@
         <tfoot>
           <tr class="project-table__row project-table__row--footer">
             <td class="project-table__cell">Total estimates</td>
-            <td class="project-table__cell"><%= @project.best_estimate_sum_per_user(current_user) %></td>
-            <td class="project-table__cell"><%= @project.worst_estimate_sum_per_user(current_user) %></td>
+            <td class="project-table__cell"></td>
+            <td class="project-table__cell best_estimates_total"><%= @project.best_estimate_sum_per_user(current_user) %></td>
+            <td class="project-table__cell worst_estimates_total"><%= @project.worst_estimate_sum_per_user(current_user) %></td>
             <td class="project-table__cell"></td>
           </tr>
         </tfoot>
