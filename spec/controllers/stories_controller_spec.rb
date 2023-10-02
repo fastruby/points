@@ -145,38 +145,30 @@ RSpec.describe StoriesController, type: :controller do
       end
     end
 
-    describe "#update_status" do
-      context "given any one of the possible statuses" do
-        it "updates the story" do
-          patch :update_status, params: {
-            story_id: story.id,
-            approved: "true"
-          }
+    describe "#approve" do
+      it "updates the story status to approved" do
+        patch :approve, params: {id: story.id}, format: :js
 
-          expect(story.reload.approved).to eq(true)
+        expect(story.reload.status).to eq("approved")
+        expect(response).to render_template("shared/update_status")
+      end
+    end
 
-          patch :update_status, params: {
-            story_id: story.id,
-            approved: "false"
-          }
+    describe "#reject" do
+      it "updates the story status to rejected" do
+        patch :reject, params: {id: story.id}, format: :js
 
-          expect(story.reload.approved).to eq(false)
+        expect(story.reload.status).to eq("rejected")
+        expect(response).to render_template("shared/update_status")
+      end
+    end
 
-          patch :update_status, params: {
-            story_id: story.id
-          }
+    describe "#pending" do
+      it "updates the story status to pending" do
+        patch :pending, params: {id: story.id}, format: :js
 
-          expect(story.reload.approved).to eq(nil)
-        end
-
-        it "redirects to the story show page" do
-          patch :update_status, params: {
-            story_id: story.id,
-            approved: "true"
-          }
-
-          expect(response).to redirect_to project_story_url(project_id: project.id, id: story.id)
-        end
+        expect(story.reload.status).to eq("pending")
+        expect(response).to render_template("shared/update_status")
       end
     end
   end

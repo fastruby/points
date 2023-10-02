@@ -115,30 +115,4 @@ RSpec.describe Story, type: :model do
       end
     end
   end
-
-  describe "#pending?" do
-    context "the story has been approved" do
-      before { subject.update_attribute(:approved, true) }
-
-      it "returns false" do
-        expect(subject.pending?).to be(false)
-      end
-    end
-
-    context "the story has been rejected" do
-      before { subject.update_attribute(:approved, false) }
-
-      it "returns false" do
-        expect(subject.pending?).to be(false)
-      end
-    end
-
-    context "the story is pending" do
-      before { subject.update_attribute(:approved, nil) }
-
-      it "returns true" do
-        expect(subject.pending?).to be(true)
-      end
-    end
-  end
 end

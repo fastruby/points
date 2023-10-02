@@ -15,7 +15,7 @@ Capybara.register_driver :headless_firefox do |app|
   browser_options.args << "-headless"
   Capybara::Selenium::Driver.new(app, browser: :firefox, options: browser_options)
 end
-Capybara.javascript_driver = :headless_firefox
+Capybara.javascript_driver = :selenium
 Capybara.server = :puma, {Silent: true}
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -63,8 +63,8 @@ module FeatureSpecsHelpers
 
   def expect_story_estimates(story, best, worst)
     within_story_row(story) do
-      expect(find("td:nth-child(2)")).to have_text best.to_s
-      expect(find("td:nth-child(3)")).to have_text worst.to_s
+      expect(find("td:nth-child(3)")).to have_text best.to_s
+      expect(find("td:nth-child(4)")).to have_text worst.to_s
     end
   end
 end
