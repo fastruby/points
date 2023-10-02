@@ -26,7 +26,7 @@
         <tbody id="stories" data-url="<%= sort_stories_project_path(@project.id) %>" data-unlocked="<%= is_unlocked?(@project) %>">
           <% if @stories.present? %>
             <% @stories.each do | story | %>
-              <tr class="project-table__row project-table__row--story" id="<%= dom_id(story)%>" data-status="<%= status_string(story) %>">
+              <tr class="project-table__row project-table__row--story" id="<%= dom_id(story)%>" data-status="<%= story.status %>">
                 <td class="project-table__cell">
                   <input type="checkbox" name="stories[]" value="<%= story.id %>">
                   <%= link_to story.title, [story.project, story] %>

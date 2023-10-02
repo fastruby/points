@@ -2,7 +2,7 @@
   <h4 class="word-break">Story #<%= story.id %>: <%= story.title %></h4>
   <div class="dropdown-wrapper">
     <button class="button <%= status_color(story) %>">
-      <%= status_string(story) %>
+      <span><%= story.status %></span>
       <i class="fa fa-solid fa-caret-down"></i>
     </button>
     <div class="dropdown">

@@ -7,6 +7,8 @@ class Story < ApplicationRecord
 
   before_create :add_position
 
+  enum :status, [:pending, :approved, :rejected]
+
   scope :by_position, -> { order("stories.position ASC NULLS FIRST, stories.created_at ASC") }
 
   def best_estimate_average
@@ -53,10 +55,6 @@ class Story < ApplicationRecord
 
   def users_estimates
     @users_estimates ||= users.distinct.map { |u| estimate_for(u) }
-  end
-
-  def pending?
-    approved.nil?
   end
 
   private
