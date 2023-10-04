@@ -15,7 +15,7 @@ Capybara.register_driver :headless_firefox do |app|
   browser_options.args << "-headless"
   Capybara::Selenium::Driver.new(app, browser: :firefox, options: browser_options)
 end
-Capybara.javascript_driver = :selenium
+Capybara.javascript_driver = :headless_firefox
 Capybara.server = :puma, {Silent: true}
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
