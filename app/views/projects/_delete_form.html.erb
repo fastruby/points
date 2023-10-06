@@ -1,0 +1,12 @@
+<%= form_with(model: project, method: :delete) do |f| %>
+  This action cannot be undone.
+  This will permanently delete the <strong><%= project.title %></strong> project,
+  stories, and associated estimations.
+
+  <div class="field">
+    <%= f.label :title, raw("Please type <strong>#{project.title}</strong> to confirm.") %>
+    <%= f.text_field :title, value: "", placeholder: "Project's title", autofocus: true, required: true %>
+  </div>
+
+  <%= f.submit "I understand the consequences, delete this project", class: "button magenta" %>
+<% end %>

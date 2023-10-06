@@ -112,7 +112,7 @@
 
     <% if is_unlocked?(@project) %>
       <%= link_unless_archived(@project, "Add Sub-Project", project_new_sub_project_path(@project), classes: :green) unless @project.parent_id.present? %>
-      <%= link_unless_archived(@project, "Delete Project", project_path(@project.id), classes: "delete magenta", method: :delete, remote: true, data_attr: { confirm: 'Are you sure?' }, id: "delete") %>
+      <%= link_unless_archived(@project, "Delete Project", open_delete_modal_project_path(@project.id), classes: "delete magenta", remote: true) %>
     <% end %>
 
     <% unless @project.parent_id %>

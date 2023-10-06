@@ -50,19 +50,27 @@ RSpec.describe "managing projects", js: true do
   end
 
   context "when the project is unarchived" do
-    it "allows me to delete a project", js: false do
+    it "does not delete a project" do
+      project.update(title: "Awesome Project's Title")
       visit project_path(id: project.id)
+
       click_link "Delete Project"
-      expect(Project.count).to eq 0
+      expect(page).to have_content "Are you absolutely sure?"
+      fill_in "project_title", with: "Random Project's Title"
+      click_button "I understand the consequences, delete this project"
+
+      expect(page).to have_content "Make sure you added the correct project's title"
     end
 
     it "allows me to delete a project" do
       visit project_path(id: project.id)
-      accept_confirm do
-        click_link "Delete Project"
-      end
-      expect(page).not_to have_content "Delete Project"
-      expect(Project.count).to eq 0
+
+      click_link "Delete Project"
+      expect(page).to have_content "Are you absolutely sure?"
+      fill_in "project_title", with: project.title
+      click_button "I understand the consequences, delete this project"
+
+      expect(page).to have_content "Project was successfully destroyed."
     end
 
     it "allows editing the project's title inline" do
