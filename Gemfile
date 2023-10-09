@@ -54,7 +54,7 @@ gem "jquery-rails"
 
 gem "pg"
 
-gem "jquery-ui-rails", "~> 5.0", ">= 5.0.5"
+gem "jquery-ui-rails", "~> 6.0"
 gem "acts_as_list"
 
 gem "mimemagic", "~> 0.3.8"
