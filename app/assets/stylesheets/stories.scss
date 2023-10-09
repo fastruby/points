@@ -10,10 +10,12 @@
   word-break: break-all;
 }
 
-.story-description, .extra-info, .story_preview {
+.story-description,
+.extra-info,
+.story_preview {
   margin-bottom: 25px;
   font-size: 15px;
-  p{
+  p {
     margin-top: 1em;
   }
   em {
@@ -54,7 +56,6 @@
   overflow: auto;
   margin-bottom: 1.5em;
 }
-
 
 .modal p {
   padding-bottom: 1.3em;
@@ -100,7 +101,8 @@
     grid-area: extra-preview;
   }
 
-  .extra_info_preview .content, .story_preview .content {
+  .extra_info_preview .content,
+  .story_preview .content {
     overflow: auto;
     max-height: min(50vh, 700px);
     // prevent long links from overflowing
@@ -131,4 +133,37 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+.comments-section {
+  margin: 16px 0;
+
+  .comment-card {
+    margin: 8px 0;
+
+    .bold {
+      font-weight: bold;
+    }
+
+    .link-blue {
+      color: blue;
+    }
+  }
+}
+
+.comment-form-container {
+  margin: 8px 0;
+  width: 50%;
+
+  .bold {
+    font-weight: bold;
+  }
+}
+
+#comment_body {
+  margin: 10px 0;
+}
+
+input.button.green {
+  width: auto;
 }

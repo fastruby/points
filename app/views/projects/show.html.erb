@@ -3,7 +3,7 @@
     <h1 class="dashboard-title"><%= render partial: "shared/project_title", locals: {allow_edit: true, project: @project} %></h1>
 
     <div class="search-field">
-      <%= label_tag 'title_contains', "Filter by title" %>
+      <%= label_tag 'title_contains', "Filter by title or ID" %>
       <%= search_field_tag 'title_contains', nil, onkeyup: "filterStories()" %>
     </div>
   </div>
@@ -29,7 +29,7 @@
               <tr class="project-table__row project-table__row--story" id="<%= dom_id(story)%>" data-status="<%= story.status %>">
                 <td class="project-table__cell">
                   <input type="checkbox" name="stories[]" value="<%= story.id %>">
-                  <%= link_to story.title, [story.project, story] %>
+                  <%= link_to "#{story.id} - #{story.title}", [story.project, story] %>
                   <button class="copy-link btn-clipboard" data-clipboard-text="<%= project_story_url(@project, story) %>" title='Copy story'><i class="fa fa-link"></i><span class= "popup">Copied to clipboard</span></button>
                 </td>
                 <td class="project-table__cell status"><%= status_label(story) %></td>

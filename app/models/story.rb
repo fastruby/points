@@ -4,6 +4,7 @@ class Story < ApplicationRecord
   belongs_to :project
   has_many :estimates
   has_many :users, through: :estimates
+  has_many :comments
 
   before_create :add_position
 

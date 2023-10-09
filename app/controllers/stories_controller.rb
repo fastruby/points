@@ -46,6 +46,8 @@ class StoriesController < ApplicationController
 
   def show
     @estimate = Estimate.find_by(story: @story, user: current_user)
+    @comments = @story.comments.includes(:user).order(:created_at)
+    @comment = Comment.new
   end
 
   def update
@@ -85,12 +87,25 @@ class StoriesController < ApplicationController
   end
 
   def export
-    csv = CSV.generate(headers: true) { |csv|
-      csv << CSV_HEADERS
-      @project.stories.by_position.each do |story|
-        csv << story.attributes.slice(*CSV_HEADERS)
+    csv = if params[:export_with_comments] == "1"
+      CSV.generate(headers: true) do |csv|
+        csv << CSV_HEADERS + ["comment"]
+        @project.stories.includes(:comments).by_position.each do |story|
+          comments = []
+          story.comments.each do |comment|
+            comments << "#{comment.user.name}: #{comment.body}"
+          end
+          csv << [story.id, story.title, story.description, story.position] + comments
+        end
       end
-    }
+    else
+      CSV.generate(headers: true) do |csv|
+        csv << CSV_HEADERS
+        @project.stories.by_position.each do |story|
+          csv << story.attributes.slice(*CSV_HEADERS)
+        end
+      end
+    end
     filename = "#{@project.title.gsub(/[^\w]/, "_")}-#{Time.now.to_formatted_s(:short).tr(" ", "_")}.csv"
     send_data csv, filename: filename
   end
