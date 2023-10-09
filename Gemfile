@@ -78,6 +78,7 @@ group :development, :test do
   gem "dotenv-rails"
   gem "recursive-open-struct"
   gem "factory_bot_rails"
+  gem "next_rails"
 end
 
 group :test do
@@ -96,10 +97,6 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem "spring", "3.0.0"
   gem "standardrb", require: false
-end
-
-group :development, :test do
-  gem "next_rails"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
