@@ -16,9 +16,9 @@ if next?
   # to make it work with ruby 3.1
   # read more about it here: https://github.com/rails/rails/issues/43998,
   # and here: https://gist.github.com/claudiug/bdc2fb70b10d19513208c816588aed92
-  gem "rails", github: "rails/rails", branch: "7-0-stable"
+  gem "rails", github: "rails/rails", branch: "main"
 else
-  gem "rails", "~> 7.0.2"
+  gem "rails", "~> 7.1.0"
 end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 
@@ -84,7 +84,7 @@ group :test do
   gem "apparition", git: "https://github.com/twalpole/apparition.git", ref: "7db58cc6b0e4ca4141b074ff27d5936a1b8874bf"
   gem "capybara"
   gem "webdrivers"
-  gem "database_cleaner"
+  gem "database_cleaner-active_record", ">= 2.1.0"
   gem "capybara-screenshot"
   gem "simplecov", require: false
 end
