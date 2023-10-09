@@ -126,3 +126,36 @@
   border: 1px solid #9b054d;
   padding: 5px;
 }
+
+.comments-section {
+  margin: 16px 0;
+
+  .comment-card {
+    margin: 8px 0;
+
+    .bold {
+      font-weight: bold;
+    }
+
+    .link-blue {
+      color: blue;
+    }
+  }
+}
+
+.comment-form-container {
+  margin: 8px 0;
+  width: 50%;
+
+  .bold {
+    font-weight: bold;
+  }
+}
+
+#comment_body {
+  margin: 10px 0;
+}
+
+input.button.green {
+  width: auto;
+}

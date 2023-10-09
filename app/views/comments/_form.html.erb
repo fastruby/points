@@ -1,0 +1,5 @@
+<%= form_with model: [project, story, comment] do |form| %>
+  <%= form.text_area :body, rows: 6 %>
+  <%= form.submit class: "button green"%>
+  <%= link_to "Back", project_story_path(project, story), id: "back", class: "button" if ["edit", "update"].include?(action_name) %>
+<% end %>
