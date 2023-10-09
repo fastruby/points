@@ -164,7 +164,7 @@ class StoriesController < ApplicationController
   end
 
   def stories_params
-    params.require(:story).permit(:title, :description, :extra_info, :project_id, :approved)
+    params.require(:story).permit(:title, :description, :extra_info, :project_id, :status)
   end
 
   def expected_csv_headers?(file)
