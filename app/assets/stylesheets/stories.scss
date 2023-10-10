@@ -69,6 +69,7 @@
     "title preview"
     "description preview"
     "extra extra-preview"
+    "status ."
     "submit .";
   grid-template-columns: repeat(2, minmax(50%, 1fr));
   grid-column-gap: 10px;
@@ -90,6 +91,10 @@
 
     &.story_extra_info {
       grid-area: extra;
+    }
+
+    &.story_status {
+      grid-area: status;
     }
   }
 
