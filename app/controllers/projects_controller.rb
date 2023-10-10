@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_project, only: [:show, :edit, :update, :sort, :sort_stories, :destroy, :new_sub_project, :toggle_archive, :toggle_locked]
+  before_action :find_project, only: [:show, :edit, :update, :sort, :sort_stories, :destroy, :new_sub_project, :toggle_archive, :toggle_locked, :open_delete_modal]
   before_action :ensure_unarchived!, only: [:edit, :new_sub_project, :update]
 
   def index
@@ -70,9 +70,14 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    @project.destroy
     respond_to do |format|
-      format.html { redirect_to projects_path, notice: "Project was successfully destroyed." }
+      if @project.title.strip.eql?(params.dig(:project, :title)&.strip)
+        @project.destroy
+        flash[:success] = "Project was successfully destroyed."
+      else
+        flash[:error] = "Make sure you added the correct project's title"
+      end
+      format.html { redirect_to projects_path }
     end
   end
 
@@ -102,6 +107,10 @@ class ProjectsController < ApplicationController
 
   def new_sub_project
     @sub = Project.new(parent_id: @project)
+  end
+
+  # GET /projects/1/open_delete_modal.js
+  def open_delete_modal
   end
 
   private

@@ -124,8 +124,34 @@ RSpec.describe ProjectsController, type: :controller do
   describe "#destroy" do
     it "deletes the project" do
       expect {
-        delete :destroy, params: {id: project.id}
+        delete :destroy, params: {id: project.id, project: {title: project.title}}
       }.to change(Project, :count).by(-1)
+    end
+
+    it "deletes stripped project's title" do
+      project.update(title: " foo bar ")
+      expect {
+        delete :destroy, params: {id: project.id, project: {title: "foo bar"}}
+      }.to change(Project, :count).by(-1)
+    end
+
+    it "deletes stripped project's params" do
+      project.update(title: "foo bar")
+      expect {
+        delete :destroy, params: {id: project.id, project: {title: "foo bar  "}}
+      }.to change(Project, :count).by(-1)
+    end
+
+    it "does not delete the project" do
+      expect {
+        delete :destroy, params: {id: project.id}
+      }.not_to change(Project, :count)
+    end
+
+    it "does not delete the project when the title does not match" do
+      expect {
+        delete :destroy, params: {id: project.id, project: {title: "random title"}}
+      }.not_to change(Project, :count)
     end
   end
 

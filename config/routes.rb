@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       patch :toggle_locked
       get :new_clone
       post :clone
+      get :open_delete_modal
     end
     get :new_sub_project
 
