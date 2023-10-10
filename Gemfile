@@ -30,8 +30,6 @@ gem "bootstrap-sass", "3.4.1"
 gem "puma", "~> 6.3"
 # Use SCSS for stylesheets
 gem "sass-rails", "~> 5.0"
-# Use Uglifier as compressor for JavaScript assets
-gem "uglifier", ">= 1.3.0"
 
 gem "bourbon"
 gem "matrix"
