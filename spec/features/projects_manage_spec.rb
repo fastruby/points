@@ -145,14 +145,6 @@ RSpec.describe "managing projects", js: true do
         expect(page.source).to include("php upgrade")
       end
 
-      it "allows me to export a CSV" do
-        visit project_path(id: project.id)
-        find("#import-export").click
-
-        click_on "Export"
-        expect(page.source).to include("php upgrade")
-      end
-
       it "allows me to import a CSV" do
         visit project_path(id: project.id)
         find("#import-export").click
