@@ -14,7 +14,7 @@
 //= require jquery
 //= require bootstrap-sprockets
 //= require jquery-ui/widget
-//= require jquery-ui/sortable
+//= require jquery-ui/widgets/sortable
 //= require turbolinks
 //= require clipboard.min
 //= require sortable_list

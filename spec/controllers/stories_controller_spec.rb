@@ -144,5 +144,47 @@ RSpec.describe StoriesController, type: :controller do
         expect(response).to redirect_to project2
       end
     end
+
+    describe "#export" do
+      it "exports a CSV file" do
+        get :export, params: {project_id: project.id}
+        expect(response).to have_http_status(:ok)
+
+        csv_data = CSV.parse(response.body)
+        expected_csv_content = [
+          ["id", "title", "description", "position"],
+          [story.id.to_s, story.title, story.description, story.position.to_s]
+        ]
+        expect(csv_data).to eq(expected_csv_content)
+      end
+
+      context "with comments" do
+        it "exports a CSV file" do
+          user = FactoryBot.create(:user)
+          story2 = FactoryBot.create(:story, project: project)
+          story3 = FactoryBot.create(:story, project: project)
+          story4 = FactoryBot.create(:story, project: project)
+          comment1 = FactoryBot.create(:comment, user: user, story: story)
+          comment1_2 = FactoryBot.create(:comment, user: user, story: story)
+          comment2_1 = FactoryBot.create(:comment, user: user, story: story2)
+          comment2_2 = FactoryBot.create(:comment, user: user, story: story2)
+          comment3_1 = FactoryBot.create(:comment, user: user, story: story3)
+          get :export, params: {project_id: project.id, export_with_comments: "1"}
+
+          expect(response).to have_http_status(:ok)
+
+          csv_data = CSV.parse(response.body)
+          expected_csv_content = [
+            ["id", "title", "description", "position", "comment"],
+            [story.id.to_s, story.title, story.description, story.position.to_s, "#{comment1.user.name}: #{comment1.body}", "#{comment1_2.user.name}: #{comment1_2.body}"],
+            [story2.id.to_s, story2.title, story2.description, story2.position.to_s, "#{comment2_1.user.name}: #{comment2_1.body}", "#{comment2_2.user.name}: #{comment2_2.body}"],
+            [story3.id.to_s, story3.title, story3.description, story3.position.to_s, "#{comment3_1.user.name}: #{comment3_1.body}"],
+            [story4.id.to_s, story4.title, story4.description, story4.position.to_s]
+          ]
+
+          expect(csv_data).to eq(expected_csv_content)
+        end
+      end
+    end
   end
 end
