@@ -1,7 +1,4 @@
-let row = document.getElementById("story_<%= estimate.story_id %>")
-status_label = row.querySelector(".status > .story-status-badge")
-status_label.textContent = "<%= estimate.story.status %>"
-status_label.classList.value = "story-status-badge <%= estimate.story.status %>"
+updateStatusLabel("<%= estimate.story.status %>", "<%= estimate.story_id %>")
 
 document.getElementById("best_estimate_<%= estimate.story_id %>").innerText = "<%= j(estimate.best_case_points.to_s) %>"
 document.getElementById("worst_estimate_<%= estimate.story_id %>").innerText = "<%= j(estimate.worst_case_points.to_s) %>"

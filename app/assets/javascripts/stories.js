@@ -36,3 +36,10 @@ function updateStatusButton(color, status) {
 
   document.querySelector(":focus").blur();
 }
+
+function updateStatusLabel(status, storyId) {
+  let row = document.getElementById(`story_${storyId}`)
+  status_label = row.querySelector(".status > .story-status-badge")
+  status_label.textContent = status
+  status_label.classList.value = `story-status-badge ${status}`
+}
