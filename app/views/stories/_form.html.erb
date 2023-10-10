@@ -13,11 +13,6 @@
 
   <%= f.hidden_field :project_id, value: params[:project_id] %>
 
-  <div class="field story_status">
-    <%= f.label :status, "Status" %>
-    <%= f.select :status, options_for_select({ "Pending" => "pending", "Approved" => "approved", "Rejected" => "rejected" }, selected: @story.status), class: "project-story-approved" %>
-  </div>
-
   <div class="field story_title">
     <%= f.label :title %>
     <%= f.text_field :title, placeholder: "Story Title", class: "project-story-title", autofocus: true %>
@@ -41,6 +36,11 @@
   <div class="extra_info_preview">
     <label>Extra Info Preview</label>
     <div class="content"><%= markdown(@story.extra_info) %></div>
+  </div>
+
+  <div class="field story_status">
+    <%= f.label :status, "Status" %>
+    <%= f.select :status, options_for_select({ "Pending" => "pending", "Approved" => "approved", "Rejected" => "rejected" }, selected: @story.status), class: "project-story-approved" %>
   </div>
 
 
