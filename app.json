@@ -14,5 +14,6 @@
     {
       "url": "heroku/ruby"
     }
-  ]
+  ],
+    "stack": "heroku-22"
 }

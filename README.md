@@ -36,6 +36,8 @@ GITHUB_APP_ID=xxxxxxxxxxxxxxxxxxxx
 GITHUB_APP_SECRET=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
+`SHOW_DEVELOPER_AUTH=true` can be used to allow easy login without requiring GitHub's setup during local development or in safe review environments.
+
 ## Starting the Server
 
 ```
@@ -56,24 +58,18 @@ $ rails spec
 
 Build the points docker image
 
-```
-$ docker-compose build
-```
-
-Setup database and run migrations
-
-```
-$ docker-compose run web rails db:setup
+```bash
+./bin/setup_with_docker
 ```
 
 Run the app
 
 ```
-$ docker-compose up web
+./bin/start_with_docker
 
 or
 
-$ docker-compose up web-next
+docker-compose up web-next
 ```
 
 ## Admin Users
@@ -85,7 +81,11 @@ Currently, the only way to flag a user as `admin` is a direct database update us
 If you want to set the flag for a user, you can follow these steps:
 
 ```bash
-$ rails c
+rails console
+
+or
+
+docker-compose run --rm web rails console
 ```
 
 and then:
@@ -93,6 +93,12 @@ and then:
 ```ruby
 User.find_by(email: "user@example.com").update_attribute(:admin, true)
 ```
+
+## Rack Mini Profiler
+
+To enable the Rack Mini Profiler widget, add the `?enable_rack_mini_profiler` query string to any url. The widget will stay on for all requests until disabled.
+
+To disable the Rack Mini Profiler widget, add the `?disable_rack_mini_profiler` query string to any url.
 
 ## Contributing
 

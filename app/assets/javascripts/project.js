@@ -1,6 +1,10 @@
 document.addEventListener("turbolinks:load", function () {
   $("input[name='stories[]']").click(() => {
     const selected = $("input[name='stories[]']:checked");
+    const is_unlocked = $("#stories").data("unlocked");
+    if (!is_unlocked) {
+      return;
+    }
 
     if (selected.length > 0) {
       const ending = selected.length == 1 ? "y" : "ies";
@@ -25,6 +29,12 @@ document.addEventListener("turbolinks:load", function () {
     $("input[name='stories[]']:checked").each((_, checkbox) => {
       stories_ids.push($(checkbox).val());
     });
+
+    const ending = stories_ids.length == 1 ? "y" : "ies";
+    let user_confirmation = confirm(
+      `Are you sure you want to delete ${stories_ids.length} stor${ending}?`
+    );
+    if (!user_confirmation) return;
 
     $(event.target)
       .text("Bulk Delete")
@@ -95,7 +105,7 @@ const filterStories = () => {
     const storyTitle = element
       .querySelector("td:first-child")
       .innerText.toLowerCase();
-    if (storyTitle.includes(searchTerm)) {
+    if (storyTitle.includes(searchTerm) || element.id.replace(/\D/g, '').includes(searchTerm)) {
       cl.remove("hidden");
     } else {
       cl.add("hidden");

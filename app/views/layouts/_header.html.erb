@@ -1,16 +1,19 @@
+<%- title = defined?(header_title) ? header_title : "points app" %>
+<%- link = defined?(header_link) ? header_link : "/projects" %>
+
 <header class="navbar navbar-inverse">
   <div class="container">
     <div class="row">
       <div class="col-xs-10">
-        <%= link_to header_title, header_link, id: "logo" %>
+        <%= link_to title, link, id: "logo" %>
       </div>
       <div class="col-xs-2">
         <nav>
           <ul class="nav">
             <% if current_user %>
-              <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "button magenta" %>
+              <%= link_to "Sign out", ombu_labs_auth.destroy_user_session_path, method: :delete, class: "button magenta" %>
             <% else %>
-              <%= link_to "Sign in", new_user_session_path, class: "button" %>
+              <%= link_to "Sign in", ombu_labs_auth.new_user_session_path, class: "button green" %>
             <% end %>
           </ul>
         </nav>

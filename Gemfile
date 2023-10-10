@@ -4,7 +4,7 @@ def next?
   File.basename(__FILE__) == "Gemfile.next"
 end
 
-ruby "3.0.2"
+ruby "3.2.2"
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
@@ -12,11 +12,13 @@ git_source(:github) do |repo_name|
 end
 
 if next?
-  gem "rails", github: "rails/rails", branch: "main"
-  gem "devise", github: "heartcombo/devise", branch: "main"
+  # using the 7-0-stable branch for the time being until the fix is merged into main
+  # to make it work with ruby 3.1
+  # read more about it here: https://github.com/rails/rails/issues/43998,
+  # and here: https://gist.github.com/claudiug/bdc2fb70b10d19513208c816588aed92
+  gem "rails", github: "rails/rails", branch: "7-0-stable"
 else
-  gem "rails", "~> 6.1.4"
-  gem "devise"
+  gem "rails", "~> 7.0.2"
 end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 
@@ -25,13 +27,14 @@ gem "bootstrap-sass", "3.4.1"
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
 # Use Puma as the app server
-gem "puma", "~> 4.3"
+gem "puma", "~> 6.2"
 # Use SCSS for stylesheets
 gem "sass-rails", "~> 5.0"
 # Use Uglifier as compressor for JavaScript assets
 gem "uglifier", ">= 1.3.0"
 
 gem "bourbon"
+gem "matrix"
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
@@ -49,15 +52,20 @@ gem "jbuilder", "~> 2.5"
 # gem 'capistrano-rails', group: :development
 gem "jquery-rails"
 
-gem "pg", "~> 1.1"
+gem "pg"
 
 gem "jquery-ui-rails", "~> 5.0", ">= 5.0.5"
 gem "acts_as_list"
 
 gem "mimemagic", "~> 0.3.8"
 
-gem "omniauth-github", "~> 2.0.0"
-gem "omniauth-rails_csrf_protection"
+gem "ombu_labs-auth"
+
+gem "rack-mini-profiler"
+
+group :production do
+  gem "newrelic_rpm"
+end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -86,8 +94,7 @@ group :development do
   gem "web-console", ">= 3.3.0"
   gem "listen", "~> 3.7"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem "spring"
-  gem "spring-watcher-listen", "~> 2.0.0"
+  gem "spring", "3.0.0"
   gem "standardrb", require: false
 end
 
@@ -99,3 +106,7 @@ end
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "coffee-script"
+
+gem "pundit", "~> 2.2"
+
+gem "madmin", "~> 1.2"

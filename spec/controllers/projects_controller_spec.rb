@@ -64,6 +64,7 @@ RSpec.describe ProjectsController, type: :controller do
   describe "#create" do
     context "with valid attributes" do
       let(:valid_params) { FactoryBot.attributes_for(:project) }
+      let(:valid_sub_proj_params) { FactoryBot.attributes_for(:project, parent_id: project.id) }
 
       it "creates a new project" do
         expect {
@@ -74,7 +75,13 @@ RSpec.describe ProjectsController, type: :controller do
       it "redirects to the new project" do
         post :create, params: {project: valid_params}
 
-        expect(response).to redirect_to "/projects"
+        expect(response).to redirect_to project_path(Project.last)
+      end
+
+      it "redirects to parent of new sub project" do
+        post :create, params: {project: valid_sub_proj_params}
+
+        expect(response).to redirect_to project_path(project)
       end
     end
 
@@ -86,7 +93,7 @@ RSpec.describe ProjectsController, type: :controller do
       end
 
       it "stays on the new template page" do
-        expect(response).to redirect_to "projects/new"
+        expect(response).to render_template(:new)
       end
 
       it "shows a flash message" do
@@ -105,7 +112,7 @@ RSpec.describe ProjectsController, type: :controller do
       end
 
       it "stays on the new template page" do
-        expect(response).to redirect_to back_path
+        expect(response).to render_template(:new)
       end
 
       it "shows a flash message" do
@@ -141,6 +148,34 @@ RSpec.describe ProjectsController, type: :controller do
       put :update, params: {id: project.id, project: {title: "New Project Title"}}
 
       expect(project.reload.title).to eq "New Project Title"
+    end
+  end
+
+  describe "#toggle_archive" do
+    context "should set the status of the project to" do
+      it "archived when it is unarchived" do
+        put :toggle_archive, params: {id: project.id}, xhr: true
+        expect(assigns[:project]).to be_archived
+      end
+
+      it "nil when it is archived" do
+        put :toggle_archive, params: {id: archived_project.id}, xhr: true
+        expect(assigns[:project]).not_to be_archived
+      end
+    end
+  end
+
+  describe "#toggle_locked" do
+    context "when locking a project" do
+      it "returns a datetime" do
+        patch :toggle_locked, params: {id: project.id}, xhr: true
+        expect(assigns[:project]).to be_locked_at
+      end
+
+      it "returns a js response" do
+        patch :toggle_locked, params: {id: project.id}, xhr: true
+        expect(request.format.symbol).to eq(:js)
+      end
     end
   end
 

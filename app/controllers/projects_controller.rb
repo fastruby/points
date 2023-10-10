@@ -1,9 +1,10 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_project, only: [:show, :edit, :update, :sort, :sort_stories, :destroy]
+  before_action :find_project, only: [:show, :edit, :update, :sort, :sort_stories, :destroy, :new_sub_project, :toggle_archive, :toggle_locked]
+  before_action :ensure_unarchived!, only: [:edit, :new_sub_project, :update]
 
   def index
-    status = params[:archived] == "true" ? "archived" : nil
+    status = (params[:archived] == "true") ? "archived" : nil
     @projects = Project.where(parent_id: nil, status: status)
   end
 
@@ -29,12 +30,20 @@ class ProjectsController < ApplicationController
   end
 
   def toggle_archive
-    @project = Project.find(params[:id])
     @project.toggle_archived!
   end
 
+  # PATCH /projects/1/toggle_locked.js
+  def toggle_locked
+    if @project.locked_at.nil?
+      @project.update(locked_at: Time.current)
+    else
+      @project.update(locked_at: nil)
+    end
+  end
+
   def new_clone
-    @original = Project.includes(:projects, stories: :estimates).find(params[:id])
+    @original = Project.includes(:projects, :version_jump, stories: :estimates).find(params[:id])
   end
 
   def clone
@@ -53,10 +62,10 @@ class ProjectsController < ApplicationController
     @project = Project.new(projects_params)
     if @project.save
       flash[:success] = "Project created!"
-      redirect_to "/projects"
+      redirect_to project_path(parent_id)
     else
-      flash[:error] = @project.errors.full_messages
-      redirect_back(fallback_location: "projects/new")
+      flash.now[:error] = @project.errors.full_messages
+      render :new
     end
   end
 
@@ -74,6 +83,7 @@ class ProjectsController < ApplicationController
   end
 
   def update
+    authorize(@project)
     if @project.update(projects_params)
       respond_to do |format|
         format.html do
@@ -91,21 +101,28 @@ class ProjectsController < ApplicationController
   end
 
   def new_sub_project
-    @project = Project.find(params[:project_id])
     @sub = Project.new(parent_id: @project)
   end
 
   private
 
   def find_project
-    @project = Project.find(params[:id])
+    @project = Project.find(params[:id] || params[:project_id])
   end
 
   def projects_params
-    params.require(:project).permit(:title, :status, :parent_id)
+    params.require(:project).permit(:title, :status, :parent_id, :version_jump_id)
   end
 
   def clone_params
-    params.require(:project).permit(:title, :parent_id)
+    params.require(:project).permit(:title, :parent_id, :version_jump_id)
+  end
+
+  def parent_id
+    if @project.parent_id.nil?
+      @project.id
+    else
+      @project.parent_id
+    end
   end
 end

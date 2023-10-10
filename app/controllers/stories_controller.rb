@@ -1,8 +1,11 @@
 require "csv"
 class StoriesController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_project, except: [:bulk_destroy, :render_markdown]
+  before_action :find_project, except: [:bulk_destroy, :render_markdown, :edit, :update, :destroy, :show, :move]
   before_action :find_story, only: [:edit, :update, :destroy, :show, :move]
+  before_action :validate_url_product_id, only: [:edit, :update, :destroy, :show, :move]
+  before_action :ensure_unarchived!, except: [:show, :bulk_destroy, :render_markdown, :move]
+
   include ApplicationHelper
 
   CSV_HEADERS = %w[id title description position]
@@ -42,7 +45,7 @@ class StoriesController < ApplicationController
   end
 
   def show
-    @estimate = Estimate.where(story: @story, user: current_user).first
+    @estimate = Estimate.find_by(story: @story, user: current_user)
   end
 
   def update
@@ -73,7 +76,7 @@ class StoriesController < ApplicationController
       redirect_to(@project) && return
     else
       file.each do |story_csv|
-        story = @project.stories.where(id: story_csv["id"]).first || @project.stories.new
+        story = @project.stories.find_by(id: story_csv["id"]) || @project.stories.new
         story.update(title: story_csv["title"], description: story_csv["description"], position: story_csv["position"])
       end
       flash[:success] = "CSV import was successful"
@@ -88,7 +91,7 @@ class StoriesController < ApplicationController
         csv << story.attributes.slice(*CSV_HEADERS)
       end
     }
-    filename = "#{@project.title.gsub(/[^\w]/, "_")}-#{Time.now.to_s(:short).tr(" ", "_")}.csv"
+    filename = "#{@project.title.gsub(/[^\w]/, "_")}-#{Time.now.to_formatted_s(:short).tr(" ", "_")}.csv"
     send_data csv, filename: filename
   end
 
@@ -117,10 +120,15 @@ class StoriesController < ApplicationController
 
   def find_story
     @story = Story.find(params[:id] || params[:story_id])
+    @project = @story.project
+  end
+
+  def validate_url_product_id
+    raise ActionController::RoutingError.new("This story was not found for this project") unless params[:project_id] == @project.id.to_s
   end
 
   def stories_params
-    params.require(:story).permit(:title, :description, :project_id)
+    params.require(:story).permit(:title, :description, :extra_info, :project_id)
   end
 
   def expected_csv_headers?(file)

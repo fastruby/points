@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: {omniauth_callbacks: "callbacks"}
+  draw :madmin
+
+  mount OmbuLabs::Auth::Engine, at: "/", as: "ombu_labs_auth"
 
   authenticated do
     root to: "projects#index", as: :authenticated_root
@@ -19,6 +21,7 @@ Rails.application.routes.draw do
       patch :sort
       patch :sort_stories
       patch :toggle_archive
+      patch :toggle_locked
       get :new_clone
       post :clone
     end

@@ -30,4 +30,8 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  estimates:
+    form:
+      button_text: "Save changes"
   hello: "Hello world"
+

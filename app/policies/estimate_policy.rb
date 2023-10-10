@@ -1,0 +1,2 @@
+class EstimatePolicy < ApplicationPolicy
+end

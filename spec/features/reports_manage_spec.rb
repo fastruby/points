@@ -43,14 +43,10 @@ RSpec.describe "managing reports", js: true do
   context "with more than one estimate" do
     let!(:user_2) { FactoryBot.create(:user, name: "Sarah") }
     let!(:estimate) do
-      FactoryBot.create(:estimate, story: story, user: user,
-                                   best_case_points: 1,
-                                   worst_case_points: 4)
+      FactoryBot.create(:estimate, story: story, user: user, best_case_points: 1, worst_case_points: 4)
     end
     let!(:estimate_2) do
-      FactoryBot.create(:estimate, story: story, user: user_2,
-                                   best_case_points: 3,
-                                   worst_case_points: 8)
+      FactoryBot.create(:estimate, story: story, user: user_2, best_case_points: 3, worst_case_points: 8)
     end
     let(:best_average) { "2.0" }
     let(:worst_average) { "6.0" }
@@ -97,10 +93,7 @@ RSpec.describe "managing reports", js: true do
     # even after that bug gets fixed, we have to be sure we handle old data correctly
     context "by the same user" do
       let!(:another_estimate) do
-        x = FactoryBot.build(:estimate, story: story, user: user,
-                                     best_case_points: 8,
-                                     worst_case_points: 13,
-                                     created_at: 2.minutes.from_now)
+        x = FactoryBot.build(:estimate, story: story, user: user, best_case_points: 8, worst_case_points: 13, created_at: 2.minutes.from_now)
         x.save(validate: false)
       end
 
@@ -122,6 +115,21 @@ RSpec.describe "managing reports", js: true do
           expect(find("td:nth-child(7)")).to have_text "2"
           expect(find("td:nth-child(8)")).to have_text "6"
         end
+      end
+    end
+  end
+
+  context "when a project is locked" do
+    it "shows a locked label for projects on reports page" do
+      locked_project = FactoryBot.create(:project, :locked)
+      visit reports_index_path
+      within "#stories" do
+        expect(page).to have_text("Locked", count: 1)
+      end
+
+      visit project_report_path(locked_project)
+      within ".status-badge.locked" do
+        expect(page).to have_text("Locked")
       end
     end
   end
