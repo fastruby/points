@@ -147,6 +147,12 @@ RSpec.describe ProjectsController, type: :controller do
         delete :destroy, params: {id: project.id}
       }.not_to change(Project, :count)
     end
+
+    it "does not delete the project when the title does not match" do
+      expect {
+        delete :destroy, params: {id: project.id, project: {title: "random title"}}
+      }.not_to change(Project, :count)
+    end
   end
 
   describe "#show" do
