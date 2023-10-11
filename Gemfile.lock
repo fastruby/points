@@ -409,6 +409,8 @@ GEM
     standardrb (1.0.1)
       standard
     stringio (3.0.8)
+    terser (1.1.18)
+      execjs (>= 0.3.0, < 3)
     thor (1.2.2)
     tilt (2.3.0)
     timeout (0.4.0)
@@ -437,7 +439,6 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    yui-compressor (0.12.0)
     zeitwerk (2.6.12)
 
 PLATFORMS
@@ -481,11 +482,11 @@ DEPENDENCIES
   simplecov
   spring (= 3.0.0)
   standardrb
+  terser
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 3.3.0)
   webdrivers
-  yui-compressor
 
 RUBY VERSION
    ruby 3.2.2p53

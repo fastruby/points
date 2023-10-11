@@ -63,7 +63,7 @@ gem "rack-mini-profiler"
 
 group :production do
   gem "newrelic_rpm"
-  gem "yui-compressor"
+  gem "terser"
 end
 
 group :development, :test do
