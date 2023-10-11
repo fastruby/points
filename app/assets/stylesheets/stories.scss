@@ -61,6 +61,10 @@
   padding-bottom: 1.3em;
 }
 
+.modal strong {
+  font-weight: bold;
+}
+
 .new_story,
 .edit_story {
   display: grid;
@@ -125,8 +129,8 @@
 .popup {
   display: none;
   position: absolute;
-  top: 5px;
-  left: 30px;
+  right: 30px;
+  z-index: 50;
   background: #d9f1f1;
   height: 30px;
   width: 140px;
