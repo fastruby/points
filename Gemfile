@@ -16,9 +16,9 @@ if next?
   # to make it work with ruby 3.1
   # read more about it here: https://github.com/rails/rails/issues/43998,
   # and here: https://gist.github.com/claudiug/bdc2fb70b10d19513208c816588aed92
-  gem "rails", github: "rails/rails", branch: "7-0-stable"
+  gem "rails", github: "rails/rails", branch: "main"
 else
-  gem "rails", "~> 7.0.2"
+  gem "rails", "~> 7.1.0"
 end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 
@@ -30,8 +30,6 @@ gem "bootstrap-sass", "3.4.1"
 gem "puma", "~> 6.3"
 # Use SCSS for stylesheets
 gem "sass-rails", "~> 5.0"
-# Use Uglifier as compressor for JavaScript assets
-gem "uglifier", ">= 1.3.0"
 
 gem "bourbon"
 gem "matrix"
@@ -65,26 +63,28 @@ gem "rack-mini-profiler"
 
 group :production do
   gem "newrelic_rpm"
+  gem "terser"
 end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
-  gem "rspec-rails", "~> 4.0.2"
+  gem "rspec-rails", "~> 6.0.3"
   gem "faker"
   gem "shoulda-matchers", "~> 3.1"
   gem "rails-controller-testing"
   gem "dotenv-rails"
   gem "recursive-open-struct"
   gem "factory_bot_rails"
+  gem "next_rails"
 end
 
 group :test do
   gem "apparition", git: "https://github.com/twalpole/apparition.git", ref: "7db58cc6b0e4ca4141b074ff27d5936a1b8874bf"
   gem "capybara"
   gem "webdrivers"
-  gem "database_cleaner"
+  gem "database_cleaner-active_record", ">= 2.1.0"
   gem "capybara-screenshot"
   gem "simplecov", require: false
 end
@@ -96,10 +96,6 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem "spring", "3.0.0"
   gem "standardrb", require: false
-end
-
-group :development, :test do
-  gem "next_rails"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

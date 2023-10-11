@@ -9,6 +9,7 @@ coverage
 .byebug_history
 .tool-versions
 .DS_Store
+public/assets
 
 node_modules
 yarn-error.log

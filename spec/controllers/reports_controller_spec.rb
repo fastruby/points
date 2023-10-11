@@ -2,6 +2,8 @@ require "rails_helper"
 require "csv"
 
 RSpec.describe ReportsController, type: :controller do
+  render_views
+
   before do
     @request.env["devise.mapping"] = Devise.mappings[:user]
     admin = FactoryBot.create(:user, :admin)
