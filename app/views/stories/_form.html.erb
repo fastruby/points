@@ -40,7 +40,7 @@
 
   <div class="field story_status">
     <%= f.label :status, "Status" %>
-    <%= f.select :status, options_for_select({ "Pending" => "pending", "Approved" => "approved", "Rejected" => "rejected" }, selected: @story.status), class: "project-story-approved" %>
+    <%= f.select :status, options_for_status_select(@story, action_name), class: "project-story-approved" %>
   </div>
 
 
