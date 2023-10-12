@@ -52,6 +52,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_08_142819) do
     t.integer "position"
     t.integer "real_score"
     t.string "extra_info"
+    t.integer "status", default: 0
   end
 
   create_table "users", force: :cascade do |t|

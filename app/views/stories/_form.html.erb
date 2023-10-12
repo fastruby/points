@@ -38,6 +38,11 @@
     <div class="content"><%= markdown(@story.extra_info) %></div>
   </div>
 
+  <div class="field story_status">
+    <%= f.label :status, "Status" %>
+    <%= f.select :status, options_for_status_select(@story, action_name), class: "project-story-approved" %>
+  </div>
+
 
   <div class="btn-group">
     <%= f.submit yield(:button_text), class: "button green", id: "edit" %>

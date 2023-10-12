@@ -11,9 +11,17 @@ Rails.application.routes.draw do
   get "home/index"
   get "reports/index"
 
-  resource :stories do
-    post :bulk_destroy, to: "stories#bulk_destroy"
-    post :render_markdown
+  resources :stories do
+    member do
+      patch :approve
+      patch :reject
+      patch :pending
+    end
+
+    collection do
+      post :bulk_destroy, to: "stories#bulk_destroy"
+      post :render_markdown
+    end
   end
 
   resources :projects do

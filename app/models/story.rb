@@ -8,6 +8,8 @@ class Story < ApplicationRecord
 
   before_create :add_position
 
+  enum :status, [:pending, :approved, :rejected]
+
   scope :by_position, -> { order("stories.position ASC NULLS FIRST, stories.created_at ASC") }
 
   def best_estimate_average

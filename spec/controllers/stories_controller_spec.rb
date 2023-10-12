@@ -145,6 +145,33 @@ RSpec.describe StoriesController, type: :controller do
       end
     end
 
+    describe "#approve" do
+      it "updates the story status to approved" do
+        patch :approve, params: {id: story.id}, format: :js
+
+        expect(story.reload.status).to eq("approved")
+        expect(response).to render_template("shared/update_status")
+      end
+    end
+
+    describe "#reject" do
+      it "updates the story status to rejected" do
+        patch :reject, params: {id: story.id}, format: :js
+
+        expect(story.reload.status).to eq("rejected")
+        expect(response).to render_template("shared/update_status")
+      end
+    end
+
+    describe "#pending" do
+      it "updates the story status to pending" do
+        patch :pending, params: {id: story.id}, format: :js
+
+        expect(story.reload.status).to eq("pending")
+        expect(response).to render_template("shared/update_status")
+      end
+    end
+
     describe "#export" do
       it "exports a CSV file" do
         get :export, params: {project_id: project.id}

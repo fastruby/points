@@ -15,8 +15,36 @@ RSpec.describe "managing stories", js: true do
     fill_in "story[title]", with: "As a user, I want to add stories"
     fill_in "story[description]", with: "This story allows users to add stories."
     fill_in "story[extra_info]", with: "This story allows users to add extra details."
+    default_status = find(:option, "Pending")
+    expect(default_status).to be_selected
     click_button "Create"
     expect(Story.count).to eq 2
+
+    story = Story.last
+    expect(story.pending?).to be true
+  end
+
+  context "within the new story page" do
+    it "allows me to select a status other than pending" do
+      visit project_path(id: project.id)
+      click_link "Add a Story"
+      fill_in "story[title]", with: "As a user, I want to add stories"
+      fill_in "story[description]", with: "This story allows users to add stories."
+      fill_in "story[extra_info]", with: "This story allows users to add extra details."
+      select "Approved", from: "Status"
+      status = find(:option, "Approved")
+      expect(status).to be_selected
+      click_button "Create"
+
+      story = Story.last
+      expect(story.approved?).to be true
+    end
+
+    it "doesn't have a Rejected option for the status" do
+      visit project_path(id: project.id)
+      click_link "Add a Story"
+      expect { find(:option, "Rejected") }.to raise_error(Capybara::ElementNotFound)
+    end
   end
 
   it "allows me to clone a story" do

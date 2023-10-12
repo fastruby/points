@@ -1,7 +1,7 @@
-let row = document.getElementById("story_<%= estimate.story_id %>")
-row.children[1].innerText = "<%= j(estimate.best_case_points.to_s) %>"
-row.children[2].innerText = "<%= j(estimate.worst_case_points.to_s) %>"
+updateStatusLabel("<%= estimate.story.status %>", "<%= estimate.story_id %>")
 
-let totals_row = document.querySelector('.project-table tfoot tr')
-totals_row.children[1].innerText = "<%= j @project.best_estimate_sum_per_user(current_user) %>"
-totals_row.children[2].innerText = "<%= j @project.worst_estimate_sum_per_user(current_user) %>"
+document.getElementById("best_estimate_<%= estimate.story_id %>").innerText = "<%= j(estimate.best_case_points.to_s) %>"
+document.getElementById("worst_estimate_<%= estimate.story_id %>").innerText = "<%= j(estimate.worst_case_points.to_s) %>"
+
+document.querySelector('.project-table tfoot tr > .best_estimates_total').innerText = "<%= j @project.best_estimate_sum_per_user(current_user) %>"
+document.querySelector('.project-table tfoot tr > .worst_estimates_total').innerText = "<%= j @project.worst_estimate_sum_per_user(current_user) %>"

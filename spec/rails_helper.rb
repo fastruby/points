@@ -63,8 +63,8 @@ module FeatureSpecsHelpers
 
   def expect_story_estimates(story, best, worst)
     within_story_row(story) do
-      expect(find("td:nth-child(2)")).to have_text best.to_s
-      expect(find("td:nth-child(3)")).to have_text worst.to_s
+      expect(find("td:nth-child(3)")).to have_text best.to_s
+      expect(find("td:nth-child(4)")).to have_text worst.to_s
     end
   end
 end

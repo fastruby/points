@@ -23,3 +23,29 @@
     background-color: #57ce81;
   }
 }
+
+.story-status-badge {
+  display: inline-block;
+  padding: 7px 15px;
+  font-weight: 600;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 20px;
+  font-size: 11px;
+  background-color: $orange;
+
+  &.approved {
+    background-color: $green;
+    border-color: #1d4ed8;
+    color: $white;
+  }
+
+  &.rejected {
+    background-color: $magenta;
+    border-color: #d77e72;
+    color: $white;
+  }
+
+}

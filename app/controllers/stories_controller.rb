@@ -1,8 +1,8 @@
 require "csv"
 class StoriesController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_project, except: [:bulk_destroy, :render_markdown, :edit, :update, :destroy, :show, :move]
-  before_action :find_story, only: [:edit, :update, :destroy, :show, :move]
+  before_action :find_project, except: [:bulk_destroy, :render_markdown, :edit, :update, :destroy, :show, :move, :approve, :reject, :pending]
+  before_action :find_story, only: [:edit, :update, :destroy, :show, :move, :approve, :reject, :pending]
   before_action :validate_url_product_id, only: [:edit, :update, :destroy, :show, :move]
   before_action :ensure_unarchived!, except: [:show, :bulk_destroy, :render_markdown, :move]
 
@@ -127,6 +127,27 @@ class StoriesController < ApplicationController
     redirect_to @project
   end
 
+  def approve
+    @story.approved!
+    respond_to do |format|
+      format.js { render "shared/update_status" }
+    end
+  end
+
+  def reject
+    @story.rejected!
+    respond_to do |format|
+      format.js { render "shared/update_status" }
+    end
+  end
+
+  def pending
+    @story.pending!
+    respond_to do |format|
+      format.js { render "shared/update_status" }
+    end
+  end
+
   private
 
   def find_project
@@ -143,7 +164,7 @@ class StoriesController < ApplicationController
   end
 
   def stories_params
-    params.require(:story).permit(:title, :description, :extra_info, :project_id)
+    params.require(:story).permit(:title, :description, :extra_info, :project_id, :status)
   end
 
   def expected_csv_headers?(file)

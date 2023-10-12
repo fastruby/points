@@ -11,7 +11,7 @@
   }
   .project-table__row {
     display: grid;
-    grid-template-columns: 1fr 70px 70px 260px;
+    grid-template-columns: 1fr 100px 70px 70px 260px;
     align-items: center;
     padding: 10px 0;
     &.project-table__row--reports {

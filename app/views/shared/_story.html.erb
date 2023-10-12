@@ -1,4 +1,17 @@
-<h4 class="word-break">Story #<%= story.id %>: <%= story.title %></h4>
+<div class="story-title">
+  <h4 class="word-break">Story #<%= story.id %>: <%= story.title %></h4>
+  <div class="dropdown-wrapper">
+    <button class="button <%= status_color(story) %>">
+      <span><%= story.status %></span>
+      <i class="fa fa-solid fa-caret-down"></i>
+    </button>
+    <div class="dropdown">
+      <%= button_to "Approve", approve_story_path(@story), class: "status-selector", method: :patch, remote: true %>
+      <%= button_to "Reject", reject_story_path(@story), class: "status-selector", method: :patch, remote: true %>
+      <%= button_to "Pending", pending_story_path(@story), class: "status-selector", method: :patch, remote: true %>
+    </div>
+  </div>
+</div>
 
 <div class="story-description">
   <%= markdown(story.description) %>
