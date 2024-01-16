@@ -29,4 +29,16 @@ RSpec.describe User, type: :model do
       end
     end
   end
+  describe "Instance Methods" do
+    describe "#name" do
+      it "returns the name a name exists" do
+        expect(subject.name).to eql subject.name
+      end
+
+      it "returns the email if the name doesn't exist" do
+        subject.name = nil
+        expect(subject.name).to eql subject.email
+      end
+    end
+  end
 end
