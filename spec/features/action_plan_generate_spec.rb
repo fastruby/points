@@ -8,15 +8,17 @@ RSpec.describe "generating an action plan", js: true do
 
   let!(:project) do
     FactoryBot.create(:project, parent: parent).tap do |project|
-      FactoryBot.create(:story, title: "Second Story", description: "Second", position: 2, project: project, extra_info: "Extra Information")
-      FactoryBot.create(:story, title: "First Story", description: "First", position: 1, project: project)
+      FactoryBot.create(:story, :approved, title: "Second Story", description: "Second", position: 2, project: project, extra_info: "Extra Information")
+      FactoryBot.create(:story, :approved, title: "First Story", description: "First", position: 1, project: project)
+      FactoryBot.create(:story, :pending, title: "Pending task", description: "Pending description", position: 3, project: project)
     end
   end
 
   let!(:project2) do
     FactoryBot.create(:project, parent: parent).tap do |project|
-      FactoryBot.create(:story, title: "Third Story", description: "Third", position: 2, project: project)
-      FactoryBot.create(:story, title: "Forth Story", description: "Forth", position: 1, project: project)
+      FactoryBot.create(:story, :approved, title: "Third Story", description: "Third", position: 2, project: project)
+      FactoryBot.create(:story, :approved, title: "Forth Story", description: "Forth", position: 1, project: project)
+      FactoryBot.create(:story, :rejected, title: "Rejected task", description: "Rejected description", position: 3, project: project)
     end
   end
 

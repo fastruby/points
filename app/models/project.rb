@@ -16,6 +16,7 @@ class Project < ApplicationRecord
   scope :sub_projects_with_ordered_stories, ->(project_id) {
     where(parent_id: project_id)
       .includes(:stories).references(:stories)
+      .where(stories: {status: :approved})
       .order("projects.position ASC, stories.position ASC NULLS FIRST")
   }
 
