@@ -141,10 +141,12 @@ RSpec.describe "managing projects", js: true do
 
     context "import & Export" do
       before do
-        project.stories.create(title: "php upgrade", description: "quick php upgrade")
+        project.stories.create(title: "php upgrade", description: "quick php upgrade", status: :approved)
       end
 
       it "allows me to export a CSV", js: false do
+        project.stories.create(title: "pending story", description: "pending stories don't export", status: :pending)
+        project.stories.create(title: "rejected story", description: "rejected stories don't export", status: :rejected)
         visit project_path(id: project.id)
         find("#import-export").click
 
