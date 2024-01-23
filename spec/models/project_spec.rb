@@ -21,18 +21,19 @@ RSpec.describe Project, type: :model do
     expect(sub_project2.position).to eq 2
   end
 
-  describe ".with_ordered_descendents" do
+  describe ".sub_projects_with_approved_and_ordered_stories" do
     it "orders sub projects properly" do
       parent = FactoryBot.create(:project)
       sub_project1 = FactoryBot.create(:project, parent: parent, position: 2)
-      story_5 = FactoryBot.create(:story, project: sub_project1, position: 2)
-      story_4 = FactoryBot.create(:story, project: sub_project1, position: 1)
-      story_6 = FactoryBot.create(:story, project: sub_project1, position: 3)
+      story_5 = FactoryBot.create(:story, :approved, project: sub_project1, position: 2)
+      story_4 = FactoryBot.create(:story, :approved, project: sub_project1, position: 1)
+      story_6 = FactoryBot.create(:story, :approved, project: sub_project1, position: 3)
+
       sub_project2 = FactoryBot.create(:project, parent: parent, position: 1)
-      story_3 = FactoryBot.create(:story, project: sub_project2, position: 3)
-      story_1 = FactoryBot.create(:story, project: sub_project2, position: 1)
-      story_2 = FactoryBot.create(:story, project: sub_project2, position: 2)
-      sub_projects = Project.sub_projects_with_ordered_stories(parent.id)
+      story_3 = FactoryBot.create(:story, :approved, project: sub_project2, position: 3)
+      story_1 = FactoryBot.create(:story, :approved, project: sub_project2, position: 1)
+      story_2 = FactoryBot.create(:story, :approved, project: sub_project2, position: 2)
+      sub_projects = Project.sub_projects_with_approved_and_ordered_stories(parent.id)
 
       expect(sub_projects.count).to eq 2
       expect(sub_projects[0].id).to eq sub_project2.id

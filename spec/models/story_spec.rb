@@ -115,4 +115,14 @@ RSpec.describe Story, type: :model do
       end
     end
   end
+
+  describe ".approved" do
+    it "returns only approved stories" do
+      approved_stories = FactoryBot.create_list(:story, 2, :approved)
+      FactoryBot.create(:story, :rejected)
+      FactoryBot.create(:story, :pending)
+
+      expect(Story.approved.map(&:id).sort).to eq(approved_stories.map(&:id).sort)
+    end
+  end
 end
