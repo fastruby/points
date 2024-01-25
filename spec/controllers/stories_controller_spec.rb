@@ -4,7 +4,7 @@ RSpec.describe StoriesController, type: :controller do
   render_views
 
   let!(:project) { FactoryBot.create(:project) }
-  let!(:story) { FactoryBot.create(:story, project: project) }
+  let!(:story) { FactoryBot.create(:story, project: project, status: :approved) }
 
   before do
     @request.env["devise.mapping"] = Devise.mappings[:user]
@@ -173,7 +173,9 @@ RSpec.describe StoriesController, type: :controller do
     end
 
     describe "#export" do
-      it "exports a CSV file" do
+      it "exports a CSV file with only approved stories" do
+        FactoryBot.create(:story, project: project, status: :rejected)
+        FactoryBot.create(:story, project: project, status: :pending)
         get :export, params: {project_id: project.id}
         expect(response).to have_http_status(:ok)
 
@@ -186,11 +188,13 @@ RSpec.describe StoriesController, type: :controller do
       end
 
       context "with comments" do
-        it "exports a CSV file" do
+        it "exports a CSV file with only approved stories" do
           user = FactoryBot.create(:user)
-          story2 = FactoryBot.create(:story, project: project)
-          story3 = FactoryBot.create(:story, project: project)
-          story4 = FactoryBot.create(:story, project: project)
+          story2 = FactoryBot.create(:story, project: project, status: :approved)
+          story3 = FactoryBot.create(:story, project: project, status: :approved)
+          story4 = FactoryBot.create(:story, project: project, status: :approved)
+          FactoryBot.create(:story, project: project, status: :rejected)
+          FactoryBot.create(:story, project: project, status: :pending)
           comment1 = FactoryBot.create(:comment, user: user, story: story)
           comment1_2 = FactoryBot.create(:comment, user: user, story: story)
           comment2_1 = FactoryBot.create(:comment, user: user, story: story2)
