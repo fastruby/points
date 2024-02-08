@@ -1,5 +1,5 @@
 <div class="comment-card">
-  <p class="bold"><%= comment.user.name %>: <%= markdown(comment.body) %> <%= comment.created_at %><p>
+  <p class="bold"><%= display_name(comment.user) %>: <%= markdown(comment.body) %> <%= comment.created_at %><p>
   <% if current_user == comment.user %>
     <%= link_to "Edit Comment", edit_project_story_comment_path(project, story, comment), class: "link-blue" %> |
     <%= link_to "Delete", project_story_comment_path(project, story, comment), method: :delete, data: { confirm: "Are you sure?" }, title: "Delete" %>

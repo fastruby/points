@@ -8,8 +8,8 @@
       <tr class="project-table__row project-table__row--reports project-table__row--header">
         <td class="project-table__cell">Story Title</td>
         <% @users.each do |user| %>
-          <td class="project-table__cell"><%= user.name %>'s Best Estimate</td>
-          <td class="project-table__cell"><%= user.name %>'s Worst Estimate</td>
+          <td class="project-table__cell"><%= display_name(user) %>'s Best Estimate</td>
+          <td class="project-table__cell"><%= display_name(user) %>'s Worst Estimate</td>
         <% end %>
         <td class="project-table__cell"></td>
         <td class="project-table__cell">Average: Best Estimates</td>
