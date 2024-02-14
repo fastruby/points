@@ -33,4 +33,8 @@ module ApplicationHelper
 
     markdown.render(text.to_s).html_safe
   end
+
+  def display_name(user)
+    user.name || user.email
+  end
 end

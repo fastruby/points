@@ -93,7 +93,7 @@ class StoriesController < ApplicationController
         @project.stories.includes(:comments).approved.by_position.each do |story|
           comments = []
           story.comments.each do |comment|
-            comments << "#{comment.user.name}: #{comment.body}"
+            comments << "#{display_name(comment.user)}: #{comment.body}"
           end
           csv << [story.id, story.title, story.description, story.position] + comments
         end

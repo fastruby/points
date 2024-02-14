@@ -9,7 +9,7 @@ class UserResource < Madmin::Resource
   attribute :estimates
 
   def self.display_name(record)
-    record.name.truncate(12)
+    record.name.truncate(12) || record.email.truncate(12)
   end
 
   # Uncomment this to customize the default sort column and direction.
