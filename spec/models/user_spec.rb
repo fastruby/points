@@ -29,11 +29,4 @@ RSpec.describe User, type: :model do
       end
     end
   end
-  describe "Instance Methods" do
-    describe "#name" do
-      it "returns the name a name exists" do
-        expect(subject.name).to eql subject.name
-      end
-    end
-  end
 end
