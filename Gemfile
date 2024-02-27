@@ -18,7 +18,7 @@ if next?
   # and here: https://gist.github.com/claudiug/bdc2fb70b10d19513208c816588aed92
   gem "rails", github: "rails/rails", branch: "main"
 else
-  gem "rails", "~> 7.1.0"
+  gem "rails", "~> 7.1.3"
 end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 
