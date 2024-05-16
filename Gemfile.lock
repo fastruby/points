@@ -320,7 +320,8 @@ GEM
     responders (3.1.0)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rexml (3.2.6)
+    rexml (3.2.8)
+      strscan (>= 3.0.9)
     rspec-core (3.12.2)
       rspec-support (~> 3.12.0)
     rspec-expectations (3.12.3)
@@ -409,6 +410,7 @@ GEM
     standardrb (1.0.1)
       standard
     stringio (3.0.8)
+    strscan (3.1.0)
     terser (1.1.18)
       execjs (>= 0.3.0, < 3)
     thor (1.2.2)
