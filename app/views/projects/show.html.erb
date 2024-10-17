@@ -18,6 +18,10 @@
             <th class="project-table__cell">Best<br />Estimate</th>
             <th class="project-table__cell">Worst<br />Estimate</th>
             <th class="project-table__cell story_actions">
+              <div>
+                <input type="checkbox" name="select_all" id="select_all">
+                <label for="select_all">Select All</label>
+              </div>
               <%= link_unless_archived(@project, "Add a Story", new_project_story_path(@project), classes: "green") if is_unlocked?(@project) %>
               <button id="bulk_delete" class="button magenta" aria-disabled="true" disabled>Bulk Delete</button>
             </th>

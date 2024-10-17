@@ -1,28 +1,23 @@
 document.addEventListener("turbolinks:load", function () {
   $("input[name='stories[]']").click(() => {
-    const selected = $("input[name='stories[]']:checked");
-    const is_unlocked = $("#stories").data("unlocked");
-    if (!is_unlocked) {
-      return;
-    }
-
-    if (selected.length > 0) {
-      const ending = selected.length == 1 ? "y" : "ies";
-      $("#bulk_delete")
-        .text(`Bulk Delete (${selected.length} Stor${ending})`)
-        .attr("aria-disabled", "false")
-        .prop("disabled", false);
-    } else {
-      $("#bulk_delete")
-        .text("Bulk Delete")
-        .attr("aria-disabled", "true")
-        .prop("disabled", true);
-    }
+    updateBulkDeleteStatus();
   });
+
 
   $(".import-export-header").click(function () {
     $(this).children(".rotate").toggleClass("left");
   });
+
+
+  $("#select_all").click((event) => {
+    let checked = event.target.checked;
+
+    $("input[name='stories[]']").each((_, checkbox) => {
+      checkbox.checked = checked;
+    })
+
+    updateBulkDeleteStatus();
+  })
 
   $("#bulk_delete").click((event) => {
     let stories_ids = [];
@@ -117,4 +112,25 @@ function toggleCloneSubProjects(value) {
   document
     .querySelectorAll("#sub-projects-to-clone input[type='checkbox']")
     .forEach((el) => (el.checked = value));
+}
+
+function updateBulkDeleteStatus() {
+  const selected = $("input[name='stories[]']:checked");
+    const is_unlocked = $("#stories").data("unlocked");
+    if (!is_unlocked) {
+      return;
+    }
+
+    if (selected.length > 0) {
+      const ending = selected.length == 1 ? "y" : "ies";
+      $("#bulk_delete")
+        .text(`Bulk Delete (${selected.length} Stor${ending})`)
+        .attr("aria-disabled", "false")
+        .prop("disabled", false);
+    } else {
+      $("#bulk_delete")
+        .text("Bulk Delete")
+        .attr("aria-disabled", "true")
+        .prop("disabled", true);
+    }
 }
