@@ -1,6 +1,7 @@
 document.addEventListener("turbolinks:load", function () {
   $("input[name='stories[]']").click(() => {
     updateBulkDeleteStatus();
+    updateSelectAllStatus();
   });
 
 
@@ -133,4 +134,20 @@ function updateBulkDeleteStatus() {
         .attr("aria-disabled", "true")
         .prop("disabled", true);
     }
+}
+
+function updateSelectAllStatus() {
+  const selected = $("input[name='stories[]']:checked");
+  const checkboxes = $("input[name='stories[]']");
+
+  if (selected.length == 0) {
+    $("#select_all")[0].checked = false;
+    $("#select_all")[0].indeterminate = false;
+  } else if (selected.length == checkboxes.length) {
+    $("#select_all")[0].checked = true;
+    $("#select_all")[0].indeterminate = false;
+  } else {
+    $("#select_all")[0].checked = false;
+    $("#select_all")[0].indeterminate = true;
+  }
 }
