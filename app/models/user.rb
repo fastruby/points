@@ -3,5 +3,4 @@ class User < ApplicationRecord
 
   has_many :estimates
   has_many :comments
-
 end
