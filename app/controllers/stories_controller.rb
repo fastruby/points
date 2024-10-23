@@ -90,7 +90,12 @@ class StoriesController < ApplicationController
     csv = if params[:export_with_comments] == "1"
       CSV.generate(headers: true) do |csv|
         csv << CSV_HEADERS + ["comment"]
-        @project.stories.includes(:comments).approved.by_position.each do |story|
+        stories = if params.include?(:export_all) && params[:export_all] == "1"
+          @project.stories.includes(:comments)
+        else
+          @project.stories.includes(:comments).approved
+        end
+        stories.by_position.each do |story|
           comments = []
           story.comments.each do |comment|
             comments << "#{display_name(comment.user)}: #{comment.body}"
@@ -101,7 +106,13 @@ class StoriesController < ApplicationController
     else
       CSV.generate(headers: true) do |csv|
         csv << CSV_HEADERS
-        @project.stories.approved.by_position.each do |story|
+        stories = if params.include?(:export_all) && params[:export_all] == "1"
+          @project.stories
+        else
+          @project.stories.approved
+        end
+
+        stories.by_position.each do |story|
           csv << story.attributes.slice(*CSV_HEADERS)
         end
       end
