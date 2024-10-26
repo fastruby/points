@@ -88,37 +88,45 @@ class StoriesController < ApplicationController
 
   def export
     csv = if params[:export_with_comments] == "1"
-      CSV.generate(headers: true) do |csv|
-        csv << CSV_HEADERS + ["comment"]
-        stories = if params.include?(:export_all) && params[:export_all] == "1"
-          @project.stories.includes(:comments)
-        else
-          @project.stories.includes(:comments).approved
-        end
-        stories.by_position.each do |story|
-          comments = []
-          story.comments.each do |comment|
-            comments << "#{display_name(comment.user)}: #{comment.body}"
-          end
-          csv << [story.id, story.title, story.description, story.position] + comments
-        end
-      end
+      generate_csv_with_comments
     else
-      CSV.generate(headers: true) do |csv|
-        csv << CSV_HEADERS
-        stories = if params.include?(:export_all) && params[:export_all] == "1"
-          @project.stories
-        else
-          @project.stories.approved
-        end
-
-        stories.by_position.each do |story|
-          csv << story.attributes.slice(*CSV_HEADERS)
-        end
-      end
+      generate_csv_without_comments
     end
     filename = "#{@project.title.gsub(/[^\w]/, "_")}-#{Time.now.to_formatted_s(:short).tr(" ", "_")}.csv"
     send_data csv, filename: filename
+  end
+
+  def generate_csv_with_comments
+    CSV.generate(headers: true) do |csv|
+      csv << CSV_HEADERS + ["comment"]
+      stories = if params.include?(:export_all) && params[:export_all] == "1"
+        @project.stories.includes(:comments)
+      else
+        @project.stories.includes(:comments).approved
+      end
+      stories.by_position.each do |story|
+        comments = []
+        story.comments.each do |comment|
+          comments << "#{display_name(comment.user)}: #{comment.body}"
+        end
+        csv << [story.id, story.title, story.description, story.position] + comments
+      end
+    end
+  end
+
+  def generate_csv_without_comments
+    CSV.generate(headers: true) do |csv|
+      csv << CSV_HEADERS
+      stories = if params.include?(:export_all) && params[:export_all] == "1"
+        @project.stories
+      else
+        @project.stories.approved
+      end
+
+      stories.by_position.each do |story|
+        csv << story.attributes.slice(*CSV_HEADERS)
+      end
+    end
   end
 
   def render_markdown
