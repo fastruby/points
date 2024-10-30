@@ -87,33 +87,32 @@ class StoriesController < ApplicationController
   end
 
   def export
-    csv = generate_csv(params[:export_with_comments], params[:export_all])
+    csv = if params[:export_with_comments] == "1" && params[:export_all] == "1"
+      generate_csv(@project.stories.includes(:comments), with_comments: true, export_all: true)
+    elsif params[:export_with_comments] == "1"
+      generate_csv(@project.stories.includes(:comments).approved, with_comments: true, export_all: false)
+    elsif params[:export_all] == "1"
+      generate_csv(@project.stories, with_comments: false, export_all: true)
+    else
+      generate_csv(@project.stories.approved, with_comments: false, export_all: false)
+    end
+
     filename = "#{@project.title.gsub(/[^\w]/, "_")}-#{Time.now.to_formatted_s(:short).tr(" ", "_")}.csv"
     send_data csv, filename: filename
   end
 
-  def generate_csv(with_comments, export_all)
-    stories = if with_comments == "1" && export_all == "1"
-      @project.stories.includes(:comments)
-    elsif with_comments == "1"
-      @project.stories.includes(:comments).approved
-    elsif export_all == "1"
-      @project.stories
-    else
-      @project.stories.approved
-    end
-
+  def generate_csv(stories, with_comments: false, export_all: false)
     CSV.generate(headers: true) do |csv|
-      csv << ((with_comments == "1") ? (CSV_HEADERS + ["comment"]) : CSV_HEADERS)
+      csv << (with_comments ? (CSV_HEADERS + ["comment"]) : CSV_HEADERS)
 
       stories.by_position.each do |story|
-        if with_comments == "1"
+        if with_comments
           comments = []
           story.comments.each do |comment|
             comments << "#{display_name(comment.user)}: #{comment.body}"
           end
         end
-        csv << ((with_comments == "1") ? ([story.id, story.title, story.description, story.position] + comments) : story.attributes.slice(*CSV_HEADERS))
+        csv << (with_comments ? ([story.id, story.title, story.description, story.position] + comments) : story.attributes.slice(*CSV_HEADERS))
       end
     end
   end
