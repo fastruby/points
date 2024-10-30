@@ -103,7 +103,13 @@ class StoriesController < ApplicationController
 
   def generate_csv(stories, with_comments: false, export_all: false)
     CSV.generate(headers: true) do |csv|
-      csv << (with_comments ? (CSV_HEADERS + ["comment"]) : CSV_HEADERS)
+      headers = if with_comments
+        CSV_HEADERS + ["comment"]
+      else
+        CSV_HEADERS
+      end
+
+      csv << headers
 
       stories.by_position.each do |story|
         if with_comments
@@ -111,8 +117,11 @@ class StoriesController < ApplicationController
           story.comments.each do |comment|
             comments << "#{display_name(comment.user)}: #{comment.body}"
           end
+
+          csv << [story.id, story.title, story.description, story.position] + comments
+        else
+          csv << story.attributes.slice(*CSV_HEADERS)
         end
-        csv << (with_comments ? ([story.id, story.title, story.description, story.position] + comments) : story.attributes.slice(*CSV_HEADERS))
       end
     end
   end
