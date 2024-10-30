@@ -113,9 +113,8 @@ class StoriesController < ApplicationController
 
       stories.by_position.each do |story|
         if with_comments
-          comments = []
-          story.comments.each do |comment|
-            comments << "#{display_name(comment.user)}: #{comment.body}"
+          comments = story.comments.map do |comment|
+            "#{display_name(comment.user)}: #{comment.body}"
           end
 
           csv << [story.id, story.title, story.description, story.position] + comments
