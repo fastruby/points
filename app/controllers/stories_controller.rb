@@ -87,44 +87,33 @@ class StoriesController < ApplicationController
   end
 
   def export
-    csv = if params[:export_with_comments] == "1"
-      generate_csv_with_comments
-    else
-      generate_csv_without_comments
-    end
+    csv = generate_csv(params[:export_with_comments], params[:export_all])
     filename = "#{@project.title.gsub(/[^\w]/, "_")}-#{Time.now.to_formatted_s(:short).tr(" ", "_")}.csv"
     send_data csv, filename: filename
   end
 
-  def generate_csv_with_comments
-    CSV.generate(headers: true) do |csv|
-      csv << CSV_HEADERS + ["comment"]
-      stories = if params.include?(:export_all) && params[:export_all] == "1"
-        @project.stories.includes(:comments)
-      else
-        @project.stories.includes(:comments).approved
-      end
-      stories.by_position.each do |story|
-        comments = []
-        story.comments.each do |comment|
-          comments << "#{display_name(comment.user)}: #{comment.body}"
-        end
-        csv << [story.id, story.title, story.description, story.position] + comments
-      end
+  def generate_csv(with_comments, export_all)
+    stories = if with_comments == "1" && export_all == "1"
+      @project.stories.includes(:comments)
+    elsif with_comments == "1"
+      @project.stories.includes(:comments).approved
+    elsif export_all == "1"
+      @project.stories
+    else
+      @project.stories.approved
     end
-  end
 
-  def generate_csv_without_comments
     CSV.generate(headers: true) do |csv|
-      csv << CSV_HEADERS
-      stories = if params.include?(:export_all) && params[:export_all] == "1"
-        @project.stories
-      else
-        @project.stories.approved
-      end
+      csv << ((with_comments == "1") ? (CSV_HEADERS + ["comment"]) : CSV_HEADERS)
 
       stories.by_position.each do |story|
-        csv << story.attributes.slice(*CSV_HEADERS)
+        if with_comments == "1"
+          comments = []
+          story.comments.each do |comment|
+            comments << "#{display_name(comment.user)}: #{comment.body}"
+          end
+        end
+        csv << ((with_comments == "1") ? ([story.id, story.title, story.description, story.position] + comments) : story.attributes.slice(*CSV_HEADERS))
       end
     end
   end
