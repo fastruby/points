@@ -103,11 +103,7 @@ class StoriesController < ApplicationController
 
   def generate_csv(stories, with_comments: false, export_all: false)
     CSV.generate(headers: true) do |csv|
-      headers = if with_comments
-        CSV_HEADERS + ["comment"]
-      else
-        CSV_HEADERS
-      end
+      headers = with_comments ? CSV_HEADERS + ["comment"] : CSV_HEADERS
 
       csv << headers
 
