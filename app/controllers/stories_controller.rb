@@ -103,9 +103,7 @@ class StoriesController < ApplicationController
 
   def generate_csv(stories, with_comments: false, export_all: false)
     CSV.generate(headers: true) do |csv|
-      headers = CSV_HEADERS.dup
-      headers << "comment" if with_comments
-      csv << headers
+      csv << CSV_HEADERS.dup.tap { |headers| headers << "comment" if with_comments }
 
       stories.by_position.each do |story|
         if with_comments
