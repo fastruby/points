@@ -26,19 +26,28 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  const form = document.querySelector('.edit_story');
-  const backButton = document.getElementById('back');
-  const logo = document.getElementById('logo');
+  const form = document.querySelector(".edit_story");
+  const backButton = document.getElementById("back");
+  const logo = document.getElementById("logo");
   let isDirty = false;
 
-  // Mark the form as dirty when any input changes
-  form.addEventListener('input', function () {
-    isDirty = true;
-  });
+  if (form) {
+    // Mark the form as dirty when any input changes
+    form.addEventListener("input", function () {
+      isDirty = true;
+      addBeforeUnloadEventListener(isDirty);
+    });
+
+    // Reset isDirty on form submission
+    form.addEventListener("submit", function () {
+      isDirty = false;
+      addBeforeUnloadEventListener(isDirty);
+    });
+  }
 
   // Attach a click event to the custom back button
   [backButton, logo].forEach(element => {
-    element.addEventListener('click', function (event) {
+    element.addEventListener("click", function (event) {
       if (isDirty) {
         const confirmLeave = confirm("You have unsaved changes. Are you sure you want to go back?");
         if (!confirmLeave) {
@@ -47,22 +56,20 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
           // Optionally, reset isDirty if leaving
           isDirty = false;
+          addBeforeUnloadEventListener(isDirty)
         }
       }
     })
   });
+});
 
-  // Reset isDirty on form submission
-  form.addEventListener('submit', function () {
-    isDirty = false;
-  });
-
+function addBeforeUnloadEventListener(isDirty) {
   if (isDirty) {
     window.addEventListener("beforeunload", warnUserifUnsavedEdits);
   } else {
     window.removeEventListener("beforeunload", warnUserifUnsavedEdits);
   }
-});
+}
 
 function warnUserifUnsavedEdits(event) {
   event.preventDefault();
