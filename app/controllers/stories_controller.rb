@@ -103,18 +103,20 @@ class StoriesController < ApplicationController
 
   def generate_csv(stories, with_comments: false, export_all: false)
     CSV.generate(headers: true) do |csv|
-      csv << CSV_HEADERS.dup.tap { |headers| headers << "comment" if with_comments }
+      headers = CSV_HEADERS.dup
+      headers << "comment" if with_comments
+      csv << headers
 
       stories.by_position.each do |story|
+        comments = []
+
         if with_comments
           comments = story.comments.map do |comment|
             "#{display_name(comment.user)}: #{comment.body}"
           end
-
-          csv << [story.id, story.title, story.description, story.position] + comments
-        else
-          csv << story.attributes.slice(*CSV_HEADERS)
         end
+
+        csv << [story.id, story.title, story.description, story.position] + comments
       end
     end
   end
