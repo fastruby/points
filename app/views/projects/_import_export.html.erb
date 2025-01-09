@@ -33,7 +33,13 @@
         <div class="card-body">
           <%= form_with url: export_project_stories_path(@project), method: :get do |f| %>
             <%= f.submit "Export", class: "button green", data: { disable_with: false } %>
-            <br/>
+            <% if current_user.admin? %>
+              <br />
+              <%= f.label :export_all do %>
+                <%= f.check_box :export_all %>
+                Export all stories
+              <% end %>
+            <% end %>
             <%= f.label :export_with_comments do %>
               <%= f.check_box :export_with_comments %>
               Export with comments
