@@ -4,7 +4,7 @@ def next?
   File.basename(__FILE__) == "Gemfile.next"
 end
 
-ruby "3.2.2"
+ruby "3.2.3"
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
@@ -16,7 +16,7 @@ if next?
   # to make it work with ruby 3.1
   # read more about it here: https://github.com/rails/rails/issues/43998,
   # and here: https://gist.github.com/claudiug/bdc2fb70b10d19513208c816588aed92
-  gem "rails", github: "rails/rails", branch: "main"
+  gem "rails", "~> 7.2.0"
 else
   gem "rails", "~> 7.1.0"
 end
@@ -64,6 +64,9 @@ gem "rack-mini-profiler"
 group :production do
   gem "newrelic_rpm"
   gem "terser"
+  gem "stackprof"
+  gem "sentry-ruby"
+  gem "sentry-rails"
 end
 
 group :development, :test do
