@@ -1,28 +1,24 @@
 document.addEventListener("turbolinks:load", function () {
   $("input[name='stories[]']").click(() => {
-    const selected = $("input[name='stories[]']:checked");
-    const is_unlocked = $("#stories").data("unlocked");
-    if (!is_unlocked) {
-      return;
-    }
-
-    if (selected.length > 0) {
-      const ending = selected.length == 1 ? "y" : "ies";
-      $("#bulk_delete")
-        .text(`Bulk Delete (${selected.length} Stor${ending})`)
-        .attr("aria-disabled", "false")
-        .prop("disabled", false);
-    } else {
-      $("#bulk_delete")
-        .text("Bulk Delete")
-        .attr("aria-disabled", "true")
-        .prop("disabled", true);
-    }
+    updateBulkDeleteStatus();
+    updateSelectAllStatus();
   });
+
 
   $(".import-export-header").click(function () {
     $(this).children(".rotate").toggleClass("left");
   });
+
+
+  $("#select_all").click((event) => {
+    let checked = event.target.checked;
+
+    $("input[name='stories[]']").each((_, checkbox) => {
+      checkbox.checked = checked;
+    })
+
+    updateBulkDeleteStatus();
+  })
 
   $("#bulk_delete").click((event) => {
     let stories_ids = [];
@@ -117,4 +113,41 @@ function toggleCloneSubProjects(value) {
   document
     .querySelectorAll("#sub-projects-to-clone input[type='checkbox']")
     .forEach((el) => (el.checked = value));
+}
+
+function updateBulkDeleteStatus() {
+  const selected = $("input[name='stories[]']:checked");
+    const is_unlocked = $("#stories").data("unlocked");
+    if (!is_unlocked) {
+      return;
+    }
+
+    if (selected.length > 0) {
+      const ending = selected.length == 1 ? "y" : "ies";
+      $("#bulk_delete")
+        .text(`Bulk Delete (${selected.length} Stor${ending})`)
+        .attr("aria-disabled", "false")
+        .prop("disabled", false);
+    } else {
+      $("#bulk_delete")
+        .text("Bulk Delete")
+        .attr("aria-disabled", "true")
+        .prop("disabled", true);
+    }
+}
+
+function updateSelectAllStatus() {
+  const selected = $("input[name='stories[]']:checked");
+  const checkboxes = $("input[name='stories[]']");
+
+  if (selected.length == 0) {
+    $("#select_all")[0].checked = false;
+    $("#select_all")[0].indeterminate = false;
+  } else if (selected.length == checkboxes.length) {
+    $("#select_all")[0].checked = true;
+    $("#select_all")[0].indeterminate = false;
+  } else {
+    $("#select_all")[0].checked = false;
+    $("#select_all")[0].indeterminate = true;
+  }
 }
