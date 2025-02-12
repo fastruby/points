@@ -15,6 +15,7 @@ end
 if commands.empty?
   puts "No arguments provided. Running both RubyCritic and Skunk..."
   run_rubycritic
+  run_skunk
   exit 0
 end
 
