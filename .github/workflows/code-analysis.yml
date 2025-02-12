@@ -15,7 +15,7 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       - name: Build Docker Image
-        run: docker build -t code-analysis -f Dockerfile .
+        run: docker build -t code-analysis -f Dockerfile.analysis .
 
       - name: Run Code Analysis
         run: |
