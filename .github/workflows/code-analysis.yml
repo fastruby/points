@@ -1,0 +1,29 @@
+name: Code Analysis
+
+on:
+  pull_request:
+
+jobs:
+  static_analysis:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set Up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Docker Image
+        run: docker build -t code-analysis -f Dockerfile .
+
+      - name: Run Code Analysis
+        run: |
+          mkdir -p reports
+          docker run --rm -v $(pwd)/reports:/app/reports code-analysis
+
+      - name: Upload Reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: code-analysis-reports
+          path: reports/

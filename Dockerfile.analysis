@@ -1,0 +1,25 @@
+# Use the base Ruby 3.4 image
+FROM ruby:3.4
+
+# Set working directory
+WORKDIR /app
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Bundler (latest version compatible with Ruby 3.4)
+RUN gem install rubycritic skunk
+
+# Copy the entrypoint script
+COPY entrypoint.rb /entrypoint.rb
+
+# Set execute permissions
+RUN chmod +x /entrypoint.rb
+
+VOLUME ["/app"]
+
+# Set the Ruby script as the entrypoint
+ENTRYPOINT ["ruby", "/entrypoint.rb"]
