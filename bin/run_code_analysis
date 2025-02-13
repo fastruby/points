@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+
+# Default Ruby version
+ruby_version = "3.2"
+
+# Parse command-line options
+OptionParser.new do |opts|
+  opts.banner = "Usage: build_and_run.rb --ruby-version <RUBY_VERSION>"
+
+  opts.on("--ruby-version VERSION", "Specify the Ruby version for the Docker build") do |version|
+    ruby_version = version
+  end
+end.parse!
+
+# Docker image name
+image_name = "code-analysis"
+
+puts "🚀 Building Docker image with Ruby #{ruby_version}..."
+build_command = "docker build --build-arg RUBY_VERSION=#{ruby_version} -t #{image_name} -f Dockerfile.analysis ."
+puts "🔨 Running: #{build_command}"
+system(build_command) || abort("❌ Docker build failed!")
+
+# Ensure reports directory exists on the host
+reports_dir = File.expand_path("./reports")
+Dir.mkdir(reports_dir) unless Dir.exist?(reports_dir)
+
+puts "🏃 Running container with reports mounted..."
+run_command = "docker run --rm -v #{reports_dir}:/app/reports #{image_name}"
+puts "🔧 Running: #{run_command}"
+system(run_command) || abort("❌ Docker run failed!")
+
+puts "✅ Done! Check the 'reports/' directory for analysis results."

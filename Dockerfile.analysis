@@ -1,25 +1,37 @@
-# Use the base Ruby 3.4 image
-FROM ruby:3.4
+# Use a base image with Ruby, version set by ARG (default: 3.2)
+ARG RUBY_VERSION=3.2
+FROM ruby:$RUBY_VERSION
 
-# Set working directory
-WORKDIR /app
+# Set environment variables
+ENV APP_HOME=/app
+WORKDIR $APP_HOME
 
-# Install dependencies
+# Install necessary packages for Rails and system dependencies
 RUN apt-get update && apt-get install -y \
-    git \
-    curl \
+    build-essential \
+    libpq-dev \
+    nodejs \
+    yarn \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Bundler (latest version compatible with Ruby 3.4)
-RUN gem install rubycritic skunk
+# Copy the application files
+COPY . .
 
-# Copy the entrypoint script
+# Install Bundler
+RUN gem install bundler
+
+# Install dependencies
+RUN bundle install
+
+# Copy the entrypoint script and set execution permissions
 COPY entrypoint.rb /entrypoint.rb
-
-# Set execute permissions
 RUN chmod +x /entrypoint.rb
 
-VOLUME ["/app"]
+# Ensure reports directory exists before declaring a volume
+RUN mkdir -p $APP_HOME/reports && chmod 777 $APP_HOME/reports
 
-# Set the Ruby script as the entrypoint
-ENTRYPOINT ["ruby", "/entrypoint.rb"]
+# Declare a volume for the reports directory
+VOLUME ["/app/reports"]
+
+# Set the entrypoint
+ENTRYPOINT ["/entrypoint.rb"]
