@@ -133,6 +133,21 @@ RSpec.describe Project, type: :model do
     end
   end
 
+  describe "#cloning behaviour" do
+    it "clones stories into the new project but does not copy status" do
+      original_project = FactoryBot.create(:project)
+      FactoryBot.create(:story, :approved, project: original_project, position: 2)
+      FactoryBot.create(:story, :rejected, project: original_project, position: 1)
+      FactoryBot.create(:story, :pending, project: original_project, position: 3)
+
+      new_project = FactoryBot.create(:project)
+      original_project.clone_stories_into(new_project)
+      new_project.stories.each do |story|
+        expect(story).to be_pending
+      end
+    end
+  end
+
   def add_sub_project
     FactoryBot.create(:project, parent: subject, status: subject.status)
   end
