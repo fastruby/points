@@ -68,6 +68,21 @@ RSpec.describe "managing stories", js: true do
     expect(page).to have_content "Story updated!"
   end
 
+  it "allows me to select all stories" do
+    visit project_path(id: project.id)
+    check("Select All")
+
+    expect(page).to have_checked_field(name: "stories[]")
+  end
+
+  it "allows me to unselect all stories" do
+    visit project_path(id: project.id)
+    check("Select All")
+    uncheck("Select All")
+
+    expect(page).to have_unchecked_field(name: "stories[]")
+  end
+
   it "allows me to delete a story" do
     visit project_path(id: project.id)
 
