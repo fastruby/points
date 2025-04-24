@@ -214,7 +214,7 @@ GEM
     newrelic_rpm (9.5.0)
     next_rails (1.3.0)
       colorize (>= 0.8.1)
-    nio4r (2.7.0)
+    nio4r (2.7.4)
     nokogiri (1.16.2-arm64-darwin)
       racc (~> 1.4)
     nokogiri (1.16.2-x86_64-darwin)
@@ -257,7 +257,7 @@ GEM
     psych (5.1.0)
       stringio
     public_suffix (5.0.3)
-    puma (6.4.2)
+    puma (6.6.0)
       nio4r (~> 2.0)
     pundit (2.3.1)
       activesupport (>= 3.0.0)
@@ -480,7 +480,7 @@ DEPENDENCIES
   next_rails
   ombu_labs-auth
   pg
-  puma (~> 6.4)
+  puma (~> 6.5)
   pundit (~> 2.2)
   rack-mini-profiler
   rails (~> 7.1.0)
