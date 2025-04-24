@@ -75,7 +75,7 @@ class Project < ApplicationRecord
 
   def clone_stories_into(clone)
     stories.each do |story|
-      attrs = story.dup.attributes.except("status", "id", "created_at", "updated_at")
+      attrs = story.dup.attributes.slice("title", "description", "position", "extra_info")
       clone.stories.create(attrs)
     end
   end
