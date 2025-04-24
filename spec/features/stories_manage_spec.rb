@@ -68,6 +68,17 @@ RSpec.describe "managing stories", js: true do
     expect(page).to have_content "Story updated!"
   end
 
+  it "alerts me when I try to navigate away from the page without saving my edits", js: true do
+    visit project_path(id: project.id)
+    click_button "More actions"
+    click_link "Edit"
+    fill_in "story[title]", with: "As a user, I want to edit stories"
+    click_link "Back"
+    alert_text = page.driver.browser.switch_to.alert.text
+
+    expect(alert_text).to eq "You have unsaved changes. Are you sure you want to go back?"
+  end
+
   it "allows me to delete a story" do
     visit project_path(id: project.id)
 
