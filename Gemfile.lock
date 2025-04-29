@@ -125,7 +125,7 @@ GEM
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
-    date (3.3.3)
+    date (3.4.1)
     devise (4.8.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -202,12 +202,12 @@ GEM
     minitest (5.20.0)
     multi_xml (0.6.0)
     mutex_m (0.1.2)
-    net-imap (0.4.1)
+    net-imap (0.4.20)
       date
       net-protocol
     net-pop (0.1.2)
       net-protocol
-    net-protocol (0.2.1)
+    net-protocol (0.2.2)
       timeout
     net-smtp (0.4.0)
       net-protocol
@@ -422,7 +422,7 @@ GEM
       execjs (>= 0.3.0, < 3)
     thor (1.2.2)
     tilt (2.3.0)
-    timeout (0.4.0)
+    timeout (0.4.3)
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
