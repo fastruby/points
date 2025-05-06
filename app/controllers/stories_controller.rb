@@ -87,27 +87,38 @@ class StoriesController < ApplicationController
   end
 
   def export
-    csv = if params[:export_with_comments] == "1"
-      CSV.generate(headers: true) do |csv|
-        csv << CSV_HEADERS + ["comment"]
-        @project.stories.includes(:comments).approved.by_position.each do |story|
-          comments = []
-          story.comments.each do |comment|
-            comments << "#{display_name(comment.user)}: #{comment.body}"
-          end
-          csv << [story.id, story.title, story.description, story.position] + comments
-        end
-      end
+    csv = if params[:export_with_comments] == "1" && params[:export_all] == "1"
+      generate_csv(@project.stories.includes(:comments), with_comments: true, export_all: true)
+    elsif params[:export_with_comments] == "1"
+      generate_csv(@project.stories.includes(:comments).approved, with_comments: true, export_all: false)
+    elsif params[:export_all] == "1"
+      generate_csv(@project.stories, with_comments: false, export_all: true)
     else
-      CSV.generate(headers: true) do |csv|
-        csv << CSV_HEADERS
-        @project.stories.approved.by_position.each do |story|
-          csv << story.attributes.slice(*CSV_HEADERS)
-        end
-      end
+      generate_csv(@project.stories.approved, with_comments: false, export_all: false)
     end
+
     filename = "#{@project.title.gsub(/[^\w]/, "_")}-#{Time.now.to_formatted_s(:short).tr(" ", "_")}.csv"
     send_data csv, filename: filename
+  end
+
+  def generate_csv(stories, with_comments: false, export_all: false)
+    CSV.generate(headers: true) do |csv|
+      headers = CSV_HEADERS.dup
+      headers << "comment" if with_comments
+      csv << headers
+
+      stories.by_position.each do |story|
+        comments = []
+
+        if with_comments
+          comments = story.comments.map do |comment|
+            "#{display_name(comment.user)}: #{comment.body}"
+          end
+        end
+
+        csv << [story.id, story.title, story.description, story.position] + comments
+      end
+    end
   end
 
   def render_markdown
