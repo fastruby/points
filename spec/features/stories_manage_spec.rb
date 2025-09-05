@@ -72,11 +72,26 @@ RSpec.describe "managing stories", js: true do
     visit project_path(id: project.id)
     click_button "More actions"
     click_link "Edit"
-    fill_in "story[title]", with: "As a user, I want to edit stories"
-    click_link "Back"
-    alert_text = page.driver.browser.switch_to.alert.text
 
-    expect(alert_text).to eq "You have unsaved changes. Are you sure you want to go back?"
+    click_link "Back"
+    assert_current_path project_path(id: project.id)
+
+    click_button "More actions"
+    click_link "Edit"
+
+    fill_in "story[title]", with: "As a user, I want to edit stories"
+
+    dismiss_confirm("You have unsaved changes. Are you sure you want to go back?") do
+      find("#logo").click
+    end
+
+    assert_current_path edit_project_story_path(project, story)
+
+    accept_confirm("You have unsaved changes. Are you sure you want to go back?") do
+      click_link "Back"
+    end
+
+    assert_current_path project_path(id: project.id)
   end
 
   it "allows me to delete a story" do
