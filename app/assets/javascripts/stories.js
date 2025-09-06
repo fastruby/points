@@ -50,13 +50,13 @@ document.addEventListener("DOMContentLoaded", () => {
     element.addEventListener("click", function (event) {
       if (isDirty) {
         const confirmLeave = confirm("You have unsaved changes. Are you sure you want to go back?");
-        if (!confirmLeave) {
-          // Prevent navigation if the user chooses not to leave
-          event.preventDefault();
-        } else {
+        if (confirmLeave) {
           // Optionally, reset isDirty if leaving
           isDirty = false;
           addBeforeUnloadEventListener(isDirty)
+        } else {
+          // Prevent navigation if the user chooses not to leave
+          event.preventDefault();
         }
       }
     })
