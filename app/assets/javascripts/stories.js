@@ -71,7 +71,7 @@ function addBeforeUnloadEventListener(isDirty) {
   }
 }
 
-function warnUserifUnsavedEdits(event) {
+function warnUserIfUnsavedEdits(event) {
   event.preventDefault();
   event.returnValue = '';
 }
