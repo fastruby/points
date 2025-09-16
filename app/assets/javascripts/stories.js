@@ -65,9 +65,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function addBeforeUnloadEventListener(isDirty) {
   if (isDirty) {
-    window.addEventListener("beforeunload", warnUserifUnsavedEdits);
+    window.addEventListener("beforeunload", warnUserIfUnsavedEdits);
   } else {
-    window.removeEventListener("beforeunload", warnUserifUnsavedEdits);
+    window.removeEventListener("beforeunload", warnUserIfUnsavedEdits);
   }
 }
 
