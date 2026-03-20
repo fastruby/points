@@ -12,13 +12,9 @@ git_source(:github) do |repo_name|
 end
 
 if next?
-  # using the 7-0-stable branch for the time being until the fix is merged into main
-  # to make it work with ruby 3.1
-  # read more about it here: https://github.com/rails/rails/issues/43998,
-  # and here: https://gist.github.com/claudiug/bdc2fb70b10d19513208c816588aed92
-  gem "rails", "~> 7.2.0"
+  gem "rails", "~> 8.0.0"
 else
-  gem "rails", "~> 7.1.0"
+  gem "rails", "~> 7.2.0"
 end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 
@@ -73,7 +69,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
-  gem "rspec-rails", "~> 6.0.3"
+  gem "rspec-rails", "~> 6.1"
   gem "faker"
   gem "shoulda-matchers", "~> 3.1"
   gem "rails-controller-testing"
