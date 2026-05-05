@@ -11,15 +11,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-if next?
-  # using the 7-0-stable branch for the time being until the fix is merged into main
-  # to make it work with ruby 3.1
-  # read more about it here: https://github.com/rails/rails/issues/43998,
-  # and here: https://gist.github.com/claudiug/bdc2fb70b10d19513208c816588aed92
-  gem "rails", "~> 7.2.0"
-else
-  gem "rails", "~> 7.1.0"
-end
+gem "rails", "~> 7.2.0"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 
 gem "bootstrap-sass", "3.4.1"
