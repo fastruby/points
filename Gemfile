@@ -11,11 +11,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-if next?
-  gem "rails", "~> 8.0.0"
-else
-  gem "rails", "~> 7.2.0"
-end
+gem "rails", "~> 8.0.0"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 
 gem "bootstrap-sass", "3.4.1"
