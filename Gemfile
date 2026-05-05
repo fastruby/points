@@ -11,7 +11,11 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem "rails", "~> 7.2.0"
+if next?
+  gem "rails", "~> 8.0.0"
+else
+  gem "rails", "~> 7.2.0"
+end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 
 gem "bootstrap-sass", "3.4.1"
@@ -32,7 +36,7 @@ gem "redcarpet", "~> 3.5.1"
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem "turbolinks", "~> 5"
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem "jbuilder", "~> 2.5"
+gem "jbuilder", "~> 2.13"
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
