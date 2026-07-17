@@ -110,4 +110,4 @@ gem "pundit", "~> 2.2"
 
 gem "ostruct"
 
-gem "madmin", "~> 1.2"
+gem "madmin", "~> 2.0"
