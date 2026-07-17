@@ -63,4 +63,15 @@
     </tbody>
   </table>
 </div>
-<%== render(partial: 'madmin/pagy/nav', locals: { pagy: @pagy }) if @pagy.pages > 1 %>
+<%# madmin 2.x dropped the madmin/pagy/_nav partial in favor of pagy's own
+    helpers. series_nav/info_tag are the pagy 43+ API; pagy_nav/pagy_info the
+    older one. %>
+<div class="pagination">
+  <% if @pagy.respond_to?(:series_nav) %>
+    <%== @pagy.series_nav if @pagy.last > 1 %>
+    <%== @pagy.info_tag %>
+  <% else %>
+    <%== pagy_nav @pagy if @pagy.last > 1 %>
+    <%== pagy_info @pagy %>
+  <% end %>
+</div>
