@@ -29,7 +29,7 @@ gem "bootstrap-sass", "3.4.1"
 # Use Puma as the app server
 gem "puma", "~> 7.2"
 # Use SCSS for stylesheets
-gem "sass-rails", "~> 5.0"
+gem "sass-rails", "~> 6.0"
 
 gem "bourbon"
 gem "matrix"
