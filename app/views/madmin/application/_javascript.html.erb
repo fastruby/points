@@ -1,3 +1,6 @@
+<%# madmin's npm_rails_version helper was removed in 2.x; reproduce it here.
+    Pins @rails/* unpkg packages to the matching Rails version (or "main" for prereleases). %>
+<% npm_rails_version = Rails.version.match?(/\A\d+\.\d+\.\d+\z/) ? Rails.version : "main" %>
 <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
 <%= stylesheet_link_tag "https://unpkg.com/flatpickr/dist/flatpickr.min.css", "data-turbo-track": "reload" %>
 <%= stylesheet_link_tag "https://unpkg.com/trix/dist/trix.css", "data-turbo-track": "reload" %>
