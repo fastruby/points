@@ -124,6 +124,7 @@ GEM
     concurrent-ruby (1.3.7)
     connection_pool (3.0.2)
     crass (1.0.7)
+    csv (3.3.5)
     database_cleaner-active_record (2.2.2)
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0)
@@ -145,11 +146,11 @@ GEM
     erb (6.0.5)
     erubi (1.13.1)
     execjs (2.9.1)
-    factory_bot (6.2.1)
-      activesupport (>= 5.0.0)
-    factory_bot_rails (6.2.0)
-      factory_bot (~> 6.2.0)
-      railties (>= 5.0.0)
+    factory_bot (6.6.0)
+      activesupport (>= 6.1.0)
+    factory_bot_rails (6.5.1)
+      factory_bot (~> 6.5)
+      railties (>= 6.1.0)
     faker (3.2.1)
       i18n (>= 1.8.11, < 2)
     faraday (2.14.3)
@@ -326,6 +327,8 @@ GEM
     rails-html-sanitizer (1.7.1)
       loofah (~> 2.25, >= 2.25.2)
       nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
+    rails-observers (0.1.5)
+      activemodel (>= 4.0)
     railties (8.0.5)
       actionpack (= 8.0.5)
       activesupport (= 8.0.5)
@@ -508,6 +511,7 @@ DEPENDENCIES
   capybara
   capybara-screenshot
   coffee-script
+  csv
   database_cleaner-active_record (>= 2.1.0)
   dotenv-rails
   factory_bot_rails
@@ -528,6 +532,7 @@ DEPENDENCIES
   rack-mini-profiler
   rails (~> 8.0.0)
   rails-controller-testing
+  rails-observers
   recursive-open-struct
   redcarpet (~> 3.5.1)
   rspec-rails (~> 6.1)
