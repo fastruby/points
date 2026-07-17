@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
+
   protect_from_forgery with: :exception
   before_action :toggle_rack_mini_profiler
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
