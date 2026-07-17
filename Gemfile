@@ -4,15 +4,23 @@ def next?
   File.basename(__FILE__) == "Gemfile.next"
 end
 
-ruby "3.2.3"
+ruby "3.4.10"
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
 end
 
-gem "rails", "~> 8.0.0"
+if next?
+  gem "rails", "~> 8.1.0"
+  gem "mutex_m"
+else
+  gem "rails", "~> 8.0.0"
+end
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+gem "rails-observers"
+gem "csv"
 
 gem "bootstrap-sass", "3.4.1"
 
@@ -44,7 +52,7 @@ gem "jquery-rails"
 
 gem "pg"
 
-gem "jquery-ui-rails", "~> 6.0"
+gem "jquery-ui-rails", "~> 8.0"
 gem "acts_as_list"
 
 gem "mimemagic", "~> 0.3.8"

@@ -7,6 +7,7 @@ inherit_gem:
 AllCops:
   SuggestExtensions: false
   NewCops: enable
+  TargetRubyVersion: 3.4
   Exclude: # ignore files in these directories when running the linter
     - bin/**/*
     - node_modules/**/*
