@@ -7,7 +7,7 @@
   box-sizing: border-box;
 }
 main {
-  min-height: unquote("calc(100vh - 160px)");
+  min-height: calc(100vh - 160px);
   padding-bottom: 60px;
 }
 ::selection {

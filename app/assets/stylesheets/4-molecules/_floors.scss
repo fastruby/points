@@ -13,7 +13,7 @@
 		justify-content: center;
 		width: 100%;
 		overflow: hidden;
-		height: unquote("calc(100vh - 160px)");
+		height: calc(100vh - 160px);
 		margin: -100px 0;
 	}
 }

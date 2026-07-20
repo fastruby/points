@@ -21,6 +21,10 @@ module Points
     # raising "Incompatible units" on valid CSS. Set to nil explicitly since
     # sprockets-rails otherwise defaults to :sass when sassc is available. This
     # affects any env that compiles assets (test + production), so set it here.
+    #
+    # Tradeoff: this disables CSS minification in production, so application.css
+    # ships unminified (gzip at the web/CDN layer still applies). Revisit with a
+    # non-SassC minifier if CSS payload size becomes a concern.
     config.assets.css_compressor = nil
   end
 end
