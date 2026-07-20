@@ -63,15 +63,9 @@
     </tbody>
   </table>
 </div>
-<%# madmin 2.x dropped the madmin/pagy/_nav partial in favor of pagy's own
-    helpers. series_nav/info_tag are the pagy 43+ API; pagy_nav/pagy_info the
-    older one. %>
+<%# madmin 2.x renders pagination with pagy's own object helpers instead of
+    the removed madmin/pagy/_nav partial. %>
 <div class="pagination">
-  <% if @pagy.respond_to?(:series_nav) %>
-    <%== @pagy.series_nav if @pagy.last > 1 %>
-    <%== @pagy.info_tag %>
-  <% else %>
-    <%== pagy_nav @pagy if @pagy.last > 1 %>
-    <%== pagy_info @pagy %>
-  <% end %>
+  <%== @pagy.series_nav if @pagy.last > 1 %>
+  <%== @pagy.info_tag %>
 </div>
