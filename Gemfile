@@ -108,4 +108,6 @@ gem "coffee-script"
 
 gem "pundit", "~> 2.2"
 
+gem "ostruct"
+
 gem "madmin", "~> 1.2"

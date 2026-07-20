@@ -564,6 +564,7 @@ DEPENDENCIES
   newrelic_rpm
   next_rails
   ombu_labs-auth
+  ostruct
   pg
   puma (~> 7.2)
   pundit (~> 2.2)
