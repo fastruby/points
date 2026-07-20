@@ -4,7 +4,9 @@ require "rails_helper"
 # exercises create/update in addition to the read-only actions.
 RSpec.describe "Madmin version jumps", type: :request do
   let(:admin) { FactoryBot.create(:user, :admin) }
-  let!(:version_jump) { FactoryBot.create(:version_jump) }
+  let!(:version_jump) do
+    FactoryBot.create(:version_jump, technology: "RailsUpgrade", initial_version: "6.1", target_version: "7.0")
+  end
 
   before { login_as(admin, scope: :user) }
   after { Warden.test_reset! }
@@ -14,6 +16,14 @@ RSpec.describe "Madmin version jumps", type: :request do
       get "/madmin/version_jumps"
 
       expect(response).to have_http_status(:ok)
+    end
+
+    it "shows the technology and versions, not just the id" do
+      get "/madmin/version_jumps"
+
+      expect(response.body).to include("RailsUpgrade")
+      expect(response.body).to include("6.1")
+      expect(response.body).to include("7.0")
     end
   end
 
