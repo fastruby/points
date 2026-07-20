@@ -20,10 +20,18 @@
     </div>
   </div>
 
-  <div class="hidden md:flex flex-col flex-grow justify-between" data-dropdown-target="menu">
-    <% Madmin.resources.each do |resource| %>
-      <%= nav_link_to resource.friendly_name.pluralize, resource.index_path, class: "block p-2 rounded hover:bg-gray-100", starts_with: resource.index_path, active_class: "font-bold text-black" %>
-    <% end %>
+  <%# The dropdown controller is a mobile-only toggle. On connect it applies its
+      closed-state transition classes (opacity-0 scale-95), which would hide the
+      sidebar on desktop too. The md: overrides keep the menu fully visible on
+      desktop regardless of the dropdown's open/closed state (media-query rules
+      win over the controller's base classes). %>
+  <div class="hidden md:flex md:opacity-100 md:scale-100 flex-col flex-grow justify-between" data-dropdown-target="menu">
+    <div>
+      <%= nav_link_to "Dashboard", madmin_root_path, class: "block p-2 rounded hover:bg-gray-100", active_class: "font-bold text-black" %>
+      <% Madmin.resources.each do |resource| %>
+        <%= nav_link_to resource.friendly_name.pluralize, resource.index_path, class: "block p-2 rounded hover:bg-gray-100", starts_with: resource.index_path, active_class: "font-bold text-black" %>
+      <% end %>
+    </div>
 
     <div class="mt-auto">
       <%= link_to "View Madmin on GitHub", "https://github.com/excid3/madmin", target: :_blank, class: "block p-2 rounded text-gray-500 hover:bg-gray-100" %>

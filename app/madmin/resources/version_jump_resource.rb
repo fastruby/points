@@ -1,9 +1,9 @@
 class VersionJumpResource < Madmin::Resource
   # Attributes
   attribute :id, form: false
-  attribute :technology
-  attribute :initial_version
-  attribute :target_version
+  attribute :technology, index: true
+  attribute :initial_version, index: true
+  attribute :target_version, index: true
 
   # Associations
   attribute :projects, form: false
