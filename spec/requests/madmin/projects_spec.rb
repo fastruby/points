@@ -13,7 +13,7 @@ RSpec.describe "Madmin projects", type: :request do
       get "/madmin/projects"
 
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include(project.title.truncate(20))
+      expect(response.body).to include(project.title)
     end
   end
 
