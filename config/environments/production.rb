@@ -18,11 +18,8 @@ Rails.application.configure do
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
 
-  # Do not use the SassC/libsass CSS compressor: it re-parses already-compiled
-  # CSS and evaluates arithmetic inside calc()/min() (e.g. `100vh - 160px`),
-  # raising "Incompatible units" on valid CSS. Set to nil explicitly since
-  # sprockets-rails otherwise defaults to :sass when sassc is available.
-  config.assets.css_compressor = nil
+  # css_compressor is disabled globally in config/application.rb (SassC re-parses
+  # compiled CSS and chokes on calc()/min() unit arithmetic).
   config.assets.js_compressor = :terser
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
