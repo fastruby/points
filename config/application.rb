@@ -15,5 +15,16 @@ module Points
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+
+    # Do not use the SassC/libsass CSS compressor: it re-parses already-compiled
+    # CSS and evaluates arithmetic inside calc()/min() (e.g. `100vh - 160px`),
+    # raising "Incompatible units" on valid CSS. Set to nil explicitly since
+    # sprockets-rails otherwise defaults to :sass when sassc is available. This
+    # affects any env that compiles assets (test + production), so set it here.
+    #
+    # Tradeoff: this disables CSS minification in production, so application.css
+    # ships unminified (gzip at the web/CDN layer still applies). Revisit with a
+    # non-SassC minifier if CSS payload size becomes a concern.
+    config.assets.css_compressor = nil
   end
 end

@@ -113,7 +113,7 @@
   .extra_info_preview .content,
   .story_preview .content {
     overflow: auto;
-    max-height: min(50vh, 700px);
+    max-height: unquote("min(50vh, 700px)");
     // prevent long links from overflowing
     a {
       word-break: break-all;

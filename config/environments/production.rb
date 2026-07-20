@@ -18,7 +18,8 @@ Rails.application.configure do
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
 
-  config.assets.css_compressor = :sass
+  # css_compressor is disabled globally in config/application.rb (SassC re-parses
+  # compiled CSS and chokes on calc()/min() unit arithmetic).
   config.assets.js_compressor = :terser
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.

@@ -63,4 +63,9 @@
     </tbody>
   </table>
 </div>
-<%== render(partial: 'madmin/pagy/nav', locals: { pagy: @pagy }) if @pagy.pages > 1 %>
+<%# madmin 2.x renders pagination with pagy's own object helpers instead of
+    the removed madmin/pagy/_nav partial. %>
+<div class="pagination">
+  <%== @pagy.series_nav if @pagy.last > 1 %>
+  <%== @pagy.info_tag %>
+</div>
