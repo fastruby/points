@@ -13,17 +13,17 @@
       <table class="project-table">
         <thead class="table-header fixed-header">
           <tr class="project-table__row project-table__row--header">
+            <th class="project-table__cell select-all-cell">
+              <% if is_unlocked?(@project) %>
+                <label for="select_all">Select All</label>
+                <input type="checkbox" name="select_all" id="select_all">
+              <% end %>
+            </th>
             <th class="project-table__cell">Story Title</th>
             <th class="project-table__cell">Status</th>
             <th class="project-table__cell">Best<br />Estimate</th>
             <th class="project-table__cell">Worst<br />Estimate</th>
             <th class="project-table__cell story_actions">
-              <% if is_unlocked?(@project) %>
-                <div>
-                  <input type="checkbox" name="select_all" id="select_all">
-                  <label for="select_all">Select All</label>
-                </div>
-              <% end %>
               <%= link_unless_archived(@project, "Add a Story", new_project_story_path(@project), classes: "green") if is_unlocked?(@project) %>
               <button id="bulk_delete" class="button magenta" aria-disabled="true" disabled>Bulk Delete</button>
             </th>
@@ -33,9 +33,11 @@
           <% if @stories.present? %>
             <% @stories.each do | story | %>
               <tr class="project-table__row project-table__row--story" id="<%= dom_id(story)%>" data-status="<%= story.status %>">
+                <td class="project-table__cell select-all-cell">
+                  <input type="checkbox" name="stories[]" value="<%= story.id %>">
+                </td>
                 <td class="project-table__cell">
                   <span class="popup">Copied to clipboard</span>
-                  <input type="checkbox" name="stories[]" value="<%= story.id %>">
                   <%= link_to "#{story.id} - #{story.title}", [story.project, story] %>
                 </td>
                 <td class="project-table__cell status"><%= status_label(story) %></td>
@@ -88,6 +90,7 @@
         </tbody>
         <tfoot>
           <tr class="project-table__row project-table__row--footer">
+            <td class="project-table__cell"></td>
             <td class="project-table__cell">Total estimates</td>
             <td class="project-table__cell"></td>
             <td class="project-table__cell best_estimates_total"><%= @project.best_estimate_sum_per_user(current_user) %></td>

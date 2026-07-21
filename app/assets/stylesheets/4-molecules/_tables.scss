@@ -11,9 +11,15 @@
   }
   .project-table__row {
     display: grid;
-    grid-template-columns: 1fr 100px 70px 70px 260px;
+    grid-template-columns: 120px 1fr 100px 70px 70px 260px;
     align-items: center;
     padding: 10px 0;
+    .select-all-cell {
+      text-align: center;
+      label {
+        font-weight: bold;
+      }
+    }
     &.project-table__row--reports {
       display: flex;
       flex-direction: row;

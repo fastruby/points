@@ -97,7 +97,7 @@ const filterStories = () => {
   document.querySelectorAll("#stories tr").forEach(function (element) {
     const cl = element.classList;
     const storyTitle = element
-      .querySelector("td:first-child")
+      .querySelector("td:nth-child(2)")
       .innerText.toLowerCase();
     if (storyTitle.includes(searchTerm) || element.id.replace(/\D/g, '').includes(searchTerm)) {
       cl.remove("hidden");
