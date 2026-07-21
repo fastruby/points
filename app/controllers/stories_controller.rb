@@ -87,38 +87,19 @@ class StoriesController < ApplicationController
   end
 
   def export
-    csv = if params[:export_with_comments] == "1" && params[:export_all] == "1"
-      generate_csv(@project.stories.includes(:comments), with_comments: true, export_all: true)
-    elsif params[:export_with_comments] == "1"
-      generate_csv(@project.stories.includes(:comments).approved, with_comments: true, export_all: false)
-    elsif params[:export_all] == "1"
-      generate_csv(@project.stories, with_comments: false, export_all: true)
-    else
-      generate_csv(@project.stories.approved, with_comments: false, export_all: false)
-    end
+    with_comments = params[:export_with_comments] == "1"
+    # Only admins may export non-approved stories. Enforce it here rather than
+    # relying on the checkbox being hidden in the view, so the param can't be
+    # forged by a non-admin.
+    export_all = params[:export_all] == "1" && current_user.admin?
+
+    stories = export_all ? @project.stories : @project.stories.approved
+    stories = stories.includes(:comments) if with_comments
+
+    csv = generate_csv(stories, with_comments: with_comments)
 
     filename = "#{@project.title.gsub(/[^\w]/, "_")}-#{Time.now.to_formatted_s(:short).tr(" ", "_")}.csv"
     send_data csv, filename: filename
-  end
-
-  def generate_csv(stories, with_comments: false, export_all: false)
-    CSV.generate(headers: true) do |csv|
-      headers = CSV_HEADERS.dup
-      headers << "comment" if with_comments
-      csv << headers
-
-      stories.by_position.each do |story|
-        comments = []
-
-        if with_comments
-          comments = story.comments.map do |comment|
-            "#{display_name(comment.user)}: #{comment.body}"
-          end
-        end
-
-        csv << [story.id, story.title, story.description, story.position] + comments
-      end
-    end
   end
 
   def render_markdown
@@ -160,6 +141,26 @@ class StoriesController < ApplicationController
   end
 
   private
+
+  def generate_csv(stories, with_comments: false)
+    CSV.generate(headers: true) do |csv|
+      headers = CSV_HEADERS.dup
+      headers << "comment" if with_comments
+      csv << headers
+
+      stories.by_position.each do |story|
+        comments = []
+
+        if with_comments
+          comments = story.comments.map do |comment|
+            "#{display_name(comment.user)}: #{comment.body}"
+          end
+        end
+
+        csv << [story.id, story.title, story.description, story.position] + comments
+      end
+    end
+  end
 
   def find_project
     @project = Project.find(params[:project_id])

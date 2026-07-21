@@ -189,8 +189,7 @@ RSpec.describe StoriesController, type: :controller do
 
       context "when an admin" do
         it "exports a CSV file with all stories" do
-          user = FactoryBot.create(:user)
-          user.admin = true
+          sign_in FactoryBot.create(:user, :admin)
 
           story2 = FactoryBot.create(:story, project: project, status: :rejected)
           story3 = FactoryBot.create(:story, project: project, status: :pending)
@@ -203,6 +202,24 @@ RSpec.describe StoriesController, type: :controller do
             [story.id.to_s, story.title, story.description, story.position.to_s],
             [story2.id.to_s, story2.title, story2.description, story2.position.to_s],
             [story3.id.to_s, story3.title, story3.description, story3.position.to_s]
+          ]
+          expect(csv_data).to eq(expected_csv_content)
+        end
+      end
+
+      context "when not an admin" do
+        it "ignores export_all and exports only approved stories" do
+          # The signed-in user from the before block is not an admin, so a
+          # forged export_all param must not leak non-approved stories.
+          FactoryBot.create(:story, project: project, status: :rejected)
+          FactoryBot.create(:story, project: project, status: :pending)
+          get :export, params: {project_id: project.id, export_all: "1"}
+          expect(response).to have_http_status(:ok)
+
+          csv_data = CSV.parse(response.body)
+          expected_csv_content = [
+            ["id", "title", "description", "position"],
+            [story.id.to_s, story.title, story.description, story.position.to_s]
           ]
           expect(csv_data).to eq(expected_csv_content)
         end
