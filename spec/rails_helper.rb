@@ -132,6 +132,14 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
+  # Rails 8.1 loads routes lazily. Devise registers its mappings while the
+  # routes are drawn (via devise_for), so until the routes are loaded
+  # Devise.mappings is empty and sign_in raises "Could not find a valid
+  # mapping". Force the routes to load before the suite runs.
+  config.before(:suite) do
+    Rails.application.reload_routes_unless_loaded
+  end
+
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
   end
