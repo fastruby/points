@@ -108,6 +108,40 @@ RSpec.describe "managing stories", js: true do
     assert_current_path project_path(id: project.id)
   end
 
+  it "allows me to select all stories" do
+    visit project_path(id: project.id)
+    check("Select All")
+
+    expect(page).to have_checked_field(name: "stories[]")
+  end
+
+  it "allows me to unselect all stories" do
+    visit project_path(id: project.id)
+    check("Select All")
+    uncheck("Select All")
+
+    expect(page).to have_unchecked_field(name: "stories[]")
+  end
+
+  it "does not show Select All on a locked project" do
+    locked_project = FactoryBot.create(:project, :locked)
+    FactoryBot.create(:story, project: locked_project)
+
+    visit project_path(id: locked_project.id)
+
+    expect(page).to have_no_field("Select All")
+  end
+
+  it "keeps Bulk Delete disabled on a locked project even when a story is selected" do
+    locked_project = FactoryBot.create(:project, :locked)
+    FactoryBot.create(:story, project: locked_project)
+
+    visit project_path(id: locked_project.id)
+    find("input[name='stories[]']", match: :first).check
+
+    expect(page).to have_selector("#bulk_delete[disabled]")
+  end
+
   it "allows me to delete a story" do
     visit project_path(id: project.id)
 
@@ -396,14 +430,14 @@ RSpec.describe "managing stories", js: true do
     fill_in "title_contains", with: "XYZ"
 
     within("#stories") do
-      expect(find("td:nth-child(1)")).to have_text story4.title
+      expect(find("td:nth-child(2)")).to have_text story4.title
       expect(all("#stories > tr").count).to eq(1)
     end
 
     fill_in "title_contains", with: story5.id
 
     within("#stories") do
-      expect(find("td:nth-child(1)")).to have_text story5.title
+      expect(find("td:nth-child(2)")).to have_text story5.title
       expect(all("#stories > tr").count).to eq(1)
     end
   end
