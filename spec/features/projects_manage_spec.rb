@@ -266,9 +266,9 @@ RSpec.describe "managing projects", js: true do
 
           last_project = Project.parents.last
           expect(last_project.id).not_to eq(project.id)
-          expect(last_project.projects.count).to eq 2
-          expect(last_project.projects[0].title).to eq sub_project1.title
-          expect(last_project.projects[1].title).to eq sub_project3.title
+          expect(last_project.projects.map(&:title)).to contain_exactly(
+            sub_project1.title, sub_project3.title
+          )
         end
 
         it "allows to select/unselect all sub-projects at once" do
