@@ -13,7 +13,10 @@ RSpec.describe "Madmin projects", type: :request do
       get "/madmin/projects"
 
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include(project.title)
+      # The title is HTML-escaped in the rendered page (e.g. an apostrophe
+      # becomes &#39;), so compare against the escaped form to avoid a flaky
+      # failure whenever Faker generates a name with special characters.
+      expect(response.body).to include(CGI.escapeHTML(project.title))
     end
   end
 
