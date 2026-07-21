@@ -181,8 +181,8 @@ RSpec.describe StoriesController, type: :controller do
 
         csv_data = CSV.parse(response.body)
         expected_csv_content = [
-          ["id", "title", "description", "position"],
-          [story.id.to_s, story.title, story.description, story.position.to_s]
+          ["id", "position", "status", "title", "description"],
+          [story.id.to_s, story.position.to_s, story.status, story.title, story.description]
         ]
         expect(csv_data).to eq(expected_csv_content)
       end
@@ -198,10 +198,10 @@ RSpec.describe StoriesController, type: :controller do
 
           csv_data = CSV.parse(response.body)
           expected_csv_content = [
-            ["id", "title", "description", "position"],
-            [story.id.to_s, story.title, story.description, story.position.to_s],
-            [story2.id.to_s, story2.title, story2.description, story2.position.to_s],
-            [story3.id.to_s, story3.title, story3.description, story3.position.to_s]
+            ["id", "position", "status", "title", "description"],
+            [story.id.to_s, story.position.to_s, story.status, story.title, story.description],
+            [story2.id.to_s, story2.position.to_s, story2.status, story2.title, story2.description],
+            [story3.id.to_s, story3.position.to_s, story3.status, story3.title, story3.description]
           ]
           expect(csv_data).to eq(expected_csv_content)
         end
@@ -218,8 +218,8 @@ RSpec.describe StoriesController, type: :controller do
 
           csv_data = CSV.parse(response.body)
           expected_csv_content = [
-            ["id", "title", "description", "position"],
-            [story.id.to_s, story.title, story.description, story.position.to_s]
+            ["id", "position", "status", "title", "description"],
+            [story.id.to_s, story.position.to_s, story.status, story.title, story.description]
           ]
           expect(csv_data).to eq(expected_csv_content)
         end
@@ -244,11 +244,11 @@ RSpec.describe StoriesController, type: :controller do
 
           csv_data = CSV.parse(response.body)
           expected_csv_content = [
-            ["id", "title", "description", "position", "comments"],
-            [story.id.to_s, story.title, story.description, story.position.to_s, "#{comment1.user.name}: #{comment1.body}\n#{comment1_2.user.name}: #{comment1_2.body}"],
-            [story2.id.to_s, story2.title, story2.description, story2.position.to_s, "#{comment2_1.user.name}: #{comment2_1.body}\n#{comment2_2.user.name}: #{comment2_2.body}"],
-            [story3.id.to_s, story3.title, story3.description, story3.position.to_s, "#{comment3_1.user.name}: #{comment3_1.body}"],
-            [story4.id.to_s, story4.title, story4.description, story4.position.to_s, ""]
+            ["id", "position", "status", "title", "description", "comments"],
+            [story.id.to_s, story.position.to_s, story.status, story.title, story.description, "#{comment1.user.name}: #{comment1.body}\n#{comment1_2.user.name}: #{comment1_2.body}"],
+            [story2.id.to_s, story2.position.to_s, story2.status, story2.title, story2.description, "#{comment2_1.user.name}: #{comment2_1.body}\n#{comment2_2.user.name}: #{comment2_2.body}"],
+            [story3.id.to_s, story3.position.to_s, story3.status, story3.title, story3.description, "#{comment3_1.user.name}: #{comment3_1.body}"],
+            [story4.id.to_s, story4.position.to_s, story4.status, story4.title, story4.description, ""]
           ]
 
           expect(csv_data).to eq(expected_csv_content)
@@ -270,10 +270,10 @@ RSpec.describe StoriesController, type: :controller do
 
           csv_data = CSV.parse(response.body)
           expect(csv_data).to eq([
-            ["id", "title", "description", "position", "comments"],
-            [story.id.to_s, story.title, story.description, story.position.to_s, "#{commenter.name}: #{approved_comment.body}"],
-            [rejected.id.to_s, rejected.title, rejected.description, rejected.position.to_s, "#{commenter.name}: #{rejected_comment.body}"],
-            [pending.id.to_s, pending.title, pending.description, pending.position.to_s, ""]
+            ["id", "position", "status", "title", "description", "comments"],
+            [story.id.to_s, story.position.to_s, story.status, story.title, story.description, "#{commenter.name}: #{approved_comment.body}"],
+            [rejected.id.to_s, rejected.position.to_s, rejected.status, rejected.title, rejected.description, "#{commenter.name}: #{rejected_comment.body}"],
+            [pending.id.to_s, pending.position.to_s, pending.status, pending.title, pending.description, ""]
           ])
         end
       end

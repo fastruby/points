@@ -8,8 +8,6 @@ class StoriesController < ApplicationController
 
   include ApplicationHelper
 
-  CSV_HEADERS = %w[id title description position]
-
   def new
     @story = Story.where(id: params[:story_id]).first_or_initialize.dup
   end
@@ -146,12 +144,12 @@ class StoriesController < ApplicationController
 
   def generate_csv(stories, with_comments: false)
     CSV.generate(headers: true) do |csv|
-      headers = CSV_HEADERS.dup
+      headers = %w[id position status title description]
       headers << "comments" if with_comments
       csv << headers
 
       stories.by_position.each do |story|
-        row = [story.id, story.title, story.description, story.position]
+        row = [story.id, story.position, story.status, story.title, story.description]
 
         # Keep every story on a single, uniform-width row: collapse all comments
         # into one cell instead of spilling into a variable number of trailing,
