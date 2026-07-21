@@ -81,13 +81,13 @@ RSpec.describe "managing stories", js: true do
 
     fill_in "story[title]", with: "As a user, I want to edit stories"
 
-    dismiss_confirm("You have unsaved changes. Are you sure you want to go back?") do
+    dismiss_confirm("You have unsaved changes. Are you sure you want to leave?") do
       find("#logo").click
     end
 
     assert_current_path edit_project_story_path(project, story)
 
-    accept_confirm("You have unsaved changes. Are you sure you want to go back?") do
+    accept_confirm("You have unsaved changes. Are you sure you want to leave?") do
       click_link "Back"
     end
 
