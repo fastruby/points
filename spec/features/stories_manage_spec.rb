@@ -94,6 +94,20 @@ RSpec.describe "managing stories", js: true do
     assert_current_path project_path(id: project.id)
   end
 
+  it "does not alert me when I revert my edits back to their original values", js: true do
+    visit edit_project_story_path(project, story)
+    original_title = find_field("story[title]").value
+
+    # Make a change and then undo it, returning the form to its initial state.
+    fill_in "story[title]", with: "A temporary edit"
+    fill_in "story[title]", with: original_title
+
+    # No unsaved-changes confirm should appear, so navigation happens directly.
+    click_link "Back"
+
+    assert_current_path project_path(id: project.id)
+  end
+
   it "allows me to delete a story" do
     visit project_path(id: project.id)
 

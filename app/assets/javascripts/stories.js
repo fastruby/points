@@ -32,11 +32,19 @@ document.addEventListener("DOMContentLoaded", () => {
   let isDirty = false;
 
   if (form) {
-    // Mark the form as dirty when any input changes
-    form.addEventListener("input", function () {
-      isDirty = true;
+    // Snapshot the initial form state so we can compare against it. Tracking a
+    // plain "changed at least once" flag reported the form as dirty even after
+    // the user undid their edits (e.g. typed some text and then deleted it).
+    const initialState = serializeForm(form);
+
+    const refreshDirtyState = function () {
+      isDirty = serializeForm(form) !== initialState;
       addBeforeUnloadEventListener(isDirty);
-    });
+    };
+
+    // "input" covers text fields; "change" covers selects like the status.
+    form.addEventListener("input", refreshDirtyState);
+    form.addEventListener("change", refreshDirtyState);
 
     // Reset isDirty on form submission
     form.addEventListener("submit", function () {
@@ -47,6 +55,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Attach a click event to the custom back button
   [backButton, logo].forEach(element => {
+    if (!element) return;
+
     element.addEventListener("click", function (event) {
       if (isDirty) {
         const confirmLeave = confirm("You have unsaved changes. Are you sure you want to go back?");
@@ -62,6 +72,10 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   });
 });
+
+function serializeForm(form) {
+  return new URLSearchParams(new FormData(form)).toString();
+}
 
 function addBeforeUnloadEventListener(isDirty) {
   if (isDirty) {
