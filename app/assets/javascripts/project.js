@@ -4,11 +4,9 @@ document.addEventListener("turbolinks:load", function () {
     updateSelectAllStatus();
   });
 
-
   $(".import-export-header").click(function () {
     $(this).children(".rotate").toggleClass("left");
   });
-
 
   $("#select_all").click((event) => {
     let checked = event.target.checked;
@@ -117,37 +115,44 @@ function toggleCloneSubProjects(value) {
 
 function updateBulkDeleteStatus() {
   const selected = $("input[name='stories[]']:checked");
-    const is_unlocked = $("#stories").data("unlocked");
-    if (!is_unlocked) {
-      return;
-    }
+  const is_unlocked = $("#stories").data("unlocked");
+  if (!is_unlocked) {
+    return;
+  }
 
-    if (selected.length > 0) {
-      const ending = selected.length == 1 ? "y" : "ies";
-      $("#bulk_delete")
-        .text(`Bulk Delete (${selected.length} Stor${ending})`)
-        .attr("aria-disabled", "false")
-        .prop("disabled", false);
-    } else {
-      $("#bulk_delete")
-        .text("Bulk Delete")
-        .attr("aria-disabled", "true")
-        .prop("disabled", true);
-    }
+  if (selected.length > 0) {
+    const ending = selected.length == 1 ? "y" : "ies";
+    $("#bulk_delete")
+      .text(`Bulk Delete (${selected.length} Stor${ending})`)
+      .attr("aria-disabled", "false")
+      .prop("disabled", false);
+  } else {
+    $("#bulk_delete")
+      .text("Bulk Delete")
+      .attr("aria-disabled", "true")
+      .prop("disabled", true);
+  }
 }
 
 function updateSelectAllStatus() {
+  const selectAll = $("#select_all")[0];
+  // Select All is only rendered for unlocked projects, so there is nothing to
+  // sync when it is absent.
+  if (!selectAll) {
+    return;
+  }
+
   const selected = $("input[name='stories[]']:checked");
   const checkboxes = $("input[name='stories[]']");
 
   if (selected.length == 0) {
-    $("#select_all")[0].checked = false;
-    $("#select_all")[0].indeterminate = false;
+    selectAll.checked = false;
+    selectAll.indeterminate = false;
   } else if (selected.length == checkboxes.length) {
-    $("#select_all")[0].checked = true;
-    $("#select_all")[0].indeterminate = false;
+    selectAll.checked = true;
+    selectAll.indeterminate = false;
   } else {
-    $("#select_all")[0].checked = false;
-    $("#select_all")[0].indeterminate = true;
+    selectAll.checked = false;
+    selectAll.indeterminate = true;
   }
 }
