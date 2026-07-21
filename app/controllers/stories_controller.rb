@@ -94,7 +94,9 @@ class StoriesController < ApplicationController
     export_all = params[:export_all] == "1" && current_user.admin?
 
     stories = export_all ? @project.stories : @project.stories.approved
-    stories = stories.includes(:comments) if with_comments
+    # Eager-load the comments and their authors; generate_csv reads
+    # comment.user for every comment, which would otherwise be an N+1.
+    stories = stories.includes(comments: :user) if with_comments
 
     csv = generate_csv(stories, with_comments: with_comments)
 
@@ -145,19 +147,20 @@ class StoriesController < ApplicationController
   def generate_csv(stories, with_comments: false)
     CSV.generate(headers: true) do |csv|
       headers = CSV_HEADERS.dup
-      headers << "comment" if with_comments
+      headers << "comments" if with_comments
       csv << headers
 
       stories.by_position.each do |story|
-        comments = []
+        row = [story.id, story.title, story.description, story.position]
 
+        # Keep every story on a single, uniform-width row: collapse all comments
+        # into one cell instead of spilling into a variable number of trailing,
+        # unlabeled columns.
         if with_comments
-          comments = story.comments.map do |comment|
-            "#{display_name(comment.user)}: #{comment.body}"
-          end
+          row << story.comments.map { |comment| "#{display_name(comment.user)}: #{comment.body}" }.join("\n")
         end
 
-        csv << [story.id, story.title, story.description, story.position] + comments
+        csv << row
       end
     end
   end
