@@ -85,7 +85,9 @@ end
 
 group :test do
   gem "apparition", git: "https://github.com/twalpole/apparition.git", ref: "7db58cc6b0e4ca4141b074ff27d5936a1b8874bf"
-  gem "capybara"
+  # 3.40+ needed for Rack 3: earlier versions reference the removed
+  # Rack::Handler::Puma constant when booting the test server
+  gem "capybara", ">= 3.40"
   gem "webdrivers"
   gem "database_cleaner-active_record", ">= 2.1.0"
   gem "capybara-screenshot"
