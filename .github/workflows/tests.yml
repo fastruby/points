@@ -16,7 +16,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:11.6-alpine
+        image: postgres:16.4-alpine
         ports:
           - 5432:5432
         env:
@@ -29,13 +29,13 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v1
 
-      - name: Install PostgreSQL 11 client
+      - name: Install PostgreSQL Client
         run: |
           sudo apt-get -yqq install libpq-dev
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.4.10"
+          ruby-version: "3.4.13"
           bundler-cache: true
 
       - name: Build App
