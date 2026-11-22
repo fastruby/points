@@ -283,6 +283,49 @@ RSpec.describe "managing stories", js: true do
       end
     end
 
+    it "styles the extra information preview the same way as the description preview" do
+      visit project_path(id: project.id)
+      click_link "Add a Story"
+
+      content = <<~CONTENT
+        Some **bold** and _italic_ text.
+
+        * first item
+        * second item
+      CONTENT
+
+      fill_in "story[description]", with: content
+      fill_in "story[extra_info]", with: content
+
+      expect(page).to have_selector(".story_preview .content strong", text: "bold")
+      expect(page).to have_selector(".extra_info_preview .content strong", text: "bold")
+
+      computed_styles = lambda do |preview|
+        evaluate_script(<<~JS)
+          (function() {
+            var content = document.querySelector(".#{preview} .content");
+            var style = function(selector, property) {
+              return window.getComputedStyle(content.querySelector(selector))[property];
+            };
+            return {
+              strong: style("strong", "fontWeight"),
+              em: style("em", "fontStyle"),
+              list: style("ul", "listStyleType"),
+              paragraph: style("p", "marginTop")
+            };
+          })()
+        JS
+      end
+
+      description_styles = computed_styles.call("story_preview")
+      extra_info_styles = computed_styles.call("extra_info_preview")
+
+      expect(description_styles["strong"]).to eq "700"
+      expect(description_styles["em"]).to eq "italic"
+      expect(description_styles["list"]).to eq "circle"
+      expect(extra_info_styles).to eq description_styles
+    end
+
     it "debounces the requests to update the preview to not flood the server" do
       renderer = double(:markdown_renderer)
       allow(renderer).to receive(:render).and_return("<span>preview</span>")
