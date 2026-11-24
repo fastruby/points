@@ -1,4 +1,4 @@
-FROM cimg/ruby:3.4.13-browsers
+FROM cimg/ruby:4.0.10-browsers
 
 ARG BUNDLE_GEMFILE=Gemfile
 
